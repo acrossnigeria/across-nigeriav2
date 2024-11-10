@@ -1,0 +1,80 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+html,
+body {
+  padding: 0;
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
+    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+}
+* {
+  scroll-behavior: smooth;
+}
+
+.swiper {
+ @apply h-screen;
+}
+
+.swiper-slide {
+ @apply flex justify-center items-center;
+}
+
+.swiper-pagination-bullet {
+ @apply  bg-white opacity-5;
+}
+
+.swiper-pagination-bullet-active {
+ @apply  bg-white opacity-100;
+}
+.primary-button {
+  @apply mb-1  cursor-pointer flex 
+font-serif bg-green-500  rounded items-center opacity-85
+mx-auto justify-center font-bold hover:bg-gray-800 py-2 px-1 outline-none
+hover:text-gray-200 text-center shadow-slate-900 shadow-lg;
+}
+.animate-bounce-short {
+    animation: bounce 10ms 3s;
+}
+.arrowBtn {
+  @apply w-12 h-12 text-white text-2xl 
+  cursor-pointer bg-arrowbtn rounded-3xl p-3 mr-4 
+  select-none transition duration-100 ease-out 
+  hover:bg-cyan-950 hover:transform 
+  hover:scale-105 hover:ease-in hover:duration-100;
+}
+
+
+.feature-card:hover {
+  background: var(--black-gradient);
+  box-shadow: var(--card-shadow);
+}
+
+.feedback-card {
+  background: transparent;
+}
+
+.feedback-card:hover {
+  background: var(--black-gradient);
+}
+
+.bg-blue-gradient {
+  background: linear-gradient(
+    157.81deg,
+    #def9fa -43.27%,
+    #bef3f5 -21.24%,
+    #9dedf0 12.19%,
+    #7de7eb 29.82%,
+    #5ce1e6 51.94%,
+    #33bbcf 90.29%
+  );
+}
+
+.slider-container {
+  @apply w-full;
+}
+
+.vertical-menu {
+@apply fixed left-0 top-0 w-48 h-screen bg-gray-200 
+  border-r border-gray-200 p-4
+}
