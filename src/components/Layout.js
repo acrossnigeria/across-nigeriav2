@@ -12,11 +12,11 @@ export default function Layout({ title, children }) {
   const toggle = () => {
     setIsOpen(!isOpen);
   };
-const[isMobile, setIsMobile]=useState(false);
+  const[isMobile, setIsMobile]=useState(false);
   useEffect(()=>{
     if(/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)&&window.matchMedia("(max-width: 600px)").matches){
- setIsMobile(true)
-} else{setIsMobile(false)}
+  setIsMobile(true)
+  } else{setIsMobile(false)}
 // console.log(isMobile, navigator.userAgent)
   },[isMobile])
   
