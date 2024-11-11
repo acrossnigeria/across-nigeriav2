@@ -4,7 +4,7 @@ import { PaystackButton } from "react-paystack";
 
 export default function PaystackBtn(props) {
 //provide props for amount email key is proc.env.PAYSTACK
-    const {amount, email,paystackKey, purpose}=props;
+    const {amount, email, paystackKey, purpose}=props;
     const [price, setPrice]=useState(0)
     const [localePayment, setLocalePayment]=useState('')
     useEffect(()=>{
@@ -17,8 +17,9 @@ export default function PaystackBtn(props) {
     reference: new Date().getTime().toString(),
     email: email,
     amount: amount * 100, //Amount is in the country's lowest currency. E.g Kobo, so 20000 kobo = N200
-    publicKey: "pk_live_09ba874adcdca43ec856e37e480ec1e17dc13eda",
+    publicKey: paystackKey,
   };
+  // publicKey: "pk_live_09ba874adcdca43ec856e37e480ec1e17dc13eda",
   const handlePaystackSuccessAction = async (ref) => {
     props.pay(ref);
         // Implementation for whatever you want to do with reference and after success call.
@@ -46,7 +47,7 @@ inset-0 p-6  bg-white m-auto bottom-0 h-screen">
     <div className="border-yellow-500 border h-14 py-4 w-40 rounded-lg bg-green-700 text-white text-xl
      font-semibold italic mx-auto text-center">
                            
-                              <PaystackButton {...componentProps} />
+          <PaystackButton {...componentProps} />
                           
                                                        
         </div>

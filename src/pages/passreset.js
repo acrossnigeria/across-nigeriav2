@@ -8,45 +8,49 @@ const EmailForm = () => {
   const [check, setCheck] = useState(false);
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState('');
+
   function generateRandomString(length) {
-  const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-  let result = '';
-  const charactersLength = characters.length;
-  
-  for (let i = 0; i < length; i++) {
-    const randomIndex = Math.floor(Math.random() * charactersLength);
-    result += characters.charAt(randomIndex);
+    const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    let result = '';
+    const charactersLength = characters.length;
+    
+    for (let i = 0; i < length; i++) {
+      const randomIndex = Math.floor(Math.random() * charactersLength);
+      result += characters.charAt(randomIndex);
+    }
+    return result;
   }
-  
-  return result;
-}
 
   const handleSubmit = async (event) => {
     setLoading(true);
     event.preventDefault();
     try {
+
       const response = await axios.get('/api/findUser', { params: { email } });
       console.log(response.data)
       setMessage(response.data)
       setCheck(true);
-      const outgoing="noreply <password-reset@acrossnig.com>";
-        const recepient=message.email;
-        const subject="Password Reset";
-        const resetCode= generateRandomString(8);
-        const resetCodeUrl=window.location.origin+`/mail/`+resetCode;
-        const content= `Dear ${message?.name?? ""} kindly click on ${resetCodeUrl} to reset your password`;
+
+      const outgoing = "noreply <password-reset@acrossnig.com>";
+      const recepient = message.email;
+      const subject="Password Reset";
+      const resetCode= generateRandomString(8);
+      const resetCodeUrl=window.location.origin+`/mail/`+resetCode;
+      const content= `Dear ${message?.name?? ""} kindly click on ${resetCodeUrl} to reset your password`;
+
       const mailResult= await axios.patch('/api/findUser',{recepient, resetCodeUrl,resetCode});
-       const storResult= await axios.post('/api/mail/mail',{outgoing,
-        recepient, subject, content
-      });
+      const storResult= await axios.post('/api/mail/mail', {outgoing, recepient, subject, content } );
+
       console.log("MAIL RESULT IS",mailResult)
       console.log("DATABASE RESULT IS",storResult)
+
     } catch (error) {
       console.error('Error checking email:', error);
     
     } 
-     setLoading(false)
-     setEmail("");
+
+    setLoading(false)
+    setEmail("");
   };
 
   return (
