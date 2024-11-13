@@ -43,10 +43,17 @@ const EmailForm = () => {
       <p>Thanks for being a part of Across Nigeria reality TV show!</p>
       <p>Best regards, <br></br>
         The Across Nigeria Team</p>`
-      const heading= 'Reset Your Password - We have Got You Covered!'
+      const heading= 'Reset Your Password - We have Got You Covered!';
 
       const mailResult= await axios.patch('/api/findUser', { recepient, resetCodeUrl, resetCode });
-      const storResult= await axios.post('/api/mail/mail', { outgoing, recepient, subject, content } );
+
+      try {
+        const storResult= await axios.post('/api/mail/mail', { outgoing, recepient, subject, content, heading } );
+      } catch (err) {
+        console.log('error:', err.message );
+        setLoading(false);
+      }
+      
 
       console.log("MAIL RESULT IS",mailResult)
       console.log("DATABASE RESULT IS",storResult)
@@ -75,7 +82,7 @@ const EmailForm = () => {
             className='mb-4 ml-1 border p-2 text-lg font-thin font-mono border-gray-500 rounded w-52'
           />
   
-        <button className='block border bg-green-800 text-white border-gray-500 cursor-pointer rounded p-2' type="submit">Submit</button>
+        <button className='block hover:opacity-80 border bg-green-800 text-white border-gray-500 cursor-pointer rounded p-2' type="submit">Submit</button>
       </form>
       {check&&!message.exists && <p>Email doesnt exist</p>}
       <div>
