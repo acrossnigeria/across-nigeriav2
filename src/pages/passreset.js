@@ -36,10 +36,17 @@ const EmailForm = () => {
       const subject="Password Reset";
       const resetCode= generateRandomString(8);
       const resetCodeUrl=window.location.origin+`/mail/`+resetCode;
-      const content= `Dear ${message?.name?? ""} kindly click on ${resetCodeUrl} to reset your password`;
+      const content=  `<p>Hi ${message?.name?? ""} </p>
+      <p>We received a request to reset the password for your account. If this was you, simply click the link below to create a new password:</p>
+      <p>${resetCodeUrl}<p/>
+      <p>If you didn't request a password reset, no worries! You can safely ignore this email. Your account is still secure.</p>
+      <p>Thanks for being a part of Across Nigeria reality TV show!</p>
+      <p>Best regards, <br></br>
+        The Across Nigeria Team</p>`
+      const heading= 'Reset Your Password - We have Got You Covered!'
 
-      const mailResult= await axios.patch('/api/findUser',{recepient, resetCodeUrl,resetCode});
-      const storResult= await axios.post('/api/mail/mail', {outgoing, recepient, subject, content } );
+      const mailResult= await axios.patch('/api/findUser', { recepient, resetCodeUrl, resetCode });
+      const storResult= await axios.post('/api/mail/mail', { outgoing, recepient, subject, content } );
 
       console.log("MAIL RESULT IS",mailResult)
       console.log("DATABASE RESULT IS",storResult)
