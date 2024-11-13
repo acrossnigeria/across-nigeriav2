@@ -30,6 +30,11 @@ const handler = async (req, res) => {
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
 
+  if (req.method === 'OPTIONS') {
+    // Respond to the OPTIONS request (preflight request)
+    return res.status(200).end();
+  }
+
   console.log("from mail api:", req.body);
   const { outgoing, recepient, subject, content, heading } = req.body;
   // Email content 
