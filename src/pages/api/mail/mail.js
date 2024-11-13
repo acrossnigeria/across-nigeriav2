@@ -23,17 +23,18 @@ import nodemailer from 'nodemailer';
 // };
 
 // Handling Email sending using nodemailer
-const emailPass = process.env.ZOHO_PASS;
 const handler = async (req, res) => {
 
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
-  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
 
   if (req.method === 'OPTIONS') {
     // Respond to the OPTIONS request (preflight request)
     return res.status(200).end();
   }
+  
+  const emailPass = process.env.ZOHO_PASS;
 
   console.log("from mail api:", req.body);
   const { outgoing, recepient, subject, content, heading } = req.body;
@@ -56,15 +57,15 @@ const handler = async (req, res) => {
     }
   });
   // sending mail
-  transporter.sendMail( mailOptions, ( error, info )=> {
+  transporter.sendMail(mailOptions, (error, info) => {
     if (error) {
-      console.log('Error Occured:', error);
-      res.status(500).json('an Error Occurd:', error)
+      console.log('Error Occurred:', error);
+      return res.status(500).json({ message: 'An error occurred', error: error.message });
     } else {
-      console.log( 'Email sent:', info.response )
-      res.status(200).json( info.response );
+      console.log('Email sent:', info.response);
+      return res.status(200).json({ message: 'Email sent successfully', info: info.response });
     }
-  } )
+  });
 
 }
 
