@@ -1,4 +1,5 @@
 import { useState } from "react";
+import Head from "next/head";
 
 export default function Index () {
     const [name, setName] = useState("");
@@ -40,9 +41,9 @@ export default function Index () {
         <main
             className={`flex flex-col items-center p-24 min-h-screen`}
         >
-            <h1>
+            <Head>
                 <title>Contact Me | Coffeed</title>
-            </h1>
+            </Head>
 
             <div className="relative flex flex-col gap-4 ">
                 <div className="flex flex-col place-items-center gap-4">

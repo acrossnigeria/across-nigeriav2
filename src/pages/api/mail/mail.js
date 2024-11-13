@@ -2,7 +2,6 @@
 import { EmailTemplate } from '@/components/email-contact';
 import { Resend } from 'resend';
 import nodemailer from 'nodemailer';
-import { Html } from 'next/document';
 
 // const resend = new Resend(process.env.RESEND_API_KEY);
 // export default handler = async (req, res) => {
