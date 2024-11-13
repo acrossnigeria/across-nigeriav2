@@ -17,7 +17,7 @@ export default function PaystackBtn(props) {
     reference: new Date().getTime().toString(),
     email: email,
     amount: amount * 100, //Amount is in the country's lowest currency. E.g Kobo, so 20000 kobo = N200
-    publicKey: "pk_test_cbdf33dbafe37c266634416e1b99f1f6b87e709a",
+    publicKey: "pk_live_09ba874adcdca43ec856e37e480ec1e17dc13eda",
   };
   // publicKey: "pk_test_cbdf33dbafe37c266634416e1b99f1f6b87e709a",
   // publicKey: "pk_live_09ba874adcdca43ec856e37e480ec1e17dc13eda",
