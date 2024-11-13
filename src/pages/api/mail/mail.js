@@ -25,6 +25,11 @@ import nodemailer from 'nodemailer';
 // Handling Email sending using nodemailer
 const emailPass = process.env.ZOHO_PASS;
 const handler = async (req, res) => {
+
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+  
   console.log("from mail api:", req.body);
   const { outgoing, recepient, subject, content, heading } = req.body;
   // Email content 
