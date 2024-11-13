@@ -29,7 +29,7 @@ const handler = async (req, res) => {
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
-  
+
   console.log("from mail api:", req.body);
   const { outgoing, recepient, subject, content, heading } = req.body;
   // Email content 
@@ -53,7 +53,7 @@ const handler = async (req, res) => {
   // sending mail
   transporter.sendMail( mailOptions, ( error, info )=> {
     if (error) {
-      console.log('Error Occured');
+      console.log('Error Occured:', error);
       res.status(500).json('an Error Occurd:', error)
     } else {
       console.log( 'Email sent:', info.response )
