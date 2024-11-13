@@ -1,6 +1,4 @@
 
-import { EmailTemplate } from '@/components/email-contact';
-import { Resend } from 'resend';
 import nodemailer from 'nodemailer';
 
 // const resend = new Resend(process.env.RESEND_API_KEY);
@@ -50,7 +48,8 @@ const handler = async (req, res) => {
   // sending mail
   transporter.sendMail( mailOptions, ( error, info )=> {
     if (error) {
-      console.log('Error Occured:', error)
+      console.log('Error Occured');
+      res.status(500).json('an Error Occurd:', error)
     } else {
       console.log( 'Email sent:', info.response )
       res.status(200).json( info.response );
