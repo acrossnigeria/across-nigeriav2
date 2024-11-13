@@ -46,7 +46,7 @@ const PersonCard = ({ imageUrl, name, age, occupation }) => {
     console.log('Data is:',data)
   };
   fetchData();
-} );
+}, [ ]);
  
   return (
     <div>

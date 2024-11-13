@@ -18,7 +18,7 @@ export default function Layout({ title, children }) {
   setIsMobile(true)
   } else{setIsMobile(false)}
 // console.log(isMobile, navigator.userAgent)
-  },[isMobile])
+  },[ isMobile ])
   
     return(
 <div className="h-screen p-0 m-0 bottom-0">
@@ -28,9 +28,9 @@ export default function Layout({ title, children }) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
        <ToastContainer position="top-center" limit={1} />
-{!isMobile&&<StickyNavbar/>}
-{isMobile&&<Navbar/>}
- <div className="flex left-0 ml-0 w-full overflow-hidden min-h-screen flex-col justify-between">
+        {!isMobile&&<StickyNavbar/>}
+        {isMobile&&<Navbar/>}
+      <div className="flex left-0 ml-0 w-full overflow-hidden min-h-screen flex-col justify-between">
         <main className="h-full w-screen overflow-hidden p-0 left-0 mx-auto  min-h-screen">{children}</main>
        
       </div> 
