@@ -30,7 +30,7 @@ const PersonCard = ({ imageUrl, name, age, occupation }) => {
       loading:false,
       error: '',
     });
-     useEffect(() => {
+  useEffect(() => {
     setData([]);
     const fetchData = async () => {
       try {
@@ -46,7 +46,7 @@ const PersonCard = ({ imageUrl, name, age, occupation }) => {
     console.log('Data is:',data)
   };
   fetchData();
-}, []);
+}, [ data ]);
  
   return (
     <div>
