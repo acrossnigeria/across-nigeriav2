@@ -22,17 +22,16 @@ import Link from "next/link";
 
 
 export const games=[
-{title:"GIVE AWAY QUIZZES",
-image:image1,link:"/giveaway"},
-{title:"SKITS ACROSS NIGERIA",image:image2,link:"/skitsPage"},
-{title:"NAIJA VIBES", image:image8,link:"/naijavibes"},
-{title:"KING AND QUEEN",image:image3,link:"/soon"},
-{title:"MYSTERY BOXES",image:image4,link:"/soon"},
-{title:"STATE TREASURE HUNT SHOW",image:image5,link:"/soon"},
-{title:"MEGA CASH OUT",image:image6,link:"/soon"},
-{title:"ACROSS NIGERIA REALITY SHOW",image:image7,link:"/soon"},
-{title:"SHOPPING HUSTLE",image:image9,link:"/soon"},
-{title:"I DON HAMMA",image:image10,link:"/soon"},
+  {title:"GIVE AWAY QUIZZES", image:image1,link:"/giveaway", date:'March, 2024'},
+  {title:"SKITS ACROSS NIGERIA",image:image2,link:"/skitsPage", date:'March, 2024'},
+  {title:"NAIJA VIBES", image:image8,link:"/naijavibes", date:'March, 2024'},
+  {title:"KING AND QUEEN",image:image3,link:"/soon", date:'January 1st, 2025'},
+  {title:"MYSTERY BOXES",image:image4,link:"/soon", date:'July 1st, 2024'},
+  {title:"STATE TREASURE HUNT SHOW",image:image5,link:"/soon", date:'October, 2024'},
+  {title:"MEGA CASH OUT",image:image6,link:"/soon", date:'October, 2024'},
+  {title:"ACROSS NIGERIA REALITY SHOW",image:image7,link:"/soon", date:'Nov/ Dec, 2026'},
+  {title:"SHOPPING HUSTLE",image:image9,link:"/soon", date:'August 1st, 2024'},
+  {title:"I DON HAMMA",image:image10,link:"/soon", date:'March, 2025'},
 ]
 const inter = Inter({ subsets: ["latin"] });
 
@@ -49,8 +48,8 @@ export default function Home() {
                  <Image quality={10} src={flameimg} height={5} width={20} alt="hot"/>
               </span>
             </p>
-        <div className=" mt-6 grid left-0 grid-cols-2 gap-4 border-b-1 border-b-gray-500 md:grid-cols-2 lg:grid-cols-3 md:gap-4 mx-auto items-center md:max-w-screen-xl px-4 sm:px-3 lg:px-20">
-            { games.map((card)=>(<Cards key={card.title} title={card.title} 
+        <div className="mt-6 grid left-0 grid-cols-1 gap-4 border-b-1 md:grid-cols-2 lg:grid-cols-2 md:gap-6 mx-auto items-center md:max-w-screen-xl px-4 sm:px-3 lg:px-20">
+            { games.map((card)=>(<Cards key={card.title} date={card.date} title={card.title} 
             link={card.link} image={card.image}/>))}
         </div>
         

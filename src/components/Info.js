@@ -24,16 +24,16 @@ const Info = ()=>{
   reversed:true
     };
   return (
-      <div className="relative h-full wfull  grid grid-cols-1 mt-0 top-0 border-b-1 pb-4 px-4 border-b-gray-700">
+      <div className="relative h-full wfull  grid grid-cols-1 mt-0 top-0 border-b-1 pb-4 px-4 border-b-gray">
         
-         <div className="flex lg:w-full text-green-950  w-full font-bold text-6xl 
+         <div className="flex lg:w-full text-green-800  w-full font-bold text-6xl 
           right-0 pt-8  text-pretty">
-        <span className="w-full font-extrabold tracking-wider">HOWFA?</span> 
+        <span style={{ color:'rgb(23, 123, 43)'}} className="w-full font-extrabold tracking-wider">HOWFA?</span> 
         </div>
             <p className="font-semibold text-left mt-4 text-xl mb-4 text-gray-700">{data.paragraph}</p>
        
-          <Link className={`mt-6  mb-4 ${session?.user ? ("hidden"):("bg-green-950")} 
-          pt-3 px-4 rounded-md tracking-tight items-center text-center text-white text-balance w-fit h-14`} href="/reg">
+          <Link style={{ display:( session?.user? 'none': 'block'), backgroundColor: 'rgb(23, 123, 43)', width:'fit-content', padding:'8px 15px', color: "white", fontSize:'18px', borderRadius:'17px'}}
+        className="w-full font-bold tracking-wider hover:opacity-70" href="/reg">
           {"Register to get Involved".toUpperCase()}
           </Link>
    <div className="text-8xl mt-6 mb-6 mx-auto rounded-md justify-between bg-gray-100 flex">

@@ -9,7 +9,7 @@ import { signIn } from "next-auth/react";
 import Cookies from "js-cookie";
 
 export default function PayScreen (){
-  const paystackLiveKey=process.env.PAYSTACK;
+  const paystackLiveKey=process.env.PAYSTACK_TEST;
   const { state, dispatch } = useContext(Store);
   const {user:{userDetails},}= state;
   const [loading, setLoading]=useState(false)
