@@ -48,11 +48,11 @@ const EmailForm = () => {
       const findUser = await axios.get('/api/findUser', { params: { email } });
 
       const outgoing = "noreply <password-reset@acrossnig.com>";
-      const recepient = findUser.email;
+      const recepient = findUser.data.email;
       const subject="Password Reset";
       const resetCode= generateRandomString(8);
       const resetCodeUrl=window.location.origin+`/mail/`+resetCode;
-      const content=  `<p>Hi ${message?.name?? ""} </p>
+      const content=  `<p>Hi ${findUser.data?.name?? ""} </p>
       <p>We received a request to reset the password for your account. If this was you, simply click the link below to create a new password:</p>
       <p>${resetCodeUrl}<p/>
       <p>If you didn't request a password reset, no worries! You can safely ignore this email. Your account is still secure.</p>
