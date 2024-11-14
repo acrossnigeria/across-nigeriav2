@@ -29,11 +29,6 @@ const handler = async (req, res) => {
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
 
-  if (req.method === 'OPTIONS') {
-    // Respond to the OPTIONS request (preflight request)
-    return res.status(200).end();
-  }
-
   const emailPass = process.env.ZOHO_PASS;
 
   console.log("from mail api:", req.body);
