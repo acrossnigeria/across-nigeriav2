@@ -48,7 +48,7 @@ const EmailForm = () => {
       const findUser = await axios.get('/api/findUser', { params: { email } });
 
       const outgoing = "noreply <password-reset@acrossnig.com>";
-      const recepient = message.email;
+      const recepient = findUser.email;
       const subject="Password Reset";
       const resetCode= generateRandomString(8);
       const resetCodeUrl=window.location.origin+`/mail/`+resetCode;
