@@ -33,7 +33,7 @@ const handler = async (req, res) => {
     // Respond to the OPTIONS request (preflight request)
     return res.status(200).end();
   }
-  
+
   const emailPass = process.env.ZOHO_PASS;
 
   console.log("from mail api:", req.body);
@@ -49,12 +49,15 @@ const handler = async (req, res) => {
   // Creating a transporter using ZOHO smtp settings
   const transporter = nodemailer.createTransport({
     host: 'smtp.zoho.com',
-    port: 465,
-    secure: true,
+    port: 587,
+    secure: false,
     auth: {
       user: 'noreply@acrossnig.com',
       pass: emailPass
-    }
+    },
+    tls: {
+      rejectUnauthorized: false,
+    },
   });
   // sending mail
   transporter.sendMail(mailOptions, (error, info) => {
