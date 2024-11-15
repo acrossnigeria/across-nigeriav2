@@ -73,7 +73,7 @@ const toggleMenu=()=>{
       {/* Menus */}
       <div className="mt-4 flex justify-center">
         {/* First Line Menus */}
-        <div style={{fontSize:'18.5px'}} className="space-x-4 font-semibold">
+        <div style={{fontSize:'17.5px'}} className="space-x-4 font-semibold">
           <Link href="/" className="text-white  hover:text-green-500">
             Home
           </Link>
@@ -89,7 +89,7 @@ const toggleMenu=()=>{
         </div>
       </div>
 
-      <div className="mt-2 flex font-sans font-thin text-[17px] justify-center">
+      <div className="mt-2 flex font-sans font-thin text-[14px] justify-center">
         {/* Second Line Menus */}
         <div className="space-x-1">
           <Link href="/giveaway" className="text-white border rounded p-[2px] hover:bg-green-800">
