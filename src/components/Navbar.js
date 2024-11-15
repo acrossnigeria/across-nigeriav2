@@ -4,6 +4,8 @@ import logo from "../../public/images/logo1.png";
 import Link from 'next/link';
 import { signOut, useSession } from 'next-auth/react';
 import { useRouter } from 'next/router';
+import Home from '../../public/images/icon/Home.js';
+import Search from '../../public/images/icon/Search';
 
 const Navbar = () => {
   const { status, data: session } = useSession();
@@ -16,21 +18,32 @@ const logoutClickHandler = () => {
 const toggleMenu=()=>{
   setOpen(!open);}
   return (
-    <nav className="bg-gradient-to-br from-green-400 to-green-800 bg-gradient-to-b from-green-500 to-green-950 overflow-hidden  py-4 px-2" onClick={()=>{open&&setOpen(false)}}>
+    <nav style={{borderBottomLeftRadius:'20px', borderBottomRightRadius:'20px'}} className="bg-gradient-to-br from-green-400 to-green-800 bg-gradient-to-b from-green-500 to-green-950 overflow-hidden  py-4 px-2" onClick={()=>{open&&setOpen(false)}}>
       {/* Logo */}
-      <Link href="/" onClick={()=>(router.push("/"))} className="flex items-center justify-center">
-        <Image src={logo} alt="Logo"  className="h-8 w-8" />
+
+      <Link href="/" style={{marginBottom:'10px'}} onClick={()=>(router.push("/"))} className="flex items-center justify-center">
+        <Image src={logo} alt="Logo"  className="h-15 w-14" />
       </Link>
-      <p className='flex items-center text-[10px] justify-center mb-2 font-thin text-white'> Across Nigeria Reality Show</p>
-         <div className="flex justify-start">
+
+      <div style={{alignItems:'center', flexDirection:'row', justifyContent:'space-between', padding:'0px 1rem'}} className="flex gap-2">
+              {/* Search Bar */}
+      <div style={{height:'45px', display:'flex', backgroundColor:'white', padding:'0px 17px', borderRadius:'17px'}} >
+        <input
+          type="text"
+          placeholder="Search..."
+          style={{fontSize:'18px'}}
+          className=" focus:outline-none"
+        />
+        <Search/>
+      </div>
       {/* Dropdown Button */}
       {status === 'loading' ? (
         <div className="flex w-[fit-content] p-1 h-9 cursor-pointer items-center font-semibold 
         justify-center uppercase text-white border-2 border-green-600 bg-green-600 transition duration-100 rounded-lg text-[10px]
         ease-in-out hover:bg-white hover:text-yellow-600 hover:border-2 hover:border-yellow-600 hover:scale-105 hover:rounded-sm">
-          Loading...
+          Loading
         </div>
-      ) : session?.user ? (
+        ) : session?.user ? (
         <div className="relative">
           <div className="flex left-0 py-3 cursor-pointer font-semibold 
           uppercase text-white border-2 border-green-300 bg-green-600 transition duration-100 rounded-lg text-[10px]"
@@ -43,58 +56,44 @@ const toggleMenu=()=>{
               <div className="py-1 flex" role="none">
                 <a onClick={logoutClickHandler} className="text-gray-700 block px-3" role="menuitem">LogOut</a>
               </div>
-              <div className="py-2 flex" role="none">
-                <a onClick={() => router.push('/profile')} className="text-gray-700 block px-6" role="menuitem">Profile</a>
-              </div>
             </div>
           )}
         </div>
       ) : (
-        <div className="flex w-[fit-content] p-1 h-9 cursor-pointer items-center font-semibold 
-        justify-center uppercase text-white border-2 border-green-300 bg-green-600 transition duration-100 rounded-lg text-[10px]
-        ease-in-out hover:bg-white hover:text-yellow-600 hover:border-2 hover:border-yellow-600 hover:scale-105 hover:rounded-sm">
+        <div style={{width:'70px', height:'45px'}} className="flex p-1 h-10 cursor-pointer items-center font-semibold 
+        justify-center uppercase text-white border-2 border-green-300 bg-green-600 transition duration-100 rounded-lg text-[14px]
+        ease-in-out hover:bg-green-900 hover:border-1 hover:scale-105 hover:rounded-sm">
           <Link href="/login" className="p-2 cursor-pointer" legacyBehavior>
             <a>Login</a>
           </Link>
         </div>
       )}
 
-      {/* Search Bar */}
-      <div className="flex-grow mx-1">
-        <input
-          type="text"
-          placeholder="Search..."
-          className="px-4 py-2 mx-0 rounded-md border border-gray-300 focus:outline-none focus:ring focus:border-blue-500"
-        />
-      </div>
     </div>
       {/* Menus */}
       <div className="mt-4 flex justify-center">
         {/* First Line Menus */}
-        <div className="space-x-4">
+        <div style={{fontSize:'18.5px'}} className="space-x-4 font-semibold">
           <Link href="/" className="text-white  hover:text-green-500">
-          Home
+            Home
           </Link>
-          <Link href="/about" className="text-white hover:text-green-500">
-            About
+          <Link style={{display:(session?.user?'block':'none')}} href="/profile" className="text-white hover:text-green-500">
+            Profile
           </Link>
           <Link href="" className="text-white  hover:text-green-500">
             Our Products
           </Link>
-          <Link href="/profile" className="text-white hover:text-green-500">
-            Profile
+          <Link href="/about" className="text-white hover:text-green-500">
+            About
           </Link>
         </div>
       </div>
 
-      <div className="mt-2 flex font-sans font-thin text-[11px] justify-center">
+      <div className="mt-2 flex font-sans font-thin text-[17px] justify-center">
         {/* Second Line Menus */}
-        <div className="space-x-2">
-          <Link href="/naijavibes" className="text-white border rounded p-[2px] hover:bg-green-800">
-            NaijaVibes
-          </Link>
+        <div className="space-x-1">
           <Link href="/giveaway" className="text-white border rounded p-[2px] hover:bg-green-800">
-            Giveaway
+            Giveaway quizzes
           </Link>
           <Link href="/skitsPage" className="text-white border rounded p-[2px] hover:bg-green-800">
             Skits Across Naija
@@ -102,6 +101,9 @@ const toggleMenu=()=>{
           <Link href="/shoutout/booking" className="text-white border rounded p-[2px] hover:bg-green-800">
           Shout Out!
           </Link>
+          {/* <Link href="" className="text-white border rounded p-[2px] hover:bg-green-800">
+            Our products
+          </Link> */}
         </div>
       </div>
     </nav>

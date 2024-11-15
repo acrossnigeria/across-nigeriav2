@@ -11,7 +11,6 @@ const EmailForm = () => {
   const [message, setMessage] = useState('');
   const [ timer, setTimer ] = useState(60);
   const [ timerDisplay, setTimerDisplay ] = useState('hidden');
-  const [ userEmail, setUserEmail ] = useState('');
 
   function allow () {
     setTimer(10);
@@ -46,10 +45,11 @@ const EmailForm = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     setMessage('');
+    let emailAddress;
     setLoading(true);
     try {
       const findUser = await axios.get('/api/findUser', { params: { email } });
-      setUserEmail(findUser.data.email);
+      emailAddress = findUser.data.email;
 
       const outgoing = "noreply <password-reset@acrossnig.com>";
       const recepient = findUser.data.email;
@@ -69,7 +69,7 @@ const EmailForm = () => {
 
       try {
         const isEmailSent = await axios.post('/api/mail/mail', { outgoing, recepient, subject, content, heading } );
-        setMessage('A link to reset your password was sent to ', userEmail);
+        setMessage(`A link to reset your password was sent to ${emailAddress}`);
         setAllowSubmit(false);
         setTimerDisplay('visible');
       } catch (err) {
