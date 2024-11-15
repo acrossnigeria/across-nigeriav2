@@ -18,14 +18,14 @@ const logoutClickHandler = () => {
 const toggleMenu=()=>{
   setOpen(!open);}
   return (
-    <nav style={{borderBottomLeftRadius:'20px', borderBottomRightRadius:'20px'}} className="bg-gradient-to-br from-green-400 to-green-800 bg-gradient-to-b from-green-500 to-green-950 overflow-hidden  py-4 px-2" onClick={()=>{open&&setOpen(false)}}>
+    <nav style={{borderBottomLeftRadius:'10px', borderBottomRightRadius:'10px'}} className="bg-gradient-to-br from-green-400 to-green-800 bg-gradient-to-b from-green-500 to-green-950 overflow-hidden  py-4 px-2" onClick={()=>{open&&setOpen(false)}}>
       {/* Logo */}
 
       <Link href="/" style={{marginBottom:'10px'}} onClick={()=>(router.push("/"))} className="flex items-center justify-center">
         <Image src={logo} alt="Logo"  className="h-15 w-14" />
       </Link>
 
-      <div style={{alignItems:'center', flexDirection:'row', justifyContent:'space-between', padding:'0px 1rem'}} className="flex">
+      <div style={{alignItems:'center', flexDirection:'row', justifyContent:'space-between', padding:'0px 1rem'}} className="flex gap-2">
               {/* Search Bar */}
       <div style={{height:'40px', display:'flex', backgroundColor:'white', padding:'0px 10px', borderRadius:'10px'}} >
         <input
@@ -60,7 +60,7 @@ const toggleMenu=()=>{
           )}
         </div>
       ) : (
-        <div style={{width:'70px', height:'45px'}} className="flex p-1 h-10 cursor-pointer items-center font-semibold 
+        <div style={{width:'70px', height:'40px'}} className="flex p-1 h-10 cursor-pointer items-center font-semibold 
         justify-center uppercase text-white border-2 border-green-300 bg-green-600 transition duration-100 rounded-lg text-[14px]
         ease-in-out hover:bg-green-900 hover:border-1 hover:scale-105 hover:rounded-sm">
           <Link href="/login" className="p-2 cursor-pointer" legacyBehavior>
