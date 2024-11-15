@@ -48,8 +48,8 @@ const EmailForm = () => {
     setMessage('');
     setLoading(true);
     try {
-      setUserEmail(email);
       const findUser = await axios.get('/api/findUser', { params: { email } });
+      setUserEmail(findUser.data.email);
 
       const outgoing = "noreply <password-reset@acrossnig.com>";
       const recepient = findUser.data.email;
@@ -69,7 +69,7 @@ const EmailForm = () => {
 
       try {
         const isEmailSent = await axios.post('/api/mail/mail', { outgoing, recepient, subject, content, heading } );
-        setMessage('A link to reset your password was been sent to ', userEmail);
+        setMessage('A link to reset your password was sent to ', userEmail);
         setAllowSubmit(false);
         setTimerDisplay('visible');
       } catch (err) {
