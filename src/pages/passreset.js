@@ -102,9 +102,9 @@ const EmailForm = () => {
             required
             className='mb-4 ml-1 border p-2 text-lg font-thin font-sans border-gray-500 rounded'
           />
-       <div>
+       <div style={{display:'flex', flexDirection:'column', alignItems:'center', width:'100%', paddingLeft:'20px', paddingRight:'20px'}}>
           <p style={{fontSize:'19px', textAlign:'center', lineHeight:'25px'}}>{message}</p>
-          <p style={{ color:'grey', fontSize:'17px', display:(timerDisplay)}}>You can submit a new request in {timer}s</p>
+          <p style={{textAlign:'center', color:'grey', fontSize:'17px', display:(timerDisplay)}}>You can submit a new request in {timer}s</p>
        </div>
   
         <button style={{backgroundColor:(allowSubmit?'#166534':'grey'), marginTop:'10px', fontSize:'19px', width:'150px'}}  className='block hover:opacity-80 text-white cursor-pointer rounded p-2' type="submit">
