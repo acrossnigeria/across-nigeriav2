@@ -86,7 +86,7 @@ const EmailForm = () => {
 
   return (
     <Layout title="Password Reset" >
-    <div style={{width:'fit-content', placeSelf:'center'}} >
+    <div style={{width:'100%', placeSelf:'center'}} >
       <form 
       style={{alignItems: 'center'}}
       className='flex flex-col' 
