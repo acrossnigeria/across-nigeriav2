@@ -8,22 +8,27 @@ import { getError } from "../../utils/error";
 import { toast } from "react-toastify";
 
 export default function LoginScreen() {
-    const[loading,setLoading]=useState(false);
- const { data: session } = useSession();
+  const[loading,setLoading]=useState(false);
+  const { data: session } = useSession();
 
   const router = useRouter();
   const { redirect } = router.query;
   const sessionName=session?.user?? null
+  const [showPassword, setShowPassword] = useState(false);
 
-  useEffect(() => {
+  const togglePasswordVisibility1 = () => {
+    setShowPassword(!showPassword);
+  };
+
+  useEffect( () => {
     if (sessionName===null) {
-        console.log(sessionName)
-          }
-          else{
-            console.log(sessionName)
-            router.push(redirect || '/');
-          }
-  }, [router, sessionName, redirect]);
+        console.log(sessionName);
+    }
+    else{
+      console.log(sessionName)
+      router.push(redirect || '/');
+    }
+  }, [router, sessionName, redirect] );
 
   const {
     handleSubmit,
@@ -31,24 +36,26 @@ export default function LoginScreen() {
     formState: { errors },
   } = useForm();
   const submitHandler = async ({ email, password }) => {
-   setLoading(true)
-    try {
-      const result = await signIn('credentials', {
-        redirect: false,
-        email,
-        password,
-      });
-      if (result.error) {
-        toast.error(result.error);
-      }
-    } catch (err) {
-      toast.error(getError(err));
+  setLoading(true)
+  try {
+
+    const result = await signIn('credentials', {
+      redirect: false,
+      email,
+      password,
+    });
+
+    if (result.error) {
+      toast.error(result.error);
     }
-    setLoading(false)
-    if (session) {
-      console.log(session)
-      router.push(redirect || '/'); // Replace "/" with your desired page
-    }
+  } catch (err) {
+    toast.error(getError(err));
+  }
+  setLoading(false)
+  if (session) {
+    console.log(session)
+    router.push(redirect || '/'); // Replace "/" with your desired page
+  }
   };
   return (
     <Layout title="Login">
@@ -78,14 +85,23 @@ export default function LoginScreen() {
         <div className="mb-6">
           <label htmlFor="password" className="font-semibold text-sm ">  Password</label>
           <input
-            type="password"
+            type={showPassword?'text':'password'}
             {...register('password', {
               required: 'Please enter password',
               minLength: { value: 6, message: 'password is more than 5 chars' },
             })}
+            style={{marginBottom:'15px'}}
             className="w-full h-10 focus:outline-gray-600 px-2 rounded-md bg-gray-200 text-black"
             id="password"
           ></input>
+           <button
+              type="button"
+              style={{borderRadius:'5px', height:'16.5px', width:'16.5px', border:'1px solid'}}
+              className={`right-0 w-fit ${showPassword?"bg-blue-800 opacity-90 px-1":"bg-white px-[2px]"}py-2 ` }
+              onClick={togglePasswordVisibility1}
+            >
+            </button>
+            <span style={{marginLeft: '10px'}}>Show password</span>
           {errors.password && (
             <div className="text-red-500 ">{errors.password.message}</div>
           )}

@@ -93,40 +93,8 @@ const Register = () => {
     formatEnteredDate();
   }, [day,month, year,formattedDate])
 
-  // useEffect(()=>{
-  //   if(!userDetails[0]?.name){
-  //     setFormData({...formData,  name: "",
-  //     surname:"",
-  //   dob:"",
-  //   email: "",
-  //   password: "",
-  //   phone:"",
-  //   residence:"",
-  //   confirmPassword: "",
-  //   acceptTerms: false, });}
-  //   else{
-      
-  //   setFormData({...formData,  name: userDetails[0].name,
-  //   surname:userDetails[0].surname,
-  //   dob:userDetails[0].dob,
-  //   email: userDetails[0].email,
-  //   password: userDetails[0].password,
-  //   phone:userDetails[0].phone,
-  //   gender:userDetails[0].gender,
-  //   residence:userDetails[0].residence,
-  //   confirmPassword: userDetails[0].password,
-  //    acceptTerms: userDetails[0].acceptTerms, });
-  //    }
-
-  // }, [])
-
  const [showPassword, setShowPassword] = useState(false);
  const [showPassword2, setShowPassword2] = useState(false);
-
-  // const handleChange = (e) => {
-  //   setFormData({ ...formData, [e.target.name]: e.target.value });
-
-  // };
 
   const {user}= state;
   const  handleTermsCheckboxChange=(isChecked)=>{setAcceptTerms(true)};
