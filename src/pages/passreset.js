@@ -6,7 +6,7 @@ import { center } from '@cloudinary/url-gen/qualifiers/textAlignment';
 
 const EmailForm = () => {
   const [email, setEmail] = useState('');
-  const [ allowSubmit, setAllowSubmit ] = useState(false);
+  const [ allowSubmit, setAllowSubmit ] = useState(true);
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState('');
   const [ timer, setTimer ] = useState(60);
