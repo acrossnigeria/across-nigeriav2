@@ -25,13 +25,13 @@ const toggleMenu=()=>{
         <Image src={logo} alt="Logo"  className="h-15 w-14" />
       </Link>
 
-      <div style={{alignItems:'center', flexDirection:'row', justifyContent:'space-between', padding:'0px 1rem'}} className="flex gap-2">
+      <div style={{alignItems:'center', flexDirection:'row', justifyContent:'space-between', padding:'0px 1rem'}} className="flex">
               {/* Search Bar */}
-      <div style={{height:'45px', display:'flex', backgroundColor:'white', padding:'0px 17px', borderRadius:'17px'}} >
+      <div style={{height:'40px', display:'flex', backgroundColor:'white', padding:'0px 10px', borderRadius:'10px'}} >
         <input
           type="text"
           placeholder="Search..."
-          style={{fontSize:'18px'}}
+          style={{fontSize:'16px'}}
           className=" focus:outline-none"
         />
         <Search/>
