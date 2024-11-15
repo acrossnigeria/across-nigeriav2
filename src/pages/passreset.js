@@ -6,24 +6,27 @@ import { center } from '@cloudinary/url-gen/qualifiers/textAlignment';
 
 const EmailForm = () => {
   const [email, setEmail] = useState('');
-  const [ allowSubmit, setAllowSubmit ] = useState(true);
+  const [ allowSubmit, setAllowSubmit ] = useState(false);
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState('');
-  const [ timer, setTimer ] = useState(60);
-  const [ timerDisplay, setTimerDisplay ] = useState('none')
+  const [ timer, setTimer ] = useState(10);
+  const [ timerDisplay, setTimerDisplay ] = useState('visible')
 
-  function startTimer() {
-    setTimerDisplay('block');
-    const count = setTimeout(() => {
-      if (allowSubmit) { clearTimeout(count)}
-      const time = timer - 1
-      if ( timer === 0 ) { 
-        setAllowSubmit(true);
-        clearTimeout(count);
+  function allow () {
+    setTimer(10);
+    setAllowSubmit(true);
+    setTimerDisplay('hidden')
+  }
+  const count = setTimeout(() => {
+      if (!allowSubmit) {
+        const time = timer - 1 
+        setTimer(time);
       }
-      setTimer(time);
-    }, 1000);
-    setTimer(60);
+  }, 1000);
+
+  if (timer === 0) { 
+    clearTimeout(count);
+    allow();
   }
 
 
@@ -40,9 +43,9 @@ const EmailForm = () => {
   }
 
   const handleSubmit = async (event) => {
+    event.preventDefault();
     setMessage('');
     setLoading(true);
-    event.preventDefault();
     try {
 
       const findUser = await axios.get('/api/findUser', { params: { email } });
@@ -65,8 +68,9 @@ const EmailForm = () => {
 
       try {
         const isEmailSent = await axios.post('/api/mail/mail', { outgoing, recepient, subject, content, heading } );
-        startTimer();
-        setMessage('A link to reset your password has been sent to ', email);
+        setMessage('A link to reset your password was been sent to ', recepient);
+        setAllowSubmit(false);
+        setTimerDisplay('visible');
       } catch (err) {
         console.log('error:', err.message );
         setLoading(false);
@@ -104,7 +108,7 @@ const EmailForm = () => {
           />
        <div style={{display:'flex', flexDirection:'column', alignItems:'center', width:'100%', paddingLeft:'20px', paddingRight:'20px'}}>
           <p style={{fontSize:'19px', textAlign:'center', lineHeight:'25px'}}>{message}</p>
-          <p style={{textAlign:'center', color:'grey', fontSize:'17px', display:(timerDisplay)}}>You can submit a new request in {timer}s</p>
+          <p style={{textAlign:'center', color:'grey', fontSize:'17px', visibility:(timerDisplay)}}>You can submit a new request in {timer}s</p>
        </div>
   
         <button style={{backgroundColor:(allowSubmit?'#166534':'grey'), marginTop:'10px', fontSize:'19px', width:'150px'}}  className='block hover:opacity-80 text-white cursor-pointer rounded p-2' type="submit">
