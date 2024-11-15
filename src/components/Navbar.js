@@ -73,7 +73,7 @@ const toggleMenu=()=>{
       {/* Menus */}
       <div className="mt-4 flex justify-center">
         {/* First Line Menus */}
-        <div style={{fontSize:'17.5px'}} className="space-x-4 font-semibold">
+        <div style={{fontSize:'14px'}} className="space-x-4 font-semibold">
           <Link href="/" className="text-white  hover:text-green-500">
             Home
           </Link>
