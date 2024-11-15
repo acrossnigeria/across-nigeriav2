@@ -10,7 +10,7 @@ const EmailForm = () => {
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState('');
   const [ timer, setTimer ] = useState(60);
-  const [ timerDisplay, setTimerDisplay ] = useState('visible');
+  const [ timerDisplay, setTimerDisplay ] = useState('hidden');
   const [ userEmail, setUserEmail ] = useState('');
 
   function allow () {
