@@ -18,7 +18,7 @@ const images = [
 const bearSlideItemData = images.map((row) => {
   return {
     key: row.id,
-    children: <BearSlideImage style={{ borderRadius:'15px', filter:'brightness(70%)'}} imageUrl={row.image} />
+    children: <BearSlideImage style={{ borderRadius:'10px', filter:'brightness(70%)'}} imageUrl={row.image} />
   };
 });
 
@@ -34,13 +34,12 @@ const CustomBanner = () => {
   },[isMobile])
 
   return (
-    <div style={{padding:'0px 20px', marginTop:'20px', display:'flex', flexDirection:'column'}}>
+    <div style={{padding:'0px 20px', marginTop:'10px', display:'flex', flexDirection:'column'}}>
       <BearCarousel
         className=""
         data={bearSlideItemData}
         isEnableLoop
-        autoPlayTime={3000}
-        
+        autoPlayTime={3500}
         isEnableAutoPlay
         isEnablePagination
         height={ isMobile?{ widthRatio: 12, heightRatio: 13 }:{widthRatio:15, heightRatio:5}}

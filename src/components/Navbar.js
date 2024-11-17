@@ -4,7 +4,6 @@ import logo from "../../public/images/logo1.png";
 import Link from 'next/link';
 import { signOut, useSession } from 'next-auth/react';
 import { useRouter } from 'next/router';
-import Home from '../../public/images/icon/Home.js';
 import Search from '../../public/images/icon/Search';
 
 const Navbar = () => {
@@ -27,41 +26,40 @@ const toggleMenu=()=>{
 
       <div style={{alignItems:'center', flexDirection:'row', justifyContent:'space-between', padding:'0px 1rem'}} className="flex gap-2">
               {/* Search Bar */}
-      <div style={{height:'40px', display:'flex', backgroundColor:'white', padding:'0px 10px', borderRadius:'10px'}} >
+      <div style={{height:'40px', display:'flex', justifyContent:'space-between', backgroundColor:'white', padding:'0px 5px', borderRadius:'10px'}} >
         <input
           type="text"
           placeholder="Search..."
-          style={{fontSize:'16px'}}
+          style={{fontSize:'16px', borderRadius:'10px'}}
           className=" focus:outline-none"
         />
         <Search/>
       </div>
       {/* Dropdown Button */}
       {status === 'loading' ? (
-        <div className="flex w-[fit-content] p-1 h-9 cursor-pointer items-center font-semibold 
-        justify-center uppercase text-white border-2 border-green-600 bg-green-600 transition duration-100 rounded-lg text-[10px]
-        ease-in-out hover:bg-white hover:text-yellow-600 hover:border-2 hover:border-yellow-600 hover:scale-105 hover:rounded-sm">
+        <div className="flex w-[fit-content] p-1 h-9 items-center font-semibold 
+        justify-center uppercase text-white border-2 border-green-600 bg-green-600 transition duration-100 rounded-lg text-[14px]
+        ease-in-out  ">
           Loading
         </div>
         ) : session?.user ? (
         <div className="relative">
-          <div className="flex left-0 py-3 cursor-pointer font-semibold 
-          uppercase text-white border-2 border-green-300 bg-green-600 transition duration-100 rounded-lg text-[10px]"
+          <div className="flex left-0 py-3 px-4 cursor-pointer font-semibold  text-white border-2 border-green-300 bg-green-600 transition duration-100 rounded-lg text-[14px]"
           onClick={toggleMenu}>
             {session.user.name}
           </div>
           {open && (
-            <div className="absolute right-0 top-12 flex-1 mr-3 w-16 origin-top-right bg-green-600 text-[8px] lg:text-sm divide-y divide-gray-100 rounded-md shadow-lg ring-1
+            <div className="absolute right-0 top-14 flex-1 mr-3 w-18 origin-top-right bg-green-600 text-[16px] divide-y divide-gray-100 rounded-md shadow-lg ring-1
             ring-black ring-opacity-5 focus:outline-none" role="menu" aria-orientation="vertical" aria-labelledby="options-menu">
               <div className="py-1 flex" role="none">
-                <a onClick={logoutClickHandler} className="text-gray-700 block px-3" role="menuitem">LogOut</a>
+                <a onClick={logoutClickHandler} className="text-gray-700 font-medium block px-3" role="menuitem">LogOut</a>
               </div>
             </div>
           )}
         </div>
       ) : (
         <div style={{width:'70px', height:'40px'}} className="flex p-1 h-10 cursor-pointer items-center font-semibold 
-        justify-center uppercase text-white border-2 border-green-300 bg-green-600 transition duration-100 rounded-lg text-[14px]
+        justify-center text-white border-2 border-green-300 bg-green-600 transition duration-100 rounded-lg text-[14px]
         ease-in-out hover:bg-green-900 hover:border-1 hover:scale-105 hover:rounded-sm">
           <Link href="/login" className="p-2 cursor-pointer" legacyBehavior>
             <a>Login</a>

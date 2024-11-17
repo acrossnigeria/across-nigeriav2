@@ -36,7 +36,7 @@ const Info = ()=>{
         className="w-full font-bold tracking-wider hover:opacity-70" href="/reg">
           {"Register to get Involved".toUpperCase()}
           </Link>
-   <div style={{gap:'10px'}} className="text-8xl mt-6 mb-6 mx-auto rounded-md justify-between bg-gray-100 flex">
+   <div style={{gap:'10px'}} className="text-8xl mt-6 mb-6 mx-auto rounded-md justify-between flex">
       <Link href=''>
         <Image  quality={100}  className="cursor-pointer" src={facebook} height={20} width={30} alt="facebook"/>
       </Link>
