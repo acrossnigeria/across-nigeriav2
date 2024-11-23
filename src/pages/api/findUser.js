@@ -9,7 +9,7 @@ const handler = async(req,res)=>{
 
       // checks type of request, if true 
       //if method === get sends back user name and email
-      if (req.method==='GET'){
+      if (req.method==='GET') {
       const { email } = req.query;
       console.log("GETTING",req.query)
       await db.connect();

@@ -15,13 +15,13 @@ const Profile = () => {
   const [ refLink, setRefLink ] = useState('...loading');
   const [ isCopied, setIsCopied ] = useState('hidden');
 
-  async function getUserData() {
+  const getUserData = async () => {
     try {
-      const response = await axios.get('/api/findUser', {params:{ email }});
+      const response = await axios.get('/api/findUser', { params:{ email } });
       const profile = response.data;
       setRefs(profile.refs);
       setRefCode(profile.refCode);
-      setRefLink(`https:acrossnig.com/account/reg?ref=${profile.refCode}`);
+      setRefLink(`https://acrossnig.com/account/reg?ref=${profile.refCode}`);
     } catch( err ) {
       alert('an error occurred, please check your internet connection');
     }

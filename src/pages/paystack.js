@@ -17,7 +17,7 @@ export default function PayScreen (){
 
   useEffect(() => {
     if (!userDetails[0]?.name) {
-      router.push('/reg'); 
+      router.push('/account/reg'); 
       }
       
   }, [router, userDetails]);
@@ -38,7 +38,7 @@ export default function PayScreen (){
     if ( name===null || surname===null || phone===null || residence===null || dob===null || password===null || gender===null ) {
     router.push(
       {
-          pathname: '/reg',
+          pathname: '/account/reg',
           query:"Fill in all required parameters"
         }
     )
