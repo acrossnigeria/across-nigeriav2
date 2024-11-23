@@ -57,7 +57,7 @@ export default function PayScreen (){
         return result;
       }
 
-      const referee=localStorage.getItem('refId');
+      const referee = localStorage.getItem('refId');
       const randomCode = generateRandomCode();
       const refCode= name.trim()+randomCode;
 
@@ -66,10 +66,12 @@ export default function PayScreen (){
       // Outputs something like: '4J8QKLP'
 
       const refInfo = ref.transaction
-      const regData=await axios.post('/api/auth/signup', {
+
+      const regData = await axios.post('/api/auth/signup', {
         name,surname, email, phone, residence, dob,
         gender, password, refInfo, refCode,referee
       });
+
       console.log(localStorage.getItem('refCode'))
       const result = await signIn('credentials', {
           redirect: false,
@@ -89,7 +91,9 @@ export default function PayScreen (){
   };
     return (
     <Layout>
-       {loading&&<div className="absolute z-50 bg-white text-black text-center h-screen w-screen font-sans font-bold text-5xl bg-opacity-90">Submiting your Details, please wait</div>}
+       { loading && <div className="absolute z-50 bg-white text-black text-center h-screen w-screen font-sans font-bold text-[30px] bg-opacity-90">
+        Submiting your Details, please wait
+        </div>}
        <PaystackBtn pay={paymentUpdate} paystackKey={paystackLiveKey} amount={1000} email={userDetails[0]?.email?? null} purpose="Registration to use Our Products"/>
 
       </Layout>

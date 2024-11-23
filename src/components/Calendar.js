@@ -54,9 +54,7 @@ const isSameDay = (date1, date2) => {
     const date = new Date(today.getFullYear(), today.getMonth(), i);
     const isToday = isSameDay(date, new Date()); // Check if it's today's date
     calendarCells.push(
-      <div
-        key={`day-${i}`}
-        className={`w-12 h-12 flex items-center justify-center border border-gray-700 cursor-pointer ${
+      <div style={{borderRadius:'10px'}} key={`day-${i}`} className={`w-12 h-12 flex items-center justify-center border border-gray-700 cursor-pointer ${
           isToday||!isDateAvailable(date) ? 'bg-gray-300 cursor-not-allowed' : 'bg-green-500 hover:bg-slate-100'
         }`}
         onClick={() => handleSelectDate(date)}

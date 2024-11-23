@@ -1,7 +1,9 @@
 import Layout from '@/components/Layout'
+import ProductLanding from '@/components/ProductLanding';
 import Quiz from '@/components/Quiz';
 import WelcomeScreen2 from '@/components/WelcomScreen2';
-import React from 'react'
+import React, { useState } from 'react'
+
 const section="GIVE AWAY QUIZZES"
 const TandC = (
   <div>
@@ -73,7 +75,7 @@ const TandC = (
       </li>
       <li>
         <h3 className={`font-bold text-lg underline`}>PRIVACY POLICY:</h3>
-        <p>Participant informat ion will be handled in accordance with the {`website's`} privacy policy.</p>
+        <p>Participant information will be handled in accordance with the {`website's`} privacy policy.</p>
       </li>
       <li>
         <h3 className={`font-bold text-lg underline`}>ACCEPTANCE OF TERMS & CONDITIONS:</h3>
@@ -83,16 +85,19 @@ const TandC = (
     </ol>
   </div>
 );
+
 function giveaway() {
+  const [ isPlay, setIsPlay ] = useState('hidden')
 
   return (
     <Layout>
-      <WelcomeScreen2 toc={TandC} section={section} title="Giveaway Quizes"/>
-      <Quiz />
+      {/* <WelcomeScreen2 toc={TandC} section={section} title="Giveaway Quizes"/> */}
+      <Quiz state={isPlay} />
+      <ProductLanding startGame={setIsPlay} isPlay={isPlay}/>
     </Layout>
   )
 }
 
 
-giveaway.auth=true;
-  export default giveaway
+giveaway.auth = true;
+export default giveaway;

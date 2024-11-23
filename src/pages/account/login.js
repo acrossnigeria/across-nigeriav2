@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import { getError } from "../../utils/error";
+import { getError } from "../../../utils/error";
 import { toast } from "react-toastify";
 
 export default function LoginScreen() {
@@ -108,11 +108,11 @@ export default function LoginScreen() {
         </div>
         <div className="mb-6 p-0">
          {loading?(<button disabled className="text-slate-100 text-3xl px-8 py-1 rounded-sm bg-green-500">Please Wait</button>):(<button className="text-slate-100 px-8 py-1 rounded-sm bg-green-800 hover:bg-green-900 active:bg-green-950">Login</button>)} 
-         <span className="text-sm mx-8 mb-0 mt-8"><Link href="/passreset" className="mt-3">Forgot Password?</Link></span>
+         <span className="text-sm mx-8 mb-0 mt-8"><Link href="/user/passreset" className="mt-3">Forgot Password?</Link></span>
          </div> 
         <div className="mb-4 mt-6 text-sm font-semibold ">
           Don&apos;t have an account? &nbsp;
-          <Link className="text-green-700 cursor-pointer hover:text-green-500"  href={`/reg?redirect=${redirect || '/'}`}>Register</Link>
+          <Link className="text-green-700 cursor-pointer hover:text-green-500"  href={`/account/reg?redirect=${redirect || '/'}`}>Register</Link>
         </div>
       </form></div>
     </Layout>

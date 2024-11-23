@@ -179,7 +179,7 @@ const [selectedFile, setSelectedFile]=useState(false);
       <h2 className="text-2xl font-semibold mb-4">Booking Form</h2>
       <form onSubmit={confirm}>
         <div className="mb-4">
-          <label className="block text-gray-700 font-semibold mb-2" htmlFor="displayName">Display Name</label>
+          <label className="block text-gray-700 font-semibold mb-2" htmlFor="displayName">Title</label>
           <input
             type="text"
             id="displayName"
@@ -190,7 +190,7 @@ const [selectedFile, setSelectedFile]=useState(false);
           />
         </div>
         <div className="mb-4">
-          <label className="block text-gray-700 font-semibold mb-2" htmlFor="displayName">Display Name</label>
+          <label className="block text-gray-700 font-semibold mb-2" htmlFor="displayName">Caption</label>
           <textarea
             type="text"
             id="shoutOut"
@@ -213,7 +213,7 @@ const [selectedFile, setSelectedFile]=useState(false);
                   onChange={(e)=>{e.target.files[0]&&setSelectedFile(true);uploadHandler(e);}}
                 /> {selectedFile&&<span className='bg-red-500 cursor-pointer text-white opacity-95 rounded-lg p-2 mt-2 hover:bg-red-700' onClick={handleRemoveFile}>Remove file</span>}
 
-                {loadingUpload && <div className=" bg-orange-400">Please wait while we upload your File....
+                {loadingUpload && <div style={{borderRadius:'10px'}} className="mt-2 p-2 bg-orange-300">Please wait while we upload your File....
                 <p>`Don&apos;t Navigate from this Page </p></div>}
               </div>
                <div className="mb-4">
@@ -244,9 +244,8 @@ const [selectedFile, setSelectedFile]=useState(false);
         
         )}
         <Checkbox handleTermsCheckboxChange={()=>{setAgree(!agree)}}/>
-        {agree && (selectedCategory==="premium"||selectedCategory==="general") &&selectedFile&&(<button
-          type="submit" onClick={confirm}
-          className="bg-green-500 text-white font-semibold px-4 py-2 rounded hover:bg-green-700 focus:outline-none focus:bg-green-700"
+        {agree && (selectedCategory==="premium"||selectedCategory==="general") &&selectedFile&&(<button type="submit" onClick={confirm}
+          className="bg-green-500 text-white font-semibold px-[30px] py-2 rounded my-3 hover:bg-green-700 focus:outline-none focus:bg-green-700"
         >
           Submit
         </button>)}

@@ -17,7 +17,7 @@ const logoutClickHandler = () => {
 const toggleMenu=()=>{
   setOpen(!open);}
   return (
-    <nav style={{borderBottomLeftRadius:'10px', borderBottomRightRadius:'10px'}} className="bg-gradient-to-br from-green-400 to-green-800 bg-gradient-to-b from-green-500 to-green-950 overflow-hidden  py-4 px-2" onClick={()=>{open&&setOpen(false)}}>
+    <nav id="top" style={{borderBottomLeftRadius:'10px', borderBottomRightRadius:'10px'}} className="bg-gradient-to-br from-green-400 to-green-800 bg-gradient-to-b from-green-500 to-green-950 overflow-hidden  py-4 px-2" onClick={()=>{open&&setOpen(false)}}>
       {/* Logo */}
 
       <Link href="/" style={{marginBottom:'10px'}} onClick={()=>(router.push("/"))} className="flex items-center justify-center">
@@ -75,7 +75,7 @@ const toggleMenu=()=>{
           <Link href="/" className="text-white  hover:text-green-500">
             Home
           </Link>
-          <Link style={{display:(session?.user?'inline':'none')}} href="/profile" className="text-white hover:text-green-500">
+          <Link style={{display:(session?.user?'inline':'none')}} href="/user/profile" className="text-white hover:text-green-500">
             Profile
           </Link>
           <Link href="" className="text-white  hover:text-green-500">

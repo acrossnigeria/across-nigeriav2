@@ -2,7 +2,7 @@ import { useContext, useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import { toast } from 'react-toastify';
 import Cookies from 'js-cookie';
-import { Store } from '../../utils/Store';
+import { Store } from '../../../utils/Store';
 import Layout from '@/components/Layout';
 import { PhoneInput } from 'react-international-phone';
 import 'react-international-phone/style.css';
@@ -39,23 +39,14 @@ const Register = () => {
   const router = useRouter();
   const { ref } = router.query; // Get the referrer from the URL query
 
+  const [showPassword, setShowPassword] = useState(false);
+  const [showPassword2, setShowPassword2] = useState(false);
+  const [ toConfirmPage, setToConfirmPage ] = useState(false);
+
   if (ref!==undefined) {
-    localStorage.setItem( "refId",ref );
+    localStorage.setItem( "refId",ref );// save ref in local storage
   }
-
-  // const [formData, setFormData] = useState({
-  //   name: '',
-  //   surname:"",
-  //   dob:'',
-  //   email: '',
-  //   gender:'',
-  //   password: '',
-  //   phone:'',
-  //   residence:'',
-  //   confirmPassword: '',
-  //   acceptTerms: false, 
-  // });
-
+  // handles change in day
   const handleDayChange = (e) => {
     const value = e.target.value;
     // Allow only numbers and limit to 2 characters
@@ -64,7 +55,7 @@ const Register = () => {
       setDayError(false)
     }else{setDayError(true)}
   };
-
+  // handles change in year
   const handleYearChange = (e) => {
     const value = e.target.value;
     const currentDate = new Date();
@@ -91,49 +82,20 @@ const Register = () => {
       }
     };
     formatEnteredDate();
-  }, [day,month, year,formattedDate])
-
- const [showPassword, setShowPassword] = useState(false);
- const [showPassword2, setShowPassword2] = useState(false);
+  }, [day,month, year,formattedDate]);
 
   const {user}= state;
-  const  handleTermsCheckboxChange=(isChecked)=>{setAcceptTerms(true)};
-
-  // move user to the confirmation page
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    const dob = new Date(formData.dob);
-    const age= today.getFullYear()-dob.getFullYear();
-    
-    if( age<18 ){
-      return( alert("underage! cannot register below 18years old") );
-    } else{
-    try {
-      dispatch({type:'RESET'})
-      dispatch({type:'ADD_USER', payload: formData })
-      Cookies.set( 'user', JSON.stringify({...user,userDetails:formData,}) );
-      localStorage.setItem('referee',ref);
-      router.push('/confirm');
-      // Post data to confirmation page
-      await router.push({
-        pathname: '/confirm',
-      });
-
-      } catch (error) {
-        console.error('Error submitting form:', error);
-      }
-  }
-  };
+  const  handleTermsCheckboxChange = (isChecked) => {setAcceptTerms(true)};// sets and unsets tac checkbox
+  
+  // show and hide password inputs
   const togglePasswordVisibility1 = () => {
     setShowPassword(!showPassword);
   };
   const togglePasswordVisibility2 = () => {
     setShowPassword2(!showPassword2);
   };
-
-  const passwordFieldType = showPassword ? 'text' : 'password';
-  const [ toConfirmPage, setToConfirmPage ] = useState(false);
   
+
   // loads the confirm page
   const today=new Date();
   function toConfirm(e) {
@@ -385,7 +347,7 @@ const Register = () => {
                 </button>
               )}
             </div>
-          <div>Already have an Account? <Link className="text-green-700 font-semibold" href="#" onClick={()=>router.push("/login")}>Login</Link></div> 
+          <div>Already have an Account? <Link className="text-green-700 font-semibold" href="#" onClick={()=>router.push("/account/login")}>Login</Link></div> 
           </form>
         </div>
         </Layout>

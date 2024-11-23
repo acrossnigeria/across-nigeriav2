@@ -24,7 +24,7 @@ import Link from "next/link";
 export const games=[
   {title:"GIVE AWAY QUIZZES", image:image1,link:"/giveaway", date:'March, 2024'},
   {title:"SKITS ACROSS NIGERIA",image:image2,link:"/skitsPage", date:'March, 2024'},
-  {title:"NAIJA VIBES", image:image8,link:"/naijavibes", date:'March, 2024'},
+  {title:"NAIJA VIBES", image:image8,link:"/soon", date:'March, 2024'},
   {title:"KING AND QUEEN",image:image3,link:"/soon", date:'January 1st, 2025'},
   {title:"MYSTERY BOXES",image:image4,link:"/soon", date:'July 1st, 2024'},
   {title:"STATE TREASURE HUNT SHOW",image:image5,link:"/soon", date:'October, 2024'},

@@ -6,12 +6,12 @@ export const Store = createContext();
 const initialState={
   user:{userDetails:[null]},
 };
-function reducer(state, action){
+function reducer(state, action) {
   switch (action.type){
     case 'ADD_USER':{
-      const newUser=action.payload;
-     const userDetails=[...state.user.userDetails, newUser];
-     Cookies.set('user',JSON.stringify({...state.user, userDetails}))
+    const newUser=action.payload;
+    const userDetails = [...state.user.userDetails, newUser];
+    Cookies.set('user',JSON.stringify({...state.user, userDetails}))
      return {...state, user:{...state.user,userDetails}}
     };
     case 'RESET':{
@@ -24,7 +24,7 @@ function reducer(state, action){
 }
 
 export function StoreProvider({children}){
-  const [state, dispatch]=useReducer(reducer, initialState);
-  const value={state, dispatch};
+  const [ state, dispatch ] = useReducer(reducer, initialState);
+  const value = { state, dispatch };
   return <Store.Provider value={value}>{children}</Store.Provider>
 }

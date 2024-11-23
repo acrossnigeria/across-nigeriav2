@@ -14,6 +14,7 @@ import { ImFacebook2, ImInstagram } from "react-icons/im";
 import { BsTwitterX } from "react-icons/bs";
 import { FaLinkedin } from "react-icons/fa";
 import { RiTiktokLine } from "react-icons/ri";
+
 export const sliderData = [
   {
     title: "An Adventure of a lifetime",

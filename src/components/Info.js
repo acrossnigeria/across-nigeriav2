@@ -33,8 +33,8 @@ const Info = ()=>{
             <p className="font-semibold text-left mt-4 text-xl mb-4 text-gray-700">{data.paragraph}</p>
        
           <Link style={{ display:( session?.user? 'none': 'block'), backgroundColor: 'rgb(23, 123, 43)', width:'fit-content', padding:'8px 15px', color: "white", fontSize:'18px', borderRadius:'17px'}}
-        className="w-full font-bold tracking-wider hover:opacity-70" href="/reg">
-          {"Register to get Involved".toUpperCase()}
+        className="w-full font-bold tracking-wider hover:opacity-70" href="/account/reg">
+          {"Register to get Involved"}
           </Link>
    <div style={{gap:'10px'}} className="text-8xl mt-6 mb-6 mx-auto rounded-md justify-between flex">
       <Link href=''>
