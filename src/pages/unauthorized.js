@@ -20,7 +20,7 @@ export default function Unauthorized() {
     <Layout title="Unauthorized Login">
       <div style={{alignItems:'center'}} className='mx-auto flex flex-col h-screen text-center object-center'>
         <div style={{borderRadius:'25px'}} className='bg-gray-100 w-[fit-content] mt-[70px] p-[10px]'>
-          <h1 className="text-[25px] font-bold text-gray-500 text-center">Oops! You can't access this page</h1>
+          <h1 className="text-[25px] font-bold text-gray-500 text-center">Oops! You can&apos;t access this page</h1>
           {message && <div className="mb-4 text-[20px] text-red-600 text-center">{message}</div>}
           {redirectMessage ? <p>{redirectMessage}</p>:
           <><p>If you are not redirected,</p>  

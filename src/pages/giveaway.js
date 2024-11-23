@@ -1,8 +1,6 @@
 import Layout from '@/components/Layout'
-import ProductLanding from '@/components/ProductLanding';
-import Quiz from '@/components/Quiz';
-import WelcomeScreen2 from '@/components/WelcomScreen2';
-import React, { useState } from 'react'
+import GiveawayQuiz from '@/components/GiveawayQuiz';
+import React from 'react'
 
 const section="GIVE AWAY QUIZZES"
 const TandC = (
@@ -87,17 +85,13 @@ const TandC = (
 );
 
 function giveaway() {
-  const [ isPlay, setIsPlay ] = useState('hidden')
-
   return (
     <Layout>
-      {/* <WelcomeScreen2 toc={TandC} section={section} title="Giveaway Quizes"/> */}
-      <Quiz state={isPlay} />
-      <ProductLanding startGame={setIsPlay} isPlay={isPlay}/>
+      <GiveawayQuiz/>
     </Layout>
   )
 }
 
 
-giveaway.auth = true;
+// giveaway.auth = true;
 export default giveaway;
