@@ -11,7 +11,7 @@ const Navbar = () => {
   const router=useRouter();
 const logoutClickHandler = () => {
         signOut();
-        router.push("/login")
+        router.push("/account/login")
       };
       const[open,setOpen]=useState(false)
 const toggleMenu=()=>{

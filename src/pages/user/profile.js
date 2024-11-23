@@ -10,5 +10,5 @@ const profile = () => {
   )
 }
 
-// profile.auth = true;
+profile.auth = true;
 export default profile;

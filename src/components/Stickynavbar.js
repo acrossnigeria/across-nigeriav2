@@ -27,7 +27,7 @@ const toggleMenu=()=>{
 
   const logoutClickHandler = () => {
   
-  signOut({ callbackUrl: `/login` });
+  signOut({ callbackUrl: `/account/login` });
   
   };
 

@@ -8,7 +8,7 @@ const Profile = () => {
   const { status, data: session } = useSession();
 
   const [ isMobile, setIsMobile ] = useState(false);
-  const [ email, emailEmail ] = useState('');
+  const [ email, setEmail ] = useState('');
   const [ phone, setPhone ] = useState('+0000 000 0000');
   const [ refs, setRefs ] = useState(0);
   const [ refCode, setRefCode ] = useState('...loading');
