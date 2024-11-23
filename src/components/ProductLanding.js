@@ -31,7 +31,7 @@ export default function ProductLanding( { startGame, isPlay }) {
                 <span style={{lineHeight:'30px'}} className={`w-[100%] text-green-600 ${isMobile?'text-[25px]':'text-[30px]'} text-center font-extrabold tracking-wider`}>Welcome to the Ultimate Giveaway Quiz 🎉</span> 
             </div>
             <div style={{borderRadius:'15px'}} className={` mt-4 text-gray-500 text-[20px] ${isMobile?'w-[90%] ml-[5%] text-center':'w-[60%] ml-[20%]'} p-[15px]`}>
-                <span>Think you've got what it takes to win big? Here's your chance to play, have fun, and walk away with incredible prizes, Let's break it down for you</span>
+                <span>Think you&apos;ve got what it takes to win big? Here&apos;s your chance to play, have fun, and walk away with incredible prizes, Let&apos;s break it down for you</span>
             </div>
             <div className="text-center mt-5" >
                 <span style={{lineHeight:'25px'}} className="w-[50%] text-[25px] text-center text-purple-800 font-bold tracking-wider">How to Join the Fun</span> 
@@ -40,7 +40,7 @@ export default function ProductLanding( { startGame, isPlay }) {
                 <div className="flex flex-row justify-evenly mt-[20px]">
                     <span style={{borderRadius:'50%'}} className="text-[25px] h-[fit-content] bg-yellow-400 px-[15px] py-[5px] text-white text-center font-extrabold tracking-wider">1</span> 
                     <div style={{borderTopRightRadius:'15px', borderBottomRightRadius:'15px', borderBottomLeftRadius:'15px'}} className={`bg-gray-100 ${isMobile?'w-[70%] text-[17px]':'text-[20px]'} max-w-[600px] text-purple-800 p-[10px]`}>
-                        <span>Entry fee? just 100 Naira! That's right. For just 100 naira, you can dive into the excitement. Answer a single question in each quiz. you can play as much as you like. each play costs 100 naira</span>
+                        <span>Entry fee? just 100 Naira! That&apos;s right. For just 100 naira, you can dive into the excitement. Answer a single question in each quiz. you can play as much as you like. each play costs 100 naira</span>
                     </div>
                 </div>
                 <div className="flex flex-row justify-evenly mt-[20px]">
@@ -59,7 +59,7 @@ export default function ProductLanding( { startGame, isPlay }) {
                     <Link href={'/termsAndCondition'}>
                         <span style={{textDecoration:'underline'}} className="text-center text-blue-700 w-full"> See Terms and conditions</span>
                     </Link>
-                    <span>T & C's apply: By clicking play you agree to the Terms and Conditions</span>
+                    <span>T & C&apos;s apply: By clicking play you agree to the Terms and Conditions</span>
                     <button onClick={play} style={{alignSelf:'center', borderRadius:'20px'}} className="bg-purple-800 transition duration-100 w-[fit-content] px-[50px] hover:text-gray-200 hover:bg-purple-950 text-white font-bold py-[2px] text-[25px]"><a href="#top">Play</a></button>
                 </div>
             </div>
