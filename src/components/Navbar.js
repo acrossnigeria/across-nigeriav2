@@ -40,7 +40,7 @@ const toggleMenu=()=>{
           <Search/>
         </div> */}
         {/* Dropdown Button */}
-        {true ? (
+        {status === 'loading' ? (
           <div className=" w-[120px] h-[35px] items-center font-semibold rounded-full justify-center uppercase text-white  bg-green-500 text-[14px] animate-pulse  ">
           </div>
           ) : session?.user ? (
