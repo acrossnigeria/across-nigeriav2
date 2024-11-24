@@ -16,6 +16,7 @@ const Profile = () => {
   const [ isCopied, setIsCopied ] = useState('hidden');
 
   const getUserData = async () => {
+    setEmail(session?.user?.email);
     try {
       const response = await axios.get('/api/findUser', { params:{ email } });
       const profile = response.data;
