@@ -52,7 +52,7 @@ export default function ProductLanding( { startGame, isPlay }) {
                 <div className="flex flex-row justify-evenly mt-[20px]">
                     <span style={{borderRadius:'50%'}} className="text-[25px] h-[fit-content] bg-yellow-400 px-[15px] py-[5px] text-white text-center font-extrabold tracking-wider">3</span> 
                     <div style={{borderTopRightRadius:'15px', borderBottomRightRadius:'15px', borderBottomLeftRadius:'15px'}} className={`bg-gray-100 ${isMobile?'w-[70%] text-[17px]':'text-[20px]'} max-w-[600px] text-purple-800 p-[10px]`}>
-                        <span>Winners can claim up to one million naira in cash prizes! Yes, you heard that right. A chance to win big for just 100 naira. Remember More plays = Better Odds</span>
+                        <span>Winners can claim up to one million naira in cash prizes! Yes, you heard that right. A chance to win big for just 100&#8358;. Remember More plays = Better Odds</span>
                     </div>
                 </div>
                 <div className="mt-[30px] border-t-1 border-green-300 pt-[10px] flex flex-col text-center gap-2">
