@@ -13,7 +13,6 @@ import image8 from "../../public/images/naija_vibes.jpg";
 import image9 from "../../public/images/shopping_hustle.jpg";
 import image10 from "../../public/images/i_don_hamma.jpg";
 import PersonCard from "@/components/ModelCard";
-import flameimg from "../../public/images/flame2.png"
 import Image from "next/image";
 import ReviewSlider from "@/components/ReviewSlider";
 import Testimonials from "@/components/Testimonials";
@@ -41,14 +40,12 @@ export default function Home() {
         <ReviewSlider/>
         <div className="md:px-36 px-5">
            <Info/>
-            <p className="grid w-full  mx-auto text-center text-2xl text-green-800 ">
-              <span id="products" className="flex text-center text-3xl font-sans font-extrabold mx-auto p-4">
-                 <Image quality={10} src={flameimg} height={5} width={20} alt="hot"/> 
-                  {"Our Amazing Products".toUpperCase()}
-                 <Image quality={10} src={flameimg} height={5} width={20} alt="hot"/>
+            <p className="grid w-full border-b-1  mx-auto text-center bg-clip-text text-transparent bg-gradient-to-tr from-yellow-200 to-orange-600 ">
+              <span style={{lineHeight:'30px'}} id="products" className="flex text-center text-[28px] font-sans font-extrabold mx-auto p-2"> 
+                  {"OUR AMAZING PRODUCTS"}
               </span>
             </p>
-        <div className="mt-6 grid left-0 grid-cols-1 gap-4 border-b-1 md:grid-cols-2 lg:grid-cols-2 md:gap-6 mx-auto items-center md:max-w-screen-xl px-4 sm:px-3 lg:px-20">
+        <div className="mt-3 grid left-0 grid-cols-1 gap-4 border-b-1 md:grid-cols-2 lg:grid-cols-2 md:gap-6 mx-auto items-center md:max-w-screen-xl px-4 sm:px-3 lg:px-20">
             { games.map((card)=>(<Cards key={card.title} date={card.date} title={card.title} 
             link={card.link} image={card.image}/>))}
         </div>

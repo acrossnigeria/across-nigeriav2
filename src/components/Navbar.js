@@ -5,6 +5,9 @@ import Link from 'next/link';
 import { signOut, useSession } from 'next-auth/react';
 import { useRouter } from 'next/router';
 import Search from '../../public/images/icon/Search';
+import Money from '../../public/images/icon/Money';
+import Video from '../../public/images/icon/Video';
+import ShoutMic from '../../public/images/icon/ShoutMic';
 
 const Navbar = () => {
   const { status, data: session } = useSession();
@@ -70,7 +73,7 @@ const toggleMenu=()=>{
             </div>
             <div style={{width:'70px', height:'40px'}} className="flex p-1 h-10 cursor-pointer items-center font-semibold 
             justify-center text-green-700 bg-white transition duration-100 rounded-lg text-[14px]
-            ease-in-out hover:bg-green-900 hover:border-1 hover:scale-105 hover:rounded-sm">
+            ease-in-out hover:bg-green-100  hover:scale-105">
               <Link href="/account/login" className="p-2 cursor-pointer" legacyBehavior>
                 <a>Login</a>
               </Link>
@@ -80,7 +83,7 @@ const toggleMenu=()=>{
 
     </div>
       {/* Menus */}
-      <div className="flex mt-2 justify-center gap-3 font-bold">
+      <div className="flex mt-2 justify-center gap-5 font-bold">
         {/* First Line Menus */}
           <Link href="/" className="text-white  hover:text-green-500">
             Home
@@ -98,13 +101,16 @@ const toggleMenu=()=>{
 
       <div className="mt-2 flex bg-gray-300 flex-row font-sans py-2 font-bold text-[13px] justify-around">
         {/* Second Line Menus */}
-          <Link href="/giveaway" className="text-gray-700  hover:bg-green-800">
+          <Link style={{alignItems:'center'}} href="/giveaway" className="text-gray-700 flex flex-row justify-center gap-1  hover:text-white">
+            <Money/>
             Giveaway quizzes
           </Link>
-          <Link href="/skitsPage" className="text-gray-700  hover:bg-green-800">
+          <Link style={{alignItems:'center'}} href="/skitsPage" className="text-gray-700 flex flex-row justify-center gap-1  hover:text-white">
+            <Video/>
             Skits Across Naija
           </Link>
-          <Link href="/shoutout/booking" className="text-gray-700  hover:bg-green-800">
+          <Link style={{alignItems:'center'}} href="/shoutout/booking" className="text-gray-700 flex flex-row justify-center gap-1  hover:text-white">
+            <ShoutMic/>
           Shout Out!
           </Link>
       </div>

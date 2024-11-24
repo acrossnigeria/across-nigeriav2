@@ -24,16 +24,16 @@ const Info = ()=>{
   reversed:true
     };
   return (
-      <div className="relative h-full wfull  grid grid-cols-1 mt-0 top-0 border-b-1 pb-4 px-4 border-b-gray">
+      <div className="relative h-full wfull  grid grid-cols-1 top-0 border-b-1 pb-4 px-1 border-b-gray">
         
-         <div className="flex lg:w-full text-green-800  w-full font-bold text-6xl 
-          right-0 pt-8  text-pretty">
-        <span style={{ color:'rgb(23, 123, 43)'}} className="w-full font-extrabold tracking-wider">HOWFA?</span> 
+         <div className="flex lg:w-full  w-full font-bold text-6xl 
+          right-0 pt-4  text-pretty">
+        <span style={{}} className="w-full bg-clip-text bg-gradient-to-tr from-green-700 text-transparent to-green-400 font-extrabold tracking-wider">HOWFA?</span> 
         </div>
             <p className="font-semibold text-left mt-4 text-xl mb-4 text-gray-700">{data.paragraph}</p>
        
-          <Link style={{ display:( session?.user? 'none': 'block'), backgroundColor: 'rgb(23, 123, 43)', width:'fit-content', padding:'8px 15px', color: "white", fontSize:'18px', borderRadius:'17px'}}
-        className="w-full font-bold tracking-wider hover:opacity-70" href="/account/reg">
+          <Link style={{ display:( session?.user? 'none': 'block'), width:'fit-content', padding:'8px 15px', color: "white", fontSize:'18px', borderRadius:'17px', borderBottomRightRadius:'50px'}}
+        className="w-full font-bold tracking-wider bg-gradient-to-br from-green-800 to-green-500 hover:opacity-70" href="/account/reg">
           {"Register to get Involved"}
           </Link>
    <div style={{gap:'10px'}} className="text-8xl mt-6 mb-6 mx-auto rounded-md justify-between flex">

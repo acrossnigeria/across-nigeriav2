@@ -23,14 +23,14 @@ export default function ProductLanding( { startGame, isPlay }) {
                     <span style={{lineHeight:(isMobile?'30px':'50px')}} className={`font-extrabold ${isMobile?'text-[30px] text-center':'text-[50px]'} text-pretty text-yellow-400`}>Upto <span className="bg-gradient-to-tr from-green-400 to-green-800 bg-clip-text text-transparent">100,000&#8358;</span> up for grabs! <span className="text-orange-600">& more</span></span> 
                     <a style={{marginTop:(isMobile?'20px':'35px'), marginBottom:(isMobile?'10px':'0px'), alignSelf:(isMobile?'center':'left'), borderRadius:'25px'}} className={`text-white bg-gradient-to-br from-purple-500 to-purple-900 w-[fit-content] px-[20px] py-[2px] ${isMobile?'text-[20px]':'text-[25px]'} font-semibold`} href="#how" >Explore</a>
                 </div>
-                <div style={{height:(isMobile?'280px':'400px')}} className={`${isMobile?'w-[90%] left-[5%]':'w-[60%]'} relative`}>
+                <div style={{height:(isMobile?'200px':'400px')}} className={`${isMobile?'w-[95%] left-[2.5%]':'w-[60%]'} relative`}>
                     <Image className="bg-gray-300" style={{borderRadius:'22px'}} alt='banner' layout="fill" objectFit="fill" src={image1}/>
                 </div> 
             </div>
             <div id="how" className="text-center mt-10" >
                 <span style={{lineHeight:'30px'}} className={`w-[100%] text-green-600 ${isMobile?'text-[25px]':'text-[30px]'} text-center font-extrabold tracking-wider`}>Welcome to the Ultimate Giveaway Quiz </span> 
             </div>
-            <div style={{borderRadius:'15px'}} className={` mt-4 text-gray-500 text-[20px] ${isMobile?'w-[90%] ml-[5%] text-center':'w-[60%] ml-[20%]'} p-[15px]`}>
+            <div style={{borderRadius:'15px'}} className={` text-gray-500 text-[20px] ${isMobile?'w-[90%] ml-[5%] text-center':'w-[60%] mt-4 ml-[20%]'} p-[15px]`}>
                 <span>Think you&apos;ve got what it takes to win big? Here&apos;s your chance to play, have fun, and walk away with incredible prizes, Let&apos;s break it down for you</span>
             </div>
             <div className="text-center mt-5" >

@@ -40,7 +40,7 @@ const toggleMenu=()=>{
 
   return (
     <header id="top" className={`top-0 w-full  z-[9999] overflow-x-hidden px-0`}>
-      <nav style={{height:'fit-content', display:'flex', justifyContent:'space-between', paddingTop:'15px', paddingLeft:'4%', paddingRight:'4%', paddingBottom:'10px', borderBottomLeftRadius:'10px', borderBottomRightRadius:'10px'}} className={`w-full pt-3 top-0 left-0 right-0 py-0 bg-green-600 text-white px-1`}>
+      <nav style={{height:'fit-content', display:'flex', justifyContent:'space-between', paddingTop:'15px', paddingLeft:'4%', paddingRight:'4%', paddingBottom:'10px'}} className={`w-full pt-3 top-0 left-0 right-0 py-0 bg-green-600 text-white px-1`}>
           <div style={{height:'fit-content', display:'flex', justifyContent:'space-between', alignItems:'center', gap:'1.5rem'}}>
             <Link href="/" legacyBehavior>
                 <Image src={logo} alt="Logo" className="h-[60px] w-[60px]" placeholder="blur"/>
