@@ -93,5 +93,5 @@ function giveaway() {
 }
 
 
-giveaway.auth = true;
+// giveaway.auth = true;
 export default giveaway;
