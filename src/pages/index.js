@@ -17,6 +17,8 @@ import Image from "next/image";
 import ReviewSlider from "@/components/ReviewSlider";
 import Testimonials from "@/components/Testimonials";
 import Link from "next/link";
+import { useState, useEffect } from "react";
+import IntroLoader from "@/components/IntroLoader";
 
 
 
@@ -80,6 +82,6 @@ export default function Home() {
         </div>
       </div>
    
-      </Layout>
+      </Layout> 
   );
 }

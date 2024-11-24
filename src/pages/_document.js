@@ -1,3 +1,4 @@
+import Loader from "@/components/Loader";
 import { Html, Head, Main, NextScript } from "next/document";
 
 export default function Document() {
