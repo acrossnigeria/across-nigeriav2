@@ -22,8 +22,9 @@ const Profile = () => {
       setRefs(profile.refs);
       setRefCode(profile.refCode);
       setRefLink(`https://acrossnig.com/account/reg?ref=${profile.refCode}`);
+      setPhone(profile.phone)
     } catch( err ) {
-      alert('an error occurred, please check your internet connection');
+    //   alert('an error occurred, please check your internet connection');
     }
 
   }
@@ -56,7 +57,7 @@ const Profile = () => {
     <>
         <div style={{alignItems:'center'}} className='mt-[10px] flex flex-col'>
           <div style={{borderRadius:'15px', alignItems:'center'}} className={`${isMobile?'w-[95%]':'w-[70%]'} border-[0.5px] bg-green-100 border-green-800 gap-4 text-left flex flex-row bg-gray-200 p-[15px]`}>
-            <div style={{borderRadius:'50%'}} className='w-[60px] h-[60px] bg-gray-800'></div>
+            <div style={{borderRadius:'50%', alignItems:'center'}} className='w-[60px] h-[60px] text-[30px] font-extrabold flex flex-col justify-center bg-yellow-500'>{session?.user?.name[0].toUpperCase()}</div>
             <div className='flex flex-col'>
               <span><span className='font-bold text-gray-500 text-[14px]'>Full name:</span> { status === 'loading'?'...loading': `${session?.user?.name} ${session?.user?.surname}` }</span>
               <span><span className='font-bold text-gray-500 text-[14px]'>Email:</span> { status === 'loading'?'...loading':session?.user?.email } </span>
