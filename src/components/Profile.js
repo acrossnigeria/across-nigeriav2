@@ -32,11 +32,6 @@ const Profile = () => {
 
   }
 
-  if ( status !== 'loading') {
-    console.log('getting user data');
-    getUserData();
-  }
-
   async function copyRefLink() {
      try {
         await navigator.clipboard.writeText(refLink);
@@ -53,6 +48,7 @@ const Profile = () => {
     if (/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)&&window.matchMedia("(max-width: 600px)").matches) {
     setIsMobile(true)
     } else { setIsMobile(false) }
+    getUserData();
     // console.log(isMobile, navigator.userAgent)
   },[ isMobile ])
 
