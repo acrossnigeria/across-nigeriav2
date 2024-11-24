@@ -40,22 +40,11 @@ const toggleMenu=()=>{
 
   return (
     <header id="top" className={`top-0 w-full  z-[9999] overflow-x-hidden px-0`}>
-      <nav style={{height:'fit-content', display:'flex', justifyContent:'space-between', paddingTop:'20px', paddingLeft:'4%', paddingRight:'4%', paddingBottom:'10px', borderBottomLeftRadius:'10px', borderBottomRightRadius:'10px'}} className={`w-full pt-3 top-0 left-0 right-0 py-0 bg-green-600 text-white px-1`}>
+      <nav style={{height:'fit-content', display:'flex', justifyContent:'space-between', paddingTop:'15px', paddingLeft:'4%', paddingRight:'4%', paddingBottom:'10px', borderBottomLeftRadius:'10px', borderBottomRightRadius:'10px'}} className={`w-full pt-3 top-0 left-0 right-0 py-0 bg-green-600 text-white px-1`}>
           <div style={{height:'fit-content', display:'flex', justifyContent:'space-between', alignItems:'center', gap:'1.5rem'}}>
             <Link href="/" legacyBehavior>
                 <Image src={logo} alt="Logo" className="h-[60px] w-[60px]" placeholder="blur"/>
             </Link>
-            <div style={{height:'37px', display:'flex', justifyContent:'space-between', backgroundColor:'white', padding:'0px 10px', borderRadius:'15px'}} >
-              <input type="text"placeholder="Search..."
-                style={{fontSize:'16px', borderRadius:'10px', color:'black'}}
-                className=" focus:outline-none"
-                value={query}
-                onChange={(e) => setQuery(e.target.value)} />
-              <Search/>
-            </div>
-          </div>
-            {/* Menu content */}
-          <div style={{alignItems:'center'}} className="text-white flex cursor-pointer w-auto gap-[2rem]">
             <div className="flex flex-row gap-[2rem]">
               <Link href={'/'}>
                   <div className="flex font-mono text-[17px] font-extrabold hover:text-green-400">
@@ -83,6 +72,17 @@ const toggleMenu=()=>{
                   </div>
               </Link>
             </div>
+          </div>
+            {/* Menu content */}
+          <div style={{alignItems:'center'}} className="text-white flex cursor-pointer w-auto gap-[2rem]">
+            <div className="bg-gray-50" style={{height:'35px', display:'flex', justifyContent:'space-between', alignItems:'center', padding:'0px 10px', borderRadius:'15px'}} >
+                <input type="text"placeholder="Search..."
+                  style={{fontSize:'16px', borderRadius:'10px', background:'transparent'}}
+                  className=" focus:outline-none text-green-800"
+                  value={query}
+                  onChange={(e) => setQuery(e.target.value)} />
+                <Search/>
+              </div>
           
             { session?.user ? (
               <div className={`flex-1 top-0 w-[fit-content] p-1 h-9 cursor-pointer items-center font-semibold justify-center uppercase text-white border-2 border-green-600  transition duration-100  rounded-lg text-[10px]`}>
@@ -99,15 +99,15 @@ const toggleMenu=()=>{
               </div>
             ) : (
               <div style={{height:'fit-content', display:'flex', justifyContent:'space-between', alignItems:'center', gap:'1rem'}} >
-                <div className="flex  w-[100px] p-1 h-9 cursor-pointer items-center font-bold justify-center uppercase text-green-700  bg-white transition duration-100  rounded-lg text-[12px]
-                ease-in-out hover:border-2 hover:scale-105" >
-                  <Link href="/account/reg" className="p-2 cursor-pointer" legacyBehavior>
+                <div className="flex  w-[100px] px-4 py-2 cursor-pointer items-center font-bold justify-center uppercase text-white transition duration-100  rounded-lg text-[12px]
+                ease-in-out hover:scale-125" >
+                  <Link href="/account/reg" className="cursor-pointer" legacyBehavior>
                     <a>Register</a>
                   </Link>
                 </div>
-                <div className="flex  w-[100px] p-1 h-9 cursor-pointer items-center font-bold justify-center uppercase text-white  bg-yellow-500 transition duration-100  rounded-lg text-[12px]
-                ease-in-out hover:border-2 hover:scale-105" >
-                  <Link href="/account/login" className="p-2 cursor-pointer" legacyBehavior>
+                <div className="flex  w-[100px] px-4 py-2 cursor-pointer items-center font-bold justify-center uppercase text-white  bg-yellow-400 transition duration-100  rounded-[30px] text-[12px]
+                ease-in-out hover:border-white hover:py-1 hover:bg-transparent hover:border-2" >
+                  <Link href="/account/login" className="cursor-pointer" legacyBehavior>
                     <a>Login</a>
                   </Link>
                 </div>
