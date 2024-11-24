@@ -11,98 +11,102 @@ const Navbar = () => {
   const router=useRouter();
 const logoutClickHandler = () => {
         signOut();
-        router.push("/account/login")
+        router.push("/account/login");
       };
       const[open,setOpen]=useState(false)
 const toggleMenu=()=>{
   setOpen(!open);}
   return (
-    <nav id="top" style={{borderBottomLeftRadius:'10px', borderBottomRightRadius:'10px'}} className="bg-gradient-to-br from-green-400 to-green-800 bg-gradient-to-b from-green-500 to-green-950 overflow-hidden  py-4 px-2" onClick={()=>{open&&setOpen(false)}}>
-      {/* Logo */}
+    <nav id="top" style={{paddingBottom:'0px'}} className="bg-gradient-to-br from-green-400 to-green-800 bg-gradient-to-b from-green-500 to-green-950 overflow-hidden  py-4" onClick={()=>{open&&setOpen(false)}}>
 
-      <Link href="/" style={{marginBottom:'10px'}} onClick={()=>(router.push("/"))} className="flex items-center justify-center">
-        <Image src={logo} alt="Logo"  className="h-15 w-14" />
-      </Link>
-
-      <div style={{alignItems:'center', flexDirection:'row', justifyContent:'space-between', padding:'0px 1rem'}} className="flex gap-2">
-              {/* Search Bar */}
-      <div style={{height:'40px', display:'flex', justifyContent:'space-between', backgroundColor:'white', padding:'0px 5px', borderRadius:'10px'}} >
-        <input
-          type="text"
-          placeholder="Search..."
-          style={{fontSize:'16px', borderRadius:'10px'}}
-          className=" focus:outline-none"
-        />
-        <Search/>
-      </div>
-      {/* Dropdown Button */}
-      {status === 'loading' ? (
-        <div className="flex w-[fit-content] p-1 h-9 items-center font-semibold 
-        justify-center uppercase text-white border-2 border-green-600 bg-green-600 transition duration-100 rounded-lg text-[14px]
-        ease-in-out  ">
-          Loading
-        </div>
-        ) : session?.user ? (
-        <div className="relative">
-          <div className="flex left-0 py-3 px-4 cursor-pointer font-semibold  text-white border-2 border-green-300 bg-green-600 transition duration-100 rounded-lg text-[14px]"
-          onClick={toggleMenu}>
-            {session.user.name}
-          </div>
-          {open && (
-            <div className="absolute right-0 top-14 flex-1 mr-3 w-18 origin-top-right bg-green-600 text-[16px] divide-y divide-gray-100 rounded-md shadow-lg ring-1
-            ring-black ring-opacity-5 focus:outline-none" role="menu" aria-orientation="vertical" aria-labelledby="options-menu">
-              <div className="py-1 flex" role="none">
-                <a onClick={logoutClickHandler} className="text-gray-700 font-medium block px-3" role="menuitem">LogOut</a>
-              </div>
-            </div>
-          )}
-        </div>
-      ) : (
-        <div style={{width:'70px', height:'40px'}} className="flex p-1 h-10 cursor-pointer items-center font-semibold 
-        justify-center text-white border-2 border-green-300 bg-green-600 transition duration-100 rounded-lg text-[14px]
-        ease-in-out hover:bg-green-900 hover:border-1 hover:scale-105 hover:rounded-sm">
-          <Link href="/login" className="p-2 cursor-pointer" legacyBehavior>
-            <a>Login</a>
+      <div style={{alignItems:'center', flexDirection:'row', justifyContent:'space-between', padding:'0px 10px', paddingBottom:'10px'}} className="flex border-green-300 border-b-1">
+        <div className='flex flex-row justify-between gap-[12px]'>
+            {/* Logo */}
+          <Link href="/" style={{}} onClick={()=>(router.push("/"))} className="flex items-center justify-center">
+            <Image src={logo} alt="Logo"  className="h-[40px] w-[40px]" />
           </Link>
+              {/* Search Bar */}
+          <button style={{alignItems:'center'}} className='border-2 h-[40px] border-white rounded-[9px] px-1 flex flex-row justify-center'>
+            <Search/>
+          </button>
         </div>
-      )}
+        {/* <div style={{height:'40px', width:'50px', display:'flex', justifyContent:'center', alignItems:'center', backgroundColor:'white', borderRadius:'9px'}} >
+          {/* <input
+            type="text"
+            placeholder="Search..."
+            style={{fontSize:'16px', borderRadius:'10px'}}
+            className=" focus:outline-none"
+          /> 
+          <Search/>
+        </div> */}
+        {/* Dropdown Button */}
+        {true ? (
+          <div className=" w-[120px] h-[35px] items-center font-semibold rounded-full justify-center uppercase text-white  bg-green-500 text-[14px] animate-pulse  ">
+          </div>
+          ) : session?.user ? (
+          <div className="relative">
+            <div style={{alignItems:'center'}} className="flex flex-row justify-center h-[40px] px-3 cursor-pointer font-bold  text-white border-b-2 border-green-300 bg-green-800 transition duration-100 rounded-lg text-[16px]"
+            onClick={toggleMenu}>
+              <Link href={'/user/profile'}>{session.user.name}</Link>
+
+            </div>
+            {/* {open && (
+              <div className="absolute right-0 top-14 flex-1 mr-3 w-18 origin-top-right bg-green-600 text-[16px] divide-y divide-gray-100 rounded-md shadow-lg ring-1
+              ring-black ring-opacity-5 focus:outline-none" role="menu" aria-orientation="vertical" aria-labelledby="options-menu">
+                <div className="py-1 flex" role="none">
+                  <a onClick={logoutClickHandler} className="text-gray-700 font-medium block px-3" role="menuitem">LogOut</a>
+                </div>
+              </div>
+            )} */}
+          </div>
+        ) : (
+          <div className='w-[fit-content] flex flex-row gap-2'>
+            <div style={{width:'70px', height:'40px'}} className="flex p-1 h-10 cursor-pointer items-center font-semibold 
+            justify-center text-white border-2 bg-transparent transition duration-100 rounded-lg text-[15px]
+            ease-in-out hover:scale-105 hover:rounded-sm">
+              <Link href="/account/reg" className="p-2 cursor-pointer" legacyBehavior>
+                <a>Register</a>
+              </Link>
+            </div>
+            <div style={{width:'70px', height:'40px'}} className="flex p-1 h-10 cursor-pointer items-center font-semibold 
+            justify-center text-green-700 bg-white transition duration-100 rounded-lg text-[14px]
+            ease-in-out hover:bg-green-900 hover:border-1 hover:scale-105 hover:rounded-sm">
+              <Link href="/account/login" className="p-2 cursor-pointer" legacyBehavior>
+                <a>Login</a>
+              </Link>
+            </div>
+          </div>
+        )}
 
     </div>
       {/* Menus */}
-      <div className="mt-4 flex justify-center">
+      <div className="flex mt-2 justify-center gap-3 font-bold">
         {/* First Line Menus */}
-        <div style={{fontSize:'17.5px'}} className="space-x-4 font-semibold">
           <Link href="/" className="text-white  hover:text-green-500">
             Home
           </Link>
-          <Link style={{display:(session?.user?'inline':'none')}} href="/user/profile" className="text-white hover:text-green-500">
+          {/* <Link style={{display:(session?.user?'inline':'none')}} href="/user/profile" className="text-white hover:text-green-500">
             Profile
-          </Link>
-          <Link href="" className="text-white  hover:text-green-500">
+          </Link> */}
+          <Link href="#products" className="text-white  hover:text-green-500">
             Our Products
           </Link>
           <Link href="/about" className="text-white hover:text-green-500">
             About
           </Link>
-        </div>
       </div>
 
-      <div className="mt-2 flex font-sans font-thin text-[14px] justify-center">
+      <div className="mt-2 flex bg-gray-300 flex-row font-sans py-2 font-bold text-[13px] justify-around">
         {/* Second Line Menus */}
-        <div className="space-x-1">
-          <Link href="/giveaway" className="text-white border rounded p-[2px] hover:bg-green-800">
+          <Link href="/giveaway" className="text-gray-700  hover:bg-green-800">
             Giveaway quizzes
           </Link>
-          <Link href="/skitsPage" className="text-white border rounded p-[2px] hover:bg-green-800">
+          <Link href="/skitsPage" className="text-gray-700  hover:bg-green-800">
             Skits Across Naija
           </Link>
-          <Link href="/shoutout/booking" className="text-white border rounded p-[2px] hover:bg-green-800">
+          <Link href="/shoutout/booking" className="text-gray-700  hover:bg-green-800">
           Shout Out!
           </Link>
-          {/* <Link href="" className="text-white border rounded p-[2px] hover:bg-green-800">
-            Our products
-          </Link> */}
-        </div>
       </div>
     </nav>
   );

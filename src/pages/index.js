@@ -42,7 +42,7 @@ export default function Home() {
         <div className="md:px-36 px-5">
            <Info/>
             <p className="grid w-full  mx-auto text-center text-2xl text-green-800 ">
-              <span className="flex text-center text-3xl font-sans font-extrabold mx-auto p-4">
+              <span id="products" className="flex text-center text-3xl font-sans font-extrabold mx-auto p-4">
                  <Image quality={10} src={flameimg} height={5} width={20} alt="hot"/> 
                   {"Our Amazing Products".toUpperCase()}
                  <Image quality={10} src={flameimg} height={5} width={20} alt="hot"/>
