@@ -18,7 +18,9 @@ const handler = async(req,res)=>{
       await db.disconnect();
       // Send the found documents as a response
       if (user.length>0) {
-        res.status(200).json( { exists: true , name:user[0].name, surname:user[0].surname, email:user[0].email, refCode:user[0].refCode, refs:user[0].references, phone:user[0].phone } );
+        const fullname = `${user[0].name} ${user[0].surname}`;
+        const notifications = [];
+        res.status(200).json( { exists: true , fullname, email:user[0].email, refCode:user[0].refCode, refs:user[0].references, phone:user[0].phone, notifications } );
       } else {
         res.status(200).json({ exists: false });
       };

@@ -32,7 +32,7 @@ const toggleMenu=()=>{
             <Logo/>
           </Link>
               {/* Search Bar */}
-          <button onClick={toggleMenu} style={{alignItems:'center'}} className='border-2 h-[40px] border-white rounded-[9px] px-1 flex flex-row justify-center'>
+          <button onClick={toggleMenu} style={{alignItems:'center'}} className='border-2 h-[40px] border-green-300 rounded-[9px] px-1 flex flex-row justify-center'>
             <Search/>
           </button>
         </div>
@@ -68,14 +68,14 @@ const toggleMenu=()=>{
         ) : (
           <div className='w-[fit-content] flex flex-row gap-2'>
             <div style={{width:'70px', height:'40px'}} className="flex p-1 h-10 cursor-pointer items-center font-semibold 
-            justify-center text-white border-2 bg-transparent transition duration-100 rounded-lg text-[15px]
+            justify-center text-green-300 border-2 border-green-300 bg-transparent transition duration-100 rounded-lg text-[15px]
             ease-in-out hover:scale-105 hover:rounded-sm">
               <Link href="/account/reg" className="p-2 cursor-pointer" legacyBehavior>
                 <a>Register</a>
               </Link>
             </div>
             <div style={{width:'70px', height:'40px'}} className="flex p-1 h-10 cursor-pointer items-center font-semibold 
-            justify-center text-green-700 bg-white transition duration-100 rounded-lg text-[14px]
+            justify-center text-green-800 bg-green-300 transition duration-100 rounded-lg text-[14px]
             ease-in-out hover:bg-green-100  hover:scale-105">
               <Link href="/account/login" className="p-2 cursor-pointer" legacyBehavior>
                 <a>Login</a>
