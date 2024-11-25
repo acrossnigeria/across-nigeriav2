@@ -20,6 +20,7 @@ const logoutClickHandler = () => {
 const toggleMenu=()=>{
   setOpen(!open);}
   return (
+    <>
     <nav id="top" style={{paddingBottom:'0px'}} className="bg-gradient-to-br from-green-400 to-green-800 bg-gradient-to-b from-green-500 to-green-950 overflow-hidden  py-4" onClick={()=>{open&&setOpen(false)}}>
 
       <div style={{alignItems:'center', flexDirection:'row', justifyContent:'space-between', padding:'0px 10px', paddingBottom:'10px'}} className="flex border-green-300 border-b-1">
@@ -29,7 +30,7 @@ const toggleMenu=()=>{
             <Image src={logo} alt="Logo"  className="h-[40px] w-[40px]" />
           </Link>
               {/* Search Bar */}
-          <button style={{alignItems:'center'}} className='border-2 h-[40px] border-white rounded-[9px] px-1 flex flex-row justify-center'>
+          <button onClick={toggleMenu} style={{alignItems:'center'}} className='border-2 h-[40px] border-white rounded-[9px] px-1 flex flex-row justify-center'>
             <Search/>
           </button>
         </div>
@@ -115,6 +116,13 @@ const toggleMenu=()=>{
           </Link>
       </div>
     </nav>
+    { open && (
+    <div className={`mt-2 flex flex-row justify-center gap-3`}>
+      <input className='w-[250px] border-2 border-green-800 h-[40px] focus:outline-none px-[10px] rounded-[10px]' type='text'></input>
+      <button className='text-green-800 text-[19px] font-semibold h-[40px] px-[10px] border-2 rounded-[10px] border-green-800 hover:text-white hover:bg-green-800 hover:border-none'>Search</button>
+    </div>
+    )}
+    </>
   );
 };
 
