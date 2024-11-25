@@ -18,7 +18,7 @@ import ReviewSlider from "@/components/ReviewSlider";
 import Testimonials from "@/components/Testimonials";
 import Link from "next/link";
 import { useState, useEffect } from "react";
-import IntroLoader from "@/components/IntroLoader";
+import ShoutOutCard from "@/components/ShoutOutCard";
 
 
 
@@ -37,6 +37,14 @@ export const games=[
 const inter = Inter({ subsets: ["latin"] });
 
 export default function Home() {
+  const[isMobile, setIsMobile]=useState(false);
+  useEffect(()=>{
+    if(/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)&&window.matchMedia("(max-width: 600px)").matches){
+    setIsMobile(true)
+  } else{setIsMobile(false)}
+// console.log(isMobile, navigator.userAgent)
+  },[ isMobile ])
+
   return (
         <Layout title={"Home Page"}>
         <ReviewSlider/>
@@ -53,10 +61,9 @@ export default function Home() {
         </div>
         
        <div className="mb-4">
-          <p className="w-full mx-auto text-center flex justify-center items-center 
-          md:flex-row flex-col sm:mb-16 mb-1 mt-8 font-poppins text-3xl font-sans font-extrabold
-           text-green-800 ">{"Shout Out".toUpperCase()}</p>
-      <PersonCard name="Amina Yusuf" age={23} occupation="Dancer" imageUrl="/images/model/model2.jpg"/>
+          <div style={{alignItems:'baseline'}} className="w-full gap-2 flex flex-row justify-between mb-3 mt-8 font-sans font-extrabold
+           text-green-800 "> <span className="bg-clip-text text-[30px] text-transparent bg-gradient-to-tr from-green-700 to-green-300">SHOUT OUT</span> <div className="w-[70%] h-[10px] bg-gradient-to-tr from-green-400 to-yellow-500"></div></div>
+          <ShoutOutCard/>
      </div>
 
          <div className="h-80 mt-6">

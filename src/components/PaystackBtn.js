@@ -17,7 +17,7 @@ export default function PaystackBtn(props) {
     reference: new Date().getTime().toString(),
     email: email,
     amount: amount * 100, //Amount is in the country's lowest currency. E.g Kobo, so 20000 kobo = N200
-    publicKey: "pk_test_cbdf33dbafe37c266634416e1b99f1f6b87e709a",
+    publicKey: "pk_live_09ba874adcdca43ec856e37e480ec1e17dc13eda",
   };
   // publicKey: "pk_test_cbdf33dbafe37c266634416e1b99f1f6b87e709a",
   // publicKey: "pk_live_09ba874adcdca43ec856e37e480ec1e17dc13eda",
@@ -41,7 +41,7 @@ const componentProps = {
     return (
 
        
-<div className="absolute transform top-[0px] ease-in-out duration-1000 inset-0  bg-white m-0 bottom-0 h-[100%] z-[20000]">
+<div className="absolute transform top-[0px] ease-in-out duration-1000 inset-0  bg-white m-0 bottom-0 h-[100%]">
  
       <h1 className="text-3xl mt-56 font-bold mb-4 text-center">You need to Pay &#8358;{localePayment} as {purpose}</h1>
       <div className="border-yellow-500 border h-14 py-4 w-40 rounded-lg bg-green-700 text-white text-xl font-semibold italic mx-auto text-center">                   
