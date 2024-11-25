@@ -8,6 +8,7 @@ import Search from '../../public/images/icon/Search';
 import Money from '../../public/images/icon/Money';
 import Video from '../../public/images/icon/Video';
 import ShoutMic from '../../public/images/icon/ShoutMic';
+import Logo from '../../public/images/icon/Logo';
 
 const Navbar = () => {
   const { status, data: session } = useSession();
@@ -27,7 +28,8 @@ const toggleMenu=()=>{
         <div className='flex flex-row justify-between gap-[12px]'>
             {/* Logo */}
           <Link href="/" style={{}} onClick={()=>(router.push("/"))} className="flex items-center justify-center">
-            <Image src={logo} alt="Logo"  className="h-[40px] w-[40px]" />
+            {/* <Image src={logo} alt="Logo"  className="h-[40px] w-[40px]" /> */}
+            <Logo/>
           </Link>
               {/* Search Bar */}
           <button onClick={toggleMenu} style={{alignItems:'center'}} className='border-2 h-[40px] border-white rounded-[9px] px-1 flex flex-row justify-center'>
