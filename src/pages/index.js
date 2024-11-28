@@ -61,8 +61,8 @@ export default function Home() {
         </div>
         
        <div className="mb-4">
-          <div style={{alignItems:'baseline'}} className="w-full gap-2 flex flex-row justify-between mb-3 mt-8 font-sans font-extrabold
-           text-green-800 "> <span className="bg-clip-text text-[30px] text-transparent bg-gradient-to-tr from-green-700 to-green-300">SHOUT OUT</span> <div className="w-[70%] h-[10px] bg-gradient-to-tr from-green-400 to-yellow-500"></div></div>
+          <div style={{alignItems:'baseline'}} className="w-full gap-2 flex flex-row justify-center mb-3 mt-8 font-sans font-extrabold
+           text-green-800 "> <span className="bg-clip-text md:text-[30px] text-[18px] text-transparent bg-gradient-to-tr from-green-700 to-green-300">SHOUT OUT</span> <div className="w-[70%] rounded-tr-[10px] h-[10px] bg-gradient-to-tr from-green-400 to-yellow-500"></div></div>
           <ShoutOutCard/>
      </div>
 
@@ -79,12 +79,12 @@ export default function Home() {
             </ol>
          </div>
          <div className="">
-           <h2
+           <span
         className="w-full mx-auto text-center flex justify-center items-center 
-          md:flex-row flex-col sm:mb-16 mb-6 font-poppins font-semibold xs:text-[48px] text-[40px]
-           text-green-800 xs:leading-[76.8px] leading-[66.8px]"
+          md:flex-row flex-col mb-6 font-serif font-light text-[35px]
+           text-green-800"
       >{"Testimonials".toUpperCase()}
-      </h2>
+      </span>
         <Testimonials/>
         </div>
       </div>

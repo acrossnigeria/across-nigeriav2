@@ -1,6 +1,7 @@
 import { useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
 import { PaystackButton } from "react-paystack";
+import Pay from "../../public/images/illustration/pay";
 
 export default function PaystackBtn(props) {
 //provide props for amount email key is proc.env.PAYSTACK
@@ -41,10 +42,12 @@ const componentProps = {
     return (
 
        
-<div className="absolute transform top-[0px] ease-in-out duration-1000 inset-0  bg-white m-0 bottom-0 h-[100%]">
- 
-      <h1 className="text-3xl mt-56 font-bold mb-4 text-center">You need to Pay &#8358;{localePayment} as {purpose}</h1>
-      <div className="border-yellow-500 border h-14 py-4 w-40 rounded-lg bg-green-700 text-white text-xl font-semibold italic mx-auto text-center">                   
+<div className="absolute transform top-[0px] ease-in-out duration-1000 inset-0 flex flex-col items-center justify-center  bg-white m-0 bottom-0 h-[100%]">
+      <div className="w-[fit-content]">
+        <Pay/>
+      </div>
+      <h1 style={{lineHeight:'25px'}} className="text-[23px] px-3 text-gray-800 font-bold mb-4 text-center">You need to Pay <span className="text-green-600 animate-pulse">&#8358;{localePayment}</span> as {purpose}</h1>
+      <div className="border-green-700 border-3 mt-[10px] py-2 w-40 rounded-[5px] bg-transparent text-green-700 text-[18px] hover:scale-105 font-extrabold hover:bg-green-700 hover:text-white mx-auto text-center">                   
           <PaystackButton {...componentProps} />                                                 
       </div>
    </div>

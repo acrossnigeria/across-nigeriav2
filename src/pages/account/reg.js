@@ -8,6 +8,10 @@ import { PhoneInput } from 'react-international-phone';
 import 'react-international-phone/style.css';
 import Checkbox from '@/components/Checkbox';
 import Link from 'next/link';
+import Close from '../../../public/images/icon/Close';
+import Loader from '@/components/Loader';
+import EyeOpen from '../../../public/images/icon/EyeOpen';
+import EyeClose from '../../../public/images/icon/EyeClose';
 
 const Register = () => {
    const nigeriaStates = [
@@ -124,22 +128,31 @@ const Register = () => {
   }
 
   return (
-    <div>
-      <div style={{ display:( toConfirmPage?'none':'block' ) }}>
-        <Layout>
+    <div className='flex flex-col'>
+      <Loader/>
+      <div className='flex flex-row justify-end px-8 py-3'>
+          <Link href={'/'}><Close/></Link> 
+      </div>
+      <div className='pt-4 pb-10' style={{ display:( toConfirmPage?'none':'block' ) }}>
+        <div className='border-b-1 border-green-100 py-3 text-center text-[17px] font-bold text-green-600'>
+          <span>ACROSS NIGERIA REALITY SHOW</span>
+        </div>
+
+        {/* <Layout> */}
         <div className="max-w-[90%] mx-auto">
           {/* handleSubmit */}
-          <form onSubmit={toConfirm} style={{ border:'1px solid gray', }} className="md:max-w-xl max-w-full mx-auto  m-4 p-10 rounded-md ">
+          <form onSubmit={toConfirm} style={{ }} className="md:max-w-xl flex flex-col max-w-full mx-auto  m-4 p-2">
             <h1 className="text-2xl text-left font-bold mb-9">Register</h1>
             <div className="mb-4">
               <label htmlFor="name" className="block mb-2">Name</label>
               <input
                 type="text"
+                placeholder='First name'
                 id="name"
                 name="name"
                 value={firstname}
                 onChange={(e) => setFirstname(e.target.value)}
-                className="rounded px-4 py-2 w-full focus:outline-gray-600 bg-gray-200"
+                className="rounded-[8px] h-[52px] text-[19px] px-4  w-full focus:outline-gray-600 bg-gray-200"
                 required
                 autoFocus
               />
@@ -149,51 +162,52 @@ const Register = () => {
               <input
                 type="text"
                 id="surname"
+                placeholder='Surname'
                 name="surname"
                 value={lastname}
                 onChange={ (e)=>setLastname(e.target.value) }
-                className="bg-gray-200 rounded px-4 py-2 w-full focus:outline-gray-600"
+                className="bg-gray-200 rounded-[8px] h-[52px] text-[19px] px-4 w-full focus:outline-gray-600"
                 required
               />
             </div>
     <div className='mb-4'>
       <label htmlFor="dob" className="block mb-2">Date of Birth</label>
-              <div className="flex space-x-2 bg-gray-200 rounded-md border contain flex-shrink">
+          <div className="flex space-x-2 bg-gray-200 rounded-[8px] border contain flex-shrink">
             <input
-              type="text"
+              type="number"
               value={day}
               onChange={handleDayChange}
-              placeholder="Day (DD)"
-              className="col-span-1 border text-[10px] md:text-lg w-12 sm:w-32 md:w-32  block appearance-none bg-white pl-1 py-0
+              placeholder="Day"
+              className="col-span-1 border h-[48px] text-[18px] md:text-lg w-[50px] sm:w-32 md:w-32  block appearance-none bg-gray-100 pl-1 py-0
               md:px-4 md:py-2 rounded shadow leading-tight focus:outline-none focus:shadow-outline"
             /><span className='text-3xl font-thin'>/</span>
             <select
               value={month}
               onChange={(e) => setMonth(e.target.value)}
-          className="col-span-1 border text-[10px] text-gray-500 md:text-lg md:w-40 w-20  checked:bg-green-700 block appearance-none bg-white pl-1 py-0
-          md:px-4 md:py-2 rounded shadow leading-tight focus:outline-none focus:shadow-outline"
+              className="col-span-1 border text-[18px] text-gray-700 md:text-lg md:w-40 w-[120px] block appearance-none bg-gray-100 pl-1 py-0
+              md:px-4 md:py-2 rounded leading-tight focus:outline-none focus:shadow-outline"
 
             >
-              <option className='focus:bg-green-700 checked:bg-green-700' value="" disabled>-Select Month-</option>
-              <option className='focus:bg-green-700 checked:bg-green-700 hover:bg-green-500 accent-green-700' value="01">January</option>
-              <option className='focus:bg-green-700 checked:bg-green-700 hover:bg-green-500 accent-green-700' value="02">February</option>
-              <option className='focus:bg-green-700 checked:bg-green-700 hover:bg-green-500 accent-green-700' value="03">March</option>
-              <option className='focus:bg-green-700 checked:bg-green-700 hover:bg-green-500 accent-green-700' value="04">April</option>
-              <option className='focus:bg-green-700 checked:bg-green-700 hover:bg-green-500 accent-green-700' value="05">May</option>
-              <option className='focus:bg-green-700 checked:bg-green-700 hover:bg-green-500 accent-green-700' value="06">June</option>
-              <option className='focus:bg-green-700 checked:bg-green-700 hover:bg-green-500 accent-green-700' value="07">July</option>
-              <option className='focus:bg-green-700 checked:bg-green-700 hover:bg-green-500 accent-green-700' value="08">August</option>
-              <option className='focus:bg-green-700 checked:bg-green-700 hover:bg-green-500 accent-green-700' value="09">September</option>
-              <option className='focus:bg-green-700 checked:bg-green-700 hover:bg-green-500 accent-green-700' value="10">October</option>
-              <option className='focus:bg-green-700 checked:bg-green-700 hover:bg-green-500 accent-green-700' value="11">November</option>
-              <option className='focus:bg-green-700 checked:bg-green-700 hover:bg-green-500 accent-green-700' value="12">December</option>
+              <option className='focus:bg-green-500 checked:bg-green-500' value="" disabled>-Select Month-</option>
+              <option className='focus:bg-green-500 checked:bg-green-500 hover:bg-green-500 accent-green-500' value="01">January</option>
+              <option className='focus:bg-green-500 checked:bg-green-500 hover:bg-green-500 accent-green-500' value="02">February</option>
+              <option className='focus:bg-green-500 checked:bg-green-500 hover:bg-green-500 accent-green-500' value="03">March</option>
+              <option className='focus:bg-green-500 checked:bg-green-500 hover:bg-green-500 accent-green-500' value="04">April</option>
+              <option className='focus:bg-green-500 checked:bg-green-500 hover:bg-green-500 accent-green-500' value="05">May</option>
+              <option className='focus:bg-green-500 checked:bg-green-500 hover:bg-green-500 accent-green-500' value="06">June</option>
+              <option className='focus:bg-green-500 checked:bg-green-500 hover:bg-green-500 accent-green-500' value="05">July</option>
+              <option className='focus:bg-green-500 checked:bg-green-500 hover:bg-green-500 accent-green-500' value="08">August</option>
+              <option className='focus:bg-green-500 checked:bg-green-500 hover:bg-green-500 accent-green-500' value="09">September</option>
+              <option className='focus:bg-green-500 checked:bg-green-500 hover:bg-green-500 accent-green-500' value="10">October</option>
+              <option className='focus:bg-green-500 checked:bg-green-500 hover:bg-green-500 accent-green-500' value="11">November</option>
+              <option className='focus:bg-green-500 checked:bg-green-500 hover:bg-green-500 accent-green-500' value="12">December</option>
             </select><span className='text-3xl font-thin'>/</span>
             <input
-              type="text"
+              type="number"
               value={year}
               onChange={handleYearChange}
-              placeholder="Year (YYYY)"
-              className="col-span-1 border text-[10px] md:text-lg md:w-40 flex-grow max-w-[80px] md:max-w-[140px] appearance-none bg-white px-2 
+              placeholder="Year"
+              className="col-span-1 border h-[48px] text-[18px] md:text-lg md:w-40 flex-grow w-full md:max-w-[140px] appearance-none bg-gray-100 px-2 
               py-0 md:px-4 md:py-2 rounded shadow leading-tight focus:outline-none focus:shadow-outline"
             />
           </div></div>
@@ -202,29 +216,28 @@ const Register = () => {
         {dayError&&<span className='text-red-600 text-sm'>Please only enter days between 1-31</span>}  
 
             <div className="mb-4">
-              <label htmlFor="email" className="block mb-2">Email</label>
+              <label htmlFor="email" className="block mb-2">Email Address</label>
               <input
                 type="email"
                 id="email"
                 name="email"
+                placeholder='Email address'
                 value={email}
                 onChange={ (e)=>setEmail(e.target.value)}
-                className="border bg-gray-200 rounded px-4 py-2 w-full"
+                className="border bg-gray-200 px-2 rounded-[8px] h-[52px] text-[19px] w-full"
                 required
               />
             </div>
             
             <div className="mb-4">
               <label htmlFor="phone" className="block mb-2">Phone Number</label>
-              <div className='w-full '>
+              <div className='w-full bg-gray-200 rounded-[5px] '>
               <PhoneInput 
               defaultCountry='ng'
-              className="border bg-gray-200 rounded px-0 py-0 h-fit w-fit"
               required
+              inputStyle={{fontSize:'18px', backgroundColor:'#e5e7eb', height:'48px', borderTop:'none', borderLeft:'1px solid gray', borderRight:'none', borderBottom:'none'}}
+              countrySelectorStyleProps={{ buttonStyle:{backgroundColor:'#e5e7eb', height:'48px', width:'100%', borderTop:'none', borderLeft:'none', borderBottom:'none'}}}
               onChange={ (phone)=>setPhone(phone)}
-        //       onChange={(phone)=>{
-        // setFormData((prevFormData) => ({ ...prevFormData, phone: phone }));
-      // }}
               name='phone'
               value={phone}/></div>
             </div>
@@ -234,20 +247,21 @@ const Register = () => {
                 id="residence"
                 name="residence"
                 value={residence}
+                placeholder='Residence'
                 onChange={ (e)=>setResidence(e.target.value) }
-                className="border rounded px-4 bg-gray-200 py-2 w-full"
+                className="border rounded-[8px] h-[52px] text-[19px] px-4 bg-gray-200 py-2 w-full"
                 required
               >
                 <option value="">Select State</option>
                 {nigeriaStates.map((residence) => (
-                  <option className=''  key={residence} value={residence}>{residence}</option>
+                  <option className='text-[14px]'  key={residence} value={residence}>{residence}</option>
                 ))}
               </select>
             </div>
             <div className='mb-4'></div>
               <div className="mb-4">
               <label htmlFor="gender" className="block mb-2">Gender</label>
-              <div className="flex ">
+              <div className="flex text-[18px] text-gray-800 font-semibold ">
                 <label htmlFor="male" className="mr-4">
                   <input
                     type="radio"
@@ -256,7 +270,7 @@ const Register = () => {
                     value="male"
                     onChange={ (e) => setGender( e.target.value)}
                     checked={gender === 'male'}
-                    className="mr-2 accent-green-700"
+                    className="mr-2 h-[17px] w-[17px] accent-green-700"
                   />
                   Male
                 </label>
@@ -268,7 +282,7 @@ const Register = () => {
                     value="female"
                     onChange={ (e)=>setGender(e.target.value) }
                     checked={gender === 'female'}
-                    className="mr-2 accent-green-700"
+                    className="mr-2 h-[17px] w-[17px] accent-green-700"
                   />
                   Female
                 </label>
@@ -283,42 +297,49 @@ const Register = () => {
             </div> */}
             <div className="mb-4">
               <label htmlFor="password" className="block mb-2">Password</label>
-              <input
-                type={showPassword?'text':'password'}
-                id="password"
-                name="password"
-                value={password}
-                onChange={ (e)=>setPassword(e.target.value) }
-                className="border w-[83%] bg-gray-200 rounded px-4 py-2"
-                required
-              />  <button
-                  type="button"
-                className={`right-0 w-fit ${showPassword?"bg-red-600 opacity-90 px-1":"bg-green-600 px-[2px]"} rounded-r-md py-2 ` }
-                  onClick={togglePasswordVisibility1}
-                >
-                  {showPassword ? 'Hide' : 'Show'}
-                </button>
+              <div className='rounded-[8px] h-[52px] bg-gray-200 flex flex-row justify-between'>
+                <input type={showPassword?'text':'password'}
+                  id="password"
+                  name="password"
+                  placeholder='Password'
+                  value={password}
+                  onChange={ (e)=>setPassword(e.target.value) }
+                  className="border outline-none  w-[75%] text-[19px] bg-gray-200 rounded px-4 py-2"
+                  required
+                />  <button
+                    type="button"
+                  className={`right-0 w-fit ${showPassword?"":""} px-2 rounded-r-md py-2 ` }
+                    onClick={togglePasswordVisibility1}
+                  >
+                    {showPassword ? <EyeOpen/> : <EyeClose/>}
+                  </button>
+                </div>
                 {password && password.length<6 && (
                   <p className="text-red-500 font-thin ">Passwords must have Six(6) or more characters</p>
               )}
             </div>
             <div className="mb-4">
               <label htmlFor="confirmPassword" className="block mb-2">Confirm Password</label>
-              <input
-                type={showPassword2?'text':'password'}
-                id="confirmPassword"
-                name="confirmPassword"
-                value={confirmPassword}
-                onChange={ (e)=>setConfirmPassword(e.target.value) }
-                className="w-[83%] bg-gray-200 rounded px-4 py-2"
-                required
-              />  <button
-                  type="button"
-                  className={`right-0 w-fit ${showPassword2?"bg-red-600 opacity-90 px-1":"bg-green-600 px-[2px]"} rounded-r-md py-2` }
-                  onClick={togglePasswordVisibility2}
-                >
-                  {showPassword2 ? 'Hide' : 'Show'}
+              <div className='rounded-[8px] h-[52px] bg-gray-200 flex flex-row justify-between'>
+                <input
+                  type={showPassword2?'text':'password'}
+                  id="confirmPassword"
+                  name="confirmPassword"
+                  value={confirmPassword}
+                  placeholder='Confirm Password'
+                  onChange={ (e)=>setConfirmPassword(e.target.value) }
+                  className="w-[75%] h-[52px] text-[19px] outline-none bg-gray-200 rounded px-4 py-2"
+                  required
+                />
+                <button
+                    type="button"
+                    className={`right-0 w-fit ${showPassword2?"":""} px-2 rounded-r-md py-2` }
+                    onClick={togglePasswordVisibility2}
+                  >
+                    {showPassword2 ? <EyeOpen/> : <EyeClose/>}
                 </button>
+              </div>
+          
             </div>
             <div> {confirmPassword &&
                 password !== confirmPassword && (
@@ -326,53 +347,52 @@ const Register = () => {
               )}</div>
               <div className="mb-4">
                 <Checkbox handleTermsCheckboxChange={handleTermsCheckboxChange}/>
-            
-            </div><div className="flex justify-between px-4 py-2">
+            </div>
+            <div style={{alignSelf:'center'}} className="flex w-full justify-between mt-2">
               {firstname.length && phone.length && lastname.length && dob.length && email.length &&
                 password.length && phone.length>11 && gender.length && residence.length && password.length>5 && password===confirmPassword && acceptTerms? (
                 <button
                   type="submit"
-                  className="font-semibold text-white px-8 py-2 rounded-md bg-green-800 hover:bg-green-900 active:bg-green-950"
+                  className="font-semibold text-white w-[100%] h-[48px] py-2 rounded-[5px] bg-green-700 hover:bg-green-900 active:bg-green-950"
                 >
-                  {' '}
                   REGISTER
                 </button>
               ) : (
                 <button
                   type="submit"
                   disabled={true}
-                  className="font-semibold text-white  px-8 py-2 rounded-md bg-green-500"
+                  className="font-semibold text-white w-[100%] h-[48px] py-2 rounded-[5px] bg-gray-300"
                 >
                   REGISTER
                 </button>
               )}
             </div>
-          <div>Already have an Account? <Link className="text-green-700 font-semibold" href="#" onClick={()=>router.push("/account/login")}>Login</Link></div> 
+            <div className='mt-3 text-[16px]'>Already have an Account? <Link className="text-green-500 underline font-semibold" href="#" onClick={()=>router.push("/account/login")}>Login</Link></div> 
           </form>
         </div>
-        </Layout>
+        {/* </Layout> */}
       </div>
 
     {/* confirmation page */}
-      <div style={{ display:(toConfirmPage?'block':'none')}}>
-        <h1 className="text-2xl font-bold mb-4 underline mt-4">Confirm Details</h1>
-        <p className='mb4 p-3 text-lg font-semibold'><span className='pr-2 font-bold'>Name: </span>{firstname}</p>
-        <p className='mb4 p-3 text-lg font-semibold'><span className='pr-2 font-bold'>Surname: </span>{lastname}</p>
-        <p className='mb4 p-3 text-lg font-semibold'><span className='pr-2 font-bold'>Date of Birth: </span>{dob}</p>
-        <p className='mb4 p-3 text-lg font-semibold'><span className='pr-2 font-bold'>Email: </span>{email}</p>
-        <p className='mb4 p-3 text-lg font-semibold'><span className='pr-2 font-bold'>Phone Number: </span>{phone}</p>
-        <p className='mb4 p-3 text-lg font-semibold'><span className='pr-2 font-bold'>Residence: </span>{residence}</p> 
-        <p className='mb4 p-3 text-lg font-semibold'><span className='pr-2 font-bold'>Gender: </span>{gender}</p>
+      <div className='flex flex-col max-w-[700px]' style={{ display:(toConfirmPage?'block':'none'), alignSelf:'center'}}>
+        <div className="text-[25px] font-extrabold text-center w-[100%] border-b-1 pb-4 text-green-600 border-green-100 mt-[30px]">Confirm Details</div>
+        <div className='bg-gray-100 py-4 rounded-[10px]'>
+          <div className='mb4 px-5 p-1 text-[19px] font-semibold'><span className='pr-2 text-gray-500 font-bold'>Name: </span>{firstname}</div>
+          <div className='mb4 px-5 p-1 text-[19px] font-semibold'><span className='pr-2 text-gray-500 font-bold'>Surname: </span>{lastname}</div>
+          <div className='mb4 px-5 p-1 text-[19px] font-semibold'><span className='pr-2 text-gray-500 font-bold'>Date of Birth: </span>{dob}</div>
+          <div className='mb4 px-5 p-1 text-[19px] font-semibold'><span className='pr-2 text-gray-500 font-bold'>Email: </span>{email}</div>
+          <div className='mb4 px-5 p-1 text-[19px] font-semibold'><span className='pr-2 text-gray-500 font-bold'>Phone Number: </span>{phone}</div>
+          <div className='mb4 px-5 p-1 text-[19px] font-semibold'><span className='pr-2 text-gray-500 font-bold'>Residence: </span>{residence}</div> 
+          <div className='mb4 px-5 p-1 text-[19px] font-semibold'><span className='pr-2 text-gray-500 font-bold'>Gender: </span>{gender}</div>
+        </div>
+
         
-        <p className='mb-16 font-semibold ml-4 lg:text-left text-large'>Please verify your details above.</p>
-        <div className='w-36 ml-4 mb-8 cursor-pointer flex 
-          font-serif bg-green-500  rounded items-center opacity-85
-          justify-center font-bold hover:bg-gray-800 py-2 px-1 outline-none
-          hover:text-gray-200 text-center shadow-slate-900 shadow-lg' onClick={()=>(router.push('/reg'))}> Back to edit</div> 
-          <div className='w-36 ml-4 mb-8 cursor-pointer flex 
-          font-serif bg-green-500  rounded items-center opacity-85
-          justify-center font-bold hover:bg-gray-800 py-2 px-1 outline-none
-          hover:text-gray-200 text-center shadow-slate-900 shadow-lg' onClick={beginPayment}>Proceed to Pay</div> 
+        <p className='px-5 text-[20px] text-blue-500'>*Please verify your details above.</p>
+        <div className='px-5 flex flex-row justify-around mt-[35px]'>
+          <button className='bg-transparent text-green-700 font-bold border-2 border-green-700 hover:bg-green-700 hover:text-white rounded-[5px] px-[22px] text-[20px] py-2' onClick={()=>{setToConfirmPage(false)}}>Edit</button> 
+          <button className=' bg-green-600 font-bold text-white text-[21px] py-2 rounded-[5px] px-[20px]' onClick={beginPayment}>Proceed to Pay</button>  
+        </div>
+
       </div>
     </div>
   );

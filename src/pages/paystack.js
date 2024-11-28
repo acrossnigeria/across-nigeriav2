@@ -90,13 +90,34 @@ export default function PayScreen (){
     }
   };
     return (
-    <Layout>
-       { loading && <div className="absolute z-50 bg-white text-black text-center h-screen w-screen font-sans font-bold text-[30px] bg-opacity-90">
-        Submiting your Details, please wait
+    <div>
+       { loading && <div className="absolute z-50 bg-white flex flex-col justify-center items-center text-black text-center h-screen w-screen font-sans">
+          <span className="font-extrabold text-[15px] text-green-700 animate-pulse">ACROSS NIGERIA REALITY SHOW</span>
+          <span className="py-[10px] text-[20px]">Submiting your Details, please wait</span>
+          <svg class="loader" viewBox="0 0 384 384" xmlns="http://www.w3.org/2000/svg">
+          <circle
+            class="active"
+            pathLength="360"
+            fill="transparent"
+            stroke-width="32"
+            cx="192"
+            cy="192"
+            r="176"
+          ></circle>
+          <circle
+            class="track"
+            pathLength="360"
+            fill="transparent"
+            stroke-width="32"
+            cx="192"
+            cy="192"
+            r="176"
+          ></circle>
+          </svg>
         </div>}
        <PaystackBtn pay={paymentUpdate} paystackKey={paystackLiveKey} amount={1000} email={userDetails[0]?.email?? null} purpose="Registration to use Our Products"/>
 
-      </Layout>
+      </div>
     
     );
 

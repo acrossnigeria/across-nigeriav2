@@ -10,16 +10,16 @@ const Checkbox = ({handleTermsCheckboxChange}) => {
       }
   return (
     
-<div className="mt-4">
+<div style={{alignItems:'center'}} className="mt-4 flex flex-row">
           <input
             type="checkbox"
             id="termsCheckbox"
             checked={termsAccepted}
-            className='accent-green-700'
+            className='accent-green-700 h-[18px] w-[18px]'
             onChange={handleChange}
           />
-          <label htmlFor="termsCheckbox" className="ml-2">
-            Accept our <Link className='text-green-800 hover:text-green-300' href="#">Terms and Conditions</Link>
+          <label htmlFor="termsCheckbox" className="ml-2 text-[18px]">
+            Accept our <Link className='text-green-500 underline hover:text-green-300' href="#">Terms and Conditions</Link>
           </label>
         </div>
   )

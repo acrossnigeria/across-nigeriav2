@@ -7,7 +7,7 @@ export default function Loader() {
     const [ progress, setProgress ] = useState('w-[0%]')
     useEffect(() => {
         if( loading ) { 
-            setProgress('w-[150%]')
+            setProgress('w-[60%]')
         }; 
         if( !loading ) { 
             setProgress('w-[200%]');
@@ -20,7 +20,7 @@ export default function Loader() {
 
 
     return (
-            <div className={`h-[10px] ${load} transition duration-[2000] ease-linear bg-orange-500 animate-pulse ${progress}`} style={{ textAlign:'center', position:'fixed', top:'3px', left:'0px', transform:'translate(-50%, -50%)', zIndex:1000}}>
+            <div className={`h-[5px] ${load} transition duration-[1000] ease-linear bg-orange-600 ${progress}`} style={{ textAlign:'center', position:'fixed', top:'1px', left:'0px', transform:'translate(-50%, -50%)', zIndex:1000}}>
             </div>
     )
 }
