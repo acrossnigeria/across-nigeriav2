@@ -1,7 +1,7 @@
 import { useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
 import { PaystackButton } from "react-paystack";
-import Pay from "../../public/images/illustration/pay";
+import Pay from "../../public/images/illustration/Pay";
 
 export default function PaystackBtn(props) {
 //provide props for amount email key is proc.env.PAYSTACK
