@@ -3,6 +3,9 @@ import { useState } from 'react';
 import axios from 'axios';
 import Layout from '@/components/Layout';
 import { center } from '@cloudinary/url-gen/qualifiers/textAlignment';
+import Close from '../../../public/images/icon/Close';
+import Loader from '@/components/Loader';
+import Link from 'next/link';
 
 const EmailForm = () => {
   const [email, setEmail] = useState('');
@@ -90,33 +93,44 @@ const EmailForm = () => {
   };
 
   return (
-    <Layout title="Password Reset" >
-    <div style={{width:'100%', placeSelf:'center'}} >
-      <form 
-      style={{alignItems: 'center'}}
-      className='flex flex-col' 
-      onSubmit={allowSubmit? handleSubmit : (e)=>{e.preventDefault()}}>
-        <h2 style={{fontSize:'25px', textAlign:'center', margin:'15px 0px'}} className="w-full font-bold tracking-wider">Password Recovery</h2>
-        <label style={{alignSelf:'left', width:'315px', fontSize:'21px', color:'166534'}}>Email: </label>
-          <input
-          placeholder='Enter your Email'
-            style={{width:'320px'}}
-            type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
-            className='mb-4 ml-1 border p-2 text-lg font-thin font-sans border-gray-500 rounded'
-          />
-       <div style={{display:'flex', flexDirection:'column', alignItems:'center', width:'100%', paddingLeft:'20px', paddingRight:'20px'}}>
-          <p style={{fontSize:'19px', textAlign:'center', lineHeight:'25px'}}>{message}</p>
-          <p style={{textAlign:'center', color:'grey', fontSize:'17px', visibility:(timerDisplay)}}>You can submit a new request in {timer}s</p>
-       </div>
-  
-        <button style={{backgroundColor:(allowSubmit?'#166534':'grey'), marginTop:'10px', fontSize:'19px', width:'150px'}}  className='block hover:opacity-80 text-white cursor-pointer rounded p-2' type="submit">
-          {loading?'Submiting...':'Submit'}
-        </button>
-      </form>
-    </div></Layout>
+    <div >
+      <Loader/>
+      <div className='flex flex-row justify-end px-8 py-3'>
+          <Link href={'/'}><Close/></Link> 
+      </div>
+      <div style={{width:'100%', placeSelf:'center'}} >
+        <div className='border-b-1 border-green-100 py-3 text-center text-[17px] font-bold text-green-600'>
+          <span>ACROSS NIGERIA REALITY SHOW</span>
+        </div>
+        <form style={{alignItems: 'center'}}className='flex flex-col' 
+        onSubmit={allowSubmit? handleSubmit : (e)=>{e.preventDefault()}}>
+          <h2 style={{fontSize:'23px', textAlign:'center', margin:'15px 0px'}} className="w-full font-semibold tracking-wider">Reset your password</h2>
+          <p className='mb-[20px] pb-[10px] border-b-[2px]' style={{alignSelf:'left', width:'315px', fontSize:'16px'}}>
+            If the account exist, we will email you instructions to reset the password.
+          </p>
+          <label style={{alignSelf:'left', width:'315px', fontSize:'19px'}}>Email </label>
+            <input
+            placeholder='Enter your email'
+              style={{width:'320px'}}
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+              className='mb-4 ml-1 h-[49px] pl-[10px] bg-gray-200 text-[19px] font-thin font-sans border-none rounded-[5px]'
+            />
+          <div className="flex flex-row justify-between w-full px-[20px] md:w-[400px]">
+          <button className="text-[16px] rounded-[5px] h-[49px] hover:bg-green-700 hover:border-none hover:text-white text-green-700 border-1 border-green-700 w-[48%]"><Link href="/account/login" className="mt-3">Return to login</Link></button>
+          <button style={{backgroundColor:(allowSubmit?'#166534':'grey'), fontSize:'19px', width:'48%'}}  className='block hover:opacity-80 text-white cursor-pointer rounded' type="submit">
+            {loading?'Submiting...':'Submit'}
+          </button> 
+          </div>
+          <div className='mt-[20px] text-red-600' style={{display:'flex', flexDirection:'column', alignItems:'center', width:'100%', paddingLeft:'20px', paddingRight:'20px'}}>
+            <p style={{fontSize:'19px', textAlign:'center', lineHeight:'25px'}}>{message}</p>
+            <p style={{textAlign:'center', color:'grey', fontSize:'17px', visibility:(timerDisplay)}}>You can submit a new request in {timer}s</p>
+        </div>
+        </form>
+      </div>
+    </div>
   );
 };
 
