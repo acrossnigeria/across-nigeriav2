@@ -40,7 +40,7 @@ const Info = () => {
       </div>
       <p className="font-semibold text-left mt-4 text-xl mb-4 text-gray-700">{data.paragraph}</p>
       <div className={`flex flex-row ${isMobile?'justify-center':''} `}>
-        <button style={{ display:( session?.user? 'none': 'block')}} className="w-[fit-content] px-[40px] font-bold text-white rounded-[30px] h-[60px] flex flex-row justify-center items-center tracking-wider bg-green-700 hover:border-green-700 hover:bg-transparent hover:text-green-700">
+        <button style={{ display:( session?.user? 'none': 'block')}} className="w-[fit-content] px-[40px] font-bold text-white rounded-[30px] h-[60px] flex flex-row justify-center items-center tracking-wider bg-green-700 hover:border-2 hover:border-green-700 hover:bg-transparent hover:text-green-700">
             <Link  href="/account/reg">
               Register to get Involved
             </Link>
