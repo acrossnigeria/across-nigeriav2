@@ -38,52 +38,53 @@ export default function ChangePass(props){
     await axios.put("/api/updatePass", {newPassword,id} )
     // You can replace this with your actual submission logic
     console.log('Password successfully changed!');
-    setNewPassword("")
-    setRepeatPassword("")
-    router.push("/login")
+    setNewPassword("");
+    setRepeatPassword("");
+    router.push("/login");
   };
 
   return (
-   <div className=" m-10 p-10 bg-gray-200 ">
-      <h1 className="mb-6 font-bold text-2xl underline">Change Password</h1>
-      <form className="font-semibold text-lg" onSubmit={handleSubmit}>
-        <div>
-          <label htmlFor="newPassword">Enter New Password:</label>
-          <input
-              className="mb-4 bg-gray-200 h-[49px] rounded-[5px] text-[19px]"
-            type={showPassword ? 'text' : 'password'} // Toggle input type based on showPassword state
-            id="newPassword"
-            value={newPassword}
-            placeholder="New Password"
-            onChange={(e) => setNewPassword(e.target.value)}
-            required
-          />
+    <div>
+      <Loader/>
+      <div className='flex flex-row justify-end px-8 py-3'>
+          <Link href={'/'}><Close/></Link> 
+      </div>
+      <div className='border-b-1 border-green-100 py-3 mt-2 text-center text-[17px] font-bold text-green-600'>
+          <span>ACROSS NIGERIA REALITY SHOW</span>
         </div>
-        <div>
-          <label htmlFor="repeatPassword">Repeat New Password:</label>
-          <input
-          className="mb-4 bg-gray-200 h-[49px] rounded-[5px] text-[19px]"
-            type={showPassword ? 'text' : 'password'} // Toggle input type based on showPassword state
-            id="repeatPassword"
-            value={repeatPassword}
-            placeholder="Repeat the New Password"
-            onChange={(e) => setRepeatPassword(e.target.value)}
-            required
-          />
-        </div>
-        {error && <p style={{ color: 'red' }}>{error}</p>}
-        <div className="mb-4">
-          <input
-          className=" p-3 accent-green-700"
-            type="checkbox"
-            id="showPassword"
-            checked={showPassword}
-            onChange={(e) => setShowPassword(e.target.checked)}
-          />
-          <label className="ml-4" htmlFor="showPassword">Show Password</label>
-        </div>
-        <button className="bg-green-800 h-[49px] text-white px-[25px]" type="submit">Submit</button>
-      </form>
+      <div className=" m-10 p-10 bg-gray-200 ">
+        <h1 className="mb-6 font-bold text-[25px] underline">Change Password</h1>
+        <form className="font-semibold text-lg" onSubmit={handleSubmit}>
+          <div>
+            <label htmlFor="newPassword">Enter New Password:</label>
+            <input className="mb-4 bg-gray-200 h-[49px] rounded-[5px] text-[19px]"
+              type={showPassword ? 'text' : 'password'} // Toggle input type based on showPassword state
+              id="newPassword"
+              value={newPassword}
+              placeholder="New Password"
+              onChange={(e) => setNewPassword(e.target.value)}
+              required />
+          </div>
+          <div>
+            <label htmlFor="repeatPassword">Repeat New Password:</label>
+            <input className="mb-4 bg-gray-200 h-[49px] rounded-[5px] text-[19px]"
+              type={showPassword ? 'text' : 'password'} // Toggle input type based on showPassword state
+              id="repeatPassword"
+              value={repeatPassword}
+              placeholder="Repeat the New Password"
+              onChange={(e) => setRepeatPassword(e.target.value)}
+              required />
+          </div>
+          {error && <p style={{ color: 'red' }}>{error}</p>}
+          <div className="mb-4">
+            <input className=" p-3 accent-green-700" type="checkbox" id="showPassword"
+              checked={showPassword}
+              onChange={(e) => setShowPassword(e.target.checked)} />
+            <label className="ml-4" htmlFor="showPassword">Show Password</label>
+          </div>
+          <button className="bg-green-800 h-[49px] text-white px-[25px]" type="submit">Submit</button>
+        </form>
+      </div>
     </div>
   );
 
