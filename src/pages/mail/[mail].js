@@ -4,6 +4,9 @@ import Layout from "@/components/Layout";
 import { useState } from "react";
 import axios from "axios";
 import { useRouter } from "next/router";
+import Loader from "@/components/Loader";
+import Link from "next/link";
+import Close from "../../../public/images/icon/Close";
 
 export default function ChangePass(props){
     const { user } = props;
