@@ -12,9 +12,18 @@ import whatsapp  from "../../public/images/soc_media/icons8-whatsapp.gif";
 import telegram from "../../public/images/soc_media/icons8-telegram.gif";
 import { useSession } from "next-auth/react";
 import Image from "next/image";
+import { useState, useEffect } from "react";
 
-const Info = ()=>{
-    const { status, data: session } = useSession();
+const Info = () => {
+  const [isMobile, setIsMobile]=useState(false);
+  useEffect(()=>{
+    if(/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)&&window.matchMedia("(max-width: 600px)").matches){
+    setIsMobile(true)
+  } else{setIsMobile(false)}
+// console.log(isMobile, navigator.userAgent)
+  },[ isMobile ])
+
+  const { status, data: session } = useSession();
   const data={
   paragraph: ` We offer a variety of giveaways, game show and reality shows that
             cater to different tastes and interests. Whether you want to win
@@ -24,47 +33,49 @@ const Info = ()=>{
   reversed:true
     };
   return (
-      <div className="relative h-full wfull  grid grid-cols-1 top-0 border-b-1 pb-4 px-1 border-b-gray">
+    <div className="relative h-full wfull  grid grid-cols-1 top-0 border-b-1 pb-4 px-1 border-b-gray">
         
-         <div className="flex lg:w-full  w-full font-bold text-6xl 
-          right-0 pt-4  text-pretty">
+      <div className="flex lg:w-full  w-full font-bold text-6xl right-0 pt-4  text-pretty">
         <span style={{}} className="w-full bg-clip-text bg-gradient-to-tr from-green-700 text-transparent to-green-400 font-extrabold tracking-wider">HOWFA?</span> 
-        </div>
-            <p className="font-semibold text-left mt-4 text-xl mb-4 text-gray-700">{data.paragraph}</p>
-       
-          <Link style={{ display:( session?.user? 'none': 'block'), width:'fit-content', padding:'8px 15px', color: "white", fontSize:'18px', borderRadius:'17px', borderBottomRightRadius:'50px'}}
-        className="w-full font-bold tracking-wider bg-gradient-to-br from-green-800 to-green-500 hover:opacity-70" href="/account/reg">
-          {"Register to get Involved"}
+      </div>
+      <p className="font-semibold text-left mt-4 text-xl mb-4 text-gray-700">{data.paragraph}</p>
+      <div className={`flex flex-row ${isMobile?'justify-center':''} `}>
+        <button style={{ display:( session?.user? 'none': 'block')}} className="w-[fit-content] px-[40px] font-bold text-white rounded-[30px] h-[60px] flex flex-row justify-center items-center tracking-wider bg-green-700 hover:border-green-700 hover:bg-transparent hover:text-green-700">
+            <Link  href="/account/reg">
+              Register to get Involved
+            </Link>
+        </button> 
+      </div>
+      
+      <div style={{gap:'10px'}} className="text-8xl mt-6 mb-6 mx-auto rounded-md justify-between flex">
+          <Link href=''>
+            <Image  quality={100}  className="cursor-pointer" src={facebook} height={20} width={30} alt="facebook"/>
           </Link>
-   <div style={{gap:'10px'}} className="text-8xl mt-6 mb-6 mx-auto rounded-md justify-between flex">
-      <Link href=''>
-        <Image  quality={100}  className="cursor-pointer" src={facebook} height={20} width={30} alt="facebook"/>
-      </Link>
-      <Link href='https://www.facebook.com/profile.php?id=61560087734551'> 
-        <Image  quality={100}  className="cursor-pointer" src={x} height={20} width={30} alt="tiktok"/>  
-      </Link>
-      <Link href='https://t.me/+2349040440983'>
-        <Image  quality={100}  className="cursor-pointer" src={telegram} height={20} width={30} alt="telegram"/>
-      </Link>
-      <Link href='https://wa.me/+2349040440983'>
-        <Image  quality={100}  className="cursor-pointer" src={whatsapp} height={20} width={30} alt="tiktok"/>
-      </Link>
-      <Link href="https://www.tiktok.com/@across_nigeria_show">
-        <Image  quality={100}  className="cursor-pointer" src={tiktok} height={20} width={30} alt="tiktok"/>
-      </Link>
-      <Link href='https://www.instagram.com/across_nigeria_reality_show?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw=='>
-        <Image quality={100} className="cursor-pointer"  src={instagram} height={20} width={30} alt="Instagram"/>
-      </Link>
-      <Link href=''>
-        <Image  quality={100} className="cursor-pointer" src={youtube} height={20} width={30} alt="youtube"/>
-      </Link>
-      <Link href=''>
-        <Image  quality={100} className="cursor-pointer" src={linkedin} height={20} width={30} alt="linkedin"/>
-      </Link>
+          <Link href='https://www.facebook.com/profile.php?id=61560087734551'> 
+            <Image  quality={100}  className="cursor-pointer" src={x} height={20} width={30} alt="tiktok"/>  
+          </Link>
+          <Link href='https://t.me/+2349040440983'>
+            <Image  quality={100}  className="cursor-pointer" src={telegram} height={20} width={30} alt="telegram"/>
+          </Link>
+          <Link href='https://wa.me/+2349040440983'>
+            <Image  quality={100}  className="cursor-pointer" src={whatsapp} height={20} width={30} alt="tiktok"/>
+          </Link>
+          <Link href="https://www.tiktok.com/@across_nigeria_show">
+            <Image  quality={100}  className="cursor-pointer" src={tiktok} height={20} width={30} alt="tiktok"/>
+          </Link>
+          <Link href='https://www.instagram.com/across_nigeria_reality_show?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw=='>
+            <Image quality={100} className="cursor-pointer"  src={instagram} height={20} width={30} alt="Instagram"/>
+          </Link>
+          <Link href=''>
+            <Image  quality={100} className="cursor-pointer" src={youtube} height={20} width={30} alt="youtube"/>
+          </Link>
+          <Link href=''>
+            <Image  quality={100} className="cursor-pointer" src={linkedin} height={20} width={30} alt="linkedin"/>
+          </Link>
+            
+      </div>
         
-   </div>
-        
-   </div>
+    </div>
 
  
   );
