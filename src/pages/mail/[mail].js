@@ -6,18 +6,18 @@ import axios from "axios";
 import { useRouter } from "next/router";
 
 export default function ChangePass(props){
-const{user}=props;
-const id= user._id;
-    const [newPassword, setNewPassword] = useState('');
-    const [repeatPassword, setRepeatPassword] = useState('');
-    const [showPassword, setShowPassword] = useState(false); // State to toggle password visibility
-    const [error, setError] = useState('');
+    const { user } = props;
+    const id= user._id;
+    const [ newPassword, setNewPassword ] = useState('');
+    const [ repeatPassword, setRepeatPassword ] = useState('');
+    const [ showPassword, setShowPassword ] = useState(false); // State to toggle password visibility
+    const [ error, setError] = useState('');
     const router=useRouter();
-if(!user){
-    return<Layout title="User Not Found">
-        <div>the user with the login details you entered is not registered in our Database</div>
-    </Layout>
-}
+    if(!user){
+        return<Layout title="User Not Found">
+            <div>the user with the login details you entered is not registered in our Database</div>
+        </Layout>
+    }
   const handleSubmit = async(e) => {
     e.preventDefault(); // Prevent the default form submission
 
@@ -44,13 +44,13 @@ if(!user){
   };
 
   return (
-   <Layout>   <div className=" m-10 p-10 border border-gray-500 rounded">
+   <div className=" m-10 p-10 bg-gray-200 ">
       <h1 className="mb-6 font-bold text-2xl underline">Change Password</h1>
       <form className="font-semibold text-lg" onSubmit={handleSubmit}>
         <div>
           <label htmlFor="newPassword">Enter New Password:</label>
           <input
-              className="mb-4 border border-gray-500 rounded"
+              className="mb-4 bg-gray-200 h-[49px] rounded-[5px] text-[19px]"
             type={showPassword ? 'text' : 'password'} // Toggle input type based on showPassword state
             id="newPassword"
             value={newPassword}
@@ -62,7 +62,7 @@ if(!user){
         <div>
           <label htmlFor="repeatPassword">Repeat New Password:</label>
           <input
-          className="mb-4 border border-gray-500 rounded"
+          className="mb-4 bg-gray-200 h-[49px] rounded-[5px] text-[19px]"
             type={showPassword ? 'text' : 'password'} // Toggle input type based on showPassword state
             id="repeatPassword"
             value={repeatPassword}
@@ -82,28 +82,28 @@ if(!user){
           />
           <label className="ml-4" htmlFor="showPassword">Show Password</label>
         </div>
-        <button className="bg-green-800 text-white p-2" type="submit">Submit</button>
+        <button className="bg-green-800 h-[49px] text-white px-[25px]" type="submit">Submit</button>
       </form>
-    </div></Layout>
+    </div>
   );
 
 }
 
 
 export async function getServerSideProps(context) {
-  const { params,req } = context;
+  const { params, req } = context;
   const { mail } = params;
-   console.log("PARAMS", params)
-   console.log("MAIL", mail)
-   await db.connect();
+  // console.log("PARAMS", params)
+  // console.log("MAIL", mail)
+  await db.connect();
   const user = await User.findOne({resetCode:`${mail}`}).lean();
   await db.disconnect();
-if (user) {
-  user.resetTime = user.resetTime ? user.resetTime.toISOString() : null;
-}
+  if (user) {
+    user.resetTime = user.resetTime ? user.resetTime.toISOString() : null;
+  }
   return {
     props: {
-      user: user ? db.convertDocToObj(user) : null,
+      user: user ? db.convertDocToObj(user) : null, 
     },
   };
 }

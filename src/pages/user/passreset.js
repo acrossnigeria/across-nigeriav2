@@ -124,7 +124,7 @@ const EmailForm = () => {
             {loading?'Submiting...':'Submit'}
           </button> 
           </div>
-          <div className='mt-[20px] text-red-600' style={{display:'flex', flexDirection:'column', alignItems:'center', width:'100%', paddingLeft:'20px', paddingRight:'20px'}}>
+          <div className='mt-[20px]' style={{display:'flex', flexDirection:'column', alignItems:'center', width:'100%', paddingLeft:'20px', paddingRight:'20px'}}>
             <p style={{fontSize:'19px', textAlign:'center', lineHeight:'25px'}}>{message}</p>
             <p style={{textAlign:'center', color:'grey', fontSize:'17px', visibility:(timerDisplay)}}>You can submit a new request in {timer}s</p>
         </div>
