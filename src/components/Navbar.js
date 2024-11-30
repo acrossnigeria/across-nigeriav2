@@ -67,15 +67,15 @@ const Navbar = () => {
         ) : (
           <div className='w-[fit-content] flex flex-row gap-2'>
             <div className="flex px-[10px] h-[40px] cursor-pointer items-center 
-            justify-center text-green-200 border-2 border-green-200 bg-transparent transition duration-100 rounded-[5px] text-[15px]
+            justify-center text-green-200 border-2 border-green-200 bg-transparent transition duration-100 rounded-[40px] text-[15px]
             ease-in-out hover:scale-105">
               <Link href="/account/reg" className="cursor-pointer" legacyBehavior>
                 <a>Register</a>
               </Link>
             </div>
             <div className="flex px-[15px] h-[40px] cursor-pointer items-center 
-            justify-center text-green-800 bg-green-200 transition duration-100 rounded-[5px] text-[14px]
-            ease-in-out hover:bg-green-100  hover:scale-105">
+            justify-center text-white bg-yellow-500 transition duration-100 rounded-[40px] text-[14px]
+            ease-in-out hover:bg-yellow-300  hover:scale-105">
               <Link href="/account/login" className="cursor-pointer" legacyBehavior>
                 <a>Login</a>
               </Link>
