@@ -52,11 +52,11 @@ export default function ChangePass(props){
       <div className='border-b-1 border-green-100 py-3 mt-2 text-center text-[17px] font-bold text-green-600'>
           <span>ACROSS NIGERIA REALITY SHOW</span>
         </div>
-      <div className=" m-10 p-10 bg-gray-200 ">
-        <h1 className="mb-6 font-bold text-[25px] underline">Change Password</h1>
-        <form className="font-semibold text-lg" onSubmit={handleSubmit}>
+      <div className=" m-5 p-5">
+        <h1 className="mb-6 font-semibold text-[25px]">Set new password</h1>
+        <form className=" text-lg" onSubmit={handleSubmit}>
           <div>
-            <label htmlFor="newPassword">Enter New Password:</label>
+            <label className="font-semibold" htmlFor="newPassword">Enter New Password:</label>
             <input className="mb-4 bg-gray-200 h-[49px] rounded-[5px] text-[19px]"
               type={showPassword ? 'text' : 'password'} // Toggle input type based on showPassword state
               id="newPassword"
@@ -82,7 +82,7 @@ export default function ChangePass(props){
               onChange={(e) => setShowPassword(e.target.checked)} />
             <label className="ml-4" htmlFor="showPassword">Show Password</label>
           </div>
-          <button className="bg-green-800 h-[49px] text-white px-[25px]" type="submit">Submit</button>
+          <button className="bg-green-700 hover:bg-white hover:border hover:text-green-700 rounded-[5px] h-[49px] text-white px-[25px]" type="submit">Submit</button>
         </form>
       </div>
     </div>
