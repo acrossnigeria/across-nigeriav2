@@ -9,7 +9,7 @@ const Profile = () => {
   const { status, data: session } = useSession();
 
   const [ isMobile, setIsMobile ] = useState(false);
-  const [ email, setEmail ] = useState('');
+  const [ email, setEmail ] = useState(session?.user?.email);
   const [ phone, setPhone ] = useState(null);
   const [ fullname, setFullname ] = useState(null);
   const [ refs, setRefs ] = useState(0);
@@ -19,7 +19,7 @@ const Profile = () => {
   const [ notifications, setNotifications ] = useState(null);
 
   const getUserData = async () => {
-    setEmail(session?.user?.email);
+    // setEmail(session?.user?.email);
     try {
       const response = await axios.get('/api/findUser', { params:{ email } });
       const profile = response.data;
