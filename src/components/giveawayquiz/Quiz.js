@@ -85,7 +85,7 @@ const Quiz = ( { state }) => {
 
             <ul className="space-y-4 w-[350px] mt-[20px]">
                 { question.options.map((option, index) => (
-                <li key={index} className={`p-4 rounded-[30px] w-[100%] cursor-pointer hover:scale-105 ${selectedAnswer === index ? 'bg-green-700 text-white border-none':'border-green-700 border-1'}`} onClick={() => handleOptionClick(index)} >
+                <li key={index} className={`p-4 rounded-[30px] w-[100%] cursor-pointer md:hover:scale-105 ${selectedAnswer === index ? 'bg-green-700 text-white border-none':'border-green-700 border-1'}`} onClick={() => handleOptionClick(index)} >
                     {option}
                 </li>
                 )) }
