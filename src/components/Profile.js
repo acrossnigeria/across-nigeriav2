@@ -23,7 +23,7 @@ const Profile = () => {
     try {
       const response = await axios.get('/api/findUser', { params:{ email } });
       const profile = response.data;
-      setRefs(profile.refs);
+      setRefs(profile.refs === 0 ? '0':profile.refs);
       setRefCode(profile.refCode);
       setRefLink(`https://acrossnig.com/account/reg?ref=${profile.refCode}`);
       setPhone(profile.phone);
