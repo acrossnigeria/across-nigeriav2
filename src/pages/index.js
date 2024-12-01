@@ -23,7 +23,7 @@ import ShoutOutCard from "@/components/ShoutOutCard";
 
 
 export const games=[
-  {title:"GIVE AWAY QUIZZES", image:image1,link:"/giveaway", date:'March, 2024'},
+  {title:"GIVE AWAY QUIZZES", image:image1,link:"/giveaway-quiz/landingPage", date:'March, 2024'},
   {title:"SKITS ACROSS NIGERIA",image:image2,link:"/skitsPage", date:'March, 2024'},
   {title:"NAIJA VIBES", image:image8,link:"/soon", date:'March, 2024'},
   {title:"KING AND QUEEN",image:image3,link:"/soon", date:'January 1st, 2025'},

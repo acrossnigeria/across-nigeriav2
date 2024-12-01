@@ -56,7 +56,7 @@ const toggleMenu=()=>{
                                         Profile
                                       </div>
                                   </Link>):('') }
-              <Link href={'/giveaway'}>
+              <Link href={'/giveaway-quiz/quizSession'}>
                   <div className="flex font-mono text-[17px] font-extrabold hover:text-green-400">
                     Giveaway-quiz
                   </div>

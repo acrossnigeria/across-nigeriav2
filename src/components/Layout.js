@@ -22,7 +22,7 @@ export default function Layout({ title, children }) {
   },[ isMobile ])
   
     return(
-<div className="h-screen p-0 m-0 bottom-0">
+    <div className="h-screen p-0 m-0 bottom-0">
       <Head>
         <title>{title ? title + "-Across Nigeria TV" : "Across Nigeria Reality Show"}</title>
         <meta name="description" content="App Description" />
@@ -31,9 +31,9 @@ export default function Layout({ title, children }) {
        <ToastContainer position="top-center" limit={1} />
         {!isMobile&&<StickyNavbar/>}
         {isMobile&&<Navbar/>}
-      <div className="flex left-0 ml-0 w-full overflow-hidden min-h-screen flex-col justify-between">
+      <div className="flex left-0 ml-0 w-full overflow-hidden flex-col justify-between">
         <Loader/>
-        <main className="h-full w-screen overflow-hidden p-0 left-0 mx-auto  min-h-screen">{children}</main>
+        <main className="h-[fit-content] w-screen overflow-hidden p-0 left-0 mx-auto">{children}</main>
        
       </div> 
       <div className="flex-grow"></div><Footer/>

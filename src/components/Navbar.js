@@ -104,7 +104,7 @@ const Navbar = () => {
 
         <div className="mt-2 flex bg-gray-300 flex-row font-sans py-2 font-bold text-[13px] justify-around">
           {/* Second Line Menus */}
-            <Link style={{alignItems:'center'}} href="/giveaway" className="text-gray-700 py-1 flex flex-row justify-center gap-1  hover:text-white">
+            <Link style={{alignItems:'center'}} href="/giveaway-quiz/landingPage" className="text-gray-700 py-1 flex flex-row justify-center gap-1  hover:text-white">
               <Money/>
               Giveaway quizzes
             </Link>
