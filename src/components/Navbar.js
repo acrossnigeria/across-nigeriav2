@@ -9,6 +9,7 @@ import Money from '../../public/images/icon/Money';
 import Video from '../../public/images/icon/Video';
 import ShoutMic from '../../public/images/icon/ShoutMic';
 import Logo from '../../public/images/icon/Logo';
+import Profile from '../../public/images/icon/Profile';
 
 const Navbar = () => {
   const { status, data: session } = useSession();
@@ -58,10 +59,10 @@ const Navbar = () => {
           </div>
           ) : session?.user ? (
           <div className="relative">
-            <div style={{alignItems:'center'}} className="flex flex-row justify-center h-[40px] px-3 cursor-pointer font-bold  text-white border-b-2 border-green-300 bg-green-800 transition duration-100 rounded-lg text-[16px]"
+            <div style={{alignItems:'center'}} className="flex flex-row justify-between gap-2 h-[40px] pl-3 pr-[2px] cursor-pointer font-bold  text-white bg-green-800 transition duration-100 rounded-[30px] text-[16px]"
             onClick={toggleMenu}>
               <Link href={'/user/profile'}>{session.user.name}</Link>
-
+               <Profile/>
             </div>
           </div>
         ) : (

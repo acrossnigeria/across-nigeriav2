@@ -148,12 +148,14 @@ const [selectedFile, setSelectedFile]=useState(false);
      document.getElementById('imageFile').value = '';
      setSelectedFile(false)
   };
+  
   const shoutoutChange=(e)=>{
     const inputValue=e.target.value;
     if(inputValue.length<=200){
       setShoutout(inputValue)
     }
   }
+
   const confirm=(e)=>{
     e.preventDefault();
     localStorage.setItem('selectedDate', selectedDate?.toDateString());
@@ -161,8 +163,8 @@ const [selectedFile, setSelectedFile]=useState(false);
     localStorage.setItem('category',selectedCategory);
     localStorage.setItem('displayName',displayName);
     localStorage.setItem('shoutout',shoutout );
-     router.push(`/shoutout/confirmbooking`);
-    }
+    router.push(`/shoutout/confirmbooking`);
+  }
 
   return (
     <Layout>
