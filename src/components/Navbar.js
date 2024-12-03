@@ -10,6 +10,7 @@ import Video from '../../public/images/icon/Video';
 import ShoutMic from '../../public/images/icon/ShoutMic';
 import Logo from '../../public/images/icon/Logo';
 import Profile from '../../public/images/icon/Profile';
+import Login from '../../public/images/icon/Login';
 
 const Navbar = () => {
   const { status, data: session } = useSession();
@@ -28,7 +29,7 @@ const Navbar = () => {
 
   useEffect( () => {
     const handleScroll = () => {
-      const scrollThreshold = 66;
+      const scrollThreshold = 140;
       setIsFixed(window.scrollY >= scrollThreshold);
     };
     window.addEventListener('scroll', handleScroll);
@@ -42,7 +43,7 @@ const Navbar = () => {
     <>
     <nav id="top" style={{paddingBottom:'0px'}} className={` bg-green-700 overflow-hidden  py-4`} onClick={()=>{open&&setOpen(false)}}>
 
-      <div style={{alignItems:'center', flexDirection:'row', justifyContent:'space-between', padding:'0px 10px', paddingBottom:'10px'}} className="flex border-green-300 border-b-1">
+      <div style={{alignItems:'center', flexDirection:'row', justifyContent:'space-between'}} className={`flex px-[10px] transition-background ease-in-out ${isFixed?'fixed top-0 z-40 bg-green-700/80 py-[10px] w-[100%] py-2':'border-green-300 pb-[10px] border-b-1'}`}>
         <div className='flex flex-row justify-between gap-[12px]'>
             {/* Logo */}
           <Link href="/" style={{}} onClick={()=>(router.push("/"))} className="flex items-center justify-center">
@@ -68,54 +69,51 @@ const Navbar = () => {
         ) : (
           <div className='w-[fit-content] flex flex-row gap-2'>
             <div className="flex px-[10px] h-[40px] cursor-pointer items-center 
-            justify-center text-green-200 border-2 border-green-200 bg-transparent transition duration-100 rounded-[40px] text-[15px]
+            justify-center text-green-200 font-bold bg-transparent transition duration-100 rounded-[40px] text-[16px]
             ease-in-out hover:scale-105">
               <Link href="/account/reg" className="cursor-pointer" legacyBehavior>
                 <a>Register</a>
               </Link>
             </div>
             <div className="flex px-[15px] h-[40px] cursor-pointer items-center 
-            justify-center text-white bg-yellow-500 transition duration-100 rounded-[40px] text-[14px]
+            justify-center text-white bg-yellow-500 font-bold transition duration-100 rounded-[40px] text-[16px]
             ease-in-out hover:bg-yellow-300  hover:scale-105">
               <Link href="/account/login" className="cursor-pointer" legacyBehavior>
-                <a>Login</a>
+                <>Login<Login/></>
               </Link>
             </div>
           </div>
         )}
 
     </div>
-      <div className={`${isFixed?'fixed top-0 z-40 bg-green-800 w-[100%]':''}`}>
+      <div >
                 {/* Menus */}
-        <div className={` flex mt-2 justify-center gap-5 font-bold`}>
+        <div className={` flex py-2 justify-center gap-5 font-extrabold`}>
           {/* First Line Menus */}
-            <Link href="/" className="text-white px-3 py-1  hover:text-green-500">
+            <Link href="#products" className="text-white px-3 py-1  hover:bg-green-900 rounded-[15px]">
+              Products
+            </Link>
+            <Link href="/" className="text-white px-3 py-1  hover:bg-green-900 rounded-[15px]">
               Home
             </Link>
-            {/* <Link style={{display:(session?.user?'inline':'none')}} href="/user/profile" className="text-white hover:text-green-500">
-              Profile
-            </Link> */}
-            <Link href="#products" className="text-white px-3 py-1  hover:text-green-500">
-              Our Products
-            </Link>
-            <Link href="/about" className="text-white px-3 py-1 hover:text-green-500">
+            <Link href="/about" className="text-white px-3 py-1 hover:bg-green-900 rounded-[15px]">
               About
             </Link>
         </div>
 
-        <div className="mt-2 flex bg-gray-300 flex-row font-sans py-2 font-bold text-[13px] justify-around">
+        <div className="mt-2 fixed bottom-0 rounded-t-[12px] w-[100%] flex z-[1000] bg-gray-300 flex-row font-sans h-[60px] items-center font-extrabold text-[13px] justify-around">
           {/* Second Line Menus */}
-            <Link style={{alignItems:'center'}} href="/giveaway-quiz/landingPage" className="text-gray-700 py-1 flex flex-row justify-center gap-1  hover:text-white">
+            <Link style={{alignItems:'center'}} href="/giveaway-quiz/landingPage" className="text-gray-600 px-1 rounded-[15px] hover:bg-gray-400 py-1 flex flex-col justify-center  hover:text-white">
               <Money/>
-              Giveaway quizzes
+              Giveaway Quiz
             </Link>
-            <Link style={{alignItems:'center'}} href="/skitsPage" className="text-gray-700 flex py-1 flex-row justify-center gap-1  hover:text-white">
+            <Link style={{alignItems:'center'}} href="/skitsPage" className="text-gray-600 px-1 rounded-[15px] hover:bg-gray-400 flex py-1 flex-col justify-center  hover:text-white">
               <Video/>
               Skits Across Naija
             </Link>
-            <Link style={{alignItems:'center'}} href="/shoutout/booking" className="text-gray-700 py-1 flex flex-row justify-center gap-1  hover:text-white">
+            <Link style={{alignItems:'center'}} href="/shoutout/booking" className="text-gray-600 px-1 rounded-[15px] hover:bg-gray-400 py-1 flex flex-col justify-center  hover:text-white">
               <ShoutMic/>
-            Shout Out!
+            Shout Out
             </Link>
         </div>
       </div>

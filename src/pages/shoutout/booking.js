@@ -168,11 +168,11 @@ const [selectedFile, setSelectedFile]=useState(false);
 
   return (
     <Layout>
-    <div  className=' m-0 left-0 top-0 mx-auto px-12 pt-10'>
-      <div className='md:ml-[30%]'><Link href="/" className=' mb-4 mx-auto text-center ' legacyBehavior>
-  <a className='font-bold cursor-pointer bg-gray-400 rounded-md p-2 mb-4'>Go to Shoutout Page</a>
-</Link></div> 
-      <h1 className='my-8 font-bold text-2xl text-center underline'>Book a Date</h1>
+    <div  className=' m-0 left-0 top-0 mx-auto px-12'>
+      <div className='my-8 flex flex-col text-center'>
+        <span className='text-gray-500'>We'd love to get started</span>
+        <span className='text-[25px] font-medium'>Make a booking</span>
+      </div>
       <Calendar unavailableDates={updatedUnavailableDates} selectedDate={selectedDate} onSelectDate={handleSelectDate} />
  
           {selectedDate && ( 

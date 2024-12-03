@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { toast } from 'react-toastify';
+import Next from '../../public/images/icon/Next';
 
 const Calendar = ({ unavailableDates, selectedDate, onSelectDate }) => {
   const [currentDate, setCurrentDate] = useState(new Date());
@@ -32,7 +33,7 @@ const generateCalendarCells = () => {
   // Add day labels
   for (let i = 0; i < 7; i++) {
     calendarCells.push(
-      <div key={`day-label-${i}`} className="w-12 h-12 flex m-0 items-center justify-center font-semibold">
+      <div key={`day-label-${i}`} className="w-[40px] h-[40px] flex text-[15px] m-0 text-gray-700 items-center justify-center font-semibold">
         {daysOfWeek[i]}
       </div>
     );
@@ -54,7 +55,7 @@ const isSameDay = (date1, date2) => {
     const date = new Date(today.getFullYear(), today.getMonth(), i);
     const isToday = isSameDay(date, new Date()); // Check if it's today's date
     calendarCells.push(
-      <div style={{borderRadius:'10px'}} key={`day-${i}`} className={`w-12 h-12 flex items-center justify-center border border-gray-700 cursor-pointer ${
+      <div key={`day-${i}`} className={`w-[40px] rounded-[2px] h-[40px] font-bold flex items-center text-white justify-center cursor-pointer ${
           isToday||!isDateAvailable(date) ? 'bg-gray-300 cursor-not-allowed' : 'bg-green-500 hover:bg-slate-100'
         }`}
         onClick={() => handleSelectDate(date)}
@@ -79,16 +80,16 @@ const isSameDay = (date1, date2) => {
   return (
     <div className=' sm:w-96 mx-auto'>
       <div className="flex justify-between mb-2">
-        <button className='border border-green-400 rounded-full p-1' onClick={handlePrevMonth}>Prev Month</button>
-       
-        <h2 className="text-lg font-semibold">{currentDate.toLocaleString('default', { month: 'long' })}</h2>
-        <h2 className="text-lg font-semibold">{currentDate.toLocaleString('default', { year: 'numeric' })}</h2> 
-        <button className='border border-green-400 rounded-full p-1'  onClick={handleNextMonth}>Next Month</button>
+        <button className='border border-green-400 p-1 rotate-180' onClick={handlePrevMonth}><Next/></button>
+        <h2 className="text-lg font-light">{currentDate.toLocaleString('default', { month: 'long' })}</h2>
+        <h2 className="text-lg font-light">{currentDate.toLocaleString('default', { year: 'numeric' })}</h2> 
+        <button className='border border-green-400 p-1'  onClick={handleNextMonth}><Next/></button>
       </div>
-      <div className="mx-auto grid grid-cols-7 gap-1">
+      <div className="w-[100%] grid grid-cols-7 gap-1">
         {generateCalendarCells()}
       </div>
     </div>
+
   );
 };
 

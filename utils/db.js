@@ -1,42 +1,57 @@
 import mongoose from 'mongoose';
+import dns from 'node:dns/promises';
 
-const connection = {};
+const connection = {}; // To track connection state
 
-async function connect() {
+export async function connect() {
+  // Return if already connected
   if (connection.isConnected) {
-    console.log('already connected');
+    console.log("Already connected to the database");
     return;
   }
-  if (mongoose.connection.length > 0) {
+
+  // Use existing connections if available
+  if (mongoose.connections.length > 0) {
     connection.isConnected = mongoose.connections[0].readyState;
     if (connection.isConnected === 1) {
-      console.log('use Previous connection');
+      console.log("Using existing database connection");
       return;
     }
+    // Disconnect if connection is not ready
     await mongoose.disconnect();
   }
-  console.log('starting connection to database...')
+
+  // Start a new connection
+  console.log("Starting new connection to database...");
   try {
-    const db = await mongoose.connect(process.env.MONGODB_URI);
-    console.log('new connection');
+    const db = await mongoose.connect(process.env.DB_DEV_URI, {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+    });
+    console.log("New database connection established:" + mongoose.connection.name);
     connection.isConnected = db.connections[0].readyState;
-  } catch (err) {
-    console.log(err.message);
-  }
-
-}
-
-async function disconnect() {
-  if (connection.isConnected) {
-    if (process.env.NODE_ENV === 'production') {
-      await mongoose.disconnect();
-      connection.isConnected = false;
-      console.log("DB disconnected")
-    } else {
-      console.log('not disonnected');
-    }
+  } catch (error) {
+    console.error("Database connection error:", error.message);
+    throw error; // Propagate error for the caller to handle
   }
 }
+
+export async function disconnect() {
+  await mongoose.disconnect();
+  connection.isConnected = false;
+  console.log("Disconnected from database");
+  // if (connection.isConnected) {
+  //   if (process.env.NODE_ENV === "production") {
+  //     await mongoose.disconnect();
+  //     connection.isConnected = false;
+  //     console.log("Disconnected from database");
+  //   } else {
+  //     console.log("Not disconnecting in development mode");
+  //   }
+  // }
+}
+
+
 function convertDocToObj(doc) {
   doc._id = doc._id.toString();
   doc.createdAt = doc.createdAt.toString();
@@ -47,3 +62,42 @@ function convertDocToObj(doc) {
 
 const db = { connect, disconnect, convertDocToObj };
 export default db;
+
+
+// const connection = {};
+
+// async function connect() {
+//   if (connection.isConnected) {
+//     console.log('already connected');
+//     return;
+//   }
+//   if (mongoose.connection.length > 0) {
+//     connection.isConnected = mongoose.connections[0].readyState;
+//     if (connection.isConnected === 1) {
+//       console.log('use Previous connection');
+//       return;
+//     }
+//     await mongoose.disconnect();
+//   }
+//   console.log('starting connection to database...')
+//   try {
+//     const db = await mongoose.connect('mongodb+srv://entertainmentmethodz:H0tsp1ce2024@cluster0.sfslv8q.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0')
+//     console.log('new connection');
+//     connection.isConnected = db.connections[0].readyState;
+//   } catch (err) {
+//     console.log(err.message);
+//   }
+
+// }
+
+// async function disconnect() {
+//   if (connection.isConnected) {
+//     if (process.env.NODE_ENV === 'production') {
+//       await mongoose.disconnect();
+//       connection.isConnected = false;
+//       console.log("DB disconnected")
+//     } else {
+//       console.log('not disonnected');
+//     }
+//   }
+// }
