@@ -58,7 +58,7 @@ const Navbar = () => {
         {status === 'loading' ? (
           <div className=" w-[120px] h-[35px] items-center font-semibold rounded-full justify-center uppercase text-white  bg-green-500 text-[14px] animate-pulse  ">
           </div>
-          ) : session?.user ? (
+          ) : false ? (
           <div className="relative">
             <div style={{alignItems:'center'}} className="flex flex-row justify-between gap-2 h-[40px] pl-3 pr-[2px] cursor-pointer font-bold  text-white bg-green-800 transition duration-100 rounded-[30px] text-[16px]"
             onClick={toggleMenu}>
@@ -75,13 +75,14 @@ const Navbar = () => {
                 <a>Register</a>
               </Link>
             </div>
-            <div className="flex px-[15px] h-[40px] cursor-pointer items-center 
-            justify-center text-white bg-yellow-500 font-bold transition duration-100 rounded-[40px] text-[16px]
-            ease-in-out hover:bg-yellow-300  hover:scale-105">
-              <Link href="/account/login" className="cursor-pointer" legacyBehavior>
+            <button onClick={()=>{router.push("/account/login")}} className="cursor-pointer" >
+              <div className="flex px-[15px] h-[40px] cursor-pointer items-center 
+              justify-center text-white bg-yellow-500 font-bold transition duration-100 rounded-[40px] text-[16px]
+              ease-in-out hover:bg-yellow-300  hover:scale-105">
                 <>Login<Login/></>
-              </Link>
-            </div>
+              </div>
+            </button>
+            
           </div>
         )}
 

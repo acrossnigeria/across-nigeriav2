@@ -1,4 +1,3 @@
-import Layout from "@/components/Layout";
 import { signIn, useSession } from "next-auth/react";
 import Link from "next/link";
 import { useRouter } from "next/router";
@@ -39,6 +38,7 @@ export default function LoginScreen() {
     register,
     formState: { errors },
   } = useForm();
+  
   const submitHandler = async ({ email, password }) => {
   setLoading(true)
   try {
