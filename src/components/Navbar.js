@@ -58,7 +58,7 @@ const Navbar = () => {
         {status === 'loading' ? (
           <div className=" w-[120px] h-[35px] items-center font-semibold rounded-full justify-center uppercase text-white  bg-green-500 text-[14px] animate-pulse  ">
           </div>
-          ) : false ? (
+          ) : session?.user ? (
           <div className="relative">
             <div style={{alignItems:'center'}} className="flex flex-row justify-between gap-2 h-[40px] pl-3 pr-[2px] cursor-pointer font-bold  text-white bg-green-800 transition duration-100 rounded-[30px] text-[16px]"
             onClick={toggleMenu}>
