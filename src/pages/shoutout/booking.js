@@ -170,7 +170,7 @@ const [selectedFile, setSelectedFile]=useState(false);
     <Layout>
     <div  className=' m-0 left-0 top-0 mx-auto px-12'>
       <div className='my-8 flex flex-col text-center'>
-        <span className='text-gray-500'>We'd love to get started</span>
+        <span className='text-gray-500'>We&apos;d love to get started</span>
         <span className='text-[25px] font-medium'>Make a booking</span>
       </div>
       <Calendar unavailableDates={updatedUnavailableDates} selectedDate={selectedDate} onSelectDate={handleSelectDate} />
