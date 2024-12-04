@@ -195,7 +195,7 @@ const Register = () => {
               <option className='focus:bg-green-500 checked:bg-green-500 hover:bg-green-500 accent-green-500' value="04">April</option>
               <option className='focus:bg-green-500 checked:bg-green-500 hover:bg-green-500 accent-green-500' value="05">May</option>
               <option className='focus:bg-green-500 checked:bg-green-500 hover:bg-green-500 accent-green-500' value="06">June</option>
-              <option className='focus:bg-green-500 checked:bg-green-500 hover:bg-green-500 accent-green-500' value="05">July</option>
+              <option className='focus:bg-green-500 checked:bg-green-500 hover:bg-green-500 accent-green-500' value="07">July</option>
               <option className='focus:bg-green-500 checked:bg-green-500 hover:bg-green-500 accent-green-500' value="08">August</option>
               <option className='focus:bg-green-500 checked:bg-green-500 hover:bg-green-500 accent-green-500' value="09">September</option>
               <option className='focus:bg-green-500 checked:bg-green-500 hover:bg-green-500 accent-green-500' value="10">October</option>

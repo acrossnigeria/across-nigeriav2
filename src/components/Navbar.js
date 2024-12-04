@@ -104,15 +104,15 @@ const Navbar = () => {
 
         <div className="mt-2 fixed bottom-0 rounded-t-[12px] w-[100%] flex z-[1000] bg-green-700 flex-row font-sans h-[60px] items-center font-extrabold text-[13px] justify-around">
           {/* Second Line Menus */}
-            <Link style={{alignItems:'center'}} href="/giveaway-quiz/landingPage" className="text-green-200 px-1 rounded-[15px] hover:bg-gray-400 py-1 flex flex-col justify-center  hover:text-white">
+            <Link style={{alignItems:'center'}} href="/giveaway-quiz/landingPage" className="text-green-200 px-1 rounded-[15px] hover:bg-green-800 py-1 flex flex-col justify-center">
               <Money/>
               Giveaway Quiz
             </Link>
-            <Link style={{alignItems:'center'}} href="/skitsPage" className="text-green-200 px-1 rounded-[15px] hover:bg-gray-400 flex py-1 flex-col justify-center  hover:text-white">
+            <Link style={{alignItems:'center'}} href="/skitsPage" className="text-green-200 px-1 rounded-[15px] hover:bg-green-800 flex py-1 flex-col justify-center">
               <Video/>
               Skits Across Naija
             </Link>
-            <Link style={{alignItems:'center'}} href="/shoutout/booking" className="text-green-200 px-1 rounded-[15px] hover:bg-gray-400 py-1 flex flex-col justify-center  hover:text-white">
+            <Link style={{alignItems:'center'}} href="/shoutout/booking" className="text-green-200 px-1 rounded-[15px] hover:bg-green-800 py-1 flex flex-col justify-center">
               <ShoutMic/>
             Shout Out
             </Link>

@@ -18,7 +18,9 @@ const isDateAvailable = (date) => {
   const handleSelectDate = (date) => {
     if (isDateAvailable(date)) {
       onSelectDate(date);
-    }else{toast.error("The selected date is not available")}
+    } else {
+      toast.error("The selected date is not available")
+    }
   };
 
   // Function to generate calendar cells
@@ -33,7 +35,7 @@ const generateCalendarCells = () => {
   // Add day labels
   for (let i = 0; i < 7; i++) {
     calendarCells.push(
-      <div key={`day-label-${i}`} className="w-[40px] h-[40px] flex text-[15px] m-0 text-gray-700 items-center justify-center font-semibold">
+      <div key={`day-label-${i}`} className="w-[45px] h-[45px] flex text-[15px] m-0 text-gray-700 items-center justify-center font-semibold">
         {daysOfWeek[i]}
       </div>
     );
@@ -81,7 +83,7 @@ const isSameDay = (date1, date2) => {
     <div className=' sm:w-96 mx-auto rounded-[5px] bg-gray-100 p-3'>
       <div className="flex justify-between mb-2">
         <button className='rounded-[50%] transition-background ease-in-out duration-100 hover:bg-gray-400 p-1 rotate-180' onClick={handlePrevMonth}><Next/></button>
-        <span className="text-lg font-light">{`${currentDate.toLocaleString('default', { month: 'long' })} ${currentDate.toLocaleString('default', { year: 'numeric' })}`}</span>
+        <span className="text-[22px] font-light">{`${currentDate.toLocaleString('default', { month: 'long' })} ${currentDate.toLocaleString('default', { year: 'numeric' })}`}</span>
         <button className='transition-background ease-in-out duration-100 rounded-[50%] hover:bg-gray-400 p-1'  onClick={handleNextMonth}><Next/></button>
       </div>
       <div className="w-[100%] grid grid-cols-7 gap-1">

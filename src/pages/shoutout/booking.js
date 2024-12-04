@@ -8,6 +8,7 @@ import Checkbox from '@/components/Checkbox';
 import { toast } from 'react-toastify';
 import axios from 'axios';
 import Link from 'next/link';
+import Upload from '../../../public/images/icon/Upload';
 
 
 function reducer(state, action) {
@@ -177,7 +178,7 @@ const [selectedFile, setSelectedFile]=useState(false);
       {selectedDate && ( 
         <div className="max-w-lg text-[19px] mx-auto mt-2 mb-8 p-2 rounded-lg">     
             <p className='mb-10'>You have Selected <span className='font-bold animate-pulse'>{selectedDate?.toDateString()}</span> for your Shout Out!</p>
-            <h2 className="text-[25px] font-light mb-4">Booking Form</h2>
+            <h2 className="text-[30px] font-light mb-4">Booking Form</h2>
           <form onSubmit={confirm}>
             <div className="mb-4">
               <label className="block text-gray-700 font-semibold mb-2" htmlFor="displayName">Title</label>
@@ -206,13 +207,19 @@ const [selectedFile, setSelectedFile]=useState(false);
             </div>
             <div className="mb-4">
               <label className="block text-gray-700 font-semibold mb-2" htmlFor="imageFile">Upload image</label>
-              <input
-              accept=".jpg"
+              <div>
+                 <input
+                accept=".jpg"
                 type="file"
                 className="mb-4 w-full"
                 id="imageFile"
-                onChange={(e)=>{e.target.files[0]&&setSelectedFile(true);uploadHandler(e);}}
-              /> {selectedFile&&<span className='bg-red-500 cursor-pointer text-white opacity-95 rounded-lg p-2 mt-2 hover:bg-red-700' onClick={handleRemoveFile}>Remove file</span>}
+                onChange={(e)=>{e.target.files[0]&&setSelectedFile(true);uploadHandler(e);}} />
+                <div className='md:w-500px border-2'>
+                  <span>Tap to Upload Photo</span>
+                  <Upload/>
+                </div>
+              </div>
+              {selectedFile&&<span className='bg-red-500 cursor-pointer text-white opacity-95 rounded-lg p-2 mt-2 hover:bg-red-700' onClick={handleRemoveFile}>Remove file</span>}
 
               {loadingUpload && <div style={{borderRadius:'10px'}} className="mt-2 p-2 bg-orange-300">Please wait while we upload your File....
               <p>`Don&apos;t Navigate from this Page </p></div>}
