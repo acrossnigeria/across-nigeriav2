@@ -214,10 +214,10 @@ const [selectedFile, setSelectedFile]=useState(false);
                 className="mb-4 w-full"
                 id="imageFile"
                 onChange={(e)=>{e.target.files[0]&&setSelectedFile(true);uploadHandler(e);}} />
-                <div className='md:w-500px border-2'>
+                {/* <div className='md:w-500px border-2'>
                   <span>Tap to Upload Photo</span>
                   <Upload/>
-                </div>
+                </div> */}
               </div>
               {selectedFile&&<span className='bg-red-500 cursor-pointer text-white opacity-95 rounded-lg p-2 mt-2 hover:bg-red-700' onClick={handleRemoveFile}>Remove file</span>}
 
