@@ -78,12 +78,11 @@ const isSameDay = (date1, date2) => {
   };
 
   return (
-    <div className=' sm:w-96 mx-auto'>
+    <div className=' sm:w-96 mx-auto rounded-[5px] bg-gray-100 p-3'>
       <div className="flex justify-between mb-2">
-        <button className='border border-green-400 p-1 rotate-180' onClick={handlePrevMonth}><Next/></button>
-        <h2 className="text-lg font-light">{currentDate.toLocaleString('default', { month: 'long' })}</h2>
-        <h2 className="text-lg font-light">{currentDate.toLocaleString('default', { year: 'numeric' })}</h2> 
-        <button className='border border-green-400 p-1'  onClick={handleNextMonth}><Next/></button>
+        <button className='rounded-[50%] transition-background ease-in-out duration-100 hover:bg-gray-400 p-1 rotate-180' onClick={handlePrevMonth}><Next/></button>
+        <span className="text-lg font-light">{`${currentDate.toLocaleString('default', { month: 'long' })} ${currentDate.toLocaleString('default', { year: 'numeric' })}`}</span>
+        <button className='transition-background ease-in-out duration-100 rounded-[50%] hover:bg-gray-400 p-1'  onClick={handleNextMonth}><Next/></button>
       </div>
       <div className="w-[100%] grid grid-cols-7 gap-1">
         {generateCalendarCells()}

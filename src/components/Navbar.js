@@ -102,17 +102,17 @@ const Navbar = () => {
             </Link>
         </div>
 
-        <div className="mt-2 fixed bottom-0 rounded-t-[12px] w-[100%] flex z-[1000] bg-gray-300 flex-row font-sans h-[60px] items-center font-extrabold text-[13px] justify-around">
+        <div className="mt-2 fixed bottom-0 rounded-t-[12px] w-[100%] flex z-[1000] bg-green-700 flex-row font-sans h-[60px] items-center font-extrabold text-[13px] justify-around">
           {/* Second Line Menus */}
-            <Link style={{alignItems:'center'}} href="/giveaway-quiz/landingPage" className="text-gray-600 px-1 rounded-[15px] hover:bg-gray-400 py-1 flex flex-col justify-center  hover:text-white">
+            <Link style={{alignItems:'center'}} href="/giveaway-quiz/landingPage" className="text-green-200 px-1 rounded-[15px] hover:bg-gray-400 py-1 flex flex-col justify-center  hover:text-white">
               <Money/>
               Giveaway Quiz
             </Link>
-            <Link style={{alignItems:'center'}} href="/skitsPage" className="text-gray-600 px-1 rounded-[15px] hover:bg-gray-400 flex py-1 flex-col justify-center  hover:text-white">
+            <Link style={{alignItems:'center'}} href="/skitsPage" className="text-green-200 px-1 rounded-[15px] hover:bg-gray-400 flex py-1 flex-col justify-center  hover:text-white">
               <Video/>
               Skits Across Naija
             </Link>
-            <Link style={{alignItems:'center'}} href="/shoutout/booking" className="text-gray-600 px-1 rounded-[15px] hover:bg-gray-400 py-1 flex flex-col justify-center  hover:text-white">
+            <Link style={{alignItems:'center'}} href="/shoutout/booking" className="text-green-200 px-1 rounded-[15px] hover:bg-gray-400 py-1 flex flex-col justify-center  hover:text-white">
               <ShoutMic/>
             Shout Out
             </Link>
