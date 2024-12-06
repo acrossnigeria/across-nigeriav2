@@ -8,7 +8,7 @@ import Close from "../../public/images/icon/Close";
 import { useSession } from "next-auth/react";
 
 const prototype = [
-    { index: 1, name: 'cynthia', text: 'As you add another year, may grace, beauty, and favor never depart from you. Happy birthday!', likes:3 },
+    { index: 1, name: 'cynthia', text: 'Big vibes only! HBD, fine lady. More life and blessings', likes:3 },
     { index: 2, name: 'bayo', text: 'Happy birthday dear', likes:1 },
     { index: 3, name: 'john', text: 'A queen was born today! Happy birthday, my beautiful sister. Shine on, you’re unstoppable!', likes:1 },
     { index: 4, name: 'kunle', text: 'Happy birthday to the most elegant and beautiful woman I know. Na you dey run the show!', likes:4 },
@@ -35,7 +35,7 @@ export default function ShoutOutCard() {
     },[ isMobile ])
 
     return (
-        <div className={`${isMobile?'w-[90%] flex-col':'w-fit flex-row'} gap-2 h-[fit-content] py-[10px] px-[10px] mx-auto bg-gray-100 border-1 border-gray-300 flex justify-center items-center rounded-[5px] `}>
+        <div className={`${isMobile?'w-[100%] flex-col':'w-fit flex-row'} gap-2 h-[fit-content] py-[10px] px-[10px] mx-auto bg-gray-100 border-1 border-gray-300 flex justify-center items-center rounded-[5px] `}>
             <div className="flex w-[100%] flex-col justify-center items-center">
                 <div className={`${isMobile? 'w-[99%]':'w-[340px]'} h-fit`}>
                     <div className={`h-[470px] w-[100%] relative`}>
@@ -72,7 +72,7 @@ export default function ShoutOutCard() {
                     <button className="px-[7px] bg-blue-500 font-bold text-white rounded-[5px]">Send</button>
                 </div>
             </div>
-            <div className={`${isCommentOpen?'':'hidden'} w-screen h-screen fixed top-0 z-30 bg-black/70 flex flex-col justify-center items-center`}>
+            <div className={`${isCommentOpen?'':'hidden'} w-screen h-screen fixed top-0 z-[2000] bg-black/70 flex flex-col justify-center items-center`}>
                 <div className="w-[85%] flex flex-col rounded-[5px] justify-between bg-gray-50 h-[470px] p-3">
                     <div className="flex flex-row justify-end">
                         <button onClick={()=>{setIsCommentOpen(!isCommentOpen)}} className="hover:bg-gray-200 rounded-[50%] p-2 w-fit"><Close/></button>
