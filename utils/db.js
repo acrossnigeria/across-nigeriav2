@@ -4,6 +4,8 @@ import dns from 'node:dns/promises';
 const connection = {}; // To track connection state
 
 export async function connect() {
+  dns.setServers(['8.8.8.8'])
+  console.log(dns.getServers())
   // Return if already connected
   if (connection.isConnected) {
     console.log("Already connected to the database");

@@ -6,22 +6,20 @@ import Pay from "../../public/images/illustration/Pay";
 export default function PaystackBtn(props) {
 //provide props for amount email key is proc.env.PAYSTACK
     const {amount, email, paystackKey, purpose}=props;
-    const [price, setPrice]=useState(0)
-    const [localePayment, setLocalePayment]=useState('')
+    const [price, setPrice]=useState(0);
+    const [localePayment, setLocalePayment]=useState('');
     useEffect(()=>{
     setPrice(parseFloat(amount))
     const locale=price.toLocaleString();
     setLocalePayment(locale)
     }, [amount, price])
-  
+    
    const config = {
     reference: new Date().getTime().toString(),
     email: email,
     amount: amount * 100, //Amount is in the country's lowest currency. E.g Kobo, so 20000 kobo = N200
-    publicKey: "pk_live_09ba874adcdca43ec856e37e480ec1e17dc13eda",
+    publicKey: process.env.PAYSTACK_LIVE,
   };
-  // publicKey: "pk_test_cbdf33dbafe37c266634416e1b99f1f6b87e709a",
-  // publicKey: "pk_live_09ba874adcdca43ec856e37e480ec1e17dc13eda",
   const handlePaystackSuccessAction = async (ref) => {
     props.pay(ref);
         // Implementation for whatever you want to do with reference and after success call.

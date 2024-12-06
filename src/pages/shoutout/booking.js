@@ -9,8 +9,12 @@ import { toast } from 'react-toastify';
 import axios from 'axios';
 import Link from 'next/link';
 import Upload from '../../../public/images/icon/Upload';
+import Image from 'next/image';
+import ImgIcon from '../../../public/images/icon/ImgIcon';
+import DeleteIcon from '../../../public/images/icon/DeleteIcon';
+import FileIcon from '../../../public/images/icon/FileIcon';
 
-
+// Reducer function
 function reducer(state, action) {
   switch (action.type) {
     case 'FETCH_REQUEST':
@@ -27,13 +31,13 @@ function reducer(state, action) {
     case 'UPDATE_FAIL':
       return { ...state, loadingUpdate: false, errorUpdate: action.payload };
     case 'PAY_REQUEST':
-      return{...state, loadingPay:true, errorPay:''};
+      return {...state, loadingPay:true, errorPay:''};
       
     case 'PAY_SUCCESS':
-      return{...state, loadingPay:false, errorPay:''};
+      return {...state, loadingPay:false, errorPay:''};
       
     case 'PAY_FAIL':
-      return{...state, loadingPay:'', errorPay:action.payload};
+      return {...state, loadingPay:'', errorPay:action.payload};
       
     case 'UPLOAD_REQUEST':
       return { ...state, loadingUpload: true, errorUpload: '' };
@@ -50,72 +54,83 @@ function reducer(state, action) {
       return state;
   }
 }
+
 const BookingPage = () => {
-  const router=useRouter();
+  const router = useRouter();
   // Example available dates
-   const [data, setData] = useState([]);
-     useEffect(() => {
+  const [ data, setData ] = useState([]);
+
+  useEffect(() => {
     setData([]);
     const fetchData = async () => {
       try {
-       dispatch({type:'UPLOAD_REQUEST'});
+        dispatch({type:'UPLOAD_REQUEST'});
         const response = await axios.get("/api/booking/booking", {params:{param:'fetch'}});
         const premiumCollections = response.data.filter(doc => doc.category === 'premium');
         setData(premiumCollections.map(doc=>doc.dateSelected));
-         console.log(data); // Log response.data directly
+        console.log(data); // Log response.data directly
       } catch (error) {
         dispatch({type:'UPDATE_FAIL'});
       } finally {
         dispatch({type:'UPLOAD_SUCCESS'})
       }
-    };
-    fetchData();
+  };
+  fetchData();
   }, []);
+
   const unavailableDates = data;
 
 // Convert date strings to Date objects
 const unavailableDateObjects = unavailableDates.map(dateString => new Date(dateString));
+
 const [{ loading, error, loadingUpdate, loadingPay, loadingUpload }, dispatch] =
     useReducer(reducer, {
       loading:false,
       error: '',
     });
 // Example: Add 1 day to each date
-const updatedUnavailableDates = unavailableDateObjects.map(date => {
-    date.setDate(date.getDate());
-    return date.toISOString().split('T')[0];
-});
+  const updatedUnavailableDates = unavailableDateObjects.map(date => {
+      date.setDate(date.getDate());
+      return date.toISOString().split('T')[0];
+  });
 
-  const [selectedDate, setSelectedDate] = useState(null);
-  const [agree, setAgree]= useState(false)
- const [displayName, setDisplayName] = useState('');
- const [shoutout, setShoutout]=useState('');
-  const [selectedCategory, setSelectedCategory] = useState('');
-  const [showInfo, setShowInfo] = useState(false);
-const [selectedFile, setSelectedFile]=useState(false);
+  const [ selectedDate, setSelectedDate ] = useState(null);
+  const [ agree, setAgree ] = useState(false)
+  const [ displayName, setDisplayName ] = useState('');
+  const [ shoutout, setShoutout ] = useState('');
+  const [ selectedCategory, setSelectedCategory ] = useState('');
+  const [ showInfo, setShowInfo ] = useState(false);
+  const [ selectedFile, setSelectedFile ] = useState(false);
+  const [ imgPreview, setImgPreview ] = useState(null);
+  const [ imgName, setImgName ] = useState('');
+  const [ imgSize, setImgSize ] = useState(0);
+
   const handleCategoryChange = (e) => {
     setSelectedCategory(e.target.value);
     setShowInfo(true);
   };
+
   const handleSelectDate = (date) => {
     setSelectedDate(date);
     console.log(selectedDate)
   };
-    const uploadHandler = async (e) => {
+
+  const uploadHandler = async (e) => {
      if (!e.target.files || e.target.files.length === 0) {
     toast.error('Please select a Picture file to upload.');
     return;
   }
+
    // Check file size
-  const fileSize = e.target.files[0].size; // Size in bytes
-  const maxSize = 2 * 1024 * 1024; // 2MB in bytes
-  if (fileSize > maxSize) {
+  const maxSize = 2 
+  if ( Math.trunc(imgSize) > maxSize) {
     toast.error('File size exceeds 2MB limit.');
 
      e.target.files[0].value = "";  
        return;
   }
-  const result = window.confirm(`Do you want to proceed with uploading ${e.target.files[0].name}?`);
+
+  const result = window.confirm(`Do you want to proceed with uploading ${imgName}?`);
     if (result) {
       const url = `https://api.cloudinary.com/v1_1/${process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME}/upload`;
     try {
@@ -130,14 +145,19 @@ const [selectedFile, setSelectedFile]=useState(false);
       formData.append('signature', signature);
       formData.append('timestamp', timestamp);
       formData.append('api_key', process.env.NEXT_PUBLIC_CLOUDINARY_API_KEY);
+      formData.append('folder', 'temp_image_uploads');
       const { data } = await axios.post(url, formData);
+
+      const response = await axios.post('/api/booking/booking', { mediaUrl: data.secure_url });
+      console.log(response.data);
+
       dispatch({ type: 'UPLOAD_SUCCESS' });
-      localStorage.setItem('dataUrl',data.secure_url)
+      localStorage.setItem('bookingId', response.data.tempBooking._id );
       toast.success('File uploaded successfully');
       
     } catch (err) {
-      dispatch({ type: 'UPLOAD_FAIL', payload: getError(err) });
-      toast.error(getError(err));
+      dispatch({ type: 'UPLOAD_FAIL', payload: err.message });
+      toast.error(err.message);
     }
     } else {
       return;
@@ -147,7 +167,8 @@ const [selectedFile, setSelectedFile]=useState(false);
   const handleRemoveFile = () => {
    // Clear the selected file
      document.getElementById('imageFile').value = '';
-     setSelectedFile(false)
+     setSelectedFile(false);
+     setImgPreview(null);
   };
   
   const shoutoutChange=(e)=>{
@@ -165,6 +186,33 @@ const [selectedFile, setSelectedFile]=useState(false);
     localStorage.setItem('displayName',displayName);
     localStorage.setItem('shoutout',shoutout );
     router.push(`/shoutout/confirmbooking`);
+  }
+
+  const photoUploader = (e) => {
+    const file = e.target.files[0];
+    setImgSize(e.target.files[0].size / 1024 / 1024);
+    setImgName(e.target.files[0].name);
+        // preview Photo
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = () => {
+        setImgPreview(reader.result);
+        setSelectedFile(true);
+
+        const timeOut = setTimeout(() => {
+          uploadHandler(e);
+          clearTimeout(timeOut);
+        }, 2000);
+      };
+      reader.readAsDataURL(file);
+    } else {
+      setImgPreview(null)
+    }
+  }
+
+  const selectPhoto = (e) => {
+    e.preventDefault();
+    document.getElementById('imageFile').click()
   }
 
   return (
@@ -207,19 +255,42 @@ const [selectedFile, setSelectedFile]=useState(false);
             </div>
             <div className="mb-4">
               <label className="block text-gray-700 font-semibold mb-2" htmlFor="imageFile">Upload image</label>
-              <div>
+              <div className='flex flex-col my-[10px]'>
                  <input
                 accept=".jpg"
                 type="file"
-                className="mb-4 w-full"
+                className="mb-4 w-[100%] hidden opacity-0 border-2 h-[30px] "
                 id="imageFile"
-                onChange={(e)=>{e.target.files[0]&&setSelectedFile(true);uploadHandler(e);}} />
-                {/* <div className='md:w-500px border-2'>
-                  <span>Tap to Upload Photo</span>
+                onChange={photoUploader} />
+                <button onClick={selectPhoto} className='bg-green-600 border-green-400 border-b-2 rounded-[5px] hover:bg-green-700 hover:border-none h-[40px] gap-[10px] flex text-white flex-row justify-center items-center'>
+                  <span>Select a Photo</span>
                   <Upload/>
-                </div> */}
+                </button>
               </div>
-              {selectedFile&&<span className='bg-red-500 cursor-pointer text-white opacity-95 rounded-lg p-2 mt-2 hover:bg-red-700' onClick={handleRemoveFile}>Remove file</span>}
+              { imgPreview ? (
+                  <div className='border-2 border-gray-400 w-[100%]' style={{ position: "relative", height: "300px" }}>
+                    <Image src={imgPreview} layout='fill' objectFit='contain' priority={true}/>
+                  </div>
+                ) : (
+                  <div className='w-[100%] h-[300px] border-2 flex flex-col justify-center text-gray-400 items-center border-gray-400'>
+                    <span>Photo preview</span>
+                    <ImgIcon/>
+                  </div>
+                )
+                  }
+              {selectedFile && (
+                <div className='flex flex-row justify-between items-center bg-gray-200 h-[70px] px-[10px] mt-[5px]'>
+                  <div className='flex flex-row gap-[15px] items-center'>
+                    <FileIcon/>
+                    <div className='flex flex-col text-[12px] text-gray-500'>
+                      <span>{imgName}</span>
+                      <span>{ imgSize.toFixed(2) } mb</span>
+                    </div>
+                    
+                  </div>
+                  <button className='cursor-pointer border-2 rounded-[50%] p-[11px] hover:bg-gray-400 transition-background duration-500 ease-in-out ' onClick={handleRemoveFile}><DeleteIcon/></button>
+                </div>
+              )}
 
               {loadingUpload && <div style={{borderRadius:'10px'}} className="mt-2 p-2 bg-orange-300">Please wait while we upload your File....
               <p>`Don&apos;t Navigate from this Page </p></div>}

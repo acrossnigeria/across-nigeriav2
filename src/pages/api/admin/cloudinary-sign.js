@@ -5,6 +5,7 @@ export default function signature(req, res) {
   const signature = cloudinary.utils.api_sign_request(
     {
       timestamp: timestamp,
+      folder: 'temp_image_uploads',
     },
     process.env.CLOUDINARY_SECRET
   );

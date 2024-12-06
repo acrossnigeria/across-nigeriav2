@@ -3,9 +3,10 @@ import Cookies from "js-cookie";
 
 export const Store = createContext();
 
-const initialState={
+const initialState = {
   user:{userDetails:[null]},
 };
+
 function reducer(state, action) {
   switch (action.type){
     case 'ADD_USER':{
