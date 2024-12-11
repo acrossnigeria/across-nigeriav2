@@ -5,7 +5,7 @@ const handler = async (req, res) => {
     if (req.method === 'POST') {
         const { user, post} = req.body;
         try {
-            db.connect();
+            await db.connect();
 
             const doc = await Booking.findById(post);
             const newLikes = doc.Likes;
@@ -13,7 +13,7 @@ const handler = async (req, res) => {
             doc.Likes = newLikes;
             await doc.save();
 
-            db.disconnect();
+            await db.disconnect();
 
             res.status(200).json({ message: 'like added', newLikes: doc.Likes});
         } catch(err) {
@@ -24,7 +24,7 @@ const handler = async (req, res) => {
     } else if (req.method === 'PATCH') {
         const { user, post} = req.body;
         try {
-            db.connect();
+            await db.connect();
 
             const doc = await Booking.findById(post);
             const copyLikes = doc.Likes;
@@ -32,7 +32,7 @@ const handler = async (req, res) => {
             doc.Likes = newLikes;
             await doc.save();
 
-            db.disconnect();
+            await db.disconnect();
 
             res.status(200).json({ message: 'like removed', newLikes: doc.Likes});
         } catch(err) {

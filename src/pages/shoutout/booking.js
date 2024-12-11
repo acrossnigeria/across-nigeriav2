@@ -70,9 +70,9 @@ const BookingPage = () => {
       try {
         dispatch({type:'UPLOAD_REQUEST'});
         const response = await axios.get("/api/booking/data?type=premium");
+        setIsLoadingCalender(false);
         const premiumCollections = response.data;
         setData(premiumCollections.map(doc=>doc.dateSelected));
-        setIsLoadingCalender(false);
       } catch (error) {
         dispatch({type:'UPDATE_FAIL'});
       } finally {

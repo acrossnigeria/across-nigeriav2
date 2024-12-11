@@ -9,6 +9,7 @@ const handler = async (req, res) => {
             await db.connect();
             const comment = await Comment.create( {user, post, text});
             const commentArray = await Comment.find( { post } ).populate('user', 'name _id');
+            await db.disconnect();
             res.status(200).json({ message:'comment added successfully', commentArray});
         } catch ( err ) {
             res.status(500).json({message:'comment was unsuccessfull'})
