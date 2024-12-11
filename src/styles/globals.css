@@ -82,19 +82,8 @@ hover:text-gray-200 text-center shadow-slate-900 shadow-lg;
 /* loader----------------------------- */
 /* Inspired by: m3.material.io/components/progress-indicators/overview */
 
-.loader {
-  width: 48px;
-  /* Subpixels get cut off */
-  overflow: visible;
-  transform: rotate(-90deg);
-  transform-origin: center;
-
-  --active: #179e0e;
-  --track: #b5f1b8;
-
-  --duration: 8s;
-
-  animation: spin 2s linear infinite;
+#cycleLoader {
+  animation: spin 1s linear infinite;
 }
 
 @keyframes spin {

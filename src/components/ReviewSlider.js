@@ -42,7 +42,7 @@ const CustomBanner = () => {
         autoPlayTime={3500}
         isEnableAutoPlay
         isEnablePagination
-        height={ isMobile?{ widthRatio: 12, heightRatio:5 }:{widthRatio:12, heightRatio:3}}
+        height={ isMobile?{ widthRatio: 12, heightRatio:5 }:{widthRatio:12, heightRatio:4.5}}
         //look for logic to make it work differently on pc and phone
       />
     </div>

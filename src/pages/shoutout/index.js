@@ -12,7 +12,7 @@ function Index() {
     const fetchData = async () => {
       try {
         setLoading(true);
-        const response = await axios.get("/api/booking/booking", {params:{param:'fetch'}});
+        const response = await axios.get("/api/booking/booking");
         setData(response.data.map(doc=>doc.dateSelected));
          console.log(data); // Log response.data directly
       } catch (error) {

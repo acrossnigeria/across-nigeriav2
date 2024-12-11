@@ -19,6 +19,11 @@ import Testimonials from "@/components/Testimonials";
 import Link from "next/link";
 import { useState, useEffect } from "react";
 import ShoutOutCard from "@/components/ShoutOutCard";
+import axios from "axios";
+import ReloadIcon from "../../public/images/icon/ReloadIcon";
+import CycleLoader from "@/components/CycleLoader";
+import RegularShoutout from "@/components/shout-out/RegularShoutout";
+import NoShoutOut from "@/components/shout-out/NoShoutOut";
 
 
 
@@ -37,18 +42,45 @@ export const games=[
 const inter = Inter({ subsets: ["latin"] });
 
 export default function Home() {
-  const[isMobile, setIsMobile]=useState(false);
-  useEffect(()=>{
+  const [ isMobile, setIsMobile ] =useState(false);
+  const [ shoutOut, setShoutOut ] = useState(null);
+  const [ networkError, setNetworkError ] = useState(false);
+
+  async function getShoutOuts() {
+    try {
+      const response = await axios.get('/api/booking/booking');
+      setShoutOut(response.data);
+      setNetworkError(false);
+
+    } catch( err ) {
+      console.log('user not connected to an internet connection')
+      setNetworkError(true);
+    }
+    
+  }
+
+
+  function reloadShoutOut() {
+    setNetworkError(false);
+    getShoutOuts();
+  }
+
+  useEffect( ()=> {
+    getShoutOuts();
+  }, [])
+
+  useEffect( ()=>{
+
     if(/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)&&window.matchMedia("(max-width: 600px)").matches){
-    setIsMobile(true)
-  } else{setIsMobile(false)}
-// console.log(isMobile, navigator.userAgent)
-  },[ isMobile ])
+      setIsMobile(true)
+    } else{setIsMobile(false)}
+
+    },[ isMobile ])
 
   return (
         <Layout title={"Home Page"}>
-        <ReviewSlider/>
-        <div className="md:px-36 px-5">
+        <div className=" px-3 md:w-[1000px] w-[100%] mx-auto border-1">
+          <ReviewSlider/>
            <Info/>
             <p className="grid w-full border-b-1  mx-auto text-center bg-clip-text text-transparent bg-gradient-to-tr from-yellow-200 to-orange-600 ">
               <span style={{lineHeight:'30px'}} id="products" className="flex text-center text-[28px] font-sans font-extrabold mx-auto p-2"> 
@@ -60,11 +92,32 @@ export default function Home() {
             link={card.link} image={card.image}/>))}
         </div>
         
-       <div className="mb-4">
-          <div style={{alignItems:'baseline'}} className="w-full gap-2 flex flex-row justify-center mb-3 mt-8 font-sans font-extrabold
-           text-green-800 "> <span className="bg-clip-text md:text-[30px] text-[18px] text-transparent bg-gradient-to-tr from-green-700 to-green-300">SHOUT OUT</span> <div className="w-[70%] rounded-tr-[10px] h-[10px] bg-gradient-to-tr from-green-400 to-yellow-500"></div></div>
-          <ShoutOutCard/>
-     </div>
+       <div className="mb-[40px] mt-[40px] flex flex-col gap-2 items-center">
+            <span className="bg-clip-text text-[30px] font-extrabold text-transparent bg-gradient-to-tr from-green-700 to-green-300">SHOUT OUT</span>
+           { networkError ? (
+                <div onClick={reloadShoutOut} className="h-[500px] cursor-pointer gap-3 md:w-[700px] w-full flex flex-col justify-center items-center rounded-[20px] bg-gradient-to-b from-gray-200 to-gray-50 border-1 border-gray-400">
+                  <span>Network error. Retry?</span>
+                  <ReloadIcon/>
+                </div>
+                ) : ( !shoutOut ? 
+                  ( 
+                    <div className="h-[500px] md:w-[700px] w-full flex flex-col justify-center items-center rounded-[20px] bg-gradient-to-b from-gray-200 to-gray-50 border-1 border-gray-400">
+                      <CycleLoader/>
+                    </div>
+                  ) : (
+                      shoutOut.length === 0? (
+                          <NoShoutOut/>
+                      ): ( shoutOut.length > 1 ? (
+                          <RegularShoutout regulars={shoutOut}/>
+                          ) : (
+                              <ShoutOutCard shoutOutType={'premium'} details={shoutOut[0]}/>
+                          )  
+                      )
+                  )
+                )
+            }
+           
+        </div>
 
          <div className="h-80 mt-6">
            <p className="grid w-full  mx-auto text-center text-2xl text-green-800 font-sans">

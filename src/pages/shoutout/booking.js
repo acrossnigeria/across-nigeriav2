@@ -1,6 +1,7 @@
 // pages/booking.js
 
 import { useEffect, useReducer, useState } from 'react';
+import { useSession } from 'next-auth/react';
 import Layout from '@/components/Layout';
 import { useRouter } from 'next/router';
 import Calendar from '@/components/Calendar';
@@ -13,6 +14,7 @@ import Image from 'next/image';
 import ImgIcon from '../../../public/images/icon/ImgIcon';
 import DeleteIcon from '../../../public/images/icon/DeleteIcon';
 import FileIcon from '../../../public/images/icon/FileIcon';
+import CycleLoader from '@/components/CycleLoader';
 
 // Reducer function
 function reducer(state, action) {
@@ -57,6 +59,8 @@ function reducer(state, action) {
 
 const BookingPage = () => {
   const router = useRouter();
+  const [ isLoadingCalender, setIsLoadingCalender ] = useState(true);
+  const { status, data: session } = useSession();
   // Example available dates
   const [ data, setData ] = useState([]);
 
@@ -65,10 +69,10 @@ const BookingPage = () => {
     const fetchData = async () => {
       try {
         dispatch({type:'UPLOAD_REQUEST'});
-        const response = await axios.get("/api/booking/booking", {params:{param:'fetch'}});
-        const premiumCollections = response.data.filter(doc => doc.category === 'premium');
+        const response = await axios.get("/api/booking/data?type=premium");
+        const premiumCollections = response.data;
         setData(premiumCollections.map(doc=>doc.dateSelected));
-        console.log(data); // Log response.data directly
+        setIsLoadingCalender(false);
       } catch (error) {
         dispatch({type:'UPDATE_FAIL'});
       } finally {
@@ -91,7 +95,9 @@ const [{ loading, error, loadingUpdate, loadingPay, loadingUpload }, dispatch] =
 // Example: Add 1 day to each date
   const updatedUnavailableDates = unavailableDateObjects.map(date => {
       date.setDate(date.getDate());
-      return date.toISOString().split('T')[0];
+      const dateVal = date.toISOString().split('T')[0];
+      console.log(dateVal);
+      return dateVal;
   });
 
   const [ selectedDate, setSelectedDate ] = useState(null);
@@ -147,8 +153,10 @@ const [{ loading, error, loadingUpdate, loadingPay, loadingUpload }, dispatch] =
       formData.append('api_key', process.env.NEXT_PUBLIC_CLOUDINARY_API_KEY);
       formData.append('folder', 'temp_image_uploads');
       const { data } = await axios.post(url, formData);
+      const user = session?.user?._id;
+      console.log(user);
 
-      const response = await axios.post('/api/booking/booking', { mediaUrl: data.secure_url });
+      const response = await axios.post('/api/booking/booking', { mediaUrl: data.secure_url, user });
       console.log(response.data);
 
       dispatch({ type: 'UPLOAD_SUCCESS' });
@@ -217,117 +225,123 @@ const [{ loading, error, loadingUpdate, loadingPay, loadingUpload }, dispatch] =
 
   return (
     <Layout>
-    <div  className=' m-0 left-0 top-0 mx-auto px-5'>
-      <div className='my-8 flex flex-col text-center'>
-        <span className='text-gray-500'>We&apos;d love to get started</span>
-        <span className='text-[25px] font-medium'>Make a booking</span>
+      <div className={`${isLoadingCalender?'':'hidden'} h-[620px] w-full flex flex-col items-center`}>
+        <div className='bg-gray-200 mt-6 h-[20px] rounded-[20px] w-[200px] animate-pulse'></div>
+        <div className='bg-gray-200 mt-2 h-[35px] rounded-[20px] w-[250px] animate-pulse'></div>
+        <div className='md:w-[400px] mt-6 w-[85%] h-[400px] bg-gray-200 animate-pulse rounded-[20px]  flex flex-col justify-center items-center'>
+        </div>
+        <div className='bg-gray-200 mt-4 h-[50px] rounded-[20px] md:w-[300px] w-[85%] animate-pulse'></div>
       </div>
-      <Calendar unavailableDates={updatedUnavailableDates} selectedDate={selectedDate} onSelectDate={handleSelectDate} />
-      {selectedDate && ( 
-        <div className="max-w-lg text-[19px] mx-auto mt-2 mb-8 p-2 rounded-lg">     
-            <p className='mb-10'>You have Selected <span className='font-bold animate-pulse'>{selectedDate?.toDateString()}</span> for your Shout Out!</p>
-            <h2 className="text-[30px] font-light mb-4">Booking Form</h2>
-          <form onSubmit={confirm}>
-            <div className="mb-4">
-              <label className="block text-gray-700 font-semibold mb-2" htmlFor="displayName">Title</label>
-              <input
-                type="text"
-                id="displayName"
-                className="w-full bg-gray-300 h-[48px] text-[19px] px-4 py-2 rounded border border-gray-300 focus:outline-none focus:border-green-500"
-                placeholder="Enter your desired title"
-                value={displayName}
-                onChange={(e) => setDisplayName(e.target.value)}
-              />
-            </div>
-            <div className="mb-4">
-              <label className="block text-gray-700 font-semibold mb-2" htmlFor="displayName">Caption</label>
-              <textarea
-                type="text"
-                id="shoutOut"
-                className="w-full bg-gray-300 text-[19px] px-4 py-2 rounded border border-gray-300 focus:outline-none focus:border-green-500"
-                placeholder="Make your Shout-Out"
-                value={shoutout}
-                rows={4}
-                cols={50}
-                onChange={shoutoutChange}
-              />
-              <div>Characters left: {200 - shoutout.length}</div>
-            </div>
-            <div className="mb-4">
-              <label className="block text-gray-700 font-semibold mb-2" htmlFor="imageFile">Upload image</label>
-              <div className='flex flex-col my-[10px]'>
-                 <input
-                accept=".jpg"
-                type="file"
-                className="mb-4 w-[100%] hidden opacity-0 border-2 h-[30px] "
-                id="imageFile"
-                onChange={photoUploader} />
-                <button onClick={selectPhoto} className='bg-green-600 border-green-400 border-b-2 rounded-[5px] hover:bg-green-700 hover:border-none h-[40px] gap-[10px] flex text-white flex-row justify-center items-center'>
-                  <span>Select a Photo</span>
-                  <Upload/>
-                </button>
+      <div  className={`${isLoadingCalender?'hidden':''} m-0 left-0 top-0 mx-auto px-5`}>
+        <div className='my-6 flex flex-col text-center'>
+          <span className='text-gray-500'>We&apos;d love to get started</span>
+          <span className='text-[25px] font-medium'>Make a booking</span>
+        </div>
+        <Calendar unavailableDates={updatedUnavailableDates} selectedDate={selectedDate} onSelectDate={handleSelectDate} />
+        <p className='mb-7 mt-3 border-1 text-[20px] border-gray-400 bg-gray-100 p-2 rounded-[20px]'>Selected : <span className='font-bold bg-green-800 text-white p-1 animate-pulse'>{selectedDate?.toDateString()}</span></p>
+        {selectedDate && ( 
+          <div className="max-w-lg text-[19px] mx-auto mt-2 mb-8 rounded-lg">     
+              <h2 className="text-[30px] text-green-700 font-light mb-4">Booking Form</h2>
+            <form onSubmit={confirm}>
+              <div className="mb-4">
+                <label className="block text-gray-700 font-semibold mb-2" htmlFor="displayName">Title</label>
+                <input
+                  type="text"
+                  id="displayName"
+                  className="w-full bg-gray-200 h-[48px] text-[19px] px-4 py-2 rounded border border-gray-300 focus:outline-none"
+                  placeholder="Enter your desired title"
+                  value={displayName}
+                  onChange={(e) => setDisplayName(e.target.value)}
+                />
               </div>
-              { imgPreview ? (
-                  <div className='border-2 border-gray-400 w-[100%]' style={{ position: "relative", height: "300px" }}>
-                    <Image src={imgPreview} layout='fill' objectFit='contain' priority={true}/>
-                  </div>
-                ) : (
-                  <div className='w-[100%] h-[300px] border-2 flex flex-col justify-center text-gray-400 items-center border-gray-400'>
-                    <span>Photo preview</span>
-                    <ImgIcon/>
-                  </div>
-                )
-                  }
-              {selectedFile && (
-                <div className='flex flex-row justify-between items-center bg-gray-200 h-[70px] px-[10px] mt-[5px]'>
-                  <div className='flex flex-row gap-[15px] items-center'>
-                    <FileIcon/>
-                    <div className='flex flex-col text-[12px] text-gray-500'>
-                      <span>{imgName}</span>
-                      <span>{ imgSize.toFixed(2) } mb</span>
+              <div className="mb-4">
+                <label className="block text-gray-700 font-semibold mb-2" htmlFor="displayName">Caption</label>
+                <textarea
+                  type="text"
+                  id="shoutOut"
+                  className="w-full bg-gray-200 text-[19px] px-4 py-2 rounded border border-gray-300 focus:outline-none"
+                  placeholder="Make your Shout-Out"
+                  value={shoutout}
+                  rows={4}
+                  cols={50}
+                  onChange={shoutoutChange}
+                />
+                <div>Characters left: {200 - shoutout.length}</div>
+              </div>
+              <div className="mb-4">
+                <label className="block text-gray-700 font-semibold mb-2" htmlFor="imageFile">Upload image</label>
+                <div className='flex flex-col my-[10px]'>
+                  <input
+                  accept=".jpg, png, jfif"
+                  type="file"
+                  className="mb-4 w-[100%] hidden opacity-0 border-2 h-[30px] "
+                  id="imageFile"
+                  onChange={photoUploader} />
+                  <button onClick={selectPhoto} className='bg-green-600 border-green-400 border-b-2 rounded-[25px] hover:bg-green-700 hover:border-none h-[50px] gap-[10px] flex text-white flex-row justify-center items-center'>
+                    <span>Select a Photo</span>
+                    <Upload/>
+                  </button>
+                </div>
+                { imgPreview ? (
+                    <div className=' w-[100%]' style={{ position: "relative", height: "300px" }}>
+                      <Image src={imgPreview} layout='fill' objectFit='contain' priority={true}/>
                     </div>
-                    
+                  ) : (
+                    <div className='w-[100%] rounded-[20px] border-gray-400 border-1 h-[300px] border-1 flex flex-col justify-center text-gray-400 items-center border-gray-400'>
+                      <span>Photo preview</span>
+                      <ImgIcon/>
+                    </div>
+                  )
+                    }
+                {selectedFile && (
+                  <div className='flex flex-row justify-between items-center bg-gray-200 h-[70px] px-[10px] mt-[5px]'>
+                    <div className='flex flex-row gap-[15px] items-center'>
+                      <FileIcon/>
+                      <div className='flex flex-col text-[12px] text-gray-500'>
+                        <span>{imgName}</span>
+                        <span>{ imgSize.toFixed(2) } mb</span>
+                      </div>
+                      
+                    </div>
+                    <button className='cursor-pointer border-2 rounded-[50%] p-[11px] hover:bg-gray-400 transition-background duration-500 ease-in-out ' onClick={handleRemoveFile}><DeleteIcon/></button>
                   </div>
-                  <button className='cursor-pointer border-2 rounded-[50%] p-[11px] hover:bg-gray-400 transition-background duration-500 ease-in-out ' onClick={handleRemoveFile}><DeleteIcon/></button>
+                )}
+
+                {loadingUpload && <div style={{borderRadius:'10px'}} className="mt-2 p-2 bg-orange-200">Please wait while the photo is uploaded....
+                <p>`Don&apos;t Navigate from this Page </p></div>}
+              </div>
+              <div className="mb-4">
+                <label className="block text-gray-700 font-semibold mb-2" htmlFor="category">Category</label>
+                <select
+                  id="category"
+                  className="w-full px-4 py-2 rounded border h-[48px] bg-gray-200 border-gray-300 focus:outline-none"
+                  value={selectedCategory}
+                  onChange={handleCategoryChange} >
+                  <option disabled value="">Select Category</option>
+                  <option value="premium">Premium</option>
+                  <option value="general">General</option>
+                </select>
+              </div>
+              {showInfo &&(selectedCategory==="premium"||selectedCategory==="general") &&(displayName.length>0)&&(
+                <div className="mb-4">
+                  {selectedCategory === 'premium' ? (
+                    <p className="text-green-700">
+                      Cost: Ten Thousand Naira. Your booking date is locked in.
+                    </p>
+                  ) : (
+                    <p className="text-green-700">
+                      Cost: One Thousand Naira. Your shout-out will be entered into the daily draw.
+                    </p>
+                  )}
                 </div>
               )}
-
-              {loadingUpload && <div style={{borderRadius:'10px'}} className="mt-2 p-2 bg-orange-300">Please wait while we upload your File....
-              <p>`Don&apos;t Navigate from this Page </p></div>}
-            </div>
-            <div className="mb-4">
-              <label className="block text-gray-700 font-semibold mb-2" htmlFor="category">Category</label>
-              <select
-                id="category"
-                className="w-full px-4 py-2 rounded border h-[48px] bg-gray-300 border-gray-300 focus:outline-none focus:border-green-500"
-                value={selectedCategory}
-                onChange={handleCategoryChange} >
-                <option disabled value="">Select Category</option>
-                <option value="premium">Premium</option>
-                <option value="general">General</option>
-              </select>
-            </div>
-            {showInfo &&(selectedCategory==="premium"||selectedCategory==="general") &&(displayName.length>0)&&(
-              <div className="mb-4">
-                {selectedCategory === 'premium' ? (
-                  <p className="text-green-700">
-                    Cost: Ten Thousand Naira. Your booking date is locked in.
-                  </p>
-                ) : (
-                  <p className="text-green-700">
-                    Cost: One Thousand Naira. Your shout-out will be entered into the daily draw.
-                  </p>
-                )}
-              </div>
-             )}
-            <Checkbox handleTermsCheckboxChange={()=>{setAgree(!agree)}}/>
-            {agree && (selectedCategory==="premium"||selectedCategory==="general") &&selectedFile&&(<button type="submit" onClick={confirm}
-              className="bg-green-500 text-white font-semibold px-[30px] py-2 rounded my-3 hover:bg-green-700 focus:outline-none focus:bg-green-700"  >
-              Submit
-            </button>)}
-          </form>
-        </div>)}
-    
+              <Checkbox handleTermsCheckboxChange={()=>{setAgree(!agree)}}/>
+              {agree && (selectedCategory==="premium"||selectedCategory==="general") &&selectedFile&&(<button type="submit" onClick={confirm}
+                className="bg-green-500 text-white font-semibold h-[50px] w-full px-[30px] py-2 rounded-[30px] my-3 hover:bg-green-700 border-b-1 border-b-green-900"  >
+                Submit
+              </button>)}
+            </form>
+          </div>)}
       </div>
     </Layout>
   );

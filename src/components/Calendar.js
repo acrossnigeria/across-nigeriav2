@@ -19,6 +19,7 @@ const isDateAvailable = (date) => {
     if (isDateAvailable(date)) {
       onSelectDate(date);
     } else {
+
       toast.error("The selected date is not available")
     }
   };
@@ -80,7 +81,7 @@ const isSameDay = (date1, date2) => {
   };
 
   return (
-    <div className=' sm:w-96 mx-auto rounded-[5px] bg-gray-100 p-3'>
+    <div className=' sm:w-96 mx-auto rounded-[20px] border-1 border-gray-400 bg-gray-100 p-3'>
       <div className="flex justify-between mb-2">
         <button className='rounded-[50%] transition-background ease-in-out duration-100 hover:bg-gray-400 p-1 rotate-180' onClick={handlePrevMonth}><Next/></button>
         <span className="text-[22px] font-light">{`${currentDate.toLocaleString('default', { month: 'long' })} ${currentDate.toLocaleString('default', { year: 'numeric' })}`}</span>

@@ -15,10 +15,10 @@ const Checkbox = ({handleTermsCheckboxChange}) => {
             type="checkbox"
             id="termsCheckbox"
             checked={termsAccepted}
-            className='accent-green-700 h-[18px] w-[18px]'
+            className='accent-green-700 h-[30px] w-[30px]'
             onChange={handleChange}
           />
-          <label htmlFor="termsCheckbox" className="ml-2 text-[18px]">
+          <label htmlFor="termsCheckbox" className="ml-2 text-[19px]">
             Accept our <Link className='text-green-500 underline hover:text-green-300' href="#">Terms and Conditions</Link>
           </label>
         </div>

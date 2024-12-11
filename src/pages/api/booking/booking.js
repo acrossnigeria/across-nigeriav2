@@ -1,15 +1,28 @@
 import Booking from "@/models/Booking";
+import Comment from "@/models/Comment";
 import db from "../../../../utils/db";
 
 const handler = async (req, res) => {
     const{param}=req.query;
-    if(req.method==='GET' && param==='fetch'){
+    if(req.method==='GET'){
         try {
+            const today = new Date();
+            const options = { weekday: 'short', year: 'numeric', month: 'short', day: '2-digit'};
+            const brokenDateStr = today.toLocaleDateString('en-US', options).split(', ');
+            const formatedDate = `${brokenDateStr[0]} ${brokenDateStr[1]} ${brokenDateStr[2]}`
+
+            console.log(formatedDate);
+            
             await db.connect();
-            const selectedDate = await Booking.find().lean();
-            const convertedDate = selectedDate.map(db.convertDocToObj);
+            const allBookings = await Booking.find().lean();
+            const bookings = [];
+            allBookings.map(booking => {
+              const isFit = booking.dateSelected === formatedDate;
+              if (isFit) { bookings.push( booking )};
+            });
+            
             await db.disconnect();
-            return res.status(200).json(convertedDate); // Send the response back to the client
+            return res.status(200).json(bookings); // Send the response back to the client
         } catch (error) {
             return res.status(500).json({ error: "Error fetching data" }); // Send error response
         }
@@ -43,13 +56,14 @@ const handler = async (req, res) => {
 
     } else if(req.method==='PATCH') {
         console.log("Body of request", req.body)
-        const { dateSelected, category, name, shoutOut, bookingId } = req.body;
+        const { dateSelected, category, name, shoutOut, bookingId, user } = req.body;
         const finalizedBooking = {
           dateSelected,
           category,
           name,
           shoutOut,
           finalized:'true',
+          user,
         }
         try {
             await db.connect();
@@ -65,10 +79,10 @@ const handler = async (req, res) => {
     }
     else if(req.method==='POST'){
       console.log("Body of request", req.body)
-      const { mediaUrl }= req.body;
+      const { mediaUrl, user }= req.body;
       try {
         await db.connect();
-        const tempBooking = await Booking.create({ mediaUrl });
+        const tempBooking = await Booking.create({ mediaUrl, user });
         await db.disconnect();
         res.send({ message: 'Temporary Booking created', tempBooking }); // Send the response back to the client
       } catch (error) {

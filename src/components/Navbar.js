@@ -60,8 +60,7 @@ const Navbar = () => {
           </div>
           ) : session?.user ? (
           <div className="relative">
-            <div style={{alignItems:'center'}} className="flex flex-row justify-between gap-2 h-[40px] pl-3 pr-[2px] cursor-pointer font-bold  text-white bg-green-800 transition duration-100 rounded-[30px] text-[16px]"
-            onClick={toggleMenu}>
+            <div style={{alignItems:'center'}} className="flex flex-row justify-between gap-2 h-[40px] pl-3 pr-[2px] cursor-pointer font-bold  text-white bg-green-800 transition duration-100 rounded-[30px] text-[16px]">
               <Link href={'/user/profile'}>{session.user.name}</Link>
                <Profile/>
             </div>

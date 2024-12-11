@@ -39,18 +39,18 @@ export async function connect() {
 }
 
 export async function disconnect() {
-  await mongoose.disconnect();
-  connection.isConnected = false;
-  console.log("Disconnected from database");
-  // if (connection.isConnected) {
-  //   if (process.env.NODE_ENV === "production") {
-  //     await mongoose.disconnect();
-  //     connection.isConnected = false;
-  //     console.log("Disconnected from database");
-  //   } else {
-  //     console.log("Not disconnecting in development mode");
-  //   }
-  // }
+  // await mongoose.disconnect();
+  // connection.isConnected = false;
+  // console.log("Disconnected from database");
+  if (connection.isConnected) {
+    if (process.env.NODE_ENV === "production") {
+      await mongoose.disconnect();
+      connection.isConnected = false;
+      console.log("Disconnected from database");
+    } else {
+      console.log("Not disconnecting in development mode");
+    }
+  }
 }
 
 

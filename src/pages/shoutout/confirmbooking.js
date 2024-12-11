@@ -5,20 +5,21 @@ import Layout from '@/components/Layout'
 import PaystackBtn from '@/components/PaystackBtn';
 import { useSession } from 'next-auth/react';
 import axios from 'axios';
-import ShoutOutCard from '@/components/ShoutOutCard';
+import Close from '../../../public/images/icon/Close';
+import CycleLoader from '@/components/CycleLoader';
 
 
 function Confirmbooking() {
   const { data: session } = useSession();
-  const [ loadPay,setLoadPay ] = useState(false);
   const [ payment, setPayment ] = useState(0);
   const router=useRouter();
   const [ dateData, setDateData ] = useState()
-  const [ url, setUrl ] = useState();
   const [ category, setCategory ] = useState();
   const [ displayName, setDisplayName ] = useState();
   const [ shoutOut, setShoutOut ] = useState('');
   const [ bookingId, setBookingId ] = useState('');
+  const [ processing, setProcessing ] = useState(false);
+  const [ processingMessage, setProcessingMessage ] = useState('Setting up booking...');
 
   useEffect(()=>{
     const selectedDate = localStorage.getItem('selectedDate')
@@ -33,7 +34,6 @@ function Confirmbooking() {
 
      setDateData(selectedDate);
      setPayment(amount);
-     setUrl(dataUrl);
      setCategory(selectedCategory);
      setDisplayName(displayName);
      setShoutOut(shoutout);
@@ -47,9 +47,10 @@ function Confirmbooking() {
   },[]);
 
   const dateHandler= async()=>{
+    setProcessing(true);
     await axios.patch('/api/booking/booking', {dateSelected:dateData,category:category, name:displayName, bookingId:bookingId, shoutOut:shoutOut});
-    alert("Booked successfully click Ok to continue");
-    router.push('/shoutout/booking');
+    setProcessingMessage('loading...');
+    router.push('/shoutout/bookingSuccess');
   }
 
   const formatPayment=parseFloat(payment);
@@ -57,24 +58,11 @@ function Confirmbooking() {
 
   return (
     <Layout>
-      <div className=''> 
-        <button className="bg-red-300 text-black font-semibold py-2 cursor-pointer px-4  rounded"onClick={()=>(router.back())}>
-          Back
-        </button>
-
-        <div className='text-center mx-auto'> 
-          <button className="bg-yellow-300 text-black font-semibold py-2 cursor-pointer px-4 text-center mx-auto rounded" 
-          onClick={()=>(setLoadPay(true))}>
-            {/* Pay &#8358;{localePayment} Naira */}Share
-          </button>
-        </div> 
-         {loadPay && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
-            <div className="w-fit h-fit p-2 font-semibold text-lg rounded-md cursor-pointer absolute left-2  top-20 z-50 bg-yellow-700" onClick={()=>(setLoadPay(false))}>Close</div>
+          <div className={`${processing?'':'hidden'} fixed h-screen w-screen inset-0 z-[2000] flex items-center flex-col justify-center bg-gradient-to-br from-gray-100 to-white`} ><CycleLoader/><span className='text-[12px] mt-[15px]'>{processingMessage}</span></div>
+          <div className={`${processing?'hidden':''} fixed h-screen w-screen inset-0 z-[2000] flex items-center justify-center bg-black bg-opacity-50`}>
+            <button className=" absolute right-7 p-2 rounded-[50%]  top-7 z-50 hover:bg-gray-200" onClick={()=>(router.push('/shoutout/booking'))}><Close/></button>
             <PaystackBtn pay={dateHandler} amount={payment} email={session?.user.email} purpose={`Booking for a Shout-Out ${category==='general'?'Lottery':'Premium'} Edition`}/>
           </div>
-          )}
-      </div>
     </Layout>
   )
 }
