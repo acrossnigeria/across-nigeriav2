@@ -28,7 +28,7 @@ const SuccessComponent = () => {
                 <ShoutOutSuccess/>
                 <div className="flex flex-col md:w-[500px] w-[90%]">
                    <span style={{lineHeight:'25px'}} className="text-center text-[22px] font-bold text-green-700 animate-pulse"><strong>Congratulations! Your Shout-Out Is Officially Booked!</strong></span>
-                   <span className="text-center text-gray-700">Your shout-out will shine on our homepage and catch everyone's attention! Get ready to make an unforgettable impact.</span>
+                   <span className="text-center text-gray-700">Your shout-out will shine on our homepage and catch everyone&apos;s attention! Get ready to make an unforgettable impact.</span>
                    <span className="text-[20px] text-green-700 font-bold mt-[20px]">What&apos;s Next? </span>
                    <span className="text-gray-700">Your shout-out will be live soon. Stay tuned and watch it light up the homepage</span>
                    <div className="bg-gray-100 mt-[7px] py-4 px-2 flex flex-col">

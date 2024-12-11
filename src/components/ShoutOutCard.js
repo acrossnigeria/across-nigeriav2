@@ -142,7 +142,7 @@ export default function ShoutOutCard( { details, shoutOutType }) {
                             <div>
                                 { comments.length > 0 && (<CommentCard comment={comments[0]}/>) }
                                 {comments.map( comment => { 
-                                    if (comment._id === 'temp') { return <CommentCard comment={comment}/>}
+                                    if (comment._id === 'temp') { return <CommentCard key={comment._id} comment={comment}/>}
                                 })}
                             </div>
                         ): ( comments.length > 0 ? (
