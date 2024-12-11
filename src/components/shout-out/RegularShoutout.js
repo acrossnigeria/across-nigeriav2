@@ -29,7 +29,7 @@ const RegularShoutout = ( { regulars }) => {
         renderCenterRightControls={null}
         >
         { regulars.map( data => {
-            return <ShoutOutCard shoutOutType={'regular'} details={data}/>
+            return <ShoutOutCard key={data._id} shoutOutType={'regular'} details={data}/>
          })}
         </Carousel>
        </div>
