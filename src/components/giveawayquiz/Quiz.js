@@ -76,7 +76,7 @@ const Quiz = ( { state }) => {
         <div className={`flex bg-gradient-to-br from-green-400 to-green-800 h-screen mx-auto flex-col space-y-4 w-[100%] ${state} `}>
         <Loader/>
         <div className='flex flex-row justify-end px-8 py-3'>
-            <Link className='bg-white w-[50px] rounded-[50%] flex flex-row justify-center items-center h-[50px]' href={'/giveaway-quiz/landingPage'}><Close/></Link> 
+            <Link className='bg-white w-[50px] rounded-[50%] flex flex-row justify-center items-center h-[50px]' href={'/giveaway-quiz'}><Close/></Link> 
         </div>
         <div className='bg-white md:w-[500px] w-[95%] self-center p-4 flex flex-col items-center rounded-[20px]'>
             <div className="p-4 md:h-[100px] w-full rounded-md">
