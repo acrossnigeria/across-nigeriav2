@@ -17,7 +17,7 @@ function Landing() {
         <div className={`pb-[50px]`}>
             <div className={`border-b-[0.5px] border-green-600 flex ${isMobile?'flex-col':'flex-row'} h-[fit-content] justify-center ${isMobile?'':'px-[10%]'} py-[20px]`}>
                 <div className={` border-black ${isMobile?'w-[90%]':'w-[40%]'} self-center flex flex-col h-[fit-content] mb-[15px]`}>
-                    <span style={{lineHeight:(isMobile?'30px':'50px')}} className={`font-extrabold ${isMobile?'text-[30px] text-center':'text-[50px]'} text-pretty text-yellow-400`}>Upto <span className="bg-gradient-to-tr from-green-400 to-green-800 bg-clip-text text-transparent">&#8358;100,000</span> up for grabs! <span className="text-orange-600">& more</span></span> 
+                    <span style={{lineHeight:(isMobile?'23px':'40px')}} className={`font-extrabold ${isMobile?'text-[22px] text-center':'text-[40px]'} text-pretty text-yellow-400`}><span className="bg-gradient-to-tr from-green-400 to-green-800 bg-clip-text text-transparent">&#8358;1 million naira</span> to be shared by <span className='bg-gradient-to-tr from-orange-600 to bg-yellow-300 bg-clip-text text-transparent'>100 lucky</span> winners <span className="text-orange-600">with correct answers</span> play with &#8358;100 and you could win <span className='bg-gradient-to-tr from-green-400 to-green-800 bg-clip-text text-transparent'>&#8358;10,000</span></span> 
                 </div>
                 <div style={{height:(isMobile?'200px':'400px')}} className={`${isMobile?'w-[98%] left-[1%]':'w-[60%]'} relative`}>
                     <Image className="bg-gray-300" style={{borderRadius:'22px'}} alt='banner' layout="fill" objectFit="fill" src={image1}/>
@@ -27,7 +27,7 @@ function Landing() {
                 <span style={{lineHeight:'10px'}} className={` text-green-600 font-bold tracking-wider`}>Welcome to the Ultimate Giveaway Quiz </span> 
             </div>
             <div className={`text-center text-gray-800 mb-[20px] text-[20px] ${isMobile?'w-[90%] ml-[5%]':'w-[60%] mt-4 ml-[20%]'}`}>
-                <span>Think you&apos;ve got what it takes to win big? Here&apos;s your chance to play, have fun, and walk away with incredible prizes, Let&apos;s break it down for you</span>
+                <span>Think you&apos;ve got what it takes to win big? Here&apos;s your chance to play, have fun, and walk away with  cash prizes, Let&apos;s break it down for you</span>
             </div>
             <div className="text-center mt-5" >
                 <span className="w-[50%] text-[25px] pb-[5px] border-green-600 text-center text-green-700 font-bold tracking-wider">How to Join the Fun</span> 
@@ -48,7 +48,7 @@ function Landing() {
                 <div className="flex flex-row justify-evenly mt-[20px]">
                     <span style={{borderRadius:'50%'}} className="text-[25px] h-[fit-content] bg-gradient-to-br from-yellow-500 to-orange-500 px-[15px] py-[5px] text-white text-center font-extrabold tracking-wider">3</span> 
                     <div style={{borderTopRightRadius:'25px', borderBottomRightRadius:'25px', borderBottomLeftRadius:'25px'}} className={`border-1 border-gray-800 ${isMobile?'w-[70%] text-[17px]':'text-[20px]'} max-w-[600px] text-gray-800 p-[10px]`}>
-                        <span>Get ready to win big! A total of 100 winners will share an incredible pot prize of 1 million Naira, with each winner taking home 50,000 Naira in cash! And the best part? Your chance to win starts at just &#8358;100. Remember, the more you play, the better your odds</span>
+                        <span>Get ready to win big! A total of 100 winners will share an incredible pot prize of 1 million Naira, with each winner taking home 10,000 Naira in cash! And the best part? Your chance to win starts at just &#8358;100. Remember, the more you play, the better your chance</span>
                     </div>
                 </div>
                 <div className="mt-[30px] border-t-1 border-green-700 pt-[10px] flex flex-col text-center gap-2">

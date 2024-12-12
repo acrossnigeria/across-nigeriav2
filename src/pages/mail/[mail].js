@@ -43,7 +43,7 @@ export default function ChangePass(props){
     console.log('Password successfully changed!');
     setNewPassword("");
     setRepeatPassword("");
-    router.push("/login");
+    router.push("/account/login");
   };
 
   return (
