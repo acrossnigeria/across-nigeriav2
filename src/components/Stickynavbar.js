@@ -8,6 +8,7 @@ import SearchIcon from "@heroicons/react/24/outline/MagnifyingGlassIcon";
 import { signOut, useSession } from "next-auth/react";
 import { useRouter } from "next/router";
 import Search from '../../public/images/icon/Search';
+import Profile from "../../public/images/icon/Profile";
 
 
 
@@ -47,27 +48,22 @@ const toggleMenu=()=>{
             </Link>
             <div className="flex flex-row gap-[2rem]">
               <Link href={'/'}>
-                  <div className="flex font-mono text-[17px] font-extrabold hover:text-green-400">
+                  <div className="flex font-mono text-[17px] h-full font-extrabold hover:text-green-400 hover:scale-110">
                     Home
                   </div>
               </Link>
-               { session?.user? (<Link href={'/user/profile'}>
-                                      <div className="flex font-mono text-[17px] font-extrabold hover:text-green-400">
-                                        Profile
-                                      </div>
-                                  </Link>):('') }
-              <Link href={'/giveaway-quiz/landingPage'}>
-                  <div className="flex font-mono text-[17px] font-extrabold hover:text-green-400">
+              <Link href={'/giveaway-quiz'}>
+                  <div className="flex font-mono text-[17px] font-extrabold hover:text-green-400 hover:scale-110">
                     Giveaway-quiz
                   </div>
               </Link>
-              <Link href={'/shoutout/booking'}>
-                  <div className="flex font-mono text-[17px] font-extrabold hover:text-green-400">
+              <Link href={'/shoutout'}>
+                  <div className="flex font-mono text-[17px] font-extrabold hover:text-green-400 hover:scale-110">
                     Shout-out
                   </div>
               </Link>
               <Link href={'/about'}>
-                  <div className="flex font-mono text-[17px] font-extrabold hover:text-green-400">
+                  <div className="flex font-mono text-[17px] font-extrabold hover:text-green-400 hover:scale-110">
                     About
                   </div>
               </Link>
@@ -85,17 +81,11 @@ const toggleMenu=()=>{
               </div>
           
             { session?.user ? (
-              <div className={`flex-1 top-0 w-[fit-content] p-1 h-9 cursor-pointer items-center font-semibold justify-center uppercase text-white border-2 border-green-600  transition duration-100  rounded-lg text-[10px]`}>
-                <div className="flex justify-center w-full" onClick={toggleMenu}>{session.user.name}</div>
-                  { open && (
-                    <div className="fixed block top-12 flex-1 mr-3 w-16 origin-top-right bg-green-600 text-[8px] lg:text-sm divide-y divide-gray-100 rounded-md shadow-lg ring-1ring-black ring-opacity-5 focus:outline-none" role="menu" aria-orientation="vertical" aria-labelledby="options-menu">
-                      <div className="py-1 flex" role="none">
-                        <a onClick={logoutClickHandler} className="text-gray-700 block px-3" role="menuitem">LogOut</a>
-                      </div>
-                      <div className="py-2 flex" role="none">
-                        <a onClick={()=>(router.push("/user/profile"))} className="text-gray-700 block px-6 " role="menuitem">Profile</a>
-                      </div>
-                    </div>) }
+              <div className="relative">
+                <div style={{alignItems:'center'}} className="flex flex-row justify-between gap-2 h-[37px] pl-3 pr-[2px] cursor-pointer font-bold  text-white bg-green-800 transition duration-100 rounded-[30px] text-[16px]">
+                  <Link className="hover:scale-105" href={'/user/profile'}>{session.user.name}</Link>
+                    <div className="hover:scale-105 hover:bg-green-900 rounded-[50%]"><Profile/></div>
+                </div>
               </div>
             ) : (
               <div style={{height:'fit-content', display:'flex', justifyContent:'space-between', alignItems:'center', gap:'1rem'}} >

@@ -29,9 +29,9 @@ import NoShoutOut from "@/components/shout-out/NoShoutOut";
 
 export const games=[
   {title:"GIVE AWAY QUIZZES", image:image1,link:"/giveaway-quiz/landingPage", date:'March, 2024'},
+  {title:"KING AND QUEEN", image:image3, link:"/king-and-queen", date:'January 1st, 2025'},
   {title:"SKITS ACROSS NIGERIA",image:image2,link:"/skitsPage", date:'March, 2024'},
   {title:"NAIJA VIBES", image:image8,link:"/soon", date:'March, 2024'},
-  {title:"KING AND QUEEN",image:image3,link:"/soon", date:'January 1st, 2025'},
   {title:"MYSTERY BOXES",image:image4,link:"/soon", date:'July 1st, 2024'},
   {title:"STATE TREASURE HUNT SHOW",image:image5,link:"/soon", date:'October, 2024'},
   {title:"MEGA CASH OUT",image:image6,link:"/soon", date:'October, 2024'},
@@ -79,7 +79,7 @@ export default function Home() {
 
   return (
         <Layout title={"Home Page"}>
-        <div className=" px-3 md:w-[1000px] w-[100%] mx-auto border-1">
+        <div className=" px-3 md:w-[1000px] w-[100%] mx-auto">
           <ReviewSlider/>
            <Info/>
             <p className="grid w-full border-b-1  mx-auto text-center bg-clip-text text-transparent bg-gradient-to-tr from-yellow-200 to-orange-600 ">

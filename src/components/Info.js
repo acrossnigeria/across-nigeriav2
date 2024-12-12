@@ -33,12 +33,12 @@ const Info = () => {
   reversed:true
     };
   return (
-    <div className="relative h-full wfull  grid grid-cols-1 top-0 border-b-1 pb-4 px-1 border-b-gray">
+    <div className="relative h-full  grid grid-cols-1 top-0 border-b-1 pb-4 px-1 border-b-gray">
         
-      <div className="flex lg:w-full  w-full font-bold text-6xl right-0 pt-4  text-pretty">
-        <span style={{}} className="w-full bg-clip-text bg-gradient-to-tr from-green-700 text-transparent to-green-400 font-extrabold tracking-wider">HOWFA?</span> 
+      <div className="flex lg:w-full  w-full font-bold text-[30px] md:text-[50px] right-0   text-pretty">
+        <span className="w-full bg-clip-text bg-gradient-to-tr from-green-700 text-transparent to-green-400 font-extrabold tracking-wider">HOWFA?</span> 
       </div>
-      <p className="font-semibold text-left mt-4 text-xl mb-4 text-gray-700">{data.paragraph}</p>
+      <p className="font-semibold text-left md:text-[23px] text-[15px] mb-4 text-gray-700">{data.paragraph}</p>
       <div className={`flex flex-row ${isMobile?'justify-center':''} `}>
         <button style={{ display:( session?.user? 'none': 'block')}} className="w-[fit-content] px-[40px] font-bold text-white rounded-[30px] h-[60px] flex flex-row justify-center items-center tracking-wider bg-green-700 hover:border-2 hover:border-green-700 hover:bg-transparent hover:text-green-700">
             <Link  href="/account/reg">
