@@ -22,12 +22,12 @@ function Index() {
             <div className={` border-black ${isMobile?'w-[90%]':'w-[35%]'} self-center flex flex-col h-[fit-content]`}>
                 <span style={{lineHeight:'30px'}}  className={`font-extrabold ${isMobile?'text-[30px] mt-1':'text-[45px]'} text-pretty bg-gradient-to-tr from-green-400 to-green-800 bg-clip-text text-transparent`}>Get Noticed. Be Celebrated.</span> 
                 <span className='mt-[10px] text-[18px] font-bold text-gray-600'>Want to be in the spotlight? Grab this opportunity to give or receive the ultimate shoutout! Perfect for celebrating milestones, sharing special messages, or promoting your brand.</span>
-                <Link className={`${isMobile?'hidden':''}`} href={'/shoutout/booking'}><button className='bg-green-600 h-[60px] w-[250px] rounded-[30px] font-extrabold text-[25px] text-white mt-2 hover:bg-white border-green-600 hover:text-green-600 hover:border-1'>Book</button></Link>
+                <Link className={`${isMobile?'hidden':''}`} href={'/shoutout/booking '}><button className='bg-green-600 h-[60px] w-[250px] rounded-[30px] font-extrabold text-[25px] text-white mt-2 hover:bg-white border-green-600 hover:text-green-600 hover:border-1'>Book</button></Link>
             </div>
             <div className={`flex flex-row justify-center `}>
                 <Support/>
             </div>
-            <Link className={`${isMobile?'':'hidden'} text-center`} href={'/shoutout/booking'}><button className='bg-green-600 h-[60px] w-[250px] rounded-[30px] font-extrabold text-[25px] text-white mt-2 hover:bg-white border-green-600 hover:text-green-600 hover:border-1'>Book</button></Link> 
+            <Link className={`${isMobile?'':'hidden'} mt-2 text-center`} href={'/shoutout/booking'}><button className='bg-green-600 h-[60px] w-[250px] rounded-[30px] font-extrabold text-[25px] text-white mt-2 hover:bg-white border-green-600 hover:text-green-600 hover:border-1'>Book</button></Link> 
           </div>
       </div>
     </Layout>
