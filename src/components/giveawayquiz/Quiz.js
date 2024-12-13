@@ -11,7 +11,7 @@ import Close from '../../../public/images/icon/Close';
 const questions = [
   {
     question: `What is the nickname given to Nigerian's national football team?`,
-    options: ['A. Lions', 'B. Eagles', 'C. Falcons', 'D. Super Eagles'],
+    options: ['A. Lions', 'B. Golden Eagles', 'C. Falcons', 'D. Super Eagles'],
     answer: 4, // Index of the correct answer option
   },
   // ... add more questions here
