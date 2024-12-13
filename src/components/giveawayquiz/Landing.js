@@ -17,7 +17,7 @@ function Landing() {
         <div className={`pb-[50px]`}>
             <div className={`border-b-[0.5px] border-green-600 flex ${isMobile?'flex-col':'flex-row'} h-[fit-content] justify-center ${isMobile?'':'px-[10%]'} py-[20px]`}>
                 <div className={` border-black ${isMobile?'w-[90%]':'w-[40%]'} self-center flex flex-col h-[fit-content] mb-[15px]`}>
-                    <span style={{lineHeight:(isMobile?'25px':'35px')}} className={`font-extrabold ${isMobile?'text-[25px] text-center':'text-[37px]'} text-pretty bg-gradient-to-bl from-green-400 to-green-700 bg-clip-text text-transparent`}>&#8358;1 million naira to be shared by 100 lucky winners with correct answer. </span> 
+                    <span style={{lineHeight:(isMobile?'25px':'35px')}} className={`font-extrabold ${isMobile?'text-[25px] text-center':'text-[37px]'} text-pretty bg-gradient-to-bl from-green-400 to-green-700 bg-clip-text text-transparent`}>&#8358;1 million naira to be shared by 100 lucky winners with the correct answer. </span> 
                     <span style={{lineHeight:'19px'}} className={`${isMobile?'text-center':'text-[20px]'} text-gray-600 font-bold mt-2`} >Play with &#8358;100 and you could win &#8358;10,000</span>
                 </div>
                 <div style={{height:(isMobile?'200px':'400px')}} className={`${isMobile?'w-[98%] left-[1%]':'w-[60%]'} relative`}>
