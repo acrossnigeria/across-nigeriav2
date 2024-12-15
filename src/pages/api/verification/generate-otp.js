@@ -46,7 +46,7 @@ const handler = async ( req, res) => {
 
 
             const emailPass = process.env.ZOHO_PASS;
-            console.log(content);
+            console.log('zoho pass:',emailPass);
             // Email content 
             const mailOptions = {
               from: '"Across Nigeria Reality TV Show" <noreply@acrossnig.com>',
