@@ -45,7 +45,7 @@ export default function SkitsPage({ skits }) {
           </div>
         ))}
       </div>
-      {/* <div className='mx-auto w-3/4'>
+      <div className='mx-auto w-3/4'>
         <p className='font-bold text-xl underline mb-4 w-fit'><span className='shadow-md shadow-gray-600'>Leader Board</span></p>
         <table>
           <thead>
@@ -63,7 +63,7 @@ export default function SkitsPage({ skits }) {
             ))}
           </tbody>
         </table>
-      </div> */}
+      </div>
       {/* Pagination */}
       <div className="flex justify-center my-4">
         {Array.from({ length: Math.ceil(sortedSkits.length / skitsPerPage) }, (_, i) => (

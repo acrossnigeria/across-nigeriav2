@@ -14,7 +14,6 @@ const handler = async(req,res)=>{
       console.log("GETTING",req.query)
       await db.connect();
       const user= await User.find({email: email});
-      console.log(user)
       await db.disconnect();
       // Send the found documents as a response
       if (user.length>0) {

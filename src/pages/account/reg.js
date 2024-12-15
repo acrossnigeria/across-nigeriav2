@@ -1,6 +1,6 @@
 import { useContext, useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
-import { toast } from 'react-toastify';
+import axios from 'axios';
 import Cookies from 'js-cookie';
 import { Store } from '../../../utils/Store';
 import Layout from '@/components/Layout';
@@ -12,6 +12,10 @@ import Close from '../../../public/images/icon/Close';
 import Loader from '@/components/Loader';
 import EyeOpen from '../../../public/images/icon/EyeOpen';
 import EyeClose from '../../../public/images/icon/EyeClose';
+import { signIn } from 'next-auth/react';
+import BackIcon from '../../../public/images/icon/BackIcon';
+import CycleLoader from '@/components/CycleLoader';
+import { setConfig } from 'next/config';
 
 const Register = () => {
    const nigeriaStates = [
@@ -46,10 +50,195 @@ const Register = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [showPassword2, setShowPassword2] = useState(false);
   const [ toConfirmPage, setToConfirmPage ] = useState(false);
+  const [ toAuthPage, setToAuthPage ] = useState(false);
+  const [toFormPage, setToFormPage ] = useState(true);
+  const [ otp, setOtp ] = useState('');
+  const [ isOtpSent, setIsOtpSent ] = useState(false);
+  const [ confirmText, setConfirmText ] = useState('Confirm');
+  const [ requestText, setRequestText ] = useState('Request code');
+  const [ regText, setRegText ] = useState('Register');
+  const [loading, setLoading ] = useState(false);
+  const [ isOtpInvalid, setIsOtpInvalid ] = useState(false);
+  const [ showEmailExistError, setShowEmailExistError ] = useState(false);
+  
+  const [ timer, setTimer ] = useState(60);
+  const [ timerDisplay, setTimerDisplay ] = useState(true);
+  const [ allowSubmit, setAllowSubmit ] = useState(true);
 
-  if (ref!==undefined) {
-    localStorage.setItem( "refId",ref );// save ref in local storage
+    // loads the confirm page
+  const today=new Date();
+  function toConfirm() {
+      const dateOfBirth = new Date(dob);
+      const age= today.getFullYear()-dateOfBirth.getFullYear();
+      
+      if( age<18 ){
+        return( alert("underage! cannot register below 18years old") );
+      };
+      setToConfirmPage(true);
+      setToFormPage(false);
+      setToAuthPage(false);
   }
+
+  const toConfirmDetails = async (e) => {
+    e.preventDefault();
+    setRegText('Loading...');
+    // check if account with email already exists
+    try {
+      const response = await axios.get(`/api/findUser?email=${email}`);
+
+      if (response.data.exists) {
+        setShowEmailExistError(true);
+        setRegText('Register');
+        router.push('/account/reg#Surname');
+      } else {
+        toConfirm();
+        setRegText('Register');
+      }
+    } catch (err) {
+      console.log(err.message)
+      setRegText('Register');
+      alert('Network error: please check your internet connection and try again');
+    }
+  }
+
+  function allow () {
+    setTimer(60);
+    setAllowSubmit(true);
+    setTimerDisplay(false)
+  }
+  const count = setTimeout(() => {
+      if (!allowSubmit) {
+        const time = timer - 1 
+        setTimer(time);
+      }
+  }, 1000);
+
+  if (timer === 0) { 
+    clearTimeout(count);
+    allow();
+  }
+
+  const sendOtp = async () => {
+    const data = { email };
+    const response = await axios.post('/api/verification/generate-otp', data);
+    return response.data.isSent;
+  }
+
+  const requestNewOtp = async () => {
+    setRequestText('Requesting...')
+    try {
+      const newOtpSent = await sendOtp();
+      if (newOtpSent) {
+        setIsOtpSent(true);
+        setAllowSubmit(false);
+        setTimer(60);
+        setTimerDisplay(true)
+        setRequestText('Request code')
+
+        const counter = setTimeout(() => {
+          setIsOtpSent(false);
+          clearTimeout(counter);
+        }, 10000);
+      }
+    } catch (err) {
+      setRequestText('Request code');
+      alert('Network error: please check your internet connection')
+    }
+
+  }
+
+  const verifyOtp = async () => {
+    setConfirmText('Verifying...');
+    const data = { token:otp, email };
+    let response;
+    let isVerified;
+    try {
+      response = await axios.post('/api/verification/verify-otp', data);
+      isVerified = response.data.isVerified;
+      if (isVerified) {
+        initiateReg();
+      } else {
+        setIsOtpInvalid(true);
+        const count = setTimeout(() => {
+          setIsOtpInvalid(false);
+        }, 10000);
+        setConfirmText('Confirm');
+      }
+    } catch (err) {
+      alert('please check your internet connection');
+      setConfig('Confirm');
+    }
+  }
+
+  const toVerificationPage = async () => {
+    setLoading(true);
+    const isOtpSent = await sendOtp();
+    if (isOtpSent) {
+      setLoading(false);
+      setAllowSubmit(false);
+      setToAuthPage(true);
+      setToConfirmPage(false);
+    } else {
+      setLoading(false);
+    }
+
+  }
+
+  // Registration function
+  const initiateReg =  async () => {
+
+    function generateRandomCode() {
+      const characters = 'ABCDEFGHIJKLMNPQRSTUVWXYZ123456789';
+      let result = '';
+      const charactersLength = characters.length;
+      for (let i = 0; i < 7; i++) {
+        result += characters.charAt(Math.floor(Math.random() * charactersLength));
+      }
+      return result;
+    }
+
+    const referee = ref?ref:undefined;
+    const randomCode = generateRandomCode();
+    const refCode= firstname.trim()+randomCode;
+    const refInfo = 'free reg';
+
+    Cookies.set('refCode',refCode, {expires:1});
+    localStorage.setItem("refCode",refCode);
+
+    const data = {
+      name : firstname,
+      surname: lastname,
+      email,
+      phone,
+      residence,
+      dob,
+      gender,
+      password,
+      refInfo,
+      refCode,
+      referee
+    }
+    setLoading(true);
+
+    try {
+      const regData = await axios.post('/api/auth/signup', data);
+      const result = await signIn('credentials', {
+          redirect: false,
+          email,
+          password,
+      });
+      if (result.error) {
+          console.log(result.error);
+      }
+      router.push('/success')
+
+    } catch (err) {
+      setLoading(false)
+      console.log("Error in the page:")
+    }
+  }
+
+
   // handles change in day
   const handleDayChange = (e) => {
     const value = e.target.value;
@@ -100,40 +289,29 @@ const Register = () => {
   };
   
 
-  // loads the confirm page
-  const today=new Date();
-  function toConfirm(e) {
-     e.preventDefault();
-     const dateOfBirth = new Date(dob);
-     const age= today.getFullYear()-dateOfBirth.getFullYear();
-     
-     if( age<18 ){
-       return( alert("underage! cannot register below 18years old") );
-     };
-     setToConfirmPage(true);
-  }
 
-  async function beginPayment() {
-    const formData = { name: firstname, surname: lastname, email, phone, residence, gender, password, dob };
-    try {
-      dispatch({type:'RESET'});
-      dispatch({type:'ADD_USER', payload: formData });
-      Cookies.set( 'user', JSON.stringify({...user,userDetails:formData,}) );
-      localStorage.setItem('referee',ref);
-      await router.push( { pathname:'/paystack' });
-    } catch ( err ) {
-      console.log(err.message);
-    }
+  // --------PAYMENT ENABLED REGISTRATION HANDLER----------
+  // async function beginPayment() {
+  //   const formData = { name: firstname, surname: lastname, email, phone, residence, gender, password, dob };
+  //   try {
+  //     dispatch({type:'RESET'});
+  //     dispatch({type:'ADD_USER', payload: formData });
+  //     Cookies.set( 'user', JSON.stringify({...user,userDetails:formData,}) );
+  //     localStorage.setItem('referee',ref);
+  //     await router.push( { pathname:'/paystack' });
+  //   } catch ( err ) {
+  //     console.log(err.message);
+  //   }
 
-  }
+  // }
 
   return (
     <div className='flex flex-col'>
       <Loader/>
-      <div className='flex flex-row justify-end px-8 py-3'>
+      <div className={`${toAuthPage || toConfirmPage ? 'hidden':''} flex flex-row justify-end px-8 py-3`}>
           <Link href={'/'}><Close/></Link> 
       </div>
-      <div className='pt-4 pb-10' style={{ display:( toConfirmPage?'none':'block' ) }}>
+      <div className={`${toFormPage?'':'hidden'} pt-4 pb-10`}>
         <div className='border-b-1 border-green-100 py-3 text-center text-[17px] font-bold text-green-600'>
           <span>ACROSS NIGERIA REALITY SHOW</span>
         </div>
@@ -141,7 +319,7 @@ const Register = () => {
         {/* <Layout> */}
         <div className="max-w-[90%] mx-auto">
           {/* handleSubmit */}
-          <form onSubmit={toConfirm} style={{ }} className="md:max-w-xl flex flex-col max-w-full mx-auto  m-4 p-2">
+          <form onSubmit={toConfirmDetails} className="md:max-w-xl flex flex-col max-w-full mx-auto  m-4 p-2">
             <h1 className="text-2xl text-left font-bold mb-9">Register</h1>
             <div className="mb-4">
               <label htmlFor="name" className="block mb-2">Name</label>
@@ -161,7 +339,7 @@ const Register = () => {
               <label htmlFor="surname" className="block mb-2">Surname</label>
               <input
                 type="text"
-                id="surname"
+                id="Surname"
                 placeholder='Surname'
                 name="surname"
                 value={lastname}
@@ -169,6 +347,20 @@ const Register = () => {
                 className="bg-gray-200 rounded-[8px] h-[52px] text-[19px] px-4 w-full focus:outline-gray-600"
                 required
               />
+            </div>
+            <div className="mb-4">
+              <label htmlFor="surname" className="block mb-2">Email</label>
+              <input
+                type="text"
+                id="Email"
+                placeholder='email'
+                name="email"
+                value={email}
+                onChange={ (e)=>setEmail(e.target.value) }
+                className="bg-gray-200 rounded-[8px] h-[52px] text-[19px] px-4 w-full focus:outline-gray-600"
+                required
+              />
+              <div className={`${showEmailExistError?'':'hidden'} text-red-500 italic text-[14px]`}>An account with this email already exists. please try logging in or use a different email to create a new account.</div>
             </div>
     <div className='mb-4'>
       <label htmlFor="dob" className="block mb-2">Date of Birth</label>
@@ -214,20 +406,6 @@ const Register = () => {
 
         {yearError&&<span className='text-red-600 text-sm'>Please only enter Years not Earlier than 1900 and not later than {today.getFullYear()-18}</span>}  
         {dayError&&<span className='text-red-600 text-sm'>Please only enter days between 1-31</span>}  
-
-            <div className="mb-4">
-              <label htmlFor="email" className="block mb-2">Email Address</label>
-              <input
-                type="email"
-                id="email"
-                name="email"
-                placeholder='Email address'
-                value={email}
-                onChange={ (e)=>setEmail(e.target.value)}
-                className="border bg-gray-200 px-2 rounded-[8px] h-[52px] text-[19px] w-full"
-                required
-              />
-            </div>
             
             <div className="mb-4">
               <label htmlFor="phone" className="block mb-2">Phone Number</label>
@@ -355,7 +533,7 @@ const Register = () => {
                   type="submit"
                   className="font-semibold text-white w-[100%] h-[48px] py-2 rounded-[5px] bg-green-700 hover:bg-green-900 active:bg-green-950"
                 >
-                  REGISTER
+                  {regText}
                 </button>
               ) : (
                 <button
@@ -373,26 +551,65 @@ const Register = () => {
         {/* </Layout> */}
       </div>
 
+        {/* Email aunthentication */}
+      <div className='flex flex-col max-w-[700px] px-[5%] pt-[50px]' style={{ display:(toAuthPage?'flex':'none'), alignSelf:'center'}}>
+        <div>
+          <button onClick={()=>{setToAuthPage(false);setToConfirmPage(true)}} className='flex flex-row justify-center items-center border-1 border-black px-2'><BackIcon/>Back</button>
+        </div>
+        <div className='flex mt-[70px] flex-col'>
+          <span className='text-[25px] text-green-600 mb-2'>Verify your identity</span>
+          <span>For your security, we've sent a One-Time Password (OTP) to <span className='text-blue-600'>{email}</span>. Please enter the code below to complete the authentication process and secure your account.</span>
+        </div>
+        <div>
+          <div className={`${isOtpInvalid?'opacity-100':'opacity-0'} mt-1 italic text-[15px] text-red-500 ml-2`}>Invalid OTP code</div>
+          <div className="mt-1 pt-8 border-t-1 border-gray-300 flex flex-row justify-between gap-7">
+            <input
+              type="text"
+              id="otp"
+              placeholder='Enter OTP code here...'
+              name="otp"
+              value={otp}
+              onChange={ (e)=>setOtp(e.target.value) }
+              className="bg-gray-200 rounded-[30px] h-[48px] text-[19px] px-5 w-full focus:outline-none"
+              required
+            />
+            <button onClick={verifyOtp}  className={`text-white hover:bg-green-700 bg-green-600 rounded-[30px] w-[150px] h-[48px]`}>{confirmText}</button>
+          </div>
+          <div className={`${isOtpSent?'opacity-100':'opacity-0'} mt-1 text-[14px] text-green-500 ml-2`}>a new code has been sent to {email} ✔</div>
+          <div className='flex md:flex-row flex-col gap-3 justify-center mt-5 items-center border-gray-300 pt-[10px] border-t-1'>
+            <span className={`${timerDisplay?'opacity-100':'opacity-20'}`}>You can request a new OTP code in {timer}s </span>
+            <button disabled={allowSubmit?false:true} onClick={requestNewOtp} className={`${allowSubmit?'bg-blue-500 hover:bg-blue-700':'bg-gray-500 cursor-not-allowed'} text-white p-1 px-3 rounded-[30px]`}>{requestText}</button>
+          </div>
+        </div>
+
+      </div>
+
+
     {/* confirmation page */}
-      <div className='flex flex-col max-w-[700px]' style={{ display:(toConfirmPage?'block':'none'), alignSelf:'center'}}>
-        <div className="text-[25px] font-extrabold text-center w-[100%] border-b-1 pb-4 text-green-600 border-green-100 mt-[30px]">Confirm Details</div>
-        <div className='bg-gray-100 py-4 rounded-[10px]'>
-          <div className='mb4 px-5 p-1 text-[19px] font-semibold'><span className='pr-2 text-gray-500 font-bold'>Name: </span>{firstname}</div>
-          <div className='mb4 px-5 p-1 text-[19px] font-semibold'><span className='pr-2 text-gray-500 font-bold'>Surname: </span>{lastname}</div>
-          <div className='mb4 px-5 p-1 text-[19px] font-semibold'><span className='pr-2 text-gray-500 font-bold'>Date of Birth: </span>{dob}</div>
-          <div className='mb4 px-5 p-1 text-[19px] font-semibold'><span className='pr-2 text-gray-500 font-bold'>Email: </span>{email}</div>
-          <div className='mb4 px-5 p-1 text-[19px] font-semibold'><span className='pr-2 text-gray-500 font-bold'>Phone Number: </span>{phone}</div>
-          <div className='mb4 px-5 p-1 text-[19px] font-semibold'><span className='pr-2 text-gray-500 font-bold'>Residence: </span>{residence}</div> 
-          <div className='mb4 px-5 p-1 text-[19px] font-semibold'><span className='pr-2 text-gray-500 font-bold'>Gender: </span>{gender}</div>
+      <div className='flex mt-[120px] flex-col max-w-[700px]' style={{ display:(toConfirmPage?'block':'none'), alignSelf:'center'}}>
+        <div className="text-[25px] border-b-1 pb-4 text-green-600 mt-[30px]">Confirm your details</div>
+        <div className='bg-gray-100 py-4 rounded-[5px]'>
+          <div className='px-5 text-[20px]'><span className='pr-2 text-gray-500 font-semibold'>Name: </span>{firstname}</div>
+          <div className='px-5 text-[20px]'><span className='pr-2 text-gray-500 font-semibold'>Surname: </span>{lastname}</div>
+          <div className='px-5 text-[20px]'><span className='pr-2 text-gray-500 font-semibold'>Date of Birth: </span>{dob}</div>
+          <div className='px-5 text-[20px]'><span className='pr-2 text-gray-500 font-semibold'>Email: </span>{email}</div>
+          <div className='px-5 text-[20px]'><span className='pr-2 text-gray-500 font-semibold'>Phone Number: </span>{phone}</div>
+          <div className='px-5 text-[20px]'><span className='pr-2 text-gray-500 font-semibold'>Residence: </span>{residence}</div> 
+          <div className='px-5 text-[20px]'><span className='pr-2 text-gray-500 font-semibold'>Gender: </span>{gender}</div>
         </div>
 
         
         <p className='px-5 text-[20px] text-blue-500'>*Please verify your details above.</p>
         <div className='px-5 flex flex-row justify-around mt-[35px]'>
-          <button className='bg-transparent text-green-700 font-bold border-2 border-green-700 hover:bg-green-700 hover:text-white rounded-[5px] px-[22px] text-[20px] py-2' onClick={()=>{setToConfirmPage(false)}}>Edit</button> 
-          <button className=' bg-green-600 font-bold text-white text-[21px] py-2 rounded-[5px] px-[20px]' onClick={beginPayment}>Proceed to Pay</button>  
+          <button className='bg-transparent text-green-700 font-bold border-2 border-green-700 hover:bg-green-700 hover:text-white rounded-[30px] w-[120px] text-[20px] py-2' onClick={()=>{setToConfirmPage(false);setToFormPage(true)}}>Edit</button> 
+          <button className=' bg-green-600 font-bold text-white text-[21px] py-2 rounded-[30px] w-[120px]' onClick={toVerificationPage}>Next</button>  
         </div>
 
+      </div>
+
+      { /* Loader */} 
+      <div className={`${loading?'':'hidden'} absolute z-[10000] bg-gray-50 top-0 right-0 h-screen w-screen flex flex-row justify-center items-center`}>
+        <CycleLoader/>
       </div>
     </div>
   );

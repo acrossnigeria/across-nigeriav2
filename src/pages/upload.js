@@ -90,8 +90,8 @@ const [description,setDescription]=useState("");
     try {
       dispatch({ type: 'UPLOAD_REQUEST' });
       const {
-        data: { signature, timestamp },
-      } = await axios('/api/admin/cloudinary-sign');
+          data: { signature, timestamp },
+          } = await axios('/api/admin/cloudinary-sign?type=vid');
    
       const file = e.target.files[0];
       const formData = new FormData();
@@ -99,6 +99,7 @@ const [description,setDescription]=useState("");
       formData.append('signature', signature);
       formData.append('timestamp', timestamp);
       formData.append('api_key', process.env.NEXT_PUBLIC_CLOUDINARY_API_KEY);
+
       const { data } = await axios.post(url, formData);
       dispatch({ type: 'UPLOAD_SUCCESS' });
       setDataUrl( data.secure_url);

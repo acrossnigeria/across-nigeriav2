@@ -56,7 +56,7 @@ async function handler(req, res) {
     residence, 
     dob, 
     gender,
-    password: bcryptjs.hashSync(password),referencePay, regPayment, refCode,
+    password: bcryptjs.hashSync(password), referencePay, regPayment, refCode,
     isAdmin: false,
   }; 
   let userDoc;
@@ -68,21 +68,22 @@ async function handler(req, res) {
     res.status(500).json(' something went wrong while trying to create user account')
   }
 
-  if(referee !== null|| referee!= undefined) {
+  if(referee !== null|| referee!== undefined) {
 
-    const referer=await User.findOne({refCode:referee});
+    const referer = await User.findOne({refCode:referee});
     if (!referer) {
       console.log("Referee not found");
       await db.disconnect();
-      return;
+    } else {
+      console.log("Success in checking referee",referer);
+      const references = referer.references+1;
+      referer.references = references;
+
+      await referer.save(); //add and save referrals
+      await db.disconnect();
     }
 
-    console.log("Success in checking referee",referer);
-    const references = referer.references+1;
-    referer.references = references;
 
-    await referer.save(); //add and save referrals
-    await db.disconnect();
 
     res.status(201).send({
     message: `Congratulations ${userDoc.name}!`,

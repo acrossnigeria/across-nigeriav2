@@ -44,7 +44,8 @@
     "react-swipeable": "^7.0.1",
     "react-toastify": "^10.0.4",
     "resend": "^3.2.0",
-    "sharp": "^0.33.2"
+    "sharp": "^0.33.2",
+    "speakeasy": "^2.0.0"
   },
   "devDependencies": {
     "@types/react": "^18.2.74",
