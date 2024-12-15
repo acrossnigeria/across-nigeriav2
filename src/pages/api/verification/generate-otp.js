@@ -64,6 +64,7 @@ const handler = async ( req, res) => {
                 user: 'noreply@acrossnig.com',
                 pass: emailPass
               },
+              requireTLS: true,
               tls: {
                 rejectUnauthorized: false,
               },
