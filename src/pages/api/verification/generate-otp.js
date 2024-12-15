@@ -93,7 +93,9 @@ const handler = async ( req, res) => {
                 const data = { secret, email };
 
                 const token = generateOtp(secret);
-                const emailSent = sendOtpToEmail( email, token );
+                // const emailSent = sendOtpToEmail( email, token );
+
+                res.status(200).json( { token });
                
             } else {
                 console.log('No user secret matches email, creating new user secret')
@@ -102,8 +104,9 @@ const handler = async ( req, res) => {
                 const newUserSecret = await UserSecret.create(data);
 
                 const token = generateOtp(secret.base32);
-                const emailSent = sendOtpToEmail( email, token );
+                // const emailSent = sendOtpToEmail( email, token );
 
+                res.status(200).json( { token });
             }
             res.status(200).json( { isSent: true});
             

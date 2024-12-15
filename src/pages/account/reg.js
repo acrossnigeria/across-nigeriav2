@@ -120,8 +120,37 @@ const Register = () => {
 
   const sendOtp = async () => {
     const data = { email };
-    const response = await axios.post('/api/verification/generate-otp', data);
-    return response.data.isSent;
+    const response = await axios.post('/api/verification/generate-otp', data)
+    const otpEmailTemplate = (otpCode) => { 
+      return ` <div style="font-family: Arial, sans-serif; max-width: 600px; margin: auto; padding: 20px; background: #ffffff; border-radius: 8px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);">
+        <div style="text-align: center; margin-bottom: 20px;">
+        <h1 style="color: #007BFF;">Your OTP Code</h1>
+        </div>
+        <p>Hello,</p>
+        <p>Thank you for using our service. To complete your request, please use the following One-Time Password (OTP):</p>
+        <p style="font-size: 24px; font-weight: bold; color: #007BFF; text-align: center; background: #f9f9f9; padding: 10px; border: 1px dashed #ddd; display: inline-block;">${otpCode}</p>
+        <p>This code is valid for the next <strong>10 minutes</strong> and can only be used once. If you did not request this code, please ignore this email.</p>
+        <p>For your security, please do not share this code with anyone.</p>
+        <p>Best regards,<br>The Across Nigeria Reality TV Show Team</p>
+        <hr>
+        <footer style="text-align: center; font-size: 14px; color: #666;">
+        &copy; ${new Date().getFullYear()} Acrossnig. All rights reserved.<br>
+        Need help? Contact us at <a href="mailto:support@acrossnig.com">support@acrossnig.com</a>
+        </footer>
+    </div>`
+  };
+    const content = otpEmailTemplate(response.data.token);
+    const dataEmail = { 
+      recepient: email,
+      subject: 'Your OTP Code for Acrossnig',
+      content,
+      heading: 'verification',
+     };
+
+    const isEmailSent = await axios.post('/api/mail/mail', dataEmail );
+    console.log(isEmailSent)
+    return true;
+  
   }
 
   const requestNewOtp = async () => {

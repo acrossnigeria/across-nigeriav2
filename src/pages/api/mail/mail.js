@@ -32,14 +32,14 @@ const handler = async (req, res) => {
   const emailPass = process.env.ZOHO_PASS;
 
   console.log("from mail api:", req.body);
-  const { outgoing, recepient, subject, content, heading } = req.body;
+  const { recepient, subject, content, heading } = req.body;
   // Email content 
   const mailOptions = {
     from: '"Across Nigeria Reality TV Show" <noreply@acrossnig.com>',
     to: recepient,
     subject: subject,
     text: content,
-    html: `<h2><strong>${heading}</strong></h2><p>${content}</p>`
+    html: `<div>${content}</div>`
   };
   // Creating a transporter using ZOHO smtp settings
   const transporter = nodemailer.createTransport({
