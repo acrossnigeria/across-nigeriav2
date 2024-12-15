@@ -558,7 +558,7 @@ const Register = () => {
         </div>
         <div className='flex mt-[70px] flex-col'>
           <span className='text-[25px] text-green-600 mb-2'>Verify your identity</span>
-          <span>For your security, we've sent a One-Time Password (OTP) to <span className='text-blue-600'>{email}</span>. Please enter the code below to complete the authentication process and secure your account.</span>
+          <span>For your security, we&apos;ve sent a One-Time Password (OTP) to <span className='text-blue-600'>{email}</span>.Please enter the code below to complete the authentication process and secure your account.</span>
         </div>
         <div>
           <div className={`${isOtpInvalid?'opacity-100':'opacity-0'} mt-1 italic text-[15px] text-red-500 ml-2`}>Invalid OTP code</div>
