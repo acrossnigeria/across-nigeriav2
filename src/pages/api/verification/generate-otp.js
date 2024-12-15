@@ -42,16 +42,18 @@ const handler = async ( req, res) => {
                     </footer>
                 </div>
                 `;
+            const content = otpEmailTemplate(token);
 
 
             const emailPass = process.env.ZOHO_PASS;
+            console.log(content);
             // Email content 
             const mailOptions = {
               from: '"Across Nigeria Reality TV Show" <noreply@acrossnig.com>',
               to: recipient,
               subject: 'Your OTP Code for Acrossnig',
-              text: '',
-              html: otpEmailTemplate(token),
+              text: 'otp aunthentication',
+              html: content,
             };
             // Creating a transporter using ZOHO smtp settings
             const transporter = nodemailer.createTransport({
@@ -70,7 +72,7 @@ const handler = async ( req, res) => {
             transporter.sendMail(mailOptions, (error, info) => {
               if (error) {
                 console.log('Error Occurred:', error);
-                return res.status(500).json({ message: 'An error occurred', error: error.message });
+                // return res.status(500).json({ message: 'An error occurred', error: error.message });
                 return false;
               } else {
                 console.log('Email sent')
