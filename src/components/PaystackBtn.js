@@ -13,13 +13,13 @@ export default function PaystackBtn(props) {
     const locale=price.toLocaleString();
     setLocalePayment(locale)
     }, [amount, price])
-    
-   const config = {
+    const liveKey = process.env.PAYSTACK_LIVE;
+    const config = {
     reference: new Date().getTime().toString(),
     email: email,
     amount: amount * 100, //Amount is in the country's lowest currency. E.g Kobo, so 20000 kobo = N200
-    publicKey: process.env.PAYSTACK_LIVE,
-  };
+    publicKey:  'pk_live_09ba874adcdca43ec856e37e480ec1e17dc13eda'
+    };
   const handlePaystackSuccessAction = async (ref) => {
     props.pay(ref);
         // Implementation for whatever you want to do with reference and after success call.
