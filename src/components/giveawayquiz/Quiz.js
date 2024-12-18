@@ -7,6 +7,8 @@ import { useRouter } from 'next/router';
 import Loader from '@/components/Loader';
 import Link from 'next/link';
 import Close from '../../../public/images/icon/Close';
+import CycleLoader from '../CycleLoader';
+import Money from '../../../public/images/icon/Money';
 
 const questions = [
   {
@@ -25,6 +27,7 @@ const Quiz = ( { state }) => {
   const [showTerms, setShowTerms] = useState(false);
   const [isChecked, setIsChecked] = useState(false);
   const [Congratulations, setCongratulations] = useState(false);
+  const [ showLoader, setShowLoader ] = useState(false);
 
   const handleOptionClick = (index) => {
     setSelectedAnswer(index);
@@ -55,6 +58,7 @@ const Quiz = ( { state }) => {
 
   const paySuccesAction = async (ref) => {
     const oldData = {...newData, referencePay:ref.reference}
+    setShowLoader(true);
     
     if (selectedAnswer === question.answer) {
       const data = {...oldData, correctAnswer:true}
@@ -65,6 +69,7 @@ const Quiz = ( { state }) => {
     }
     setIsChecked(false)
     setShowTerms(false)
+    setShowLoader(false)
     setCongratulations(true)   
   }
       
@@ -73,19 +78,20 @@ const Quiz = ( { state }) => {
 
   return (
     <div className='flex flex-col justify-center'>
+      <div className={`${showLoader?'':'hidden'} h-screen w-screen flex flex-col gap-2 fixed top-0 right-0 z-[5000] justify-center items-center bg-gray-100`}><CycleLoader/><span className='font-bold text-[20px] text-green-700 animate-pulse flex flex-row gap-2'>Giveaway Quizzes <Money/></span></div>
         <div className={`flex bg-gradient-to-br from-green-400 to-green-800 h-screen mx-auto flex-col space-y-4 w-[100%] ${state} `}>
         <Loader/>
         <div className='flex flex-row justify-end px-8 py-3'>
             <Link className='bg-white w-[50px] rounded-[50%] flex flex-row justify-center items-center h-[50px]' href={'/giveaway-quiz'}><Close/></Link> 
         </div>
         <div className='bg-white md:w-[500px] w-[95%] self-center p-4 flex flex-col items-center rounded-[20px]'>
-            <div className="p-4 md:h-[100px] w-full rounded-md">
+            <div className="md:p-4 p-2 md:h-[100px] w-full rounded-md">
                 <h2 className="text-2xl font-bold">{question.question}</h2>
             </div> 
 
-            <ul className="space-y-4 w-[350px] mt-[20px]">
+            <ul className="space-y-4 w-[350px] flex flex-col justify-center items-center mt-[20px]">
                 { question.options.map((option, index) => (
-                <li key={index} className={`p-4 rounded-[30px] w-[100%] cursor-pointer md:hover:scale-105 ${selectedAnswer === index ? 'bg-green-700 text-white border-none':'border-green-700 border-1'}`} onClick={() => handleOptionClick(index)} >
+                <li key={index} className={`p-4 rounded-[30px] md:w-[100%] w-[90%] cursor-pointer md:hover:scale-105 ${selectedAnswer === index ? 'bg-green-700 text-white border-none':'border-green-700 border-1'}`} onClick={() => handleOptionClick(index)} >
                     {option}
                 </li>
                 )) }
@@ -134,12 +140,15 @@ const Quiz = ( { state }) => {
 
         {Congratulations && (
             <div className="transform top-[-20px] ease-in-out duration-1000 fixed inset-0 bg-gray-500/50 flex justify-center items-center z-50">
-            <div className="bg-white p-4 rounded-md shadow-md">
-                <p className='font-semibold text-lg'>Thank you <span className='font-bold'>{session?.user.name}</span> for participating in the quiz, Kindly wait for our quiz draw, Winners will be contacted</p>
-                <div className="flex justify-end space-x-2 mt-4">
-                <div className="border-yellow-500 border h-fit py-1 w-40 rounded-lg cursor-pointer bg-green-700 text-white text-xl  font-semibold italic mx-auto text-center" onClick={()=>{router.push('/giveaway')}}>
-                    Click Here to continue
-                </div>
+            <div className="bg-white h-screen w-screen flex justify-center items-center flex-col p-4 rounded-md shadow-md">
+                <p className='font-semibold text-[18px] text-center'>Thank you <span className='font-bold'>{session?.user.name}</span> for participating in the quiz, Kindly wait for our quiz draw, Winners will be contacted</p>
+                <div className="flex flex-row w-[80%] md:w-[500px] mt-4 justify-around">
+                  <button className="border-1 hover:bg-green-300 border-green-700 h-[48px] px-[10px] rounded-[30px] cursor-pointer bg-transparent text-green-700 text-[17px]  font-semibold" onClick={()=>{router.push('/giveaway-quiz')}}>
+                      Back home
+                  </button>
+                  <button className="border-1 hover:bg-green-900 bg-green-700 h-[48px] px-[10px] rounded-[30px] cursor-pointer bg-green-700 text-white text-[17px]  font-semibold" onClick={()=>{setCongratulations(false)}}>
+                      Play Again
+                  </button>
                 </div>
             </div>
             </div>

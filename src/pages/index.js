@@ -30,14 +30,14 @@ import NoShoutOut from "@/components/shout-out/NoShoutOut";
 export const games=[
   {title:"GIVE AWAY QUIZZES", image:image1,link:"/giveaway-quiz", date:'Live'},
   {title:"KING AND QUEEN", image:image3, link:"/king-and-queen", date:'January 1st, 2025'},
-  {title:"SKITS ACROSS NIGERIA",image:image2,link:"/skitsPage", date:'March, 2025'},
-  {title:"NAIJA VIBES", image:image8,link:"/soon", date:'March, 2025'},
-  {title:"MYSTERY BOXES",image:image4,link:"/soon", date:'July 1st, 2025'},
-  {title:"STATE TREASURE HUNT SHOW",image:image5,link:"/soon", date:'October, 2025'},
-  {title:"MEGA CASH OUT",image:image6,link:"/soon", date:'October, 2025'},
-  {title:"ACROSS NIGERIA REALITY SHOW",image:image7,link:"/soon", date:'Nov/ Dec, 2026'},
-  {title:"SHOPPING HUSTLE",image:image9,link:"/soon", date:'August 1st, 2025'},
-  {title:"I DON HAMMA",image:image10,link:"/soon", date:'March, 2025'},
+  {title:"SKITS ACROSS NIGERIA",image:image2,link:"/skitsPage", date:'2025'},
+  {title:"NAIJA VIBES", image:image8,link:"/soon", date:'2025'},
+  {title:"MYSTERY BOXES",image:image4,link:"/soon", date:'2025'},
+  {title:"STATE TREASURE HUNT SHOW",image:image5,link:"/soon", date:'2025'},
+  {title:"MEGA CASH OUT",image:image6,link:"/soon", date:'2025'},
+  {title:"ACROSS NIGERIA REALITY SHOW",image:image7,link:"/soon", date:'2026'},
+  {title:"SHOPPING HUSTLE",image:image9,link:"/soon", date:'2025'},
+  {title:"I DON HAMMA",image:image10,link:"/soon", date:'2025'},
 ]
 const inter = Inter({ subsets: ["latin"] });
 
@@ -84,7 +84,7 @@ export default function Home() {
            <Info/>
             <p className="grid w-full border-b-1  mx-auto text-center bg-clip-text text-transparent bg-gradient-to-tr from-yellow-200 to-orange-600 ">
               <span style={{lineHeight:'30px'}} id="products" className="flex text-center text-[28px] font-sans font-extrabold mx-auto p-2"> 
-                  {"Exclusive Highlights"}
+                  {"Our amazing products"}
               </span>
             </p>
         <div className="mt-3 grid left-0 grid-cols-1 gap-4 border-b-1 md:grid-cols-2 lg:grid-cols-2 md:gap-6 mx-auto items-center md:max-w-screen-xl px-4 sm:px-3 lg:px-20">

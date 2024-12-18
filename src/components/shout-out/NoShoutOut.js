@@ -1,5 +1,6 @@
 import Carousel from "nuka-carousel";
 import Awesome from "../../../public/images/illustration/Awesome";
+import Link from "next/link";
 
 const funFacts = [
     { id:1, text: "Did you know? A shout out isn't just for ads. its the perfect way to celebrate birthdays, achievements, or just to spread some love" },
@@ -18,6 +19,7 @@ const NoShoutOut = () => {
             <div className=" ml-[-25px] mb-2"><Awesome/></div>
             <span className="w-[90%] text-gray-600 text-[17px] text-center">Wow, no shout outs today, but you can be next!</span>
             <span className="w-[85%] text-gray-600 text-[17px] text-center">Be the first to leave a shout out! Secure your spot today</span>
+            <Link href='/shoutout/booking'><button className="w-[150px] h-[45px] hover:bg-green-800 bg-green-600 rounded-[30px] mt-[10px] text-white">Book now</button></Link>
             <div className="w-[85%] mt-[40px] flex flex-col md:w-[400px]">
                 <span className="text-green-600 text-[17px]">Fun facts</span>
                 <Carousel 

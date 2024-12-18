@@ -148,7 +148,7 @@ const Register = () => {
      };
 
     const isEmailSent = await axios.post('/api/mail/mail', dataEmail );
-    console.log(isEmailSent)
+    console.log(isEmailSent.data.message)
     return true;
   
   }
