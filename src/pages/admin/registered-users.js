@@ -86,7 +86,7 @@ const Users = () => {
                             if ( userIndex < pageSize && userIndex >= (pageSize-13)) {
                                 return (
                                     <div key={user._id} className="w-full grid grid-flow-col grid-rows-1 text-[13px] h-[30px] gap-1">
-                                        <div className="flex w-[150px] w-[150px] overflow-x-hidden flex-row bg-gray-300 mt-1 text-black justify-start items-center pl-1">{user.fullname}</div>
+                                        <div className="flex w-[150px] overflow-x-hidden flex-row bg-gray-300 mt-1 text-black justify-start items-center pl-1">{user.fullname}</div>
                                         <div className="flex w-[150px] overflow-x-hidden flex-row bg-gray-300 mt-1 text-black justify-start items-center pl-1">{user.dob}</div>
                                         <div className="flex w-[150px] overflow-x-hidden flex-row bg-gray-300 mt-1 text-black justify-start items-center pl-1">{user.residence}</div>
                                         <div className="flex w-[150px] overflow-x-hidden flex-row bg-gray-300 mt-1 text-black justify-start items-center pl-1"> {user.email}</div>
