@@ -59,7 +59,7 @@ const Users = () => {
                 <span className="text-[40px] text-gray-800 font-light">Users</span>
                 <div className="mb-3 flex flex-row gap-3">
                     <div className="flex flex-row gap-1">
-                        <input value={searchKey} onChange={(e)=>{setSearchKey(e.target.value);searchRelated();}} className="h-[40px] focus:outline-none bg-transparent border-1 rounded-[5px] border-gray-600 px-3" type="text" placeholder="Search user by name"/> 
+                        <input value={searchKey} onChange={(e)=>{setSearchKey(e.target.value);searchRelated();}}  className="h-[40px] focus:outline-none bg-transparent border-1 rounded-[5px] border-gray-600 px-3" type="text" placeholder="Search user by name"/> 
                         <button onClick={searchRelated} className="h-[40px] hover:bg-gray-300 bg-transparent border-1 w-[50px] rounded-[5px] border-gray-600">Go</button>
                     </div>
                     <div className="border-1 border-gray-600 flex flex-row rounded-[5px]">
@@ -85,7 +85,7 @@ const Users = () => {
                         {results.map( (user, userIndex ) => {
                             if ( userIndex < pageSize && userIndex >= (pageSize-13)) {
                                 return (
-                                    <div className="w-full grid grid-flow-col grid-rows-1 text-[13px] h-[30px] gap-1">
+                                    <div key={user._id} className="w-full grid grid-flow-col grid-rows-1 text-[13px] h-[30px] gap-1">
                                         <div className="flex w-[150px] w-[150px] overflow-x-hidden flex-row bg-gray-300 mt-1 text-black justify-start items-center pl-1">{user.fullname}</div>
                                         <div className="flex w-[150px] overflow-x-hidden flex-row bg-gray-300 mt-1 text-black justify-start items-center pl-1">{user.dob}</div>
                                         <div className="flex w-[150px] overflow-x-hidden flex-row bg-gray-300 mt-1 text-black justify-start items-center pl-1">{user.residence}</div>
