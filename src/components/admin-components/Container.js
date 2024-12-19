@@ -33,7 +33,7 @@ const Container = ( { children } ) => {
                 </div>
             </div>
            <main className="flex-row flex justify-between items-start">
-            <div className={`${isMobile?`${isHamOpen?'':'hidden'} absolute top-[70px] right-0`:''} bg-gray-800 w-[250px] pl-[14px] text-[13px] pt-[15px] flex flex-col gap-2 h-screen`}>
+            <div className={`${isMobile?`${isHamOpen?'':'hidden'} w-[80%] z-[5000] absolute top-[70px] right-0`:'w-[250px]'} bg-gray-800 pl-[14px] text-[13px] pt-[15px] flex flex-col gap-2 h-screen`}>
                 <Link href={'/admin/registered-users'}><button className="flex p-2 rounded-tl-[30px] rounded-bl-[30px] w-[100%] hover:border-b-1 hover:border-b-[#b4bedf] hover:bg-gray-900 transition-background duration-1000 flex-row items-center gap-2"><UsersIcon/> Users</button></Link>
                 <Link href={'/admin/dashboard'}><button className="flex p-2 rounded-tl-[30px] rounded-bl-[30px] w-[100%] hover:border-b-1 hover:border-b-[#b4bedf] hover:bg-gray-900 transition-background duration-1000 flex-row items-center gap-2"><AnIcon/>Dashboard</button></Link>
                 <Link href={'/admin/giveaway-quiz-random-selector'}><button className="flex p-2 rounded-tl-[30px] rounded-bl-[30px] w-[100%] hover:border-b-1 hover:border-b-[#b4bedf] hover:bg-gray-900 transition-background duration-1000 flex-row items-center gap-2"><RandomIcon/>GQ Random selector</button></Link>

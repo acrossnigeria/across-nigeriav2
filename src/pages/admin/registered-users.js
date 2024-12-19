@@ -3,10 +3,11 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import CycleLoader from "@/components/CycleLoader";
 import Next from "../../../public/images/icon/Next";
+import { set } from "lodash";
 
 const Users = () => {
     const [ users, setUsers ] = useState(null);
-    const [ pageSize, setPageSize ] = useState(13);
+    const [ pageSize, setPageSize ] = useState(0);
     const [ results, setResult ] = useState(null);
     const [ searchKey, setSearchKey ] = useState('');
 
@@ -23,19 +24,23 @@ const Users = () => {
             const response = await axios.get('/api/admin/getUsers');
             setUsers(response.data.users);  
             setResult(response.data.users);
+            setPageSize(response.data.users.length >= 13 ? 13 : 12);
         } catch(err) {
             console.log(err.message);
         }
     }
 
     function searchRelated( key ) {
-        if (searchKey==='') {
-            setResult(users);
-        } else {
-            const newResult = users.filter( user => user.fullname.includes(searchKey));
-            console.log(newResult);
-            setResult(newResult);
+        if (results) {
+            if (searchKey==='') {
+                setResult(users);
+            } else {
+                const newResult = users.filter( user => user.fullname.includes(searchKey));
+                console.log(newResult);
+                setResult(newResult);
+            } 
         }
+
     }
 
     useEffect( () => {
@@ -55,22 +60,25 @@ const Users = () => {
 
     return (
         <Container>
-            <div className=" p-3 h-screen">
-                <span className="text-[40px] text-gray-800 font-light">Users</span>
-                <div className="mb-3 flex flex-row gap-3">
+            <div className=" p-2 h-screen">
+                <div className="text-[40px] md:text-left text-center w-[100%] text-gray-800 font-light">Users</div>
+                <div className="mb-3 flex md:flex-row flex-col md:justify-start justify-center items-center gap-3">
                     <div className="flex flex-row gap-1">
                         <input value={searchKey} onChange={(e)=>{setSearchKey(e.target.value);searchRelated();}}  className="h-[40px] focus:outline-none bg-transparent border-1 rounded-[5px] border-gray-600 px-3" type="text" placeholder="Search user by name"/> 
                         <button onClick={searchRelated} className="h-[40px] hover:bg-gray-300 bg-transparent border-1 w-[50px] rounded-[5px] border-gray-600">Go</button>
                     </div>
-                    <div className="border-1 border-gray-600 flex flex-row rounded-[5px]">
-                        <button onClick={prevPage} className="h-[38px] flex flex-row justify-center items-center rotate-180 border-l-1 hover:bg-gray-300 border-gray-600 w-[50px]"><Next size={'15px'} bg={'#6b7280'}/></button>
-                        <button onClick={nextPage} className="h-[38px] flex flex-row justify-center hover:bg-gray-300 items-center w-[50px]"><Next size={'15px'} bg={'#6b7280'}/></button>
+                    <div className="flex gap-4 flex-row justify-center items-center">
+                        <div className="border-1 border-gray-600 flex flex-row rounded-[5px]">
+                            <button onClick={prevPage} className="h-[38px] flex flex-row justify-center items-center rotate-180 border-l-1 hover:bg-gray-300 border-gray-600 w-[50px]"><Next size={'15px'} bg={'#6b7280'}/></button>
+                            <button onClick={nextPage} className="h-[38px] flex flex-row justify-center hover:bg-gray-300 items-center w-[50px]"><Next size={'15px'} bg={'#6b7280'}/></button>
+                        </div>
+                        <span className="h-[40px] flex flex-row justify-center items-center">Showing results {pageSize-13<0?0:pageSize-13} to {pageSize}</span>      
                     </div>
-                    <span className="h-[40px] flex flex-row justify-center items-center">Showing results {pageSize-13} to {pageSize}</span>
+                  
                
                 </div>
                 { results ? (
-                    <div className=" h-[450px]">
+                    <div className="md:overflow-hidden overflow-scroll h-[450px]">
                         <div className="w-full grid grid-flow-col grid-rows-1 text-[13px] h-[30px] gap-1">
                             <div className="flex w-[150px] flex-row bg-gray-500 text-white justify-start items-center pl-1">Fullname</div>
                             <div className="flex w-[150px] overflow-x-hidden flex-row bg-gray-500 text-white justify-start items-center pl-1">Date of birth</div>

@@ -9,13 +9,14 @@ const Handler = async ( req, res) => {
         const users = data.map( user => {
            let data = { 
             _id: user._id,
-            fullname:`${user.name.toLowerCase()} ${user.surname }`,
+            fullname:`${user.name.toLowerCase()} ${user.surname.toLowerCase()}`,
             residence:user.residence, 
             referrals: user.references, 
             email: user.email,
             phone: user.phone,
             joinedAt: user.createdAt,
             dob: user.dob,
+            gender: user.gender,
           }
           return data 
        })
