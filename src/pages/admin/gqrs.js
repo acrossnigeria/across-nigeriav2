@@ -1,5 +1,5 @@
-import Container from "@/components/admin-components/Container";
 import UnderCIcon from "@/components/admin-components/graphics/UnderCIcon";
+import Container from "@/components/admin-components/Container";
 import { getSession } from "next-auth/react";
 
 
@@ -19,13 +19,15 @@ export async function  getServerSideProps(context) {
     
 }
 
-export default function Dashboard( { user } ) {
+export default function Gqrs( { user }) {
     return (
-        <Container admin={user} page={'dashboard'}>
-            <div className="h-screen md:w-[100%] border-1 gap-3 flex flex-col pt-[250px] items-center">
+        <div>
+            <Container admin={user} page={'gqrs'}>
+            <div className="h-screen md:w-[100%] gap-3 border-1 flex flex-col pt-[250px] items-center">
                 <UnderCIcon/>
                 <span>Page is still under construction</span>
             </div>
-        </Container>
+            </Container> 
+        </div>
     )
 }
