@@ -109,7 +109,7 @@ export default function Users( { user } ) {
                 </div>
                 { results ? (
                     <div className="md:overflow-hidden overflow-scroll h-[450px]">
-                        <div className="w-full bg-gray-500 grid grid-flow-col grid-rows-1 text-[13px] h-[30px] gap-1">
+                        <div className="w-full overflow-scroll bg-gray-500 grid grid-flow-col grid-rows-1 text-[13px] h-[30px] gap-1">
                             <div className="flex w-[150px] flex-row text-white justify-start items-center pl-1">Fullname</div>
                             <div className="flex w-[150px] overflow-x-hidden flex-row text-white justify-start items-center pl-1">Date of birth</div>
                             <div className="flex w-[150px] overflow-x-hidden flex-row text-white justify-start items-center pl-1">Residence</div>
@@ -124,7 +124,7 @@ export default function Users( { user } ) {
                             results.map( (user, userIndex ) => {
                             if ( userIndex < pageSize && userIndex >= (pageSize===results.length? pageSize - reminderPageSize: pageSize-13)) {
                                 return (
-                                    <div key={user._id} className={`${(userIndex+1)%2===0?'bg-gray-300':'bg-gray-200'} w-full grid grid-flow-col grid-rows-1 text-[13px] h-[30px] gap-1`}>
+                                    <div key={user._id} className={`${(userIndex+1)%2===0?'bg-gray-300':'bg-gray-200'} w-full overflow-scroll grid grid-flow-col grid-rows-1 text-[13px] h-[30px] gap-1`}>
                                         <div className="flex w-[150px] overflow-x-hidden flex-row mt-1 text-black justify-start items-center pl-1">{user.fullname}</div>
                                         <div className="flex w-[150px] overflow-x-hidden flex-row mt-1 text-black justify-start items-center pl-1">{user.dob}</div>
                                         <div className="flex w-[150px] overflow-x-hidden flex-row mt-1 text-black justify-start items-center pl-1">{user.residence}</div>
