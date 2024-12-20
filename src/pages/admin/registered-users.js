@@ -30,7 +30,6 @@ export default function Users( { user } ) {
     const [ searchKey, setSearchKey ] = useState('');
     const [ reminderPageSize, setReminderPageSize ] = useState(0);
     const [ showNavs, setShowNavs ] = useState(true);
-    console.log(user)
 
 
     function formatDate(date) {
@@ -90,7 +89,7 @@ export default function Users( { user } ) {
     }
 
     return (
-        <Container admin={user}>
+        <Container admin={user} page={'users'}>
             <div className=" p-2 h-screen">
                 <div className="text-[40px] md:text-left text-center w-[100%] text-gray-800 font-light">Users</div>
                 <div className="mb-3 flex md:flex-row flex-col md:justify-start justify-center items-center gap-3">

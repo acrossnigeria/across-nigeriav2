@@ -8,7 +8,7 @@ import { useEffect, useState } from "react";
 import HamIcon from "./graphics/HamIcon";
 import Close from "../../../public/images/icon/Close";
 
-const Container = ( { children, user } ) => {
+const Container = ( { children, admin, page } ) => {
     const [ isMobile, setIsMobile ] = useState(false);
     const [ isHamOpen, setIsHamOpen ] = useState(false);
 
@@ -24,7 +24,7 @@ const Container = ( { children, user } ) => {
             <div className={`${isMobile?'px-[3%]':'px-[5%]'} flex h-[70px] flex-row justify-between items-center border-b-[#b4bedf] border-b-1`}>
                 <span className="text-[22px] font-extrabold">ADMIN</span>
                 <div style={{alignItems:'center'}} className="flex w-fit flex-row justify-between gap-2 h-[40px] pl-3 pr-[2px] cursor-pointer transition duration-100 text-[16px]">
-                    <Link href={'/user/profile'}>Welcome, {user?.name}</Link>
+                    <Link href={'/user/profile'}>Welcome, {admin?.name}</Link>
                     <Profile bg={'#b4bedf'}/>
                     <button onClick={()=>{setIsHamOpen(!isHamOpen)}} className={`${isMobile?'':'hidden'} ml-1 p-3 rounded-full hover:bg-gray-900`}>
                         {isHamOpen?<Close bg={"#b4bedf"}/>:<HamIcon/>}
@@ -33,9 +33,9 @@ const Container = ( { children, user } ) => {
             </div>
            <main className="flex-row flex justify-between items-start">
             <div className={`${isMobile?`${isHamOpen?'':'hidden'} w-[80%] z-[5000] absolute top-[70px] right-0`:'w-[250px]'} bg-gray-800 pl-[14px] text-[13px] pt-[15px] flex flex-col gap-2 h-screen`}>
-                <Link href={'/admin/registered-users'}><button className="flex p-2 rounded-tl-[30px] rounded-bl-[30px] w-[100%] hover:border-b-1 hover:border-b-[#b4bedf] hover:bg-gray-900 transition-background duration-1000 flex-row items-center gap-2"><UsersIcon/> Users</button></Link>
-                <Link href={'/admin/dashboard'}><button className="flex p-2 rounded-tl-[30px] rounded-bl-[30px] w-[100%] hover:border-b-1 hover:border-b-[#b4bedf] hover:bg-gray-900 transition-background duration-1000 flex-row items-center gap-2"><AnIcon/>Dashboard</button></Link>
-                <Link href={'/admin/giveaway-quiz-random-selector'}><button className="flex p-2 rounded-tl-[30px] rounded-bl-[30px] w-[100%] hover:border-b-1 hover:border-b-[#b4bedf] hover:bg-gray-900 transition-background duration-1000 flex-row items-center gap-2"><RandomIcon/>GQ Random selector</button></Link>
+                <Link href={'/admin/registered-users'}><button className={`${page==='users'?'border-b-1 border-b-[#b4bedf] bg-gray-900':''} flex p-2 rounded-tl-[30px] rounded-bl-[30px] w-[100%] hover:border-b-1 hover:border-b-[#b4bedf] hover:bg-gray-900 transition-background duration-1000 flex-row items-center gap-2`}><UsersIcon/> Users</button></Link>
+                <Link href={'/admin/dashboard'}><button className={`${page==='dashboard'?'border-b-1 border-b-[#b4bedf] bg-gray-900':''} flex p-2 rounded-tl-[30px] rounded-bl-[30px] w-[100%] hover:border-b-1 hover:border-b-[#b4bedf] hover:bg-gray-900 transition-background duration-1000 flex-row items-center gap-2`}><AnIcon/>Dashboard</button></Link>
+                <Link href={'/admin/giveaway-quiz-random-selector'}><button className={`${page==='gqrs'?'border-b-1 border-b-[#b4bedf] bg-gray-900':''} flex p-2 rounded-tl-[30px] rounded-bl-[30px] w-[100%] hover:border-b-1 hover:border-b-[#b4bedf] hover:bg-gray-900 transition-background duration-1000 flex-row items-center gap-2`}><RandomIcon/>GQ Random selector</button></Link>
             </div>
             <div className="w-[100%] h-screen bg-gray-200 text-gray-700">
                 {children}

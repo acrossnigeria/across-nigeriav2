@@ -107,7 +107,7 @@ const Navbar = () => {
               <Money/>
               Giveaway Quiz
             </Link>
-            <Link style={{alignItems:'center'}} href="/skitsPage" className="text-green-200 px-1 rounded-[15px] hover:bg-green-800 flex py-1 flex-col justify-center">
+            <Link style={{alignItems:'center'}} href="/soon" className="text-green-200 px-1 rounded-[15px] hover:bg-green-800 flex py-1 flex-col justify-center">
               <Video/>
               Skits Across Naija
             </Link>

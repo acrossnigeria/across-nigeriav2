@@ -11,12 +11,6 @@ import Search from '../../public/images/icon/Search';
 import Profile from "../../public/images/icon/Profile";
 
 
-
-export const menuData = [
-  { title: "About", link: "/about" },
-  { title: "Skits", link: "/skitsPage" },
-  { title: "Contact-Us", link: "/contact" },
-];
 const StickyNavbar = () => {
   const { status, data: session } = useSession();
 

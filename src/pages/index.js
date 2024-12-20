@@ -29,8 +29,8 @@ import NoShoutOut from "@/components/shout-out/NoShoutOut";
 
 export const games=[
   {title:"GIVE AWAY QUIZZES", image:image1,link:"/giveaway-quiz", date:'Live'},
-  {title:"KING AND QUEEN", image:image3, link:"/king-and-queen", date:'January 1st, 2025'},
-  {title:"SKITS ACROSS NIGERIA",image:image2,link:"/skitsPage", date:'2025'},
+  {title:"KING AND QUEEN", image:image3, link:"/soon", date:'January 1st, 2025'},
+  {title:"SKITS ACROSS NIGERIA",image:image2,link:"/soon", date:'2025'},
   {title:"NAIJA VIBES", image:image8,link:"/soon", date:'2025'},
   {title:"MYSTERY BOXES",image:image4,link:"/soon", date:'2025'},
   {title:"STATE TREASURE HUNT SHOW",image:image5,link:"/soon", date:'2025'},
