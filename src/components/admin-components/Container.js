@@ -8,8 +8,7 @@ import { useEffect, useState } from "react";
 import HamIcon from "./graphics/HamIcon";
 import Close from "../../../public/images/icon/Close";
 
-const Container = ( { children } ) => {
-    const { data: session } = useSession();
+const Container = ( { children, user } ) => {
     const [ isMobile, setIsMobile ] = useState(false);
     const [ isHamOpen, setIsHamOpen ] = useState(false);
 
@@ -23,9 +22,9 @@ const Container = ( { children } ) => {
     return (
         <div className="bg-gray-800 text-[#b4bedf]">
             <div className={`${isMobile?'px-[3%]':'px-[5%]'} flex h-[70px] flex-row justify-between items-center border-b-[#b4bedf] border-b-1`}>
-                <span className="text-[25px] font-extrabold">ADMIN</span>
+                <span className="text-[22px] font-extrabold">ADMIN</span>
                 <div style={{alignItems:'center'}} className="flex w-fit flex-row justify-between gap-2 h-[40px] pl-3 pr-[2px] cursor-pointer transition duration-100 text-[16px]">
-                    <Link href={'/user/profile'}>Welcome, alimam</Link>
+                    <Link href={'/user/profile'}>Welcome, {user?.name}</Link>
                     <Profile bg={'#b4bedf'}/>
                     <button onClick={()=>{setIsHamOpen(!isHamOpen)}} className={`${isMobile?'':'hidden'} ml-1 p-3 rounded-full hover:bg-gray-900`}>
                         {isHamOpen?<Close bg={"#b4bedf"}/>:<HamIcon/>}
