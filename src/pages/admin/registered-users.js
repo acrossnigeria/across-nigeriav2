@@ -129,7 +129,7 @@ export default function Users( { user } ) {
                                         <div className="flex w-[150px] overflow-x-hidden flex-row mt-1 text-black justify-start items-center pl-1">{user.fullname}</div>
                                         <div className="flex w-[150px] overflow-x-hidden flex-row mt-1 text-black justify-start items-center pl-1">{user.dob}</div>
                                         <div className="flex w-[150px] overflow-x-hidden flex-row mt-1 text-black justify-start items-center pl-1">{user.residence}</div>
-                                        <div className="flex w-[150px] overflow-x-hidden flex-row mt-1 overflow-x-scroll text-black justify-start items-center pl-1"> {user.email}</div>
+                                        <div className="flex w-[150px] flex-row mt-1 overflow-x-scroll text-black justify-start items-center pl-1"> {user.email}</div>
                                         <div className="flex w-[150px] overflow-x-hidden flex-row mt-1 text-black justify-start items-center pl-1">{user.phone}</div>
                                         <div className="flex w-[150px] overflow-x-hidden flex-row mt-1 text-black justify-start items-center pl-1">{user.gender}</div>
                                         <div className="flex w-[80px] overflow-x-hidden flex-row mt-1 text-black justify-start items-center pl-1">{user.referrals}</div>
