@@ -5,24 +5,39 @@ import Skits from '@/models/Skits';
 import SkitDisp from '@/components/SkitDisp';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
+import { getSession } from 'next-auth/react';
+import CreatorIcon from '../../public/images/icon/CreatorIcon';
+import Image from 'next/image';
+import TopSkitCard from '@/components/TopSkitCard';
+import VideoIcon from '../../public/images/icon/VideoIcon';
 
 const prototype = [
   { name: 'aliman', }
 ]
 
-export default function SkitsPage({ skits }) {
+export default function SkitsPage({ skits, user }) {
   const router = useRouter();
   const [display, setDisplay] = useState(false);
-  const [url, setUrl] = useState("");
   const [sortedSkits, setSortedSkits] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
+  const [ oneUser, setOneUser ] = useState(null);
+  const [ twoUser, setTwoUser ] = useState(null);
+  const [ threeUser, setThreeUser ] = useState(null);
+  const [ fourUser, setFourUser ] = useState(null);
+  const [ fiveUser, setFiveUser ] = useState(null);
   const skitsPerPage = 20;
 
   useEffect(() => {
     // Sort the skits based on the votes property
     const sorted = skits.slice().sort((a, b) => b.votes - a.votes);
     setSortedSkits(sorted);
+    setOneUser(sorted[0]);
+    setTwoUser(sorted[1]);
+    setThreeUser(sorted[2]);
+    setFourUser(sorted[3]);
+    setFiveUser(sorted[4]);
   }, [skits]);
+  console.log(sortedSkits);
 
   // Get current skits
   const indexOfLastSkit = currentPage * skitsPerPage;
@@ -45,78 +60,41 @@ export default function SkitsPage({ skits }) {
         <div className='w-full flex flex-col bg-gradient-to-t from-green-800 to-green-400 px-2 pb-2 rounded-[30px]'>
           <div className='text-white font-bold text-center text-[22px]'>Leader Board</div>
           <div className='mt-2 flex flex-row flex-wrap gap-2 justify-center'>
-              {/* {currentSkits.map((skit, index) => (
-                <div className='bg-white rounded-[5px] md:w-[300px] h-[70px]' key={index}>
-                  <span className='text-left px-3'>{skit.title}</span>
-                  <span className='text-left px-3'>{skit?.name ?? "No Name"}</span>
-                </div>
-              ))} */}
-                <div className='bg-white rounded-[30px] flex flex-row justify-between px-[20px] items-center shadow-md shadow-green-600 w-full md:w-[300px] h-[60px]'>
-                  <div className='flex flex-row gap-2'>
-                    <div className='w-[45px] h-[45px] border-1 border-black rounded-[50%]'></div>
-                    <div className='flex flex-col'>
-                      <span className='text-left px-3 w-[100%] text-[12px] '>{'Guy laughing hard enough to burst his stomach'.slice(0, 25) + '...'}</span>
-                      <span className='text-left px-3 text-[14px] font-bold text-green-700'>alimam</span>
-                    </div>
-                  </div>
-                  <span className='text-[35px] text-[#ffd700] font-extrabold'>1</span>
-                </div>
-
-                <div className='bg-white rounded-[30px] flex flex-row justify-between px-[20px] items-center shadow-md shadow-green-600 w-full md:w-[300px] h-[60px]'>
-                  <div className='flex flex-row gap-2'>
-                    <div className='w-[45px] h-[45px] border-1 border-black rounded-[50%]'></div>
-                    <div className='flex flex-col'>
-                      <span className='text-left px-3 w-[100%] text-[12px] '>{'Guy laughing hard enough to burst his stomach'.slice(0, 25) + '...'}</span>
-                      <span className='text-left px-3 text-[14px] font-bold text-green-700'>alimam</span>
-                    </div>
-                  </div>
-                  <span className='text-[35px] text-blue-600 font-extrabold'>2</span>
-                </div>
-
-                <div className='bg-white rounded-[30px] flex flex-row justify-between px-[20px] items-center shadow-md shadow-green-600 w-full md:w-[300px] h-[60px]'>
-                  <div className='flex flex-row gap-2'>
-                    <div className='w-[45px] h-[45px] border-1 border-black rounded-[50%]'></div>
-                    <div className='flex flex-col'>
-                      <span className='text-left px-3 w-[100%] text-[12px] '>{'Guy laughing hard enough to burst his stomach'.slice(0, 25) + '...'}</span>
-                      <span className='text-left px-3 text-[14px] font-bold text-green-700'>alimam</span>
-                    </div>
-                  </div>
-                  <span className='text-[35px] text-green-500 font-extrabold'>3</span>
-                </div>   
-              </div>
-
+            <TopSkitCard strUrl={oneUser?.url} exist={oneUser?true:false} votes={oneUser?.votes} position={1} name={oneUser?.name} description={oneUser?.description}/>
+            <TopSkitCard strUrl={twoUser?.url} exist={twoUser?true:false} votes={twoUser?.votes} position={2} name={twoUser?.name} description={twoUser?.description}/>
+            <TopSkitCard strUrl={threeUser?.url} exist={threeUser?true:false} votes={threeUser?.votes} position={3} name={threeUser?.name} description={threeUser?.description}/>
+          </div>
           <div className='mt-3 bg-black/20 text-white p-2 rounded-[20px]'>
             <div className='w-full flex flex-row items-center gap-3 rounded-[15px] px-2 py-1 border-b-1 border-b-black'>
               <span className='font-bold'>4</span>
-              <div className='h-[20px] w-[20px] border-1 border-black rounded-[50%]'></div>
-              <span className='font-bold text-[14px]'>Aliman</span>
-              <span className='text-[13px]'>Guy eating ground nut</span>
+              <VideoIcon/>
+              <span className='font-bold text-[14px]'>{fourUser?(fourUser.votes>0 ? fourUser.name:''):''}</span>
+              <span className='text-[13px]'>{fourUser?(fourUser.votes>0 ? (fourUser.description.slice(0, 40) + '...'):'Position empty'):'Position empty'}</span>
             </div> 
             
             <div className='w-full flex flex-row items-center px-2 gap-3 py-1'>
               <span className='font-bold'>5</span>
-              <div className='h-[20px] w-[20px] border-1 border-black rounded-[50%]'></div>
-              <span className='font-bold text-[14px]'>Aliman</span>
-              <span className='text-[13px]'>Guy eating ground nut</span>
+              <VideoIcon/>
+              <span className='font-bold text-[14px]'>{fiveUser?(fiveUser.votes>0 ? fiveUser.name:''):''}</span>
+              <span className='text-[13px]'>{fiveUser?(fiveUser.votes>0 ? (fiveUser.description.slice(0, 40) + '...'):'Position empty'):'Position empty'}</span>
             </div> 
           </div>
          
         </div>
         <h2 className="text-[22px] mt-4 mb-2 font-extrabold">All Skits</h2>
-        <div className="border-t-1 border-t-black flex md:flex-row flex-col md:justify-evenly justify-center p-[5%] rounded-[20px] md:p-[15px]">
+        <div className="border-t-1 border-t-black flex-wrap flex md:flex-row flex-col md:justify-start gap-4 justify-center p-[5%] rounded-[20px] md:p-[15px]">
           {currentSkits.map((skit) => (
-            <div key={skit._id} onClick={() => setUrl(skit.url)}>
-              <SkitDisp watch={watch} content={skit} link={`/skits/${skit._id}`}/>
-            </div>
+              <SkitDisp key={skit.id} watch={watch} content={skit} link={`/skits/${skit._id}`}/>
           ))}
-            <div className="mb-5 flex flex-col justify-center items-center sm:h-[350px] h-[400px] sm:w-[200px] w-full bg-gradient-to-r from-black/80 to-black/30 rounded-[15px]">
-               <span className='text-[20px] font-extrabold text-white'>Click to add a skit</span>
-            </div>
+            <button onClick={()=>{router.push('/upload')}} className={`mb-5 flex flex-col justify-center items-center hover:opacity-70 sm:h-[280px] h-[400px] sm:w-[190px] w-full bg-gradient-to-br from-gray-400 to-gray-200 rounded-[15px]`}>
+               <span className='text-[14px] font-extrabold text-white'>Click to add a skit</span>
+               <CreatorIcon/>
+            </button>
         </div>
         {/* Pagination */}
         <div className="flex justify-center my-4">
           {Array.from({ length: Math.ceil(sortedSkits.length / skitsPerPage) }, (_, i) => (
-            <button key={i} onClick={() => paginate(i + 1)} className={`mx-1 py-1 px-3 ${currentPage === i + 1 ? 'bg-gray-500 text-white' : 'bg-gray-200'}`}>{i + 1}</button>
+            <button key={i} onClick={() => paginate(i + 1)} className={`mx-1 rounded-[3px] text-[19px] py-1 px-3 ${currentPage === i + 1 ? 'bg-transparent border-1 border-green-600 text-green-800' : 'bg-green-600 hover:bg-green-900 text-white'}`}>{i + 1}</button>
           ))}
         </div>
       </div>
@@ -124,13 +102,18 @@ export default function SkitsPage({ skits }) {
   );
 }
 
-export async function getServerSideProps() {
+export async function getServerSideProps(context) {
+  const session = await getSession(context);
+  const user = session?.user;
+
   await db.connect();
   const skits = await Skits.find({}).lean();
-  await db.disconnect()
+  console.log(skits)
+  await db.disconnect();
   return {
     props: {
       skits: skits.map(db.convertDocToObj),
+      user
     },
   };
 }

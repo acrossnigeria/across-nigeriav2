@@ -7,22 +7,35 @@ import { toast } from "react-toastify";
 import { getError } from "../../../utils/error";
 import axios from "axios";
 import 'next-cloudinary/dist/cld-video-player.css';
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import ReactPlayer from "react-player";
 import PaystackBtn from "@/components/PaystackBtn";
+import InfoIcon from "../../../public/images/icon/InfoIcon";
+import ContestIcon from "../../../public/images/icon/ContestIcon";
+import Profile from "../../../public/images/icon/Profile";
 
 export default function SkitScreen(props){
   const {skit}=props;
   const { query } = useRouter();
   const router= useRouter();
- const [amount, setAmount] = useState('');
+  const [amount, setAmount] = useState('');
   const [payment, setPayment] = useState(0);
   const [email, setEmail] = useState('');
   const[loadPay, setLoadPay]=useState(false);
   const[loadVote, setLoadVote]=useState(false);
-if (!skit){
-        return<Layout title="Skit not Found"><div>Skit not found</div></Layout>;
-              }
+
+  const[isMobile, setIsMobile]=useState(false);
+  useEffect(()=>{
+    if(/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)&&window.matchMedia("(max-width: 600px)").matches){
+    setIsMobile(true)
+  } else{setIsMobile(false)}
+// console.log(isMobile, navigator.userAgent)
+  },[ isMobile ])
+
+  if (!skit){
+    return<Layout title="Skit not Found"><div>Skit not found</div></Layout>;
+  }
+
   const handleChange = (e) => {
  const { name, value } = e.target;
     // Update state based on input field name
@@ -65,62 +78,50 @@ if (!skit){
     }
 
   return(
-    <Layout title={skit.title}>
-        <div className="top-0 w-[400px] h-[300px] mt-0 mx-auto">
-<ReactPlayer
-width="400px"
-height="300px"
-url={skit.url}
-controls={true}
-pip={true}
+        <Layout title={skit.title}>
+          <div className={`flex mt-[20px] rounded-[20px] justify-center items-center gap-4 ${isMobile?'flex-col':'flex-row mx-[5%]'}`}>
+            <div className={`${isMobile?'':''}`}>
+              <ReactPlayer width={isMobile?'270px':'400px'} height={isMobile?'350px':'510px'} url={skit.url} controls={true} pip={true} />
+            </div>
+            <div>    
+              <form onSubmit={handleSubmit} className=" min-h-[510px] p-3 max-w-md mx-auto">
+                <div className="flex flex-row items-center gap-2"><Profile/>{skit.name}</div>
+                  <span style={{lineHeight:'25px'}} className="text-[25px] font-extrabold">{skit.title}</span>
+                <div className="inline-flex gap-2"><ContestIcon/>contesting for best Skit in Skits Across Naija</div>
+                <h2 className="text-[18px] mb-1 text-green-600 mt-6 ml-3">You can help it win by voting. Make a vote ?</h2>
+                <div className="text-[14px] inline-flex gap-2 bg-green-200 p-2 rounded-[15px]"><InfoIcon/> Each vote costs &#8358;100, you can send as many Votes as possible</div>
 
-/></div><div>
-            
-      <form onSubmit={handleSubmit} className="border border-gray-300 p-4 max-w-md mx-auto">
-        <h1 className="text-3xl font-semibold">{skit.title.toUpperCase()} is contesting for best Skit in <span className="font-bold italic">Skits Across Naija </span></h1>
-        <h2 className="text-2xl font-semibold">You can help it win by voting</h2>
-        <h2 className="text-2xl font-semibold mb-6">Each Vote costs &#8358;100, you can send as many Votes as possible</h2>
-   <label htmlFor="email" className="block text-xl font-semibold mb-2">Kindly enter your email:</label>
-      <input 
-        type="email"
-        id="email"
-        name="email"
-        value={email}
-        onChange={handleChange}
-        className="border border-gray-300 p-2 mb-4 w-full" // Apply Tailwind classes for input styling
-        required
-      />
-  <label className="block text-xl font-semibold mb-2" htmlFor="amount">Enter Number of Votes:</label>
-      <input
-        type="text"
-        id="amount"
-        name="amount"
-        className="border border-gray-300 p-2 mb-4 w-full"
-        value={amount.toLocaleString()}
-        onChange={handleChange}
-        pattern="\d*" // Allow only numbers
-        title="Please enter only numbers"
-        required
-      />
-    {amount&& <button className="bg-yellow-300 text-black font-semibold py-2 cursor-pointer px-4 mx-auto rounded" 
-    type="submit">Pay &#8358;{payment.toLocaleString()} Naira
-    </button>} 
-</form>
-<div>
-   {loadPay&&(<div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
-                 <div className="w-fit h-fit p-2 font-semibold text-lg rounded-md cursor-pointer absolute left-2 top-20 z-50 bg-yellow-700" 
-                onClick={()=>(setLoadPay(false))}>Close</div>
-    <PaystackBtn pay={voteHandler} 
-            amount={payment} email={email}
-            purpose={`Vote for ${skit.title}`}/></div>)}
+                <label htmlFor="email" className="block text-[16px] mt-3 font-semibold mb-1 ml-2">Kindly enter your email:</label>
+                <input type="email" id="email" name="email" value={email} onChange={handleChange} className="border rounded-[15px] border-gray-300 h-[48px] px-3 mb-3 w-full" required/>
 
-        {loadVote&&(<div className="fixed inset-0 top-0 h-screen px-20  w-screen z-50 
-        left-0 bg-opacity-85 bg-slate-950 text-gray-200 rounded-lg pt-56">wait while we collate your votes</div>)}
-</div>
-        
-        </div>
-        
-    </Layout>
+                <label className="block text-[16px] font-semibold mb-1 ml-2" htmlFor="amount">Enter Number of Votes:</label>
+                <input type="number" max={10000} min={1} id="amount" name="amount" className="border rounded-[15px] h-[48px] border-gray-300 px-3 mb-3 w-full" value={amount.toLocaleString()} onChange={handleChange} pattern="\d*" title="Please enter only numbers" required/>
+
+                {amount && <button className="bg-green-700 text-white font-semibold h-[50px] hover:bg-green-900 rounded-[30px] cursor-pointer px-4 mx-auto" 
+                type="submit">Vote with &#8358;{payment.toLocaleString()} Naira
+                </button>} 
+              </form>
+
+              <div>
+                {loadPay && (
+                  <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
+                    <div className="w-fit h-fit p-2 font-semibold text-lg rounded-md cursor-pointer absolute left-2 top-20 z-50 bg-yellow-700" onClick={()=>(setLoadPay(false))}>
+                      Close
+                    </div>
+                    <PaystackBtn pay={voteHandler} amount={payment} email={email} purpose={`Vote for ${skit.title}`}/>
+                  </div>
+                )}
+
+                {loadVote && (
+                  <div className="fixed inset-0 top-0 h-screen px-20  w-screen z-50 left-0 bg-opacity-85 bg-slate-950 text-gray-200 rounded-lg pt-56">
+                    wait while we collate your votes
+                  </div>
+                )}
+              </div>       
+            </div>
+          </div>
+     
+        </Layout>
   )
 }
 
