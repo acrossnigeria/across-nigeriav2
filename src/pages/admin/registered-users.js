@@ -43,8 +43,9 @@ export default function Users( { user } ) {
     async function getUsers() {
         try {
             const response = await axios.get('/api/admin/getUsers');
-            setUsers(response.data.users);  
-            setResult(response.data.users);
+            const flattenedData = response.data.users.flat(Infinity);
+            setUsers(flattenedData);
+            setResult(flattenedData);
             setPageSize(response.data.users.length >= 13 ? 13 : 12);
             setReminderPageSize(response.data.users.length % 13);
         } catch(err) {

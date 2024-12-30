@@ -10,14 +10,11 @@ import Close from '../../../public/images/icon/Close';
 import CycleLoader from '../CycleLoader';
 import Money from '../../../public/images/icon/Money';
 
-const questions = [
-  {
+const question = {
     question: `What is the nickname given to Nigerian's national football team?`,
     options: ['A. Lions', 'B. Golden Eagles', 'C. Falcons', 'D. Super Eagles'],
-    answer: 4, // Index of the correct answer option
-  },
-  // ... add more questions here
-];
+    answer: 3, // Index of the correct answer option
+  }
 const Quiz = ( { state }) => {
   const router = useRouter();
   const { data: session } = useSession();
@@ -31,16 +28,12 @@ const Quiz = ( { state }) => {
 
   const handleOptionClick = (index) => {
     setSelectedAnswer(index);
+    console.log(selectedAnswer, question.answer)
   };
 
   const handleNext = () => {
     if (selectedAnswer !== null) {
-      if (currentQuestion === questions.length - 1) {
-        setshowFinalAnswer(true); // Show terms on final question
-      } else {
-        setCurrentQuestion(currentQuestion + 1);
-        setSelectedAnswer(null); // Reset selected answer for next question
-      }
+      setshowFinalAnswer(true); // Show terms on final question
     }
   };
 
@@ -59,6 +52,7 @@ const Quiz = ( { state }) => {
   const paySuccesAction = async (ref) => {
     const oldData = {...newData, referencePay:ref.reference}
     setShowLoader(true);
+    console.log(selectedAnswer, question.answer)
     
     if (selectedAnswer === question.answer) {
       const data = {...oldData, correctAnswer:true}
@@ -72,9 +66,6 @@ const Quiz = ( { state }) => {
     setShowLoader(false)
     setCongratulations(true)   
   }
-      
-  
-  const question = questions[currentQuestion];
 
   return (
     <div className='flex flex-col justify-center'>
@@ -146,7 +137,7 @@ const Quiz = ( { state }) => {
                   <button className="border-1 hover:bg-green-300 border-green-700 h-[48px] px-[10px] rounded-[30px] cursor-pointer bg-transparent text-green-700 text-[17px]  font-semibold" onClick={()=>{router.push('/giveaway-quiz')}}>
                       Back home
                   </button>
-                  <button className="border-1 hover:bg-green-900 bg-green-700 h-[48px] px-[10px] rounded-[30px] cursor-pointer bg-green-700 text-white text-[17px]  font-semibold" onClick={()=>{setCongratulations(false)}}>
+                  <button className="border-1 hover:bg-green-900 h-[48px] px-[10px] rounded-[30px] cursor-pointer bg-green-700 text-white text-[17px]  font-semibold" onClick={()=>{setCongratulations(false)}}>
                       Play Again
                   </button>
                 </div>

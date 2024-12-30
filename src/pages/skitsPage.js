@@ -25,7 +25,7 @@ export default function SkitsPage({ skits, user }) {
   const [ threeUser, setThreeUser ] = useState(null);
   const [ fourUser, setFourUser ] = useState(null);
   const [ fiveUser, setFiveUser ] = useState(null);
-  const skitsPerPage = 20;
+  const skitsPerPage = 15;
 
   useEffect(() => {
     // Sort the skits based on the votes property
@@ -86,7 +86,7 @@ export default function SkitsPage({ skits, user }) {
           {currentSkits.map((skit) => (
               <SkitDisp key={skit.id} watch={watch} content={skit} link={`/skits/${skit._id}`}/>
           ))}
-            <button onClick={()=>{router.push('/upload')}} className={`mb-5 flex flex-col justify-center items-center hover:opacity-70 sm:h-[280px] h-[400px] sm:w-[190px] w-full bg-gradient-to-br from-gray-400 to-gray-200 rounded-[15px]`}>
+            <button onClick={()=>{router.push('/upload')}} className={`${user?'':'hidden'} mb-5 flex flex-col justify-center items-center hover:opacity-70 sm:h-[280px] h-[400px] sm:w-[190px] w-full bg-gradient-to-br from-gray-400 to-gray-200 rounded-[15px]`}>
                <span className='text-[14px] font-extrabold text-white'>Click to add a skit</span>
                <CreatorIcon/>
             </button>
@@ -108,7 +108,6 @@ export async function getServerSideProps(context) {
 
   await db.connect();
   const skits = await Skits.find({}).lean();
-  console.log(skits)
   await db.disconnect();
   return {
     props: {

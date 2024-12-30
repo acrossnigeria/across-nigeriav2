@@ -6,8 +6,8 @@ import { useRouter } from "next/router";
 import { useSession } from "next-auth/react";
 
 const images = [
-  { id: 1, image: "/images/landing/image1.jpg" },
-  { id: 2, image: "/images/landing/image2.jpg" },
+  { id: 1, image: "/images/new year web banner.jpg" },
+  { id: 2, image: "/images/landing/image1.jpg" },
   { id: 3, image: "/images/landing/image3.jpg" },
   { id: 4, image: "/images/landing/image4.jpg" },
   { id: 5, image: "/images/landing/image5.jpg" },
@@ -39,7 +39,7 @@ const CustomBanner = () => {
         className="rounded-none"
         data={bearSlideItemData}
         isEnableLoop
-        autoPlayTime={3500}
+        autoPlayTime={5000}
         isEnableAutoPlay
         isEnablePagination
         height={ isMobile?{ widthRatio: 12, heightRatio:5 }:{widthRatio:12, heightRatio:4.5}}

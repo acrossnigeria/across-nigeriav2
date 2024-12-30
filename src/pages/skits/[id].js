@@ -13,6 +13,8 @@ import PaystackBtn from "@/components/PaystackBtn";
 import InfoIcon from "../../../public/images/icon/InfoIcon";
 import ContestIcon from "../../../public/images/icon/ContestIcon";
 import Profile from "../../../public/images/icon/Profile";
+import Close from "../../../public/images/icon/Close";
+import CycleLoader from "@/components/CycleLoader";
 
 export default function SkitScreen(props){
   const {skit}=props;
@@ -53,16 +55,16 @@ export default function SkitScreen(props){
    
   };
       
-       const handleSubmit = (e) => {
+    const handleSubmit = (e) => {
     e.preventDefault();
     // Handle form submission, e.g., send payment to server
     console.log(`Payment processed for ${payment} Naira`);
     setLoadPay(true)
   };
-    const voteHandler=async()=>{
- try{
-  setLoadVote(true)
-  const id=skit._id;
+  const voteHandler=async()=>{
+    try{
+      setLoadVote(true)
+      const id=skit._id;
       const result=await axios.post('/api/vote',{ id,amount});
       console.log("Result is:", result)
       toast.success("success")
@@ -71,20 +73,20 @@ export default function SkitScreen(props){
       setAmount("");
       setLoadVote(false);
       router.push("/skitsPage")
-   }
-   catch (err){
-    toast.error(getError(err));
-   }
     }
+    catch (err){
+      toast.error(getError(err));
+    }
+  }
 
   return(
         <Layout title={skit.title}>
           <div className={`flex mt-[20px] rounded-[20px] justify-center items-center gap-4 ${isMobile?'flex-col':'flex-row mx-[5%]'}`}>
-            <div className={`${isMobile?'':''}`}>
+            <div className={`bg-gray-100 rounded-[7px] ${isMobile?'w-[90%] flex justify-center items-center':''}`}>
               <ReactPlayer width={isMobile?'270px':'400px'} height={isMobile?'350px':'510px'} url={skit.url} controls={true} pip={true} />
             </div>
             <div>    
-              <form onSubmit={handleSubmit} className=" min-h-[510px] p-3 max-w-md mx-auto">
+              <form onSubmit={handleSubmit} className={` min-h-[510px] border-t-1 ${isMobile?'border-gray-400 rounded-t-[20px]':''} p-4 max-w-md mx-auto`}>
                 <div className="flex flex-row items-center gap-2"><Profile/>{skit.name}</div>
                   <span style={{lineHeight:'25px'}} className="text-[25px] font-extrabold">{skit.title}</span>
                 <div className="inline-flex gap-2"><ContestIcon/>contesting for best Skit in Skits Across Naija</div>
@@ -97,23 +99,24 @@ export default function SkitScreen(props){
                 <label className="block text-[16px] font-semibold mb-1 ml-2" htmlFor="amount">Enter Number of Votes:</label>
                 <input type="number" max={10000} min={1} id="amount" name="amount" className="border rounded-[15px] h-[48px] border-gray-300 px-3 mb-3 w-full" value={amount.toLocaleString()} onChange={handleChange} pattern="\d*" title="Please enter only numbers" required/>
 
-                {amount && <button className="bg-green-700 text-white font-semibold h-[50px] hover:bg-green-900 rounded-[30px] cursor-pointer px-4 mx-auto" 
+                {amount && <button className={`${isMobile?'w-[100%]':''} bg-green-700 text-white font-semibold h-[50px] hover:bg-green-900 rounded-[30px] cursor-pointer px-4 mx-auto`}
                 type="submit">Vote with &#8358;{payment.toLocaleString()} Naira
                 </button>} 
               </form>
 
               <div>
                 {loadPay && (
-                  <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
-                    <div className="w-fit h-fit p-2 font-semibold text-lg rounded-md cursor-pointer absolute left-2 top-20 z-50 bg-yellow-700" onClick={()=>(setLoadPay(false))}>
-                      Close
-                    </div>
+                  <div className="fixed w-screen h-screen top-0 left-0 z-[5000] flex flex-col items-center justify-center bg-black bg-opacity-50">
+                    <button className="p-3 fixed z-[6000] top-[5%] right-[5%] rounded-full bg-gray-100" onClick={()=>(setLoadPay(false))}>
+                      <Close/>
+                    </button>
                     <PaystackBtn pay={voteHandler} amount={payment} email={email} purpose={`Vote for ${skit.title}`}/>
                   </div>
                 )}
 
                 {loadVote && (
-                  <div className="fixed inset-0 top-0 h-screen px-20  w-screen z-50 left-0 bg-opacity-85 bg-slate-950 text-gray-200 rounded-lg pt-56">
+                  <div className="fixed inset-0 top-0 h-screen flex flex-col justify-center ite gap-2  w-screen z-50 left-0 bg-opacity-85 bg-slate-950 text-gray-200 pt-56">
+                    <CycleLoader/>
                     wait while we collate your votes
                   </div>
                 )}
