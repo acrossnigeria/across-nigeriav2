@@ -24,6 +24,7 @@ import ReloadIcon from "../../public/images/icon/ReloadIcon";
 import CycleLoader from "@/components/CycleLoader";
 import RegularShoutout from "@/components/shout-out/RegularShoutout";
 import NoShoutOut from "@/components/shout-out/NoShoutOut";
+import InfoIcon from "../../public/images/icon/InfoIcon";
 
 
 

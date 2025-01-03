@@ -13,7 +13,7 @@ export default function ProductClosed() {
                     <span>The winners will be contacted directly via email with instructions. Please keep an eye on your email inbox for updates.</span>        
                 </div>
                 <span className="text-transparent mt-[7px] font-extrabold bg-gradient-to-tr bg-clip-text from-green-700 to-green-300 text-[19px]">Stay Tuned</span>
-                <span>Jan 2025 Giveaway Quizzes we begin soon. Be sure to stay connected with us for the next giveaway quizzes!</span>
+                <span>Jan 2025 Giveaway Quizzes will begin soon. Be sure to stay connected with us for the next Giveaway quizzes!</span>
                 <span className="mt-[10px]">Thank you for being part of the fun, and congratulations to all our December 2024 Giveaway Quiz participants</span>
                 <div className="flex flex-row mt-[20px] rounded-[10px] pt-2 border-t-gray-500 border-t-1 gap-2 items-start">
                     <span className="text-gray-800 font-bold text-[15px]">Note:</span>
