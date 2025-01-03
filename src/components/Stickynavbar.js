@@ -9,9 +9,10 @@ import { signOut, useSession } from "next-auth/react";
 import { useRouter } from "next/router";
 import Search from '../../public/images/icon/Search';
 import Profile from "../../public/images/icon/Profile";
+import NotifyIcon from "../../public/images/icon/NotifyIcon";
 
 
-const StickyNavbar = () => {
+const StickyNavbar = ( { notification }) => {
   const { status, data: session } = useSession();
 
   const[open,setOpen]=useState(false)
@@ -75,7 +76,11 @@ const toggleMenu=()=>{
               </div>
           
             { session?.user ? (
-              <div className="relative">
+              <div className="relative flex flex-row items-center gap-2">
+                {/* <Link href={'/notifications'} className='flex h-[35px] w-[35px] rounded-full justify-center items-center hover:bg-green-800 flex-row'>
+                  <NotifyIcon/>
+                  <div className={`absolute ml-[23px] mb-[23px] ${notification?(notification.unread === 0?'bg-gray-500':'bg-red-500 animate-pulse'):'bg-gray-500 animate-pulse'} flex flex-row justify-center items-center font-bold rounded-full p-2 h-[23px] text-[13px] w-[23px]`}>{notification?.unread}</div>
+                </Link> */}
                 <div style={{alignItems:'center'}} className="flex flex-row justify-between gap-2 h-[37px] pl-3 pr-[2px] cursor-pointer font-bold  text-white bg-green-800 transition duration-100 rounded-[30px] text-[16px]">
                   <Link className="hover:scale-105" href={'/user/profile'}>{session.user.name}</Link>
                     <div className="hover:scale-105 hover:bg-green-900 rounded-[50%]"><Profile/></div>

@@ -11,6 +11,7 @@ import ShoutMic from '../../public/images/icon/ShoutMic';
 import Logo from '../../public/images/icon/Logo';
 import Profile from '../../public/images/icon/Profile';
 import Login from '../../public/images/icon/Login';
+import NotifyIcon from '../../public/images/icon/NotifyIcon';
 
 const Navbar = () => {
   const { status, data: session } = useSession();
@@ -59,7 +60,11 @@ const Navbar = () => {
           <div className=" w-[120px] h-[35px] items-center font-semibold rounded-full justify-center uppercase text-white  bg-green-500 text-[14px] animate-pulse  ">
           </div>
           ) : session?.user ? (
-          <div className="relative">
+          <div className="relative flex flex-row items-center gap-2">
+            {/* <Link href={'/notifications'} className='flex h-[35px] w-[35px] rounded-full justify-center items-center hover:bg-green-800 flex-row'>
+              <NotifyIcon/>
+              <div className={`absolute ml-[23px] text-white mb-[23px] bg-red-500 flex flex-row justify-center items-center font-bold rounded-full p-2 h-[23px] text-[13px] w-[23px]`}>1</div>
+            </Link> */}
             <div style={{alignItems:'center'}} className="flex flex-row justify-between gap-2 h-[40px] pl-3 pr-[2px] cursor-pointer font-bold  text-white bg-green-800 transition duration-100 rounded-[30px] text-[16px]">
               <Link href={'/user/profile'}>{session.user.name}</Link>
                <Profile/>

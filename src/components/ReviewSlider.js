@@ -40,6 +40,7 @@ const CustomBanner = () => {
         data={bearSlideItemData}
         isEnableLoop
         autoPlayTime={5000}
+        renderNav={()=>null}
         isEnableAutoPlay
         isEnablePagination
         height={ isMobile?{ widthRatio: 12, heightRatio:5 }:{widthRatio:12, heightRatio:4.5}}
