@@ -11,8 +11,8 @@ import CycleLoader from '../CycleLoader';
 import Money from '../../../public/images/icon/Money';
 
 const question = {
-    question: `What is the nickname given to Nigerian's national football team?`,
-    options: ['A. Lions', 'B. Golden Eagles', 'C. Falcons', 'D. Super Eagles'],
+    question: `Which language is the official language of Nigeria?`,
+    options: ['A. Yoruba', 'B. Hausa', 'C. English', 'D. Igbo'],
     answer: 3, // Index of the correct answer option
   }
 const Quiz = ( { state }) => {

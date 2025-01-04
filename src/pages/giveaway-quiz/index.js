@@ -7,7 +7,6 @@ function landingPage() {
 
   return (
     <Layout>
-      // <ProductClosed/>
       <Landing/>
     </Layout>
   )
