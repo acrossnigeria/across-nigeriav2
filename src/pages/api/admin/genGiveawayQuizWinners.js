@@ -52,7 +52,7 @@ const Handler = async (req, res) => {
                         })
                     }
                 });
-                const winners = bubbleSort( playersAndPlays ).slice(0, 20); //sorts the players in descending order and selects 100 players from the top;
+                const winners = bubbleSort( playersAndPlays ).slice(0, 24); //sorts the players in descending order and selects 100 players from the top;
                 res.status(200).json( { success: true, winners  });
             } catch (err) {
                 res.status(500).json( {error:'error occured getting data'});
