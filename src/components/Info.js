@@ -33,12 +33,12 @@ const Info = () => {
   reversed:true
     };
   return (
-    <div className="relative h-full  grid grid-cols-1 top-0 border-b-1 pb-4 px-3 border-b-gray">
+    <div className="relative h-full  grid grid-cols-1 top-0 border-b-1 pb-1 px-3 border-b-gray">
         
       <div className="flex lg:w-full  w-full font-bold text-[30px] md:text-[50px] right-0   text-pretty">
         <span className="w-full bg-clip-text bg-gradient-to-tr from-green-600 text-transparent to-green-200 font-extrabold tracking-wider">HOWFA?</span> 
       </div>
-      <p className="font-semibold text-left md:text-[21px] text-[17px] mb-4 text-gray-800">{data.paragraph}</p>
+      <p className="font-semibold text-left md:text-[21px] text-[15px] mb-3 text-gray-800">{data.paragraph}</p>
       <div className={`flex flex-row ${isMobile?'justify-center':''} `}>
         <button style={{ display:( session?.user? 'none': 'block')}} className="w-[85%] md:w-[300px] px-[40px] font-extrabold text-white text-[20px] rounded-[30px] h-[60px] flex flex-row justify-center items-center tracking-wider bg-green-600 border-l-3 border-b-3 hover:border-b-0 hover:border-l-0 border-b-green-800 border-l-green-800  hover:bg-green-700">
             <Link  href="/account/reg">
@@ -47,7 +47,7 @@ const Info = () => {
         </button> 
       </div>
       
-      <div style={{gap:'10px'}} className="text-8xl mt-6 mb-6 mx-auto rounded-md justify-between flex">
+      <div style={{gap:'10px'}} className="text-8xl mt-2 mb-1 mx-auto rounded-md justify-between flex">
           <Link href=''>
             <Image  quality={100}  className="cursor-pointer" src={facebook} height={20} width={30} alt="facebook"/>
           </Link>

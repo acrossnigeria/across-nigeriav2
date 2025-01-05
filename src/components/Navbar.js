@@ -65,7 +65,7 @@ const Navbar = () => {
               <NotifyIcon/>
               <div className={`absolute ml-[23px] text-white mb-[23px] bg-red-500 flex flex-row justify-center items-center font-bold rounded-full p-2 h-[23px] text-[13px] w-[23px]`}>1</div>
             </Link> */}
-            <div style={{alignItems:'center'}} className="flex flex-row justify-between gap-2 h-[40px] px-[25px] pr-[2px] cursor-pointer font-bold  text-white bg-gradient-to-br from-green-500 to-yellow-300 transition duration-100 rounded-[30px] text-[16px]">
+            <div style={{alignItems:'center'}} className="flex flex-row justify-between gap-2 h-[40px] px-[25px] pr-[2px] cursor-pointer font-bold  text-white bg-gradient-to-br from-green-500 to-yellow-400 transition duration-100 rounded-[30px] text-[16px]">
               <Link href={'/user/profile'}>{session.user.name}</Link>
                <Profile/>
             </div>

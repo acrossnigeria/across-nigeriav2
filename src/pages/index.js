@@ -86,26 +86,26 @@ export default function Home() {
         <div className="md:w-[900px] w-[100%] mx-auto">
           <Info/>
            
-            <p className="grid w-full border-b-1  mx-auto text-center bg-clip-text text-transparent bg-gradient-to-tr from-yellow-200 to-orange-600 ">
-              <span style={{lineHeight:'30px'}} id="products" className="flex text-center text-[28px] font-sans font-extrabold mx-auto p-2"> 
+            <p className="grid w-full mx-auto text-center bg-clip-text text-transparent bg-gradient-to-tr from-yellow-200 to-orange-600 ">
+              <span style={{lineHeight:'30px'}} id="products" className="flex text-center text-[23px] font-sans font-extrabold mx-auto mt-1"> 
                   {"Our amazing products"}
               </span>
             </p>
-        <div className="mt-3 grid left-0 grid-cols-1 gap-5 border-b-1 md:grid-cols-2 lg:grid-cols-2 md:gap-4 mx-auto items-center px-4">
+        <div className="mt-3 grid left-0 grid-cols-1 gap-5 border-b-1 pb-3 md:grid-cols-2 lg:grid-cols-2 md:gap-4 mx-auto items-center px-4">
             { games.map((card)=>(<Cards key={card.title} isOpen={card.isOpen} date={card.date} title={card.title} 
             link={card.link} image={card.image}/>))}
         </div>
         
-       <div className="mb-[40px] mt-[40px] flex flex-col gap-2 items-center">
+       <div className="mb-[40px] mt-[10px] flex flex-col gap-2 items-center">
             <span className="bg-clip-text text-[30px] font-extrabold text-transparent bg-gradient-to-tr from-green-700 to-green-300">SHOUT OUT</span>
            { networkError ? (
-                <div onClick={reloadShoutOut} className="h-[500px] cursor-pointer gap-3 md:w-[700px] w-full flex flex-col justify-center items-center rounded-[20px] bg-gradient-to-b from-gray-200 to-gray-50 border-1 border-gray-400">
+                <div onClick={reloadShoutOut} className="h-[500px] cursor-pointer gap-3 md:w-[700px] w-[95%] flex flex-col justify-center items-center rounded-[20px] bg-gradient-to-b from-gray-200 to-gray-50 border-1 border-gray-400">
                   <span>Network error. Retry?</span>
                   <ReloadIcon/>
                 </div>
                 ) : ( !shoutOut ? 
                   ( 
-                    <div className="h-[500px] md:w-[700px] w-full flex flex-col justify-center items-center rounded-[20px] bg-gradient-to-b from-gray-200 to-gray-50 border-1 border-gray-400">
+                    <div className="h-[500px] md:w-[700px] w-[95%] flex flex-col justify-center items-center rounded-[20px] bg-gradient-to-b from-gray-200 to-gray-50 border-1 border-gray-400">
                       <CycleLoader/>
                     </div>
                   ) : (
