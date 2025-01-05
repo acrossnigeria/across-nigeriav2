@@ -95,13 +95,13 @@ const Navbar = () => {
                 {/* Menus */}
         <div className={` flex py-1 justify-center text-[17px] gap-5 font-extrabold`}>
           {/* First Line Menus */}
-            <Link href="#products" className="text-white px-3 py-1  hover:bg-green-900">
+            <Link href="#products" className="text-white px-3 py-1 rounder-[30px]  hover:bg-green-700">
               Products
             </Link>
-            <Link href="/" className="text-white px-3 py-1  hover:bg-green-900">
+            <Link href="/" className="text-white px-3 py-1 rounder-[30px]  hover:bg-green-700">
               Home
             </Link>
-            <Link href="/about" className="text-white px-3 py-1 hover:bg-green-900">
+            <Link href="/about" className="text-white px-3 rounder-[30px] py-1 hover:bg-green-700">
               About
             </Link>
         </div>
