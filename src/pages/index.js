@@ -29,16 +29,16 @@ import InfoIcon from "../../public/images/icon/InfoIcon";
 
 
 export const games=[
-  {title:"GIVE AWAY QUIZZES", image:image1,link:"/giveaway-quiz", date:'Live'},
-  {title:"KING AND QUEEN", image:image3, link:"/soon", date:'January 1st, 2025'},
-  {title:"SKITS ACROSS NIGERIA",image:image2,link:"/soon", date:'2025'},
-  {title:"NAIJA VIBES", image:image8,link:"/soon", date:'2025'},
-  {title:"MYSTERY BOXES",image:image4,link:"/soon", date:'2025'},
-  {title:"STATE TREASURE HUNT SHOW",image:image5,link:"/soon", date:'2025'},
-  {title:"MEGA CASH OUT",image:image6,link:"/soon", date:'2025'},
-  {title:"ACROSS NIGERIA REALITY SHOW",image:image7,link:"/soon", date:'2026'},
-  {title:"SHOPPING HUSTLE",image:image9,link:"/soon", date:'2025'},
-  {title:"I DON HAMMA",image:image10,link:"/soon", date:'2025'},
+  {title:"GIVE AWAY QUIZZES", image:image1,link:"/giveaway-quiz", date:'Live', isOpen:true },
+  {title:"KING AND QUEEN", image:image3, link:"/soon", date:'2025', isOpen:false },
+  {title:"SKITS ACROSS NIGERIA",image:image2,link:"/soon", date:'2025', isOpen:false },
+  {title:"NAIJA VIBES", image:image8,link:"/soon", date:'2025', isOpen:false },
+  {title:"MYSTERY BOXES",image:image4,link:"/soon", date:'2025', isOpen:false },
+  {title:"STATE TREASURE HUNT SHOW",image:image5,link:"/soon", date:'2025', isOpen:false },
+  {title:"MEGA CASH OUT",image:image6,link:"/soon", date:'2025', isOpen:false },
+  {title:"ACROSS NIGERIA REALITY SHOW",image:image7,link:"/soon", date:'2026', isOpen:false },
+  {title:"SHOPPING HUSTLE",image:image9,link:"/soon", date:'2025', isOpen:false },
+  {title:"I DON HAMMA",image:image10,link:"/soon", date:'2025', isOpen:false },
 ]
 const inter = Inter({ subsets: ["latin"] });
 
@@ -80,16 +80,19 @@ export default function Home() {
 
   return (
         <Layout title={"Home Page"}>
-        <div className=" px-3 md:w-[1000px] w-[100%] mx-auto">
-          <ReviewSlider/>
-           <Info/>
+          <div className="bg-gradient-to-b pt-1 from-green-600 to-gray-100">
+            <ReviewSlider/>
+          </div>
+        <div className="md:w-[900px] w-[100%] mx-auto">
+          <Info/>
+           
             <p className="grid w-full border-b-1  mx-auto text-center bg-clip-text text-transparent bg-gradient-to-tr from-yellow-200 to-orange-600 ">
               <span style={{lineHeight:'30px'}} id="products" className="flex text-center text-[28px] font-sans font-extrabold mx-auto p-2"> 
                   {"Our amazing products"}
               </span>
             </p>
-        <div className="mt-3 grid left-0 grid-cols-1 gap-4 border-b-1 md:grid-cols-2 lg:grid-cols-2 md:gap-6 mx-auto items-center md:max-w-screen-xl px-4 sm:px-3 lg:px-20">
-            { games.map((card)=>(<Cards key={card.title} date={card.date} title={card.title} 
+        <div className="mt-3 grid left-0 grid-cols-1 gap-5 border-b-1 md:grid-cols-2 lg:grid-cols-2 md:gap-4 mx-auto items-center px-4">
+            { games.map((card)=>(<Cards key={card.title} isOpen={card.isOpen} date={card.date} title={card.title} 
             link={card.link} image={card.image}/>))}
         </div>
         

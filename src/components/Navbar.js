@@ -42,9 +42,9 @@ const Navbar = () => {
 
   return (
     <>
-    <nav id="top" style={{paddingBottom:'0px'}} className={` bg-green-700 overflow-hidden  py-4`} onClick={()=>{open&&setOpen(false)}}>
+    <nav id="top" style={{paddingBottom:'0px'}} className={`bg-green-600 overflow-hidden  py-3`} onClick={()=>{open&&setOpen(false)}}>
 
-      <div style={{alignItems:'center', flexDirection:'row', justifyContent:'space-between'}} className={`flex px-[10px] transition-background ease-in-out ${isFixed?'fixed top-0 z-40 bg-green-700/80 py-[10px] w-[100%] py-2':'border-green-300 pb-[10px] border-b-1'}`}>
+      <div style={{alignItems:'center', flexDirection:'row', justifyContent:'space-between'}} className={`flex px-[10px] transition-background ease-in-out ${isFixed?'fixed top-0 z-40 bg-green-600/80 py-[7px] w-[100%]':'pb-[10px]'}`}>
         <div className='flex flex-row justify-between gap-[12px]'>
             {/* Logo */}
           <Link href="/" style={{}} onClick={()=>(router.push("/"))} className="flex items-center justify-center">
@@ -65,7 +65,7 @@ const Navbar = () => {
               <NotifyIcon/>
               <div className={`absolute ml-[23px] text-white mb-[23px] bg-red-500 flex flex-row justify-center items-center font-bold rounded-full p-2 h-[23px] text-[13px] w-[23px]`}>1</div>
             </Link> */}
-            <div style={{alignItems:'center'}} className="flex flex-row justify-between gap-2 h-[40px] pl-3 pr-[2px] cursor-pointer font-bold  text-white bg-green-800 transition duration-100 rounded-[30px] text-[16px]">
+            <div style={{alignItems:'center'}} className="flex flex-row justify-between gap-2 h-[40px] px-[25px] pr-[2px] cursor-pointer font-bold  text-white bg-gradient-to-br from-green-500 to-yellow-300 transition duration-100 rounded-[30px] text-[16px]">
               <Link href={'/user/profile'}>{session.user.name}</Link>
                <Profile/>
             </div>
@@ -73,17 +73,17 @@ const Navbar = () => {
         ) : (
           <div className='w-[fit-content] flex flex-row gap-2'>
             <div className="flex px-[10px] h-[40px] cursor-pointer items-center 
-            justify-center text-green-200 font-bold bg-transparent transition duration-100 rounded-[40px] text-[16px]
+            justify-center text-white font-bold bg-transparent transition duration-100 rounded-[40px] text-[16.5px]
             ease-in-out hover:scale-105">
-              <Link href="/account/reg" className="cursor-pointer" legacyBehavior>
-                <a>Register</a>
+              <Link href="/account/login" className="cursor-pointer" legacyBehavior>
+                <a>Login</a>
               </Link>
             </div>
-            <button onClick={()=>{router.push("/account/login")}} className="cursor-pointer" >
-              <div className="flex px-[15px] h-[40px] cursor-pointer items-center 
-              justify-center text-white bg-yellow-500 font-bold transition duration-100 rounded-[40px] text-[16px]
+            <button onClick={()=>{router.push("/account/reg")}} className="cursor-pointer" >
+              <div className="flex w-[120px] h-[40px] cursor-pointer items-center 
+              justify-center text-green-800 bg-gradient-to-r from-green-400 border-b-2 border-b-green-500 border-l-2 border-l-green-500 to-yellow-300 hover:border-l-0 hover:border-b-0 font-bold transition duration-100 rounded-[18px] text-[16.5px]
               ease-in-out hover:bg-yellow-300  hover:scale-105">
-                <>Login<Login/></>
+                <>Register</>
               </div>
             </button>
             
@@ -93,20 +93,20 @@ const Navbar = () => {
     </div>
       <div >
                 {/* Menus */}
-        <div className={` flex py-2 justify-center gap-5 font-extrabold`}>
+        <div className={` flex py-1 justify-center text-[17px] gap-5 font-extrabold`}>
           {/* First Line Menus */}
-            <Link href="#products" className="text-white px-3 py-1  hover:bg-green-900 rounded-[15px]">
+            <Link href="#products" className="text-white px-3 py-1  hover:bg-green-900">
               Products
             </Link>
-            <Link href="/" className="text-white px-3 py-1  hover:bg-green-900 rounded-[15px]">
+            <Link href="/" className="text-white px-3 py-1  hover:bg-green-900">
               Home
             </Link>
-            <Link href="/about" className="text-white px-3 py-1 hover:bg-green-900 rounded-[15px]">
+            <Link href="/about" className="text-white px-3 py-1 hover:bg-green-900">
               About
             </Link>
         </div>
 
-        <div className="mt-2 fixed bottom-0 rounded-t-[12px] w-[100%] flex z-[1000] bg-green-700 flex-row font-sans h-[60px] items-center font-extrabold text-[13px] justify-around">
+        <div className="mt-2 fixed bottom-0 rounded-t-[5px] w-[100%] flex z-[1000] bg-green-600 flex-row font-sans h-[57px] items-center font-extrabold text-[13px] justify-around">
           {/* Second Line Menus */}
             <Link style={{alignItems:'center'}} href="/giveaway-quiz" className="text-green-200 px-1 rounded-[15px] hover:bg-green-800 py-1 flex flex-col justify-center">
               <Money/>

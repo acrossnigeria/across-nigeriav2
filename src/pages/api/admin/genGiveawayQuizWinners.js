@@ -52,19 +52,21 @@ const Handler = async (req, res) => {
                         })
                     }
                 });
-                const winners = bubbleSort( playersAndPlays ).slice(0, 24); //sorts the players in descending order and selects 100 players from the top;
+                const winners = bubbleSort( playersAndPlays ).slice(0, 23); //sorts the players in descending order and selects 100 players from the top;
                 res.status(200).json( { success: true, winners  });
             } catch (err) {
                 res.status(500).json( {error:'error occured getting data'});
             }
         } 
-        else if ( query.type === 'getSessionData' ) {
+        else if ( query.type === 'getWinners' ) {
             try {
                 await db.connect();
                 const data = await GiveawayQuizWinners.findOne( { quizSession: query?.quizSession });
                 await db.disconnect();
                 if (data) {
-                    res.status(200).json( { success: true, winners: data});
+                    res.status(200).json( { available: true, winners: data});
+                } else {
+                    res.status(200).json( { available: false, winners: data});
                 }
             } catch(err) {
                 res.status(500).json( { error: 'something went wrong while getting data'})

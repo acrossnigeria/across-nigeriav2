@@ -15,7 +15,7 @@ const funFacts = [
 
 const NoShoutOut = () => {
     return (
-        <div className="md:w-[700px] flex flex-col items-center pt-[20px] w-[100%] rounded-[20px] h-[500px] bg-gray-100 border-1 border-gray-400">
+        <div className="md:w-[700px] flex flex-col items-center pt-[20px] w-[95%] rounded-[20px] h-[530px] bg-gray-100 border-1 border-gray-400">
             <div className=" ml-[-25px] mb-2"><Awesome/></div>
             <span className="w-[90%] text-gray-600 text-[17px] text-center">Wow, no shout outs today, but you can be next!</span>
             <span className="w-[85%] text-gray-600 text-[17px] text-center">Be the first to leave a shout out! Secure your spot today</span>

@@ -75,7 +75,7 @@ export default function Layout({ title, children }) {
         {isMobile&&<Navbar/>} */}
       <div className="flex left-0 ml-0 w-full overflow-hidden flex-col justify-between">
         <Loader/>
-        <main className="h-[100%] w-screen overflow-hidden pb-[100px] left-0 mx-auto">{children}</main>
+        <main className="h-[100%] w-screen overflow-hidden pb-[100px] bg-gray-100 my-0 left-0 mx-auto">{children}</main>
        
       </div> 
       <div className="flex-grow"></div><Footer/>
