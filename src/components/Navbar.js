@@ -80,7 +80,7 @@ const Navbar = () => {
               </Link>
             </div>
             <button onClick={()=>{router.push("/account/reg")}} className="cursor-pointer" >
-              <div className="flex w-[120px] h-[40px] cursor-pointer items-center 
+              <div className="flex w-[100px] h-[40px] cursor-pointer items-center 
               justify-center text-green-800 bg-gradient-to-r from-green-400 border-b-2 border-b-green-500 border-l-2 border-l-green-500 to-yellow-300 hover:border-l-0 hover:border-b-0 font-bold transition duration-100 rounded-[18px] text-[16.5px]
               ease-in-out hover:bg-yellow-300  hover:scale-105">
                 <>Register</>
