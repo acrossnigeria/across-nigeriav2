@@ -133,7 +133,7 @@ export default function Gqrs( { user }) {
                         <span className="font-extrabold">History :</span>
                         {history? (
                             <div className="flex flex-row gap-2">
-                                { history.map( str => <button disabled={presentSheet===str} onClick={()=>{getWinners(str)}} className={`bg-transparent flex flex-row border-1 ${presentSheet===str?'border-blue-600':'border-gray-600'} justify-center rounded-[15px] text-gray-800 hover:bg-gray-400 items-center w-[130px] h-[35px]`}>{str}</button>)}
+                                { history.map( str => <button key={str} disabled={presentSheet===str} onClick={()=>{getWinners(str)}} className={`bg-transparent flex flex-row border-1 ${presentSheet===str?'border-blue-600':'border-gray-600'} justify-center rounded-[15px] text-gray-800 hover:bg-gray-400 items-center w-[130px] h-[35px]`}>{str}</button>)}
                             </div>
                         ) : (
                             <div className="flex flex-row gap-2">
