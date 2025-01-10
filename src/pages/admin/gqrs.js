@@ -1,10 +1,11 @@
-import UnderCIcon from "@/components/admin-components/graphics/UnderCIcon";
 import Container from "@/components/admin-components/Container";
 import { getSession } from "next-auth/react";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import CycleLoader from "@/components/CycleLoader";
 import ListSheet from "@/components/ListSheet";
+
+const pro = [ 'Jan2025', 'Dec2025']
 
 
 export async function  getServerSideProps(context) {
@@ -28,10 +29,13 @@ export default function Gqrs( { user }) {
     const [ isGenDataSaved, setIsGenDataSaved ] = useState(false);
     const [ isSavingData, setIsSavingData ] = useState(false);
     const [ isAvailable, setIsAvailable ] = useState(false);
-    const [ gettingPresentSession, setGettingPresentSession ] = useState(true);
+    const [ gettingPresentSession, setGettingPresentSession ] = useState(false);
     const [ errorOccured, setErrorOccured ] = useState(false);
     const [ genLoading, setGenLoading ] = useState(false)
     const [ genError, setGenError ] = useState(false);
+    const [ history, setHistory ] = useState(null);
+    const [ presentSheet, setPresentSheet ] = useState(`${getThisMonth()}${getThisYear()}`);
+    
 
     function getThisMonth() {
        const today = new Date();
@@ -61,6 +65,7 @@ export default function Gqrs( { user }) {
        } catch(err) {
             setGenLoading(false);
             setGenError(true); //display error message
+            setSelectedWinners(null);
        }
 
     }
@@ -86,10 +91,13 @@ export default function Gqrs( { user }) {
 
     async function getWinners(session) {
         const quizSession = session ? session : `${getThisMonth()}${getThisYear()}`;
+        setGettingPresentSession(true);
+        setPresentSheet(quizSession);
+        setSelectedWinners(null);
        try {
          const response = await axios.get(`/api/admin/genGiveawayQuizWinners?type=getWinners&quizSession=${quizSession}`);
          if (response.data.available) {
-            setSelectedWinners(response.data.winners);
+            setSelectedWinners(response.data.winners.winners);
             setIsAvailable(true);
          } else {
             setIsAvailable(false);
@@ -97,25 +105,51 @@ export default function Gqrs( { user }) {
          setGettingPresentSession(false);
        } catch (err) {
           setErrorOccured(true);
+          setGettingPresentSession(false);
+       }
+    }
+
+    async function getHistory() {
+       try {
+        const response = await axios.get('/api/admin/genGiveawayQuizWinners?type=getHistory');
+        const todayIsExcluded = !response.data.history.includes(`${getThisMonth()}${getThisYear()}`)
+            setHistory( [ ...response.data.history, (todayIsExcluded && `${getThisMonth()}${getThisYear()}`) ]);
+       } catch(err) {
+            setErrorOccured(true);
        }
     }
 
     useEffect( () => {
+        getHistory();
         getWinners();
     }, [])
 
     return (
         <div>
             <Container admin={user} page={'gqrs'}>
-                <div className="h-screen md:w-[100%] gap-3 flex flex-col items-center">
+                <div className="h-screen md:w-[100%] gap-3 flex flex-col pl-[20px]">
                     <span className="text-[25px] font-extralight mt-2 text-left ml-2">Giveaway Quizzes winners selector algorithm</span>
-                    { errorOccured && (
+                    <div className="flex items-center flex-row gap-3">
+                        <span className="font-extrabold">History :</span>
+                        {history? (
+                            <div className="flex flex-row gap-2">
+                                { history.map( str => <button disabled={presentSheet===str} onClick={()=>{getWinners(str)}} className={`bg-transparent flex flex-row border-1 ${presentSheet===str?'border-blue-600':'border-gray-600'} justify-center rounded-[15px] text-gray-800 hover:bg-gray-400 items-center w-[130px] h-[35px]`}>{str}</button>)}
+                            </div>
+                        ) : (
+                            <div className="flex flex-row gap-2">
+                                <div className="animate-pulse justify-center rounded-[15px] bg-gray-400 w-[130px] h-[35px]"></div>
+                                <div className="animate-pulse justify-center rounded-[15px] bg-gray-400 w-[130px] h-[35px]"></div>
+                                <div className="animate-pulse justify-center rounded-[15px] bg-gray-400 w-[130px] h-[35px]"></div>
+                            </div>
+                        )}
+                        
+                    </div>
+                    { errorOccured ? (
                         <div className="text-[14px] mt-[50px]">
                             <span className="text-red-600">An error occured please check your internet connection and try again</span>
                             <button className={`bg-transparent flex flex-row border-1 mt-[20px] border-gray-600 justify-center rounded-[5px] text-gray-800 hover:bg-gray-400 items-center w-[130px] h-[35px]`} onClick={getWinners}>Retry</button>
-                        </div> )}
-                    { !errorOccured && 
-                    gettingPresentSession ? ( <div className="flex flex-row justify-center mt-[50px]"><CycleLoader/></div> 
+                        </div> 
+                    ): ( gettingPresentSession ? ( <div className="flex flex-row justify-center mt-[50px]"><CycleLoader/></div> 
                     ) : ( isAvailable ? (
                         <div className="flex flex-col pt-3 gap-3">
                             <span>Total selected winners: {selectedWinners.length}</span>
@@ -152,7 +186,7 @@ export default function Gqrs( { user }) {
                                 </div>
                             )       
                     )
-                }
+                    )}
                 
                 </div>
             {/* <div className="h-screen md:w-[100%] gap-3 border-1 flex flex-col pt-[250px] items-center">

@@ -1,12 +1,14 @@
 import db from "../../../../utils/db";
 import Quiz from "@/models/Quiz";
 import GiveawayQuizWinners from "@/models/GiveawayQuizWinners";
+import ProductData from "@/models/ProductData";
 
 const Handler = async (req, res) => {
     const query = req.query;
 
     if ( req.method==='GET' ) {
-        if ( query.type = 'generateWinners' ) {
+        if ( query.type === 'generateWinners' ) {
+            console.log('generating winners');
             const arr = [0, 5, 18, 3, 9, 7]
             function bubbleSort(arr) {
                 for (let i = 0; i < arr.length - 1; i++) {
@@ -59,6 +61,7 @@ const Handler = async (req, res) => {
             }
         } 
         else if ( query.type === 'getWinners' ) {
+            console.log(`getting saved users for${query?.quizSession}`);
             try {
                 await db.connect();
                 const data = await GiveawayQuizWinners.findOne( { quizSession: query?.quizSession });
@@ -70,6 +73,23 @@ const Handler = async (req, res) => {
                 }
             } catch(err) {
                 res.status(500).json( { error: 'something went wrong while getting data'})
+            }
+        }
+        else if ( query.type === 'getHistory' ) {
+            try {
+                await db.connect();
+                const data = await ProductData.findOne( { name: 'giveawayQuiz' } );
+                let history;
+                if (data) {
+                    history = data.history;
+                } else {
+                    await ProductData.create( { name:'giveawayQuiz' } );
+                    history = [];
+                }
+                await db.disconnect();
+                res.status(200).json( { history });
+            } catch (err) {
+                res.status(500).json( { error: 'something went wrong while getting data'})  
             }
         }
         
