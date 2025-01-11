@@ -88,8 +88,12 @@ export default function SkitScreen(props){
             <div>    
               <form onSubmit={handleSubmit} className={` min-h-[510px] border-t-1 ${isMobile?'border-gray-400 rounded-t-[20px]':''} p-4 max-w-md mx-auto`}>
                 <div className="flex flex-row items-center gap-2"><Profile/>{skit.name}</div>
+                <div className="flex flex-col mb-[10px] gap-1">
                   <span style={{lineHeight:'25px'}} className="text-[25px] font-extrabold">{skit.title}</span>
-                <div className="inline-flex gap-2"><ContestIcon/>contesting for best Skit in Skits Across Naija</div>
+                  <span style={{lineHeight:'20px'}} className="text-[20px]">{skit.description}</span>
+                </div>
+                  
+                <div className="inline-flex gap-2 items-center"><ContestIcon/>contesting for best Skit in Skits Across Naija</div>
                 <h2 className="text-[18px] mb-1 text-green-600 mt-6 ml-3">You can help it win by voting. Make a vote ?</h2>
                 <div className="text-[14px] inline-flex gap-2 bg-green-200 p-2 rounded-[15px]"><InfoIcon/> Each vote costs &#8358;100, you can send as many Votes as possible</div>
 
