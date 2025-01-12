@@ -104,6 +104,7 @@ export default function UploadScreen() {
       setIsDeleting(false);
     } catch (err) {
       console.log(error);
+      toast.error('Failed to delete file, try again')
     }
   }
   
