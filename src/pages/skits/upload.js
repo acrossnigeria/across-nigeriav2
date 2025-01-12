@@ -93,9 +93,11 @@ export default function UploadScreen() {
   const handleRemoveFile = async (e) => {
     e.preventDefault();
     setIsDeleting(true);
-    const publicId = extractPublicId(dataUrl);
     try {
-      const response = await axios.patch('/api/media/delete-video', { publicId });
+      if (dataUrl) {
+        const publicId = extractPublicId(dataUrl);
+        const response = await axios.patch('/api/media/delete-video', { publicId });
+      }
       setSelectedFile(null);
       document.getElementById('videoFile').value = '';
       setDataUrl(null);
