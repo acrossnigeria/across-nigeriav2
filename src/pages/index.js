@@ -2,21 +2,19 @@ import { Inter } from "next/font/google";
 import Layout from "@/components/Layout";
 import Cards from "@/components/Cards"
 import Info from "@/components/Info";
-import image1 from "../../public/images/giveaway_quiz.jpg";
-import image2 from "../../public/images/skits_across.jpg";
-import image3 from "../../public/images/king_queen.jpg";
+import image1 from "../../public/images/giveaway_quizzes.jpg";
+import image2 from "../../public/images/skit_across_nigeria.jpg";
+import image3 from "../../public/images/king_and_queen.jpg";
 import image4 from "../../public/images/mystery_box.jpg";
-import image5 from "../../public/images/state_treasure.jpg";
+import image5 from "../../public/images/state_treasure_hunt.jpg";
 import image6 from "../../public/images/mega_cashout.jpg";
-import image7 from "../../public/images/across_naija_tv.jpg";
-import image8 from "../../public/images/naija_vibes.jpg";
+import image7 from "../../public/images/across_reality_show.jpg";
+import image8 from "../../public/images/naija_vibes.jpg"
 import image9 from "../../public/images/shopping_hustle.jpg";
 import image10 from "../../public/images/i_don_hamma.jpg";
-import PersonCard from "@/components/ModelCard";
-import Image from "next/image";
+import image11 from "../../public/images/know_your_local_government.jpg";
 import ReviewSlider from "@/components/ReviewSlider";
 import Testimonials from "@/components/Testimonials";
-import Link from "next/link";
 import { useState, useEffect } from "react";
 import ShoutOutCard from "@/components/ShoutOutCard";
 import axios from "axios";
@@ -24,21 +22,21 @@ import ReloadIcon from "../../public/images/icon/ReloadIcon";
 import CycleLoader from "@/components/CycleLoader";
 import RegularShoutout from "@/components/shout-out/RegularShoutout";
 import NoShoutOut from "@/components/shout-out/NoShoutOut";
-import InfoIcon from "../../public/images/icon/InfoIcon";
 
 
 
 export const games=[
   {title:"GIVE AWAY QUIZZES", image:image1,link:"/giveaway-quiz", date:'Live', isOpen:true },
-  {title:"KING AND QUEEN", image:image3, link:"/soon", date:'2025', isOpen:false },
-  {title:"SKITS ACROSS NIGERIA",image:image2,link:"/soon", date:'2025', isOpen:false },
-  {title:"NAIJA VIBES", image:image8,link:"/soon", date:'2025', isOpen:false },
-  {title:"MYSTERY BOXES",image:image4,link:"/soon", date:'2025', isOpen:false },
-  {title:"STATE TREASURE HUNT SHOW",image:image5,link:"/soon", date:'2025', isOpen:false },
-  {title:"MEGA CASH OUT",image:image6,link:"/soon", date:'2025', isOpen:false },
-  {title:"ACROSS NIGERIA REALITY SHOW",image:image7,link:"/soon", date:'2026', isOpen:false },
+  {title:"KING AND QUEEN", image:image2, link:"/soon", date:'2025', isOpen:false },
+  {title:"SKITS ACROSS NIGERIA",image:image3,link:"/soon", date:'2025', isOpen:false },
+  {title:"NAIJA VIBES", image:image4,link:"/soon", date:'2025', isOpen:false },
+  {title:"MYSTERY BOXES",image:image5,link:"/soon", date:'2025', isOpen:false },
+  {title:"STATE TREASURE HUNT SHOW",image:image6,link:"/soon", date:'2025', isOpen:false },
+  {title:"MEGA CASH OUT",image:image7,link:"/soon", date:'2025', isOpen:false },
+  {title:"ACROSS NIGERIA REALITY SHOW",image:image8,link:"/soon", date:'2026', isOpen:false },
   {title:"SHOPPING HUSTLE",image:image9,link:"/soon", date:'2025', isOpen:false },
   {title:"I DON HAMMA",image:image10,link:"/soon", date:'2025', isOpen:false },
+  {title:"KNOW YOUR LOCAL GOVERNMENT",image:image11,link:"/soon", date:'2025', isOpen:false },
 ]
 const inter = Inter({ subsets: ["latin"] });
 
