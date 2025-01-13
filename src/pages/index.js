@@ -30,12 +30,12 @@ export const games=[
   {title:"KING AND QUEEN", image:image2, link:"/soon", date:'2025', isOpen:false },
   {title:"SKITS ACROSS NIGERIA",image:image3,link:"/soon", date:'2025', isOpen:false },
   {title:"NAIJA VIBES", image:image4,link:"/soon", date:'2025', isOpen:false },
-  {title:"MYSTERY BOXES",image:image5,link:"/soon", date:'2025', isOpen:false },
+  {title:"MYSTERY BOXES",image:image5,link:"/soon", date:'2026', isOpen:false },
   {title:"STATE TREASURE HUNT SHOW",image:image6,link:"/soon", date:'2025', isOpen:false },
   {title:"MEGA CASH OUT",image:image7,link:"/soon", date:'2025', isOpen:false },
-  {title:"ACROSS NIGERIA REALITY SHOW",image:image8,link:"/soon", date:'2026', isOpen:false },
+  {title:"ACROSS NIGERIA REALITY SHOW",image:image8,link:"/soon", date:'2027', isOpen:false },
   {title:"SHOPPING HUSTLE",image:image9,link:"/soon", date:'2025', isOpen:false },
-  {title:"I DON HAMMA",image:image10,link:"/soon", date:'2025', isOpen:false },
+  {title:"I DON HAMMA",image:image10,link:"/soon", date:'2026', isOpen:false },
   {title:"KNOW YOUR LOCAL GOVERNMENT",image:image11,link:"/soon", date:'2025', isOpen:false },
 ]
 const inter = Inter({ subsets: ["latin"] });
