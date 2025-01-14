@@ -1,13 +1,13 @@
 import React from 'react'
 import { useEffect, useState } from 'react';
-import image1 from "../../../public/images/giveaway_quiz.jpg";
+import image1 from "../../../public/images/giveaway_quizzes.jpg";
 import Link from 'next/link';
 import Image from 'next/image';
 
 function Landing() {
   const [ isMobile, setIsMobile ] = useState(false);
   useEffect(()=>{
-    if(/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)&&window.matchMedia("(max-width: 600px)").matches){
+    if(/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)&&window.matchMedia("(max-width: 600px)").matches){ 
     setIsMobile(true)
   } else{setIsMobile(false)}
 // console.log(isMobile, navigator.userAgent)
