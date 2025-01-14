@@ -1,6 +1,5 @@
 import Layout from '@/components/Layout';
 import React, { useEffect, useState } from 'react';
-import image1 from '../../../public/images/king_queen.jpg';
 import axios from 'axios';
 import Image from 'next/image';
 import Support from '../../../public/images/illustration/Support';
