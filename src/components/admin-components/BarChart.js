@@ -81,7 +81,7 @@ const BarChart = ( { data } ) => {
                     <div className="h-[263px] overflow-y-scroll overflow-x-hidden">
                         { data?.list?.map( ( val, index ) => {
                             return (
-                            <div className="border-b-1  flex-row flex border-gray-400 text-gray-700">
+                            <div key={index} className="border-b-1  flex-row flex border-gray-400 text-gray-700">
                                 <div className="w-[35%] pl-3">{nigeriaStates[index]}</div>
                                 <div className="w-[65%] border-l-1 border-gray-400 pl-3">{val}</div>
                             </div>
