@@ -20,8 +20,8 @@ const Container = ( { children, admin, page } ) => {
     },[ isMobile ])
 
     return (
-        <div className="bg-gray-800 text-[#b4bedf]">
-            <div className={`${isMobile?'px-[3%]':'px-[5%]'} flex h-[70px] flex-row justify-between items-center border-b-[#b4bedf] border-b-1`}>
+        <div className="bg-gray-800 text-white">
+            <div className={`${isMobile?'px-[3%]':'px-[5%]'} flex h-[50px] flex-row justify-between items-center border-b-[#b4bedf] border-b-1`}>
                 <span className="text-[22px] font-extrabold">ADMIN</span>
                 <div style={{alignItems:'center'}} className="flex w-fit flex-row justify-between gap-2 h-[40px] pl-3 pr-[2px] cursor-pointer transition duration-100 text-[16px]">
                     <Link href={'/user/profile'}>Welcome, {admin?.name}</Link>
@@ -32,10 +32,10 @@ const Container = ( { children, admin, page } ) => {
                 </div>
             </div>
            <main className="flex-row flex justify-between items-start">
-            <div className={`${isMobile?`${isHamOpen?'':'hidden'} w-[80%] z-[5000] absolute top-[70px] right-0`:'w-[250px]'} bg-gray-800 pl-[14px] text-[13px] pt-[15px] flex flex-col gap-2 h-screen`}>
-                <Link href={'/admin/registered-users'}><button className={`${page==='users'?'border-b-1 border-b-[#b4bedf] bg-gray-900':''} flex p-2 rounded-tl-[30px] rounded-bl-[30px] w-[100%] hover:border-b-1 hover:border-b-[#b4bedf] hover:bg-gray-900 transition-background duration-1000 flex-row items-center gap-2`}><UsersIcon/> Users</button></Link>
-                <Link href={'/admin'}><button className={`${page==='dashboard'?'border-b-1 border-b-[#b4bedf] bg-gray-900':''} flex p-2 rounded-tl-[30px] rounded-bl-[30px] w-[100%] hover:border-b-1 hover:border-b-[#b4bedf] hover:bg-gray-900 transition-background duration-1000 flex-row items-center gap-2`}><AnIcon/>Dashboard</button></Link>
-                <Link href={'/admin/gqrs'}><button className={`${page==='gqrs'?'border-b-1 border-b-[#b4bedf] bg-gray-900':''} flex p-2 rounded-tl-[30px] rounded-bl-[30px] w-[100%] hover:border-b-1 hover:border-b-[#b4bedf] hover:bg-gray-900 transition-background duration-1000 flex-row items-center gap-2`}><RandomIcon/>GQ Random selector</button></Link>
+            <div className={`${isMobile?`${isHamOpen?'':'hidden'} w-[80%] z-[5000] absolute top-[70px] right-0`:'w-[200px]'} text-[12px] bg-gray-800 pt-[15px] flex flex-col gap-2 h-screen`}>
+                <Link href={'/admin/registered-users'}><button className={`${page==='users'?'bg-red-600':''} flex p-2 w-[100%] pl-3 hover:border-b-1 hover:border-b-[#b4bedf] hover:bg-gray-900 transition-background duration-1000 flex-row items-center gap-2`}><UsersIcon/> Users</button></Link>
+                <Link href={'/admin'}><button className={`${page==='dashboard'?'bg-red-600':''} flex p-2 w-[100%] pl-3 hover:border-b-1 hover:border-b-[#b4bedf] hover:bg-gray-900 transition-background duration-1000 flex-row items-center gap-2`}><AnIcon/>Dashboard</button></Link>
+                <Link href={'/admin/gqrs'}><button className={`${page==='gqrs'?'bg-red-600':''} flex p-2 w-[100%] pl-3 hover:border-b-1 hover:border-b-[#b4bedf] hover:bg-gray-900 transition-background duration-1000 flex-row items-center gap-2`}><RandomIcon/>GQ Random selector</button></Link>
             </div>
             <div className="w-[100%] h-screen bg-gray-200 text-gray-700">
                 {children}
