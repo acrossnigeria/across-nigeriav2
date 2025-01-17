@@ -72,15 +72,15 @@ export default function Dashboard( { user } ) {
 
     return (
         <Container admin={user} page={'dashboard'}>
-            <div className="flex flex-row justify-evenly pt-[10px]">
-                <div className="bg-blue-600 flex rounded-[5px] flex-row justify-around items-center h-[70px] p-2 w-[48%] text-white">
+            <div className="flex md:flex-row flex-col justify-evenly items-center md:gap-0 gap-1 pt-[10px]">
+                <div className="bg-blue-600 flex rounded-[5px] flex-row justify-around items-center h-[70px] p-2 md:w-[48%] w-[98%] text-white">
                     <AllUsersIcon/>
                     <div className="flex flex-col items-center">
                         <span className={`text-[22px] ${stats?.totalUsers?'':'animate-pulse'} font-extralight`}>{stats?.totalUsers?stats?.totalUsers:'loading...'}</span>
                         <span>TOTAL USERS</span>
                     </div>
                 </div>
-                <div className="bg-yellow-400 rounded-[5px]  flex flex-row justify-around items-center h-[70px] p-2 w-[48%] text-white">
+                <div className="bg-yellow-400 rounded-[5px]  flex flex-row justify-around items-center h-[70px] p-2 md:w-[48%] w-[98%] text-white">
                     <NewIcon/>
                     <div className="flex flex-col justify-center items-center">
                         <span className={`text-[22px] ${newUsers?'':'animate-pulse'} font-extralight`}>{newUsers?newUsers.length:'loading...'}</span>
@@ -89,11 +89,11 @@ export default function Dashboard( { user } ) {
                     <span className="text-[12px]"> In the Last 5 Days</span>
                 </div>
             </div>
-            <div className="flex flex-row border-1 py-[10px] justify-evenly">
-                <div className="w-[53%]">
+            <div className="flex md:flex-row flex-col md:gap-0 gap-2 border-1 py-[10px] justify-evenly">
+                <div className="md:w-[53%] w-[98%]">
                     <BarChart  data={stateData}/>
                 </div>
-                <div className="w-[22%] h-[460px] flex p-2 flex-col items-center rounded-[5px]  border-1 bg-white">
+                <div className="md:w-[22%] w-[98%] h-[460px] flex p-2 flex-col items-center rounded-[5px]  border-1 bg-white">
                    <PieChart data={genderDataPrototype}/>
                    { genderData ? (
                         <div className="flex border-1 w-[100%] text-[14px] border-gray-500 flex-col mt-[20px] font-extralight">
@@ -116,7 +116,7 @@ export default function Dashboard( { user } ) {
                    )}
                    
                 </div>
-                <div className="w-[22%] h-[460px] flex flex-col pt-[10px] rounded-[5px]  items-center bg-white border-1 p-2">
+                <div className="md:w-[22%] w-[98%] h-[460px] flex flex-col pt-[10px] rounded-[5px]  items-center bg-white border-1 p-2">
                     <PieChart data={ageDataProtoType}/>
                     { ageData? (
                         <div className="flex border-1 w-[100%] border-gray-500 text-[14px] flex-col mt-[10px] font-extralight">

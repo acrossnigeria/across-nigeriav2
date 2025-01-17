@@ -32,12 +32,12 @@ const Container = ( { children, admin, page } ) => {
                 </div>
             </div>
            <main className="flex-row flex justify-between items-start">
-            <div className={`${isMobile?`${isHamOpen?'':'hidden'} w-[80%] z-[5000] absolute top-[70px] right-0`:'w-[200px]'} text-[12px] bg-gray-800 pt-[15px] flex flex-col gap-2 h-screen`}>
+            <div className={`${isMobile?`${isHamOpen?'':'hidden'} w-[80%] z-[5000] absolute top-[51px] right-0`:'w-[200px]'} text-[12px] bg-gray-800 pt-[15px] flex flex-col gap-2 h-screen`}>
                 <Link href={'/admin/registered-users'}><button className={`${page==='users'?'bg-red-600':''} flex p-2 w-[100%] pl-3 hover:border-b-1 hover:border-b-[#b4bedf] hover:bg-gray-900 transition-background duration-1000 flex-row items-center gap-2`}><UsersIcon/> Users</button></Link>
                 <Link href={'/admin'}><button className={`${page==='dashboard'?'bg-red-600':''} flex p-2 w-[100%] pl-3 hover:border-b-1 hover:border-b-[#b4bedf] hover:bg-gray-900 transition-background duration-1000 flex-row items-center gap-2`}><AnIcon/>Dashboard</button></Link>
                 <Link href={'/admin/gqrs'}><button className={`${page==='gqrs'?'bg-red-600':''} flex p-2 w-[100%] pl-3 hover:border-b-1 hover:border-b-[#b4bedf] hover:bg-gray-900 transition-background duration-1000 flex-row items-center gap-2`}><RandomIcon/>GQ Random selector</button></Link>
             </div>
-            <div className="w-[100%] h-screen bg-gray-200 text-gray-700">
+            <div className="w-[100%] md:h-screen h-fit bg-gray-200 text-gray-700">
                 {children}
             </div>
             </main>
