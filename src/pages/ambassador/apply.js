@@ -1,11 +1,9 @@
 import { useState } from 'react';
 import banner from '../../../public/images/ambassador.jpg';
 import Image from 'next/image';
-import CycleLoader from '@/components/CycleLoader';
 import Link from 'next/link';
-import Close from '../../../public/images/icon/Close';
 
-const Apply = () => {
+const Reg = () => {
     const [ currentStatus, setCurrentStatus ] = useState('');
     const [ isWillingToJoinMeet, setIsWillingToJoinMeet ] = useState('no');
     const [ termsAgree, setTermsAgree ] = useState(false);
@@ -34,15 +32,15 @@ const Apply = () => {
                         </select>
                     </div>
                     <div className='flex flex-col gap-1 w-[100%] mt-[25px] px-[15px]'>
-                        <label htmlFor='city'>Please write your University name/ NYSC camp center/ Work place</label>
-                        <input type='text' id='city' placeholder='Enter your university name/ NYSC camp/ Work place' className='h-[48px] bg-gray-100 px-[10px] rounded-[5px] w-[100%]' />
+                        <label htmlFor='location'>Please write your University name/ NYSC camp center/ Work place</label>
+                        <input type='text' id='location' placeholder='Enter your university name/ NYSC camp/ Work place' className='h-[48px] bg-gray-100 px-[10px] rounded-[5px] w-[100%]' />
                     </div>
                     <div className='flex flex-col gap-1 w-[100%] mt-[25px] px-[15px]'>
-                        <label htmlFor='city'>Why do you want to become an Ambassador to represent Across Nigeria Reality Show?</label>
+                        <label htmlFor='why'>Why do you want to become an Ambassador to represent Across Nigeria Reality Show?</label>
                         <textarea id='why' placeholder='Write here...' className='h-[90px] bg-gray-100 px-[10px] rounded-[5px] w-[100%]'></textarea>
                     </div>
                     <div className='flex flex-col gap-1 w-[100%] mt-[25px] px-[15px]'>
-                        <label htmlFor='city'>Are you willing to attend events/meetings on call or in person?</label>
+                        <label >Are you willing to attend events/meetings on call or in person?</label>
                         <div className='flex flex-row gap-2'>
                             <label className='flex flex-row gap-2 text-[18px] items-center'><input className='h-[20px] w-[20px]' type='radio' name='isWillingToJoinMeet' value={'yes'} checked={ isWillingToJoinMeet === 'yes'} onChange={(e)=>setIsWillingToJoinMeet(e.target.value)}/>Yes</label>
                             <label className='flex flex-row gap-2 text-[18px] items-center'><input className='h-[20px] w-[20px]' type='radio' name='isWillingToJoinMeet' value={'no'} checked={ isWillingToJoinMeet === 'no'} onChange={(e)=>setIsWillingToJoinMeet(e.target.value)}/>No</label>
@@ -52,7 +50,7 @@ const Apply = () => {
                         <label htmlFor='state'>Which state do you currently reside in?</label>
                         <select id='state' className='h-[48px] bg-gray-100 px-[10px] rounded-[5px] w-[100%]' >
                             <option disabled>Select state</option>
-                            { nigeriaStates.map(state=> <option className='focus:text-gray-200 hover:text-gray-400' key={state} value={state}>{state}</option>)}
+                            { nigeriaStates.map(state=> { return <option className='focus:text-gray-200 hover:text-gray-400' key={state} value={state}>{state}</option>} )}
                         </select>
                     </div>
                     <div className='flex flex-col gap-1 w-[100%] mt-[25px] px-[15px]'>
@@ -71,4 +69,4 @@ const Apply = () => {
     )
 }
 
-export default Apply;
+export default Reg;
