@@ -58,6 +58,7 @@ async function handler(req, res) {
     gender,
     password: bcryptjs.hashSync(password), referencePay, regPayment, refCode,
     isAdmin: false,
+    referredBy:referee?referee:'none',
   }; 
   let userDoc;
   try {

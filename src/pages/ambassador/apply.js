@@ -18,7 +18,7 @@ const Reg = () => {
     const [ termsAgree, setTermsAgree ] = useState(false);
 
     const [ isProcessing, setIsProcessing ] = useState(false);
-    const [ isSuccess, setIsSuccess ] = useState(true)
+    const [ isSuccess, setIsSuccess ] = useState(false)
     const nigeriaStates = [
         'Abia', 'Adamawa', 'Akwa Ibom', 'Anambra', 'Bauchi', 'Bayelsa', 'Benue', 'Borno',
         'Cross River', 'Delta', 'Ebonyi', 'Edo', 'Ekiti', 'Enugu', 'FCT', 'Gombe', 'Imo',
@@ -36,6 +36,10 @@ const Reg = () => {
             if (response.data.success) {
                 setIsProcessing(false);
                 setIsSuccess(true);
+                setRefLink(response.data.refLink);
+            } else {
+                setIsProcessing(false);
+                setIsSuccess(false); 
             }
 
         } catch(err) {
@@ -96,7 +100,7 @@ const Reg = () => {
                 <form onSubmit={sendApplication} className='w-full text-[18px] flex flex-col border-t-1 pt-[20px]'>
                     <div className='flex flex-col  gap-1 w-[100%] px-[15px]'>
                         <label htmlFor='status'>Current status</label>
-                        <select required value={currentStatus} onChange={(e)=>{setCurrentStatus}} id='status' className='h-[48px] bg-gray-200 px-[10px] rounded-[5px] w-[100%]' >
+                        <select required value={currentStatus} onChange={(e)=>{setCurrentStatus(e.target.value)}} id='status' className='h-[48px] bg-gray-200 px-[10px] rounded-[5px] w-[100%]' >
                             <option className='focus:text-gray-200 hover:text-gray-400' value={'student'}> Student</option>
                             <option className='focus:text-gray-200 hover:text-gray-400' value={'corper'}>Youth service corper (NYSC)</option>
                             <option className='focus:text-gray-200 hover:text-gray-400' value={'Other'}>Other</option>
@@ -120,7 +124,7 @@ const Reg = () => {
                     <div className='flex flex-col gap-1 w-[100%] mt-[25px] px-[15px]'>
                         <label htmlFor='state'>Which state do you currently reside in?</label>
                         <select required value={state} onChange={(e)=>{setState(e.target.value)}} id='state' className='h-[48px] bg-gray-200 px-[10px] rounded-[5px] w-[100%]' >
-                            <option disabled>Select state</option>
+                            <option value={''} disabled>Select state</option>
                             { nigeriaStates.map(state=> { return <option className='focus:text-gray-200 hover:text-gray-400' key={state} value={state}>{state}</option>} )}
                         </select>
                     </div>
@@ -132,7 +136,9 @@ const Reg = () => {
                         <input className='h-[30px] w-[30px]' value={termsAgree} onChange={(e)=>{setTermsAgree(e.target.value)}} checked={termsAgree} type='checkbox'/>
                         <span className='text-green-600'>I certify that the information provided is accurate and agree to the terms of the ambassador program</span>
                     </div>
-                    <button className='h-[43px] w-[90%] self-center bg-green-500 hover:bg-green-600 rounded-[30px] text-white mt-[30px]' type='submit'>Apply</button>
+                    <button 
+                    disabled={!(termsAgree && orgName && state && city && why && currentStatus && isWillingToJoinMeet)}
+                     className={`h-[43px] w-[90%] self-center ${ (termsAgree && orgName && state && city && why && currentStatus && isWillingToJoinMeet)? 'bg-green-500 hover:bg-green-600':'bg-gray-500'} rounded-[30px] text-white mt-[30px]`} type='submit'>Apply</button>
                 </form>
                 <span className='mt-[50px] text-[14px] text-gray-500 mb-[15px]'>2025 Acrossnig</span>
             </div>

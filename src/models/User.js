@@ -18,7 +18,8 @@ const userSchema = new mongoose.Schema(
     resetCode:{type:String, required:false},
     resetTime:{type: Date, required: false},
     refCode:{type:String, required:false},
-    references:{type:Number, required:false, default:0},    
+    references:{type:Number, required:false, default:0},  
+    referredBy:{type:String, default:''},
   },
   {
     timestamps: true,
