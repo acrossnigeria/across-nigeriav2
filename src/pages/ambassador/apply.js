@@ -80,7 +80,7 @@ const Reg = () => {
     return (
         <div className='flex flex-col pt-[20px] items-center'>
             { showError && (
-                <div className='text-red-500 absolute bg-white/90 border-b-3 border-b-red-500 px-[20px] rounded-[10px] py-[5px] top-[30px] italic'>{errorMessage}</div>
+                <div className='text-red-500 absolute bg-white/90 border-b-3 border-b-red-500 px-[20px] rounded-[10px] py-[5px] bottom-[70px] italic'>{errorMessage}</div>
             ) }
             { isProcessing && (
                 <div className='h-screen w-full flex flex-col justify-center items-center'>
@@ -108,8 +108,7 @@ const Reg = () => {
                     </div>
                 </div>
             )}
-            { (!isProcessing && !isSuccess) && (
-                <div className='w-[100%] md:w-[50%] h-fit flex flex-col justify-center items-center'>
+            <div className={`${ (!isProcessing && !isSuccess) ? '':'hidden'} w-[100%] md:w-[50%] h-fit flex flex-col justify-center items-center`}>
                 <div className='w-full flex flex-col items-center justify-center px-[5px]'>
                     <Image className='h-[200px] w-[100%]' src={banner} alt='banner'/>
                     <div className='h-[100px] mt-[100px] md:w-[50%] w-full absolute bg-gradient-to-b from-transparent to-white'></div>
@@ -161,7 +160,6 @@ const Reg = () => {
                 </form>
                 <span className='mt-[50px] text-[14px] text-gray-500 mb-[15px]'>2025 Acrossnig</span>
             </div>
-            )}
         </div>
     )
 }

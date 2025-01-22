@@ -1,5 +1,6 @@
 import User from "@/models/User";
 import db from "../../../utils/db";
+import Ambassador from "@/models/Ambassador";
 
 const handler = async(req,res)=>{
 
@@ -13,13 +14,14 @@ const handler = async(req,res)=>{
       const { email } = req.query;
       console.log("GETTING",req.query)
       await db.connect();
-      const user= await User.find({email: email});
+      const user = await User.findOne({ email: email });
+      const isUserAmbassador = await Ambassador.findOne( { user:user._id });
       await db.disconnect();
       // Send the found documents as a response
-      if (user.length>0) {
-        const fullname = `${user[0].name} ${user[0].surname}`;
+      if (user) {
+        const fullname = `${user.name} ${user.surname}`;
         const notifications = [];
-        res.status(200).json( { exists: true , fullname, email:user[0].email, refCode:user[0].refCode, refs:user[0].references, phone:user[0].phone, notifications } );
+        res.status(200).json( { exists: true , isAmbassador:isUserAmbassador?true:false, fullname, email:user.email, refCode:user.refCode, refs:user.references, phone:user.phone, notifications } );
       } else {
         res.status(200).json({ exists: false });
       };

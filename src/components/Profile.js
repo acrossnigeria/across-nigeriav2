@@ -17,6 +17,7 @@ const Profile = () => {
   const [ refLink, setRefLink ] = useState(null);
   const [ isCopied, setIsCopied ] = useState('hidden');
   const [ notifications, setNotifications ] = useState(null);
+  const [ isAmbassador, setIsAmbassador ] = useState(false);
 
   const getUserData = async () => {
     // setEmail(session?.user?.email);
@@ -29,6 +30,7 @@ const Profile = () => {
       setPhone(profile.phone);
       setFullname(profile.fullname);
       setNotifications(profile.notifications);
+      setIsAmbassador(profile.isAmbassador);
     } catch( err ) {
     //   alert('an error occurred, please check your internet connection');
     }
