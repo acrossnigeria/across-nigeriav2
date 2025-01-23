@@ -125,7 +125,7 @@ const Reg = () => {
                         </select>
                     </div>
                     <div className='flex flex-col gap-1 w-[100%] mt-[25px] px-[15px]'>
-                        <label htmlFor='location'>Please write your University name/ NYSC camp center/ Work place</label>
+                        <label htmlFor='location'>Please write your Institution name/ NYSC camp center/ Work place</label>
                         <input required value={orgName} onChange={(e)=>{setOrgName(e.target.value)}} type='text' id='location' placeholder='Enter your university name/ NYSC camp/ Work place' className='h-[48px] bg-gray-200 px-[10px] rounded-[5px] w-[100%]' />
                     </div>
                     <div className='flex flex-col gap-1 w-[100%] mt-[25px] px-[15px]'>
