@@ -4,9 +4,7 @@ import Profile from '@/components/Profile';
 
 const profile = () => {
   return (
-    <Layout>
-        <Profile/>
-    </Layout>
+    <Profile/>
   )
 }
 

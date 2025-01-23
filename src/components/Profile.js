@@ -1,9 +1,9 @@
-import Layout from '@/components/Layout'
 import React from 'react'
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useSession, signOut } from 'next-auth/react';
-import TextLoader from './TextLoader';
+
+
 
 const Profile = () => {
   const { status, data: session } = useSession();
@@ -14,10 +14,10 @@ const Profile = () => {
   const [ fullname, setFullname ] = useState(null);
   const [ refs, setRefs ] = useState(0);
   const [ refCode, setRefCode ] = useState(null);
-  const [ refLink, setRefLink ] = useState(null);
   const [ isCopied, setIsCopied ] = useState('hidden');
   const [ notifications, setNotifications ] = useState(null);
   const [ isAmbassador, setIsAmbassador ] = useState(false);
+  const [ refLink, setRefLink ] = useState(null);
 
   const getUserData = async () => {
     // setEmail(session?.user?.email);
@@ -34,7 +34,6 @@ const Profile = () => {
     } catch( err ) {
     //   alert('an error occurred, please check your internet connection');
     }
-
   }
 
   async function copyRefLink() {
@@ -64,9 +63,9 @@ const Profile = () => {
   return (
     <>
         <div style={{alignItems:'center'}} className='mt-[10px] flex flex-col'>
-          <div style={{borderRadius:'5px', alignItems:'center'}} className={`${isMobile?'w-[95%]':'w-[70%]'} gap-4 text-left flex flex-row bg-gray-200 p-[15px]`}>
-            <div style={{borderRadius:'50%', alignItems:'center'}} className='w-[60px] h-[60px] text-[30px] font-extrabold flex flex-col justify-center bg-green-500'>{session?.user?.name[0].toUpperCase()}</div>
-            <div className='flex flex-col gap-1'>
+          <div style={{borderRadius:'5px', alignItems:'center'}} className={`${isMobile?'w-[95%]':'w-[70%]'} gap-4 text-left flex flex-col bg-gray-200 p-[15px]`}>
+            <Profile size='80px'/>
+            <div className='flex flex-col text-center gap-1'>
               <span> { fullname ?fullname: <div className={`w-[140px] h-[15px] bg-gray-300 animate-pulse rounded-[20px]`}></div>}</span>
               <span> { email ? email: <div className={`w-[130px] h-[15px] bg-gray-300 animate-pulse rounded-[20px]`}></div> }</span>
               <span> {phone ? phone: <div className={`w-[100px] h-[15px] bg-gray-300 animate-pulse rounded-[20px]`}></div> }</span>
