@@ -1,6 +1,8 @@
+import  AmbassadorDashboard from '@/components/AmbassadorDashboard';
+
 const Landing = () => {
     return (
-        <div>Ambassador home page</div>
+        <AmbassadorDashboard></AmbassadorDashboard>
     )
 }
 

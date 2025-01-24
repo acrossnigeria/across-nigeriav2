@@ -2,6 +2,8 @@ import React from 'react'
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useSession, signOut } from 'next-auth/react';
+import ProfileIcon from '../../public/images/icon/ProfileIcon';
+
 
 
 
@@ -15,12 +17,12 @@ const Profile = () => {
   const [ refs, setRefs ] = useState(0);
   const [ refCode, setRefCode ] = useState(null);
   const [ isCopied, setIsCopied ] = useState('hidden');
-  const [ notifications, setNotifications ] = useState(null);
+  const [ notifications, setNotifications ] = useState([]);
   const [ isAmbassador, setIsAmbassador ] = useState(false);
   const [ refLink, setRefLink ] = useState(null);
 
   const getUserData = async () => {
-    // setEmail(session?.user?.email);
+    setEmail(session?.user?.email);
     try {
       const response = await axios.get('/api/findUser', { params:{ email } });
       const profile = response.data;
@@ -64,7 +66,7 @@ const Profile = () => {
     <>
         <div style={{alignItems:'center'}} className='mt-[10px] flex flex-col'>
           <div style={{borderRadius:'5px', alignItems:'center'}} className={`${isMobile?'w-[95%]':'w-[70%]'} gap-4 text-left flex flex-col bg-gray-200 p-[15px]`}>
-            <Profile size='80px'/>
+            <ProfileIcon size='80px'/>
             <div className='flex flex-col text-center gap-1'>
               <span> { fullname ?fullname: <div className={`w-[140px] h-[15px] bg-gray-300 animate-pulse rounded-[20px]`}></div>}</span>
               <span> { email ? email: <div className={`w-[130px] h-[15px] bg-gray-300 animate-pulse rounded-[20px]`}></div> }</span>
@@ -80,7 +82,7 @@ const Profile = () => {
           <div style={{borderRadius:'5px', alignItems:'center'}} className={`${isMobile?'w-[95%]':'w-[70%]'} h-[300px] bg-gray-200 mt-[10px] text-left flex flex-col bg-gray-200 p-[5px]`}>
             <span className='font-bold text-gray-500 text-[16px] border-green-950'>Notifications</span>
             <div className=' mt-2 flex flex-col justify-start w-[100%]'>
-              { notifications ? (notifications.length === 0? <span className='text-gray-400 text-center mt-[100px]'>No notifications for you</span>:notifications) : <div>
+              { notifications ? (notifications.length === 0? <span className='text-gray-400 text-center mt-[100px]'>No notifications for you</span>:<span>Notification will show here</span>) : <div>
                 <div className={`w-[100%] h-[70px] mt-2 bg-gray-300 animate-pulse rounded-[20px]`}></div>
                 <div className={`w-[100%] h-[70px] mt-2 bg-gray-300 animate-pulse rounded-[20px]`}></div>
                 <div className={`w-[100%] h-[70px] mt-2 bg-gray-300 animate-pulse rounded-[20px]`}></div>
