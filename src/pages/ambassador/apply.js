@@ -90,18 +90,20 @@ const Reg = () => {
             )}
             { isSuccess && (
                 <div className='h-screen w-full md:w-[50%] px-[20px] text-center flex flex-col items-center'>
-                    <Link className='self-start' href='/'><div className='w-fit px-1 h-[30px] font-bold flex flex-row gap-2'><BackIcon/>back home</div></Link>
-                    <span className=' text-[21px] font-extrabold mt-[35px] text-green-500'>Congratulations, {session.user.name} Your application has been approved</span>
+                    <Link className='self-start' href='/'><div className='w-fit px-1 h-[30px] font-bold flex mt-[10px] flex-row gap-2'><BackIcon/>back home</div></Link>
+                    <span className=' text-[21px] font-extrabold mt-[45px] text-green-500'>Congratulations, {session.user.name} Your application has been approved</span>
                     <span className='mt-[8px] text-left font-light text-[17px]'>Your referral link is ready to use and you can start sharing it with your friends, family and followers to earn rewards. This is your chance to get ahead and maximize your impact as an Ambassador</span>
                     <div className='mt-[20px] flex flex-col items-left'>
                         <span className='text-gray-600 font-bold text-[17px]'>Why start now ?</span>
                         <span className='text-left font-extralight text-[15px]'>1. Every referral you make counts toward future bonuses and exclusive perks.</span>
                         <span className='text-left font-extralight text-[15px]'>2. Be among the first to grow your network and secure your spot at the top!</span>
                     </div>
-                    <div className='flex flex-row  items-top mt-[15px] gap-2'>
+                    <div className='flex flex-col gap-2  justify-center items-center mt-[15px] gap-2'>
                         <span className='text-green-600 font-bold'>Your Referral Link </span>
-                        <div className='border-1 border-gray-600 h-[30px] rounded-[5px] w-[200px] overflow-x-scroll'>{refLink}</div>
-                        <button className='border-1 h-[30px] w-[60px] hover:bg-gray-400 rounded-[5px] border-gray-800 bg-gray-200'>Copy</button>
+                        <div className='flex flex-row gap-2'>
+                            <div className='border-1 border-gray-600 h-[30px] rounded-[5px] w-[200px] overflow-x-scroll'>{refLink}</div>
+                            <button className='border-1 h-[30px] w-[60px] hover:bg-gray-400 rounded-[5px] border-gray-800 bg-gray-200'>Copy</button>
+                        </div>
                     </div>
                     <div className='mt-[40px] border-t-1 px-[20px] text-[14px] pt-[10px] text-gray-500'>
                         <span>Stay tuned! more exciting Ambassador features are on the way</span>
