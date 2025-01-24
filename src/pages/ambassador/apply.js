@@ -31,6 +31,13 @@ const Reg = () => {
         'Niger', 'Ogun', 'Ondo', 'Osun', 'Oyo', 'Plateau', 'Rivers', 'Sokoto', 'Taraba', 'Yobe', 'Zamfara'
       ];
 
+    function scrollToTop() {
+        window.scrollTo( {
+            top:0,
+            behavior:'smooth',
+        })
+    }
+
     function displayError() {
         setShowError(true);
         setTimeout(() => {
@@ -45,6 +52,7 @@ const Reg = () => {
         try {
             const response = await axios.post('/api/ambassador/adduser', data);
             if (response.data.success) {
+                scrollToTop();
                 setIsProcessing(false);
                 setIsSuccess(true);
                 setRefLink(response.data.refLink);
