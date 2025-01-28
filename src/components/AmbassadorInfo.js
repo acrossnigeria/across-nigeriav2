@@ -48,7 +48,7 @@ const AmbassadorInfo = () => {
             <div className="border-1 border-green-500 p-3 gap-[15px] rounded-[13px] flex flex-col">
                 <div className="flex flex-row justify-center text-gray-700 items-center gap-2 text-[20px] font-extrabold"><span >Join Our Ambassador Program!</span><FlyStarIcon size='33px'/></div>
                 <span className="mt-[5px] text-left text-center text-gray-500 text-[15px]">Become part of something big! Earn rewards, gain exclusive perks, and represent our brand in style.</span>
-                <span className="mt-[5px] md:px-[30px] text-lefttext-center text-gray-500 text-[15px]">Top ambassadors get special rewards and recognition. Represent our brand, earn rewards, and compete for amazing prizes.</span>
+                <span className="mt-[5px] md:px-[30px] text-center text-gray-500 text-[15px]">Top ambassadors get special rewards and recognition. Represent our brand, earn rewards, and compete for amazing prizes.</span>
                 <Link className="self-center" href={'/ambassador/apply'}><button className="h-[50px] mt-[10px] cursor-pointer hover:bg-green-700 w-[200px] bg-green-600 text-white rounded-[25px]">Join Now</button></Link>  
             </div>
             <div className="border-1 border-green-500 p-3 gap-[15px] rounded-[13px] flex flex-col">

@@ -84,9 +84,9 @@ export default function Home() {
           </div>
         <div className="md:w-[900px] w-[100%] mx-auto">
           <Info/>
-          <p className="grid w-full mx-auto text-center bg-clip-text text-transparent bg-gradient-to-tr from-yellow-200 to-orange-600 ">
-            <span style={{lineHeight:'30px'}} id="products" className="flex text-center text-[23px] font-sans font-extrabold mx-auto mt-1"> 
-                {"Our amazing products"}
+          <p className="grid w-full mx-auto text-center bg-clip-text text-transparent mt-[15px] bg-gradient-to-tr from-yellow-200 to-orange-600 ">
+            <span style={{lineHeight:'30px'}} id="products" className="flex text-center text-[28px] font-sans font-extrabold mx-auto "> 
+                OUR AMAZING PRODUCTS
             </span>
           </p>
         <div className="mt-3 grid left-0 grid-cols-1 gap-5 border-b-1 pb-3 md:grid-cols-2 lg:grid-cols-2 md:gap-4 mx-auto items-center px-4">
