@@ -89,9 +89,9 @@ const Profile = () => {
             <div className='flex flex-col left mt-[30px] px-[25px] gap-1'>
               <div> { fullname ? <span className='font-extrabold text-[23px]'>{fullname}</span>: <div className={`w-[140px] h-[15px] bg-gray-300 animate-pulse rounded-[20px]`}></div>}</div>
               <div> { fullname ? ( isAmbassador ? (
-                    <div className='flex flex-row text-blue-400 font-bold items-center gap-2'>Ambassador<AmbassadorIcon/></div>
+                    <div className='flex flex-row text-blue-500 font-bold items-center gap-1'>Ambassador<AmbassadorIcon/></div>
                     ):(
-                    <div className='flex text-purple-500 font-bold flex-row items-center gap-2'>Explorer<ExplorerIcon/></div>
+                    <div className='flex text-purple-500 font-bold flex-row items-center gap-1'>Explorer<ExplorerIcon/></div>
                     )
                     ) : <div className={`w-[130px] h-[15px] bg-gray-300 animate-pulse rounded-[20px]`}></div> }</div>
             </div>
