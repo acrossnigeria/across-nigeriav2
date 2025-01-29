@@ -13,6 +13,7 @@ import image8 from "../../public/images/naija_vibes.jpg"
 import image9 from "../../public/images/shopping_hustle.jpg";
 import image10 from "../../public/images/i_don_hamma.jpg";
 import image11 from "../../public/images/know_your_local_government.jpg";
+import image12 from "../../public/images/across_quiz_show.jpg";
 import ReviewSlider from "@/components/ReviewSlider";
 import Testimonials from "@/components/Testimonials";
 import { useState, useEffect } from "react";
@@ -23,12 +24,14 @@ import CycleLoader from "@/components/CycleLoader";
 import RegularShoutout from "@/components/shout-out/RegularShoutout";
 import NoShoutOut from "@/components/shout-out/NoShoutOut";
 import AmbassadorInfo from "@/components/AmbassadorInfo";
+import NoticeBanner from "@/components/NoticeBanner";
 
 
 
 export const games=[
   {title:"GIVE AWAY QUIZZES", image:image1,link:"/giveaway-quiz", date:'Live', isOpen:true },
-  {title:"KING AND QUEEN", image:image3, link:"/soon", date:'2025', isOpen:false },
+  {title:"ACROSS NIGERIA QUIZ SHOW",image:image12,link:"/soon", date:'February 2025', isOpen:false },
+  {title:"ACROSS NIGERIA KING AND QUEEN", image:image3, link:"/soon", date:'2025', isOpen:false },
   {title:"SKITS ACROSS NIGERIA",image:image2,link:"/soon", date:'2025', isOpen:false },
   {title:"NAIJA VIBES", image:image8,link:"/soon", date:'2025', isOpen:false },
   {title:"MYSTERY BOXES",image:image4,link:"/soon", date:'2026', isOpen:false },
@@ -84,69 +87,54 @@ export default function Home() {
           </div>
         <div className="md:w-[900px] w-[100%] mx-auto">
           <Info/>
-          <p className="grid w-full mx-auto text-center bg-clip-text text-transparent mt-[15px] bg-gradient-to-tr from-yellow-200 to-orange-600 ">
+          <p className="grid w-full mx-auto text-center bg-clip-text text-transparent mt-[40px] bg-gradient-to-tr from-yellow-200 to-orange-600 ">
             <span style={{lineHeight:'30px'}} id="products" className="flex text-center text-[28px] font-sans font-extrabold mx-auto "> 
                 OUR AMAZING PRODUCTS
             </span>
           </p>
-        <div className="mt-3 grid left-0 grid-cols-1 gap-5 border-b-1 pb-3 md:grid-cols-2 lg:grid-cols-2 md:gap-4 mx-auto items-center px-4">
-            { games.map((card)=>(<Cards key={card.title} isOpen={card.isOpen} date={card.date} title={card.title} 
-            link={card.link} image={card.image}/>))}
-        </div>
-        <div className="my-[20px]">
-          <AmbassadorInfo/>
-        </div>
+          <div className="mt-[10px] mb-[40px] grid left-0 grid-cols-1 gap-[30px] border-b-1 pb-3 md:grid-cols-2 lg:grid-cols-2 md:gap-4 mx-auto items-center px-4">
+              { games.map((card)=>(<Cards key={card.title} isOpen={card.isOpen} date={card.date} title={card.title} 
+              link={card.link} image={card.image}/>))}
+          </div>
+          <NoticeBanner/>
+          <div className="my-[40px]">
+            <AmbassadorInfo/>
+          </div>
         
-       <div className="mb-[40px] mt-[10px] flex flex-col gap-2 items-center">
-            <span className="bg-clip-text text-[30px] font-extrabold text-transparent bg-gradient-to-tr from-green-700 to-green-300">SHOUT OUT</span>
-           { networkError ? (
-                <div onClick={reloadShoutOut} className="h-[500px] cursor-pointer gap-3 md:w-[700px] w-[95%] flex flex-col justify-center items-center rounded-[20px] bg-gradient-to-b from-gray-200 to-gray-50 border-1 border-gray-400">
-                  <span>Network error. Retry?</span>
-                  <ReloadIcon/>
-                </div>
-                ) : ( !shoutOut ? 
-                  ( 
-                    <div className="h-[500px] md:w-[700px] w-[95%] flex flex-col justify-center items-center rounded-[20px] bg-gradient-to-b from-gray-200 to-gray-50 border-1 border-gray-400">
-                      <CycleLoader/>
+          <div className="my-[40px] flex flex-col gap-2 items-center">
+                <span className="bg-clip-text text-[30px] font-extrabold text-transparent bg-gradient-to-tr from-green-700 to-green-300">SHOUT OUT</span>
+              { networkError ? (
+                    <div onClick={reloadShoutOut} className="h-[500px] cursor-pointer gap-3 md:w-[700px] w-[95%] flex flex-col justify-center items-center rounded-[20px] bg-gradient-to-b from-gray-200 to-gray-50 border-1 border-gray-400">
+                      <span>Network error. Retry?</span>
+                      <ReloadIcon/>
                     </div>
-                  ) : (
-                      shoutOut.length === 0? (
-                          <NoShoutOut/>
-                      ): ( shoutOut.length > 1 ? (
-                          <RegularShoutout regulars={shoutOut}/>
-                          ) : (
-                              <ShoutOutCard shoutOutType={'premium'} details={shoutOut[0]}/>
-                          )  
+                    ) : ( !shoutOut ? 
+                      ( 
+                        <div className="h-[500px] md:w-[700px] w-[95%] flex flex-col justify-center items-center rounded-[20px] bg-gradient-to-b from-gray-200 to-gray-50 border-1 border-gray-400">
+                          <CycleLoader/>
+                        </div>
+                      ) : (
+                          shoutOut.length === 0? (
+                              <NoShoutOut/>
+                          ): ( shoutOut.length > 1 ? (
+                              <RegularShoutout regulars={shoutOut}/>
+                              ) : (
+                                  <ShoutOutCard shoutOutType={'premium'} details={shoutOut[0]}/>
+                              )  
+                          )
                       )
-                  )
-                )
-            }
-           
-        </div>
-
-         <div className="h-80 mt-6">
-           <p className="grid w-full  mx-auto text-center text-2xl text-green-800 font-sans">
-              <span className="flex text-center text-3xl font-sans font-extrabold mx-auto ">
-                {"Winners for the Week".toUpperCase()}  
-              </span>
-            </p>
-            <ol className="h-80 pl-8">
-              <li>List</li>
-              <li>of</li>
-              <li>Winners</li>
-            </ol>
-         </div>
-         <div className="">
-           <span
-        className="w-full mx-auto text-center flex justify-center items-center 
-          md:flex-row flex-col mb-6 font-serif font-light text-[35px]
-           text-green-800"
-      >{"Testimonials".toUpperCase()}
-      </span>
-        <Testimonials/>
-        </div>
-      </div>
+                    )
+                }
+              
+            </div>
+            <NoticeBanner/>
+            <span className="w-full mx-auto text-center mt-[35px] flex justify-center items-center md:flex-row flex-col mb-6 font-serif font-light text-[35px] text-green-800">
+              {"Testimonials".toUpperCase()}
+            </span>
+            <Testimonials/>
+            <NoticeBanner/>
+          </div>
    
-      </Layout> 
+        </Layout> 
   );
 }
