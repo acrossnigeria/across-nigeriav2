@@ -35,7 +35,7 @@ const Profile = () => {
   const getUserData = async () => {
     setEmail(session?.user?.email);
     try {
-      const response = await axios.get('/api/findUser', { params:{ email } });
+      const response = await axios.get(`/api/findUser?email=${email}`);
       const profile = response.data;
       setRefs(profile.refs === 0 ? '0':profile.refs);
       setRefCode(profile.refCode);

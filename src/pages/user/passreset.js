@@ -51,7 +51,7 @@ const EmailForm = () => {
     let emailAddress;
     setLoading(true);
     try {
-      const findUser = await axios.get('/api/findUser', { params: { email } });
+      const findUser = await axios.get(`/api/findUser?email=${email}`);
       emailAddress = findUser.data.email;
 
       const outgoing = "noreply <password-reset@acrossnig.com>";

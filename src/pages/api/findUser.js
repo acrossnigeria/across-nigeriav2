@@ -14,7 +14,7 @@ const handler = async(req,res)=>{
       const { email } = req.query;
       console.log("GETTING",req.query)
       await db.connect();
-      const user = await User.findOne({ email: email });
+      const user = await User.findOne({ email });
       // Send the found documents as a response
       if (user) {
         const isUserAmbassador = await Ambassador.findOne( { user:user._id });
