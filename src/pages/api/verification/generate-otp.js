@@ -7,6 +7,7 @@ const handler = async ( req, res) => {
     res.setHeader('Access-Control-Allow-Origin', '*');
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
     res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+    res.setHeader('Cache-Control', 'no-store');
     if (req.method === 'POST') {
         let secret;
         const { email } = req.body;
@@ -26,6 +27,7 @@ const handler = async ( req, res) => {
             // check if email has secret in the database
             await db.connect();
             const isUserSecretAvailable = await UserSecret.findOne( { email } );
+            await db.disconnect();
 
             if (isUserSecretAvailable) {
                 console.log('user secret matching email was found');
@@ -52,6 +54,7 @@ const handler = async ( req, res) => {
             
         } catch (err){
             console.log(err.message);
+            await db.disconnect();
             res.status(500).json( {error: 'something went wrong'})
         }
 

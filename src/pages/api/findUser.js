@@ -3,6 +3,8 @@ import db from "../../../utils/db";
 import Ambassador from "@/models/Ambassador";
 
 const handler = async(req,res)=>{
+    res.setHeader('Cache-Control', 'no-store, max-age=0');
+    // Your existing logic to fetch data from MongoDB
 
     try{ 
 
@@ -12,7 +14,7 @@ const handler = async(req,res)=>{
       //if method === get sends back user name and email
       if (req.method==='GET') {
       const { email } = req.query;
-      console.log("GETTING",req.query)
+      console.log("GETTING",req.query);
       await db.connect();
       const user = await User.findOne({ email });
       // Send the found documents as a response
@@ -23,6 +25,7 @@ const handler = async(req,res)=>{
         const notifications = [];
         res.status(200).json( { exists: true , isAmbassador:isUserAmbassador?true:false, fullname, email:user.email, refCode:user.refCode, refs:user.references, phone:user.phone, notifications } );
       } else {
+        await db.disconnect();
         res.status(200).json({ exists: false });
       };
 
