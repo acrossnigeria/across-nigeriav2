@@ -27,9 +27,9 @@ const handler = async ( req, res) => {
             // check if email has secret in the database
             await db.connect();
             const isUserSecretAvailable = await UserSecret.findOne( { email } );
-            await db.disconnect();
 
             if (isUserSecretAvailable) {
+                await db.disconnect();
                 console.log('user secret matching email was found');
                 secret = isUserSecretAvailable.secret;
                 const data = { secret, email };
@@ -44,6 +44,7 @@ const handler = async ( req, res) => {
                 secret = speakeasy.generateSecret({ length:20 });
                 const data = { secret:secret.base32 , email };
                 const newUserSecret = await UserSecret.create(data);
+                await db.disconnect();
 
                 const token = generateOtp(secret.base32);
                 // const emailSent = sendOtpToEmail( email, token );
