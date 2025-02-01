@@ -64,8 +64,11 @@ export default function Layout({ title, children }) {
     return(
     <div className="h-screen p-0 m-0 bottom-0">
       <Head>
-        <title>{title ? title + "-Across Nigeria TV" : "Across Nigeria Reality Show"}</title>
-        <meta name="description" content="App Description" />
+        <title>{title ? title + "-Across Nigeria Reality TV" : "Across Nigeria Reality Show"}</title>
+        <meta name="description" content="Across nigeria reality show offers a variety of giveaways, game show and reality shows that
+            cater to different tastes and interests." />
+        <meta property="og:image" content="https://acrossnig.com/images/landing/image1.jpg"/>
+        <meta property="og:type" content="website"/>
         <link rel="icon" href="/favicon.ico" />
       </Head>
        <ToastContainer position="top-center" limit={1} />

@@ -19,7 +19,8 @@ const AmbassadorInfo = () => {
             const response = await axios.get('/api/ambassador/getAmbassadors');
             if (response.data.success) {
                 let rem = 4;
-                const tempData = response.data.list;
+                const tempData = [...response.data.list]
+
                 if (tempData.length<rem) {
                     rem = rem - tempData.length;
                     for (let i = 0;i<=rem;i++) {
@@ -62,7 +63,7 @@ const AmbassadorInfo = () => {
                                     <div className="w-[30px] absolute justify-center items-center rounded-full h-[30px] flex flex-row text-[17px] font-extrabold text-white bg-yellow-400"><span>{index+1}</span></div>
                                     <Profile bg={'gray'} size={'80%'}/>
                                     <span>{user.fullname}</span>
-                                    <span>From {user.city}</span>
+                                    <span>From {user.city.length>7?`${user.city.slice(0, 7)}...`:user.city}</span>
                                 </div>)
                             } else {
                                 return (

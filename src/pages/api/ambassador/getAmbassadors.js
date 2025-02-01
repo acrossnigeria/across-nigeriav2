@@ -42,7 +42,8 @@ const Handler = async ( req, res ) => {
             })
 
             // check the list to make sure all ambassadors have more than on ref
-            list = bubbleSort(screeningList.slice(0, 5));
+            list = bubbleSort(screeningList);
+            list = list.slice(0, 5);
             const history = [];
             list.map( user => {
                 if ( user.refs >= 1 ) {
@@ -51,7 +52,7 @@ const Handler = async ( req, res ) => {
             })
 
             // save refresh top ambassadors data
-            let newDoc = await ProductData.findOne( {name:'topAmassadorsFeb'}); //check for a history for top ambassadors for a certin month
+            let newDoc = await ProductData.findOne( { name:'topAmbassadorsFeb'} ); //check for a history for top ambassadors for a certin month
             if ( newDoc ) {
                 newDoc.history = history;
                 await newDoc.save();
@@ -70,7 +71,6 @@ const Handler = async ( req, res ) => {
             const response = await ProductData.findOne( { name: 'topAmbassadorsFeb'} );
             await db.disconnect();
             const list = response?response:{ history:[] };
-            console.log(list);
             res.status(200).json( { success:true, list:list.history } );
         } catch(err) {
             console.log(err.message);

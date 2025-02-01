@@ -26,6 +26,30 @@ const Handler = async (req, res) => {
             res.status(500).json( {error: 'something went wrong'})
         }
 
+    } else if ( req.method === 'GET') {
+
+        try {
+            const ambassadors = await Ambassador.find().populate('user', 'name phone surname email references refCode');
+            let screeningList = [];
+            ambassadors.map( ambassador => {
+                let data = { 
+                    refs:ambassador.user.references,
+                    fullname:`${ambassador.user.name} ${ambassador.user.surname}`,
+                    status:ambassador.currentStatus,
+                    city:ambassador.city,
+                    orgName:ambassador.orgName,
+                    residence:ambassador.state,
+                    email:ambassador.user.email,
+                    phone:ambassador.user.phone,
+                    joinedAt:ambassador.createdAt,
+                }
+                screeningList.push(data);
+            }) 
+            res.status(200).json( {success:true, list:screeningList})
+        } catch(err) {
+            res.status(400).json( { success:false, error:err.message } )
+        }
+
     } else {
         await db.disconnect();
         res.status(403).json({error:'invalid method'});
