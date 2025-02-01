@@ -60,7 +60,7 @@ const Handler = async ( req, res ) => {
                 newDoc = await ProductData.create( { name:'topAmbassadorsFeb', history })
             }
             await db.disconnect();
-            res.status(200).json( { success:true, list:newDoc.history } );
+            res.status(200).json( { success:true, list:newDoc.history, allList:screeningList } );
         } catch(err) {
             console.log(err.message);
             res.status(500).json( { success: false, error:err.message } );

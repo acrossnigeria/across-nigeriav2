@@ -48,6 +48,10 @@ const Amb = ( { user }) => {
             const response = await axios.get('/api/ambassador/getAmbassadors');
             if (response.data.success) {
                 setData(response.data.list);
+                setAllAmbassadors(response.data.allList);
+                setResult(response.data.allList);
+                setPageSize(response.data.allList.length >= 13 ? 13 : 12);
+                setReminderPageSize(response.data.allList.length % 13);
             } else {
                 setIsErrorOccurred(true);
                 setErrorType(`Error of type: ${response.data.error}`);
@@ -59,17 +63,17 @@ const Amb = ( { user }) => {
         setIsLoading(false);
     }
 
-    async function getAllAmbassadors() {
-        try {
-            const response = await axios.get('/api/ambassador/adduser');
-            setAllAmbassadors(response.data.list);
-            setResult(response.data.list);
-            setPageSize(response.data.list.length >= 13 ? 13 : 12);
-            setReminderPageSize(response.data.list.length % 13);
-        } catch(err) {
-            console.log('something went wrong while trying to get ambassadors data');
-        }
-    }
+    // async function getAllAmbassadors() {
+    //     try {
+    //         const response = await axios.get('/api/ambassador/adduser');
+    //         setAllAmbassadors(response.data.list);
+    //         setResult(response.data.list);
+    //         setPageSize(response.data.list.length >= 13 ? 13 : 12);
+    //         setReminderPageSize(response.data.list.length % 13);
+    //     } catch(err) {
+    //         console.log('something went wrong while trying to get ambassadors data');
+    //     }
+    // }
 
 
     async function refreshAmbassadorList() {
@@ -91,7 +95,7 @@ const Amb = ( { user }) => {
 
     useEffect( ()=> {
         getTopAmbassadors();
-        getAllAmbassadors();
+        // getAllAmbassadors();
     }, [])
 
     function nextPage() {
