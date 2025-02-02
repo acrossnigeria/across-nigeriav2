@@ -3,6 +3,9 @@ import Ambassador from "@/models/Ambassador";
 import ProductData from "@/models/ProductData";
 
 const Handler = async ( req, res ) => {
+    res.setHeader("Cache-Control", "no-store, no cache, must-revalidate, proxy-revalidate");
+    res.setHeader("Pragma", "no-cache");
+    res.setHeader("Expires", "0");
 
     //bubble sorting function
     function bubbleSort(arr) {
@@ -60,7 +63,7 @@ const Handler = async ( req, res ) => {
                 newDoc = await ProductData.create( { name:'topAmbassadorsFeb', history })
             }
             await db.disconnect();
-            res.status(200).json( { success:true, list:newDoc.history, allList:screeningList } );
+            res.status(200).json( { success:true, list:newDoc.history } );
         } catch(err) {
             console.log(err.message);
             res.status(500).json( { success: false, error:err.message } );
