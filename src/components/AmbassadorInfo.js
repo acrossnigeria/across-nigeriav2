@@ -59,10 +59,10 @@ const AmbassadorInfo = () => {
                         { data.map( (user, index) => {
                             if ( user.fullname && user.city ) {
                                 return (
-                                <div className="flex h-[150px] rounded-[20px] text-[15px] flex-col text-center md:w-[20%] w-[45%] justify-center items-center p-[5px] border-1 border-gray-300" key={data.userId}>
+                                <div className="flex h-[150px] rounded-[20px] text-[13px] flex-col text-center md:w-[20%] w-[45%] justify-center items-center p-[5px] border-1 border-gray-300" key={data.userId}>
                                     <div className="w-[30px] absolute justify-center items-center rounded-full h-[30px] flex flex-row text-[17px] font-extrabold text-white bg-yellow-400"><span>{index+1}</span></div>
-                                    <Profile bg={'gray'} size={'80%'}/>
-                                    <span>{user.fullname}</span>
+                                    <Profile bg={'gray'} size={'60%'}/>
+                                    <span className="text-[11px] font-bold">{user.fullname}</span>
                                     <span>From {user.city.length>7?`${user.city.slice(0, 7)}...`:user.city}</span>
                                 </div>)
                             } else {
