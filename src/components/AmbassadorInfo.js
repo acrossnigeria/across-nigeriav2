@@ -59,11 +59,11 @@ const AmbassadorInfo = () => {
     return (
         <div className="w-[95%] mt-[10px] ml-[2.5%] gap-[20px] rounded-[13px] flex flex-col">
             { isLoading ? (
-                <div className="h-[100px] bg-gray-300 animate-pulse w-[100%] p-3 gap-[15px] rounded-[13px]"> 
+                <div className="h-[250px] md:h-[150px] bg-gray-300 animate-pulse w-[100%] p-3 gap-[15px] rounded-[13px]"> 
                 </div>
             ):( isAmbassador ? (
                     <div className="border-1 border-green-500 p-3 gap-[15px] rounded-[13px] flex flex-col">
-                        <div className="flex flex-row justify-center text-gray-700 text-center items-center gap-2 text-[20px] font-extrabold"><span >Welcome back, Ambassador {session?.user?.name}</span></div>
+                        <span className="text-gray-700 text-center text-[20px] font-extrabold">Welcome back, {session?.user?.name}. see your ambassador statistics </span>
                         <div className="w-[100%] flex md:flex-row flex-col items-center justify-around gap-2">
                             <div className="text-center md:w-fit w-[100%] h-[125px] flex flex-col justify-center items-center text-gray-500 text-[15px]">
                                 <div className="flex md:flex-row flex-col items-center gap-2 md:text-[14px] text-[25px] font-bold">
@@ -80,6 +80,7 @@ const AmbassadorInfo = () => {
                                 <span className="md:text-[18px] text-[27px] font-extrabold text-green-500">{refs}</span>
                             </div>
                         </div>
+                        <span></span>
                     </div>
                 ): (
                     <div className="border-1 border-green-500 p-3 gap-[15px] rounded-[13px] flex flex-col">
