@@ -1,22 +1,29 @@
 import Link from "next/link";
 import FlyStarIcon from "../../public/images/icon/FlyStarIcon";
 import TrophyIcon from "../../public/images/icon/TrophyIcon";
-import GoToIcon from "../../public/images/icon/GoToIcon";
 import axios from "axios";
 import { useState, useEffect } from "react";
 import Profile from "../../public/images/icon/Profile";
+import { useSession } from "next-auth/react";
+import PointIcon from "../../public/images/icon/PointIcon";
+import LevelIcon from "../../public/images/icon/LevelIcon";
+import ReferCountIcon from "../../public/images/icon/ReferCountIcon";
 
 
 const AmbassadorInfo = () => {
+    const { status, data:session } = useSession();
     const [ data, setData ] = useState([]);
     const [ errorType, setErrorType ] = useState('Unknown error');
     const [ isErrorOccurred, setIsErrorOccurred ] = useState(false);
     const [ isLoading, setIsLoading ] = useState(true);
+    const [ isAmbassador, setIsAmbassador ] = useState(false);
+    const [ refs, setRefs ] = useState(0);
 
     async function getAmbassadors() {
         setIsLoading(true);
+        const userId = session?.user?._id;
         try {
-            const response = await axios.get('/api/ambassador/getAmbassadors');
+            const response = await axios.get(`/api/ambassador/getAmbassadors?user=${userId}`);
             if (response.data.success) {
                 let rem = 4;
                 const tempData = [...response.data.list]
@@ -28,6 +35,8 @@ const AmbassadorInfo = () => {
                     }
                 }
                 setData(tempData);
+                setIsAmbassador(response.data.isAmbassador);
+                setRefs(response.data.refs);
                 
             } else {
                 setIsErrorOccurred(true);
@@ -40,18 +49,48 @@ const AmbassadorInfo = () => {
         setIsLoading(false);
     }
 
+
     useEffect(()=>{
-        getAmbassadors();
-    }, [])
+        if (session) {
+            getAmbassadors();
+        }
+    }, [ session ])
 
     return (
         <div className="w-[95%] mt-[10px] ml-[2.5%] gap-[20px] rounded-[13px] flex flex-col">
-            <div className="border-1 border-green-500 p-3 gap-[15px] rounded-[13px] flex flex-col">
-                <div className="flex flex-row justify-center text-gray-700 items-center gap-2 text-[20px] font-extrabold"><span >Join Our Ambassador Program!</span><FlyStarIcon size='33px'/></div>
-                <span className="mt-[5px] text-left text-center text-gray-500 text-[15px]">Become part of something big! Earn rewards, gain exclusive perks, and represent our brand in style.</span>
-                <span className="mt-[5px] md:px-[30px] text-center text-gray-500 text-[15px]">Top ambassadors get special rewards and recognition. Represent our brand, earn rewards, and compete for amazing prizes.</span>
-                <Link className="self-center" href={'/ambassador/apply'}><button className="h-[50px] mt-[10px] cursor-pointer hover:bg-green-700 w-[200px] bg-green-600 text-white rounded-[25px]">Join Now</button></Link>  
-            </div>
+            { isLoading ? (
+                <div className="h-[100px] bg-gray-300 animate-pulse w-[100%] p-3 gap-[15px] rounded-[13px]"> 
+                </div>
+            ):( isAmbassador ? (
+                    <div className="border-1 border-green-500 p-3 gap-[15px] rounded-[13px] flex flex-col">
+                        <div className="flex flex-row justify-center text-gray-700 text-center items-center gap-2 text-[20px] font-extrabold"><span >Welcome back, Ambassador {session?.user?.name}</span></div>
+                        <div className="w-[100%] flex md:flex-row flex-col items-center justify-around gap-2">
+                            <div className="text-center md:w-fit w-[100%] h-[150px] flex flex-col justify-center items-center text-gray-500 text-[15px]">
+                                <div className="flex md:flex-row flex-col items-center gap-2 md:text-[14px] text-[18px] font-bold">
+                                    <PointIcon/>
+                                    <span>Points earned</span>
+                                </div>
+                                <span className="md:text-[18px] text-[20px] font-extrabold text-green-500">{refs*100}</span>
+                            </div>
+                            <div className="text-center flex flex-col h-[150px] justify-center items-center text-gray-500 text-[15px]">
+                                <div className="flex md:flex-row flex-col items-center gap-2 md:text-[14px] text-[18px] font-bold">
+                                    <ReferCountIcon/>
+                                    <span>Total referrals</span>
+                                </div>
+                                <span className="md:text-[18px] text-[20px] font-extrabold text-green-500">{refs}</span>
+                            </div>
+                        </div>
+                    </div>
+                ): (
+                    <div className="border-1 border-green-500 p-3 gap-[15px] rounded-[13px] flex flex-col">
+                        <div className="flex flex-row justify-center text-gray-700 items-center gap-2 text-[20px] font-extrabold"><span >Join Our Ambassador Program!</span><FlyStarIcon size='33px'/></div>
+                        <span className="mt-[5px] text-left text-center text-gray-500 text-[15px]">Become part of something big! Earn rewards, gain exclusive perks, and represent our brand in style.</span>
+                        <span className="mt-[5px] md:px-[30px] text-center text-gray-500 text-[15px]">Top ambassadors get special rewards and recognition. Represent our brand, earn rewards, and compete for amazing prizes.</span>
+                        <Link className="self-center" href={'/ambassador/apply'}><button className="h-[50px] mt-[10px] cursor-pointer hover:bg-green-700 w-[200px] bg-green-600 text-white rounded-[25px]">Join Now</button></Link>  
+                    </div>
+                )
+            )
+            }
             <div className="border-1 border-green-500 p-3 gap-[15px] rounded-[13px] flex flex-col">
                 <div className="flex flex-row justify-center text-gray-700 items-center gap-2 text-[25px] font-extrabold"><span >Top 5 Ambassadors Leaderboard</span><TrophyIcon size='28px'/></div>
                 { (!isLoading && !isErrorOccurred) && (

@@ -1,6 +1,7 @@
 import db from "../../../../utils/db";
 import Ambassador from "@/models/Ambassador";
 import ProductData from "@/models/ProductData";
+import User from "@/models/User";
 
 const Handler = async ( req, res ) => {
     res.setHeader("Cache-Control", "no-store, no cache, must-revalidate, proxy-revalidate");
@@ -69,12 +70,23 @@ const Handler = async ( req, res ) => {
             res.status(500).json( { success: false, error:err.message } );
         }
     } else if ( req.method === 'GET') {
+        const { user } = req.query;
         try {
             await db.connect();
             const response = await ProductData.findOne( { name: 'topAmbassadorsFeb'} );
+            let isAmbassador;
+            let refs;
+            if (user) {
+                const userData = await User.findById(user);
+                isAmbassador = userData? true:false;
+                refs = userData.references;
+            } else {
+                isAmbassador = false;
+                refs = 0;
+            }
             await db.disconnect();
             const list = response?response:{ history:[] };
-            res.status(200).json( { success:true, list:list.history } );
+            res.status(200).json( { success:true, list:list.history, isAmbassador, refs } );
         } catch(err) {
             console.log(err.message);
             res.status(500).json( { success: false, error:err.message } );
