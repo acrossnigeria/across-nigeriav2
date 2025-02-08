@@ -65,19 +65,19 @@ const AmbassadorInfo = () => {
                     <div className="border-1 border-green-500 p-3 gap-[15px] rounded-[13px] flex flex-col">
                         <div className="flex flex-row justify-center text-gray-700 text-center items-center gap-2 text-[20px] font-extrabold"><span >Welcome back, Ambassador {session?.user?.name}</span></div>
                         <div className="w-[100%] flex md:flex-row flex-col items-center justify-around gap-2">
-                            <div className="text-center md:w-fit w-[100%] h-[150px] flex flex-col justify-center items-center text-gray-500 text-[15px]">
-                                <div className="flex md:flex-row flex-col items-center gap-2 md:text-[14px] text-[18px] font-bold">
+                            <div className="text-center md:w-fit w-[100%] h-[125px] flex flex-col justify-center items-center text-gray-500 text-[15px]">
+                                <div className="flex md:flex-row flex-col items-center gap-2 md:text-[14px] text-[25px] font-bold">
                                     <PointIcon/>
                                     <span>Points earned</span>
                                 </div>
-                                <span className="md:text-[18px] text-[20px] font-extrabold text-green-500">{refs*100}</span>
+                                <span className="md:text-[18px] text-[27px] font-extrabold text-green-500">{refs*100}</span>
                             </div>
-                            <div className="text-center flex flex-col h-[150px] justify-center items-center text-gray-500 text-[15px]">
-                                <div className="flex md:flex-row flex-col items-center gap-2 md:text-[14px] text-[18px] font-bold">
+                            <div className="text-center flex flex-col h-[125px] justify-center items-center text-gray-500 text-[15px]">
+                                <div className="flex md:flex-row flex-col items-center gap-2 md:text-[14px] text-[25px] font-bold">
                                     <ReferCountIcon/>
                                     <span>Total referrals</span>
                                 </div>
-                                <span className="md:text-[18px] text-[20px] font-extrabold text-green-500">{refs}</span>
+                                <span className="md:text-[18px] text-[27px] font-extrabold text-green-500">{refs}</span>
                             </div>
                         </div>
                     </div>
