@@ -63,7 +63,8 @@ const AmbassadorInfo = () => {
                 </div>
             ):( isAmbassador ? (
                     <div className="border-1 border-green-500 p-3 gap-[15px] rounded-[13px] flex flex-col">
-                        <span className="text-gray-700 text-center text-[20px] font-extrabold">Welcome back, {session?.user?.name}. see your ambassador statistics </span>
+                        <span className="text-gray-700 text-center text-[20px] font-extrabold">Your ambassador statistics </span>
+                        <span className="text-gray-700 text-center text-[17px] font-extrabold">Welcome back, {session?.user?.name} </span>
                         <div className="w-[100%] flex md:flex-row flex-col items-center justify-around gap-2">
                             <div className="text-center md:w-fit w-[100%] h-[125px] flex flex-col justify-center items-center text-gray-500 text-[15px]">
                                 <div className="flex md:flex-row flex-col items-center gap-2 md:text-[14px] text-[25px] font-bold">
