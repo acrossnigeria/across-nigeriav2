@@ -257,10 +257,10 @@ const Across_Quiz_Show = () => {
                 </div>
                
                 <div className="mb-4 mt-[20px] text-left">
-                  <label htmlFor="imageFile">Upload a short video (1 minute max) introducing yourself, and share why you're excited to be part of the show</label>
+                  <label htmlFor="imageFile">Upload a short video (1 minute max) introducing yourself, and share why you&apos;re excited to be part of the show</label>
                   <div className="flex flex-col text-[15px] mt-[10px] mb-[10px]">
                     <span>In your video, we&apos;d love to hear:</span>
-                    <span>- Who you are and where you're from</span>
+                    <span>- Who you are and where you&apos;re from</span>
                     <span>- Why you want to participate in the quiz show</span>
                     <span>- How well do you know about nigeria</span>
                   </div>
