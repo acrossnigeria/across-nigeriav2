@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
 
-const productDataSchema = mongoose.Schema( {
+const productDataSchema = new mongoose.Schema( {
         name: { type:String, required:true },
         history: { type:Array, default:[]},
     }, {

@@ -19,11 +19,12 @@ const Handler = async ( req, res) => {
             gender: user.gender,
           }
           return data 
-       })
+        })
         await db.disconnect();
 
         res.status(200).json( { message: 'success getting users data', users });
        } catch (err) {
+        await db.disconnect();
          res.status(500).json( { error: 'An error occured while getting users data from database'}) 
        }
     } else {

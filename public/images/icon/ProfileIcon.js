@@ -1,4 +1,4 @@
-export default function Profile( { bg, size } ) {
+export default function ProfileIcon( { bg, size } ) {
     return (
         <svg width={size?size:'37px'} height={size?size:'37px'} viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path opacity="1" d="M12 22.01C17.5228 22.01 22 17.5329 22 12.01C22 6.48716 17.5228 2.01001 12 2.01001C6.47715 2.01001 2 6.48716 2 12.01C2 17.5329 6.47715 22.01 12 22.01Z" fill={bg?bg:"#86efac"}/>

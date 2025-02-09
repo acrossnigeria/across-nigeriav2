@@ -134,15 +134,15 @@ export default function Dashboard( { user } ) {
                                 <div className="w-[65%] border-l-1 border-gray-500 pl-1">{`${ ageData?.list[0]} (${Math.floor((ageData?.list[0]/stats.totalUsers)*100)}%) users`}</div>
                             </div>
                             <div className="border-b-1 flex-row flex border-gray-500 text-gray-700">
-                                <div className="w-[35%] pl-1">25-30</div>
+                                <div className="w-[35%] pl-1">25-34</div>
                                 <div className="w-[65%] border-l-1 border-gray-500 pl-1">{`${ ageData?.list[1]} (${Math.floor((ageData?.list[1]/stats.totalUsers)*100)}%) users`}</div>
                             </div>
                             <div className="border-b-1 flex-row flex border-gray-500 text-gray-700">
-                                <div className="w-[35%] pl-1">31-34</div>
+                                <div className="w-[35%] pl-1">34-44</div>
                                 <div className="w-[65%] border-l-1 border-gray-500 pl-1">{`${ ageData?.list[2]} (${Math.floor((ageData?.list[2]/stats.totalUsers)*100)}%) users`}</div>
                             </div>
                             <div className="border-b-1 flex-row flex border-gray-500 text-gray-700">
-                                <div className="w-[35%] pl-1">35-40</div>
+                                <div className="w-[35%] pl-1">44 above</div>
                                 <div className="w-[65%] border-l-1 border-gray-500 pl-1">{`${ ageData?.list[3]} (${Math.floor((ageData?.list[3]/stats.totalUsers)*100)}%) users`}</div>
                             </div>
                         </div>

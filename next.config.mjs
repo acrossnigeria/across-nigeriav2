@@ -5,6 +5,10 @@ const nextConfig = {
   images: {
     domains: ['images.unsplash.com','i.imgur.com','res.cloudinary.com',], // Add the hostname(s) here
   },
+  experimental: {
+    turbo: true,
+    outputFileTracing:true,
+  }
 };
 
 export default withNextVideo(nextConfig);
