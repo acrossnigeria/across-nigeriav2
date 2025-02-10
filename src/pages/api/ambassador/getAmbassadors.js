@@ -70,14 +70,14 @@ const Handler = async ( req, res ) => {
             res.status(500).json( { success: false, error:err.message } );
         }
     } else if ( req.method === 'GET') {
-        const { user } = req.query;
+        const user = req.query?.user??false;
         try {
             await db.connect();
             const response = await ProductData.findOne( { name: 'topAmbassadorsFeb'} );
             let isAmbassador;
             let refs;
             if (user) {
-                const userData = await User.findById(user);
+                const userData = await Ambassador.findOne({user:user});
                 isAmbassador = userData? true:false;
                 refs = userData.references;
             } else {

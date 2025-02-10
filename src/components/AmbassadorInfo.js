@@ -19,11 +19,10 @@ const AmbassadorInfo = () => {
     const [ isAmbassador, setIsAmbassador ] = useState(false);
     const [ refs, setRefs ] = useState(0);
 
-    async function getAmbassadors() {
+    async function getAmbassadors(user) {
         setIsLoading(true);
-        const userId = session?.user?._id;
         try {
-            const response = await axios.get(`/api/ambassador/getAmbassadors?user=${userId}`);
+            const response = await axios.get(`/api/ambassador/getAmbassadors${user?`?user=${user}`:''}`);
             if (response.data.success) {
                 let rem = 4;
                 const tempData = [...response.data.list]
@@ -35,8 +34,10 @@ const AmbassadorInfo = () => {
                     }
                 }
                 setData(tempData);
-                setIsAmbassador(response.data.isAmbassador);
-                setRefs(response.data.refs);
+                if (response.data.isAmbassador) {
+                    setIsAmbassador(response.data.isAmbassador);
+                    setRefs(response.data.refs);
+                }
                 
             } else {
                 setIsErrorOccurred(true);
@@ -52,7 +53,11 @@ const AmbassadorInfo = () => {
 
     useEffect(()=>{
         setTimeout(() => {
-            getAmbassadors();
+            if (session) {
+                getAmbassadors(session?.user?._id);
+            } else {
+                getAmbassadors(false)
+            }
         }, 5000);
     }, [ session ])
 
