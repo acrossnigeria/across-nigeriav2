@@ -85,7 +85,6 @@ export default function LoginScreen() {
               })}
               className="w-full border-gray-400 border-1 h-[45px] px-3 outline-none rounded-[15px] bg-gray-200"
               id="email"
-              autoFocus
             ></input> 
             {errors.email && (
               <div className="text-red-500">{errors.email.message}</div>
