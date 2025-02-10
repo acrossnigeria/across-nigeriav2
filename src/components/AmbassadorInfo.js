@@ -105,7 +105,7 @@ const AmbassadorInfo = () => {
                         { data.map( (user, index) => {
                             if ( user.fullname && user.city ) {
                                 return (
-                                <div className="flex h-[150px] rounded-[20px] text-[13px] flex-col text-center md:w-[20%] w-[45%] justify-center items-center p-[5px] border-1 border-gray-300" key={data.userId}>
+                                <div className={`flex h-[150px] rounded-[20px] text-[13px] flex-col text-center md:w-[20%] ${index===0?'w-[100%]':'w-[45%]'} justify-center items-center p-[5px] border-1 border-gray-300`} key={data.userId}>
                                     <div className="w-[30px] absolute justify-center items-center rounded-full h-[30px] flex flex-row text-[17px] font-extrabold text-white bg-yellow-400"><span>{index+1}</span></div>
                                     <Profile bg={'gray'} size={'60%'}/>
                                     <span className="text-[11px] font-bold">{user.fullname}</span>
@@ -113,7 +113,7 @@ const AmbassadorInfo = () => {
                                 </div>)
                             } else {
                                 return (
-                                    <div className="flex h-[150px] bg-gray-300 text-white text-[20px] rounded-[20px] text-[15px] flex-col text-center md:w-[20%] w-[45%] justify-center items-center p-[5px]" key={index}>
+                                    <div className={`flex h-[150px] bg-gray-300 text-white rounded-[20px] text-[15px] flex-col text-center md:w-[20%] ${index===0?'w-[100%]':'w-[45%]'} justify-center items-center p-[5px]`} key={index}>
                                         <span>Open</span>
                                     </div>
                                 )
@@ -123,7 +123,7 @@ const AmbassadorInfo = () => {
                 )}
                 { isLoading && (
                     <div className="flex flex-row md:flex-nowrap flex-wrap justify-center gap-2 items-center w-[100%]">
-                    <div className="bg-gray-200 animate-pulse md:w-[20%] w-[45%] rounded-[20px] h-[150px]"></div>
+                    <div className="bg-gray-200 animate-pulse md:w-[20%] w-[92%] rounded-[20px] h-[150px]"></div>
                     <div className="bg-gray-200 animate-pulse md:w-[20%] w-[45%] rounded-[20px] h-[150px]"></div>
                     <div className="bg-gray-200 animate-pulse md:w-[20%] w-[45%] rounded-[20px] h-[150px]"></div>
                     <div className="bg-gray-200 animate-pulse md:w-[20%] w-[45%] rounded-[20px] h-[150px]"></div>
