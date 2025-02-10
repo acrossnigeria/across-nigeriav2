@@ -77,7 +77,7 @@ const Handler = async ( req, res ) => {
             let isAmbassador;
             let refs;
             if (user) {
-                const userData = await Ambassador.findOne({user:user}).populate('User');
+                const userData = await Ambassador.findOne({user:user}).populate('user');
                 isAmbassador = userData? true:false;
                 refs = userData.user.references;
             } else {
