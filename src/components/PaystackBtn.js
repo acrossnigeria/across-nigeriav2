@@ -1,24 +1,26 @@
-import { useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
 import { PaystackButton } from "react-paystack";
 import Pay from "../../public/images/illustration/Pay";
+
 
 export default function PaystackBtn(props) {
 //provide props for amount email key is proc.env.PAYSTACK
     const {amount, email, paystackKey, purpose}=props;
     const [price, setPrice]=useState(0);
     const [localePayment, setLocalePayment]=useState('');
+    const liveKey = 'pk_live_09ba874adcdca43ec856e37e480ec1e17dc13eda';
+    const testKey = 'pk_test_cbdf33dbafe37c266634416e1b99f1f6b87e709a';
+    console.log('live key', paystackKey)
     useEffect(()=>{
-    setPrice(parseFloat(amount))
-    const locale=price.toLocaleString();
-    setLocalePayment(locale)
+      setPrice(parseFloat(amount))
+      const locale=price.toLocaleString();
+      setLocalePayment(locale)
     }, [amount, price])
-    const liveKey = process.env.PAYSTACK_LIVE;
     const config = {
       reference: new Date().getTime().toString(),
       email: email,
       amount: amount * 100, //Amount is in the country's lowest currency. E.g Kobo, so 20000 kobo = N200
-      publicKey: 'pk_live_09ba874adcdca43ec856e37e480ec1e17dc13eda'
+      publicKey: testKey
     };
   const handlePaystackSuccessAction = async (ref) => {
     props.pay(ref);
@@ -39,16 +41,17 @@ const componentProps = {
   
     return (
 
-       
-<div className="absolute transform top-[0px] ease-in-out duration-1000 inset-0 flex flex-col items-center justify-center  bg-white m-0 bottom-0 h-[100%]">
-      <div className="w-[fit-content]">
-        <Pay/>
+      <div className="absolute transform top-[0px] ease-in-out duration-1000 inset-0 flex flex-col items-center justify-center bg-black/40 backdrop-blur-sm m-0 bottom-0 h-[100%]">
+        <div className="flex flex-col gap-3 bg-gray-100 md:px-2 md:py-20 md:h-fit h-[70%] md:w-fit w-[95%] rounded-[10px] justify-center items-center">
+            <div className="w-[fit-content]">
+              <Pay/>
+            </div>
+            <h1 style={{lineHeight:'25px', width:'90%'}} className="text-[20px] text-gray-800  mb-3 text-center">You need to Pay <span className="text-green-600 animate-pulse">&#8358;{localePayment}</span> as {purpose}</h1>
+            <div className="bg-green-500 hover:border-l-0 cursor-pointer hover:border-b-0 hover:bg-green-600 border-l-3 border-b-3 border-b-green-800 border-l-green-800 mt-[10px] py-[15px] w-44 rounded-[30px] text-white text-[18px] hover:scale-105 d mx-auto text-center">                   
+                <PaystackButton {...componentProps} />                                                 
+            </div>
+        </div>
       </div>
-      <h1 style={{lineHeight:'25px'}} className="text-[23px] px-3 text-gray-800 font-bold mb-4 text-center">You need to Pay <span className="text-green-600 animate-pulse">&#8358;{localePayment}</span> as {purpose}</h1>
-      <div className="border-green-700 border-3 mt-[10px] py-2 w-40 rounded-[5px] bg-transparent text-green-700 text-[18px] hover:scale-105 font-extrabold hover:bg-green-700 hover:text-white mx-auto text-center">                   
-          <PaystackButton {...componentProps} />                                                 
-      </div>
-   </div>
    
     );
 };

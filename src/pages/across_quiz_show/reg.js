@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useRouter } from "next/router";
 import React, { useEffect, useReducer, useState } from "react";
-import { useForm } from "react-hook-form";
+import { toast } from "react-toastify";
 import { getError } from "../../../utils/error";
 import PaystackBtn from "@/components/PaystackBtn"; 
 import { useSession } from "next-auth/react";
@@ -15,6 +15,19 @@ import VidThumbnail from "@/components/VidThumbnail";
 import Close from "../../../public/images/icon/Close";
 import SuccessIcon from "../../../public/images/icon/SuccessIcon";
 import UploadLoader from "@/components/UploadLoader";
+import ExitConfirmScreen from "@/components/ExitConfirmScreen";
+import Support from "../../../public/images/illustration/Support";;
+
+const funFacts = [
+  { id:1, text: "Did you know? A shout out isn't just for ads. its the perfect way to celebrate birthdays, achievements, or just to spread some love" },
+  { id:2, text:"85% of people love receiving a shout out from their friends or family! Who doesn't enjoy being noticed?" },
+  { id:1, text:"Shout outs have been shown to boost your mood by 30%! send one today and make someone's day a little brighter!" },
+  { id:1, text:"Shout outs aren't just for business! From birthdays to 'just because' it's a fun way to share special moments" },
+  { id:1, text:"People are 40% more likely to remember a special shouout than a traditional message. make your shoutout unforgettable" },
+  { id:1, text:"Think a shoutout is just for big occasions? Think again You can send a shout out for literally anything from 'Good morning!' to 'You nailed it!'" },
+  { id:1, text:"A shout can be a great way to make someone feel special, no matter the occasion. it's like sending a hug through the internet!" },
+  { id:1, text:"Shout outs are the perfect way to celebrate life's small wins, big momments, or just a random act of kindeness!"}
+]
 
 const Across_Quiz_Show = () => {
     const { query } = useRouter();
@@ -22,12 +35,13 @@ const Across_Quiz_Show = () => {
     const [ uploadProgress, SetUploadProgress ] = useState('1%');
     const [ isDeleting, setIsDeleting ] = useState(false);
     const [ anError, setAnError ] = useState(null);
-    const [ loading, setLoading ] = useState(false)
-    const [ loadingPay, setLoadingPay ] = useState(false);
+    const [ startPayment, setStartPayment ] = useState(false);
     const [ loadingUpload, setLoadingUpload ] = useState(false);
-    const[ showPreview, setShowPreview]=useState(false)
+    const [ regSuccess, setRegSuccess ] = useState(false);
+    const [ startRegistration, setStartRegistration ] = useState(false)
     const router = useRouter();
     const { data: session } = useSession();
+    const [ toExit, setToExit ] = useState(false);
 
     // form states
     const [ status, setStatus ] = useState('');
@@ -36,10 +50,9 @@ const Across_Quiz_Show = () => {
     const [referralSource, setReferralSource ] = useState('');
     const [confidenceInKnowledge, setConfidenceInKnowledge ] = useState('');
     const [ loveToVisit,  setLoveToVisit ] = useState('');
-    const [introVideoUrl, setIntroVideoUrl ] = useState('');
+    const [ introVideoUrl, setIntroVideoUrl ] = useState('');
+    const [ videoId, setVideoId ] = useState('');
     const [agreedToTerms, setAgreedToTerms ] = useState(false);
-    const [user, setUser ] = useState('');
-    const [paymentRef, setPaymentRef ] = useState('');
     const isFormFilled = status !== '' && whatsappPhone !== '' && knowledgeOfNigeria !== '' && referralSource !== '' && confidenceInKnowledge !== '' && loveToVisit !== '' && introVideoUrl !== '' && agreedToTerms !== false
 
     
@@ -49,7 +62,9 @@ const Across_Quiz_Show = () => {
     }
   
     const handleRemoveFile = async (e) => {
-      e.preventDefault();
+      if (e) {
+        e.preventDefault();
+      }
       setIsDeleting(true);
       try {
         if (introVideoUrl) {
@@ -86,9 +101,7 @@ const Across_Quiz_Show = () => {
       if (result) {
         const url = `https://api.cloudinary.com/v1_1/${process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME}/upload`;
       try {
-        const {
-            data: { signature, timestamp },
-            } = await axios('/api/admin/cloudinary-sign?type=quizShow');
+        const { data: { signature, timestamp } } = await axios('/api/admin/cloudinary-sign?type=quizShow');
      
         const file = e.target.files[0];
         const formData = new FormData();
@@ -107,12 +120,13 @@ const Across_Quiz_Show = () => {
           }
         );
   
-        setintroVideoUrl( data.secure_url);
+        setIntroVideoUrl( data.secure_url);
+        setVideoId(data.public_id)
         toast.success('File uploaded successfully');
         
       } catch (err) {
         handleRemoveFile();
-        toast.error(`${getError(err)}, please check your internet connection and try again`);
+        toast.error(`${err.message}, please check your internet connection and try again`);
       }
       } else {
         return;
@@ -120,12 +134,14 @@ const Across_Quiz_Show = () => {
      
     };
   
-    const submitHandler=()=>{
-      setTitle(title);
+    const submitHandler=(e)=>{
+      e.preventDefault();
+      setStartPayment(true)
     };
   
   
     const paySuccesAction = async (ref,) => {
+      setStartRegistration(true);
         try {
           const data = {
                 status,
@@ -137,12 +153,11 @@ const Across_Quiz_Show = () => {
                 introVideoUrl,
                 agreedToTerms,
                 user:session?.user?._id,
-                paymentRef,
+                paymentRef:ref,
               }
           const response = await axios.post(`/api/across_quiz_show/handler`,data);
           console.log(response.data.id)
-          toast.success('Product updated successfully');
-          setShowPreview(true);
+          setRegSuccess(true);
         } catch (err) {
           toast.error(`Something went wrong: ${err.message}`);
         }
@@ -153,16 +168,20 @@ const Across_Quiz_Show = () => {
       e.preventDefault();
       document.getElementById('videoFile').click()
     }
+
+    const closeExit = () => {
+      setToExit(false)
+    }
     
     return (
-       <div className="pt-[70px] flex flex-col items-center bg-gray-100">
+       <div className="flex flex-col items-center bg-gray-100">
         <div className="flex flex-col md:px-0 md:w-[50%] w-[90%] justify-center md:gap-5">
           <div className="md:col-span-3">
             {anError ? (
               <div className="alert-error">{anError}</div>
             ) : (
            <div>   
-            <form className="mx-auto align-middle snap-center flex flex-col self-center justify-center text-center content-center max-w-screen-md" onSubmit={submitHandler} >
+            <form className="mx-auto pt-[70px]  align-middle snap-center flex flex-col self-center justify-center text-center content-center max-w-screen-md" onSubmit={submitHandler} >
                 <div className="w-[100%] text-center gap-2 text-[22px] font-bold text-green-600 border-b-1 border-b-gray-400 pb-[20px]">Across Nigeria Quiz Show</div>
                 <span className="w-[100%] text-left gap-2 text-[30px] mt-[20px] mb-[10px] font-light text-black">Form</span>
                 <div className="text-[14px] text-left text-gray-500 italic mb-[35px] border-t-1 border-t-green-400 pt-[10px] rounded-[10px] px-[10px]">Thank you for your interest in participating in the Across Nigeria Quiz Show! Please take a few moments to complete the registration form below. be sure to review your information before submitting the form.</div>
@@ -211,7 +230,7 @@ const Across_Quiz_Show = () => {
                 <div className="text-left flex flex-col gap-2 mt-[10px]">
                   <label htmlFor="title"><span className="font-bold">4. </span>How confident are you in answering questions about Nigeria? </label>
                   <select value={confidenceInKnowledge}
-                    onChange={(e)=>{e.target.value}}
+                    onChange={(e)=>{setConfidenceInKnowledge(e.target.value)}}
                     className="w-full border-1 border-gray-400 h-[45px] px-3 outline-none rounded-[12px] bg-gray-200 mb-[10px] accent-slate-950">
                     <option value="" disabled>-Select choice-</option>
                     <option value='very confident'>Very Confident</option>
@@ -245,9 +264,9 @@ const Across_Quiz_Show = () => {
                     <span>Select a Video</span>
                     <Upload/>
                   </button>
-                   { introVideoUrl ? (
+                   { introVideoUrl && videoId ? (
                       <div className=' w-[100%]' style={{ position: "relative", height: "250px" }}>
-                        <VidThumbnail url={introVideoUrl}/>
+                        <VidThumbnail url={introVideoUrl} videoId={videoId}/>
                       </div>
                     ) : (
                       <div className='w-[100%] rounded-[20px] border-gray-400 border-1 h-[250px] flex flex-col justify-center text-gray-400 items-center'>
@@ -267,7 +286,7 @@ const Across_Quiz_Show = () => {
                     <div className="flex w-full flex-row justify-between items-center">
                       <div className='flex flex-row gap-[15px] items-center'>
                         <FileIcon/>
-                        <div className='flex flex-col text-[12px] text-gray-500'>
+                        <div className='flex flex-col text-left text-[12px] text-gray-500'>
                           <span>{selectedFile.name.length>50?selectedFile.name.slice(0, 45)+' ...mp4':selectedFile.name}</span>
                           <span>{((selectedFile.size/1024)/1024).toFixed(2)} mb</span>
                         </div>
@@ -275,7 +294,7 @@ const Across_Quiz_Show = () => {
                       </div>
                       <button disabled={!(uploadProgress==='100%')} className={`cursor-pointer border-2 rounded-[50%] p-[11px] hover:bg-gray-400 transition-background duration-500 ease-in-out ${uploadProgress==='100%'?'opacity-[100%]':'opacity-[0%]'}`} onClick={handleRemoveFile}><DeleteIcon/></button>
                     </div>
-                    <div className=" bg-gray-200 flex flex-col w-full text-[14px]">
+                    <div className=" bg-gray-200 flex flex-col w-full text-left text-[14px]">
                       <UploadLoader percentage={uploadProgress}/>
                       <span className={`text-red-600 ${uploadProgress === '100%'?'hidden':''} text-[12px]`}>Please don&apos;t Navigate from this page, your file is uploading</span>
                     </div>
@@ -308,44 +327,44 @@ const Across_Quiz_Show = () => {
                     before proceeding.
                   </span>
                 </div>
-                <div className="mb-4 flex-row flex justify-center items-center">
+                <div className="mb-[100px] flex-col flex justify-center items-center">
                   <button 
-                  className={`${isFormFilled?'bg-green-500 hover:border-l-0 cursor-pointer hover:border-b-0 hover:bg-green-600 border-l-3 border-b-3 border-b-green-800 border-l-green-800':'bg-gray-300 cursor-not-allowed'} h-[45px] mb-[80px] rounded-[25px] text-white w-[100%]`} disabled={!isFormFilled}>
-                    Submit
+                      className={`${isFormFilled?'bg-green-500 hover:border-l-0 cursor-pointer hover:border-b-0 hover:bg-green-600 border-l-3 border-b-3 border-b-green-800 border-l-green-800':'bg-gray-300 cursor-not-allowed'} h-[45px] mb-[80px] rounded-[25px] text-white w-[100%]`} disabled={!isFormFilled}>
+                      Submit
                   </button>
                 </div>
             </form>
-              {loadingPay && (
+              { startPayment && (
                 <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
-                  <div className="w-fit h-fit p-2 font-semibold text-lg rounded-md cursor-pointer absolute left-2 top-20 z-50 bg-yellow-700" onClick={()=>(dispatch({type:'PAY_SUCCESS'}))}>Close</div>
-                  <PaystackBtn pay={paySuccesAction} amount={10000} email={session?.user.email?? null} purpose="Payment for Skits Across Nigeria"/></div>)}
-                  { showPreview&&(
-                    <div className="fixed inset-0 z-50 flex items-center justify-center bg-gray-200">
-                      <button className="w-[50px] flex flex-row justify-center items-center h-[50px] rounded-full cursor-pointer absolute right-[20px] top-[20px] z-50 bg-gray-300" 
-                      onClick={()=>(router.push("/skitsPage"))}><Close/></button>
-                        <div className="flex flex-col items-center space-x-2">
-                          <SuccessIcon/>
-                          <span className="font-extrabold text-gray-600 text-[22px]">Success, Your skit has been created</span>
-                          <p className="flex w-full mt-[20px]">Copy the Link below and send it to your friends to view and vote for your skit</p>
-                          <input type="text" value={postUrl} readOnly className="border border-gray-300 mt-[5px] rounded-[30px] px-2 h-[50px] w-[250px]"/>
-                          <div>
-                            <button onClick={copyToClipboard} className="bg-transparent border-gray-700 rounded-[30px] hover:bg-gray-300 text-gray-800 mt-[10px] border-1 px-4 h-[50px]">
-                              Copy link
-                            </button>
-                            <Link href={postUrl}>
-                              <button className="bg-transparent border-gray-700 rounded-[30px] hover:bg-gray-300 text-gray-800 mt-[10px] border-1 px-4 h-[50px]">
-                                Open skit
-                              </button>
-                            </Link>
-                          </div>
+                  <PaystackBtn pay={paySuccesAction} amount={1000} email={session?.user.email?? null} purpose="registration for December Across Nigeria Quiz Show"/></div>)}
+                  { startRegistration && (
+                    <div className="fixed h-screen w-screen inset-0 z-50 flex items-center justify-center bg-gray-100">
+                      { regSuccess ? (
+                        <div className="flex flex-col justify-center text-center px-[5%] items-center">
+                          <SuccessIcon size={'30px'}/>
+                          <span className="font-bold text-gray-800 text-[20px]">Congratulations! You&apos;re officially registered for the December Across Nigeria Quiz Show</span>
+                          <p className="flex w-full text-left mt-[20px]">Thank you for completing your registration. You&apos;ve secured your spot and now in the running!</p>
+                          <p className="flex w-full text-left mt-[20px]">Our team will review all entries and the selected participants will be announced soon. Keep an eye on home page and your inbox for updates. Good luck, and stay tuned</p>
+                          <button className="px-[15px] py-[15px] mt-[20px] text-white bg-green-500 hover:bg-green-700 rounded-[30px]" onClick={()=>{router.push('/across_quiz_show')}}>Okay got it</button>
                         </div>
+                      ):(
+                        <div className="flex flex-col gap-3 justify-center items-center">
+                          <CycleLoader size={'60px'}/>
+                          <div className="mt-[15px] flex-row flex gap-2 items-center text-[16px]">Please wait while we process your registration...</div>
+                        </div>
+                      )}
                     </div>
-              )}  
-          </div>  
+                    )
+                  }  
+            </div>  
                 
-          )}
+              )}
         </div>
       </div>
+      <div className={`${startPayment?'fixed':'absolute'} w-fit h-fit p-[10px] rounded-full fixed font-semibold text-lg cursor-pointer right-[5%] top-[2%] md:right-10 md:top-10 z-50 bg-gray-200`} onClick={()=>{setToExit(true)}}>
+        <Close bg={'gray'} />
+      </div>
+      { toExit && <ExitConfirmScreen to={'/across_quiz_show'} cancelFunction={closeExit}/> }
     </div>
     );
 }

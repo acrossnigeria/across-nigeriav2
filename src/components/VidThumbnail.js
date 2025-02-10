@@ -7,9 +7,8 @@ const cld = new Cloudinary( {
 });
 
 
-export default function VidThumbnail( { url }) {
-    
-    const videoId = url.split('/upload/')[1].replace('mp4','jpeg').split('/')[1];
+export default function VidThumbnail( { url, videoId }) {
+    console.log(videoId)
     const thumbnailUrl = cld.image(videoId).setAssetType('video').format('auto:image').toURL().concat('.jpeg');
     console.log(thumbnailUrl)
 

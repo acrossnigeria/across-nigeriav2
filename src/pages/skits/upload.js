@@ -74,6 +74,7 @@ export default function UploadScreen() {
   const [ selectedFile, setSelectedFile ] = useState(null);
   const [ uploadProgress, SetUploadProgress ] = useState('1%');
   const [ isDeleting, setIsDeleting ] = useState(false);
+  const [ videoId, setVideoId ] = useState('');
   const {
     register,
     handleSubmit,
@@ -151,6 +152,7 @@ export default function UploadScreen() {
 
       dispatch({ type: 'UPLOAD_SUCCESS' });
       setDataUrl( data.secure_url);
+      setVideoId(data.public_id)
       toast.success('File uploaded successfully');
       
     } catch (err) {
@@ -257,7 +259,7 @@ export default function UploadScreen() {
                 </button>
                  { dataUrl ? (
                     <div className=' w-[100%]' style={{ position: "relative", height: "300px" }}>
-                      <VidThumbnail url={dataUrl}/>
+                      <VidThumbnail url={dataUrl} videoId={videoId}/>
                     </div>
                   ) : (
                     <div className='w-[100%] rounded-[20px] border-gray-400 border-1 h-[300px] flex flex-col justify-center text-gray-400 items-center'>
