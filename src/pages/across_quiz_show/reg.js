@@ -122,11 +122,9 @@ const Across_Quiz_Show = () => {
   
         setIntroVideoUrl( data.secure_url);
         setVideoId(data.public_id)
-        toast.success('File uploaded successfully');
         
       } catch (err) {
         handleRemoveFile();
-        toast.error(`${err.message}, please check your internet connection and try again`);
       }
       } else {
         return;
@@ -153,10 +151,9 @@ const Across_Quiz_Show = () => {
                 introVideoUrl,
                 agreedToTerms,
                 user:session?.user?._id,
-                paymentRef:ref,
+                paymentRef:ref.reference,
               }
-          const response = await axios.post(`/api/across_quiz_show/handler`,data);
-          console.log(response.data.id)
+          const response = await axios.post(`/api/across_quiz_show/handler`, data);
           setRegSuccess(true);
         } catch (err) {
           toast.error(`Something went wrong: ${err.message}`);
@@ -193,7 +190,6 @@ const Across_Quiz_Show = () => {
                     className="w-full border-1 border-gray-400 h-[45px] px-3 outline-none rounded-[12px] bg-gray-200 mb-[10px] accent-slate-950"
                     id="title"
                     placeholder="Are you a student, worker, farmer or enterprenuer...."
-                    autoFocus
                     value={status}
                     onChange={(e)=>{setStatus(e.target.value)}}
                   />
@@ -203,10 +199,9 @@ const Across_Quiz_Show = () => {
                   <label htmlFor="title"><span className="font-bold">2. </span>How well do you know about Nigeria? Give us a sense of your knowledge about Nigeria. What aspects of Nigerian history,
                     culture, geography, or politics do you find most fascinating? </label>
                   <textarea
-                    className="w-full border-1 border-gray-400 h-[90px] px-3 outline-none rounded-[12px] bg-gray-200 mb-[10px] accent-slate-950"
+                    className="w-full border-1 border-gray-400 h-[90px] p-3 outline-none rounded-[12px] bg-gray-200 mb-[10px] accent-slate-950"
                     id="title"
                     placeholder="Write here...."
-                    autoFocus
                     value={knowledgeOfNigeria}
                     onChange={(e)=>{setKnowledgeOfNigeria(e.target.value)}}
                   />
@@ -242,10 +237,9 @@ const Across_Quiz_Show = () => {
                 <div className="text-left flex flex-col mt-[10px] gap-2">
                   <label htmlFor="title"><span className="font-bold">5. </span>What Nigerian city or landmark would you love to visit the most and why ? This could be an iconic location, a historical site, or a place rich in culture. </label>
                   <textarea
-                    className="w-full border-1 border-gray-400 h-[90px] px-3 outline-none rounded-[12px] bg-gray-200 mb-[10px] accent-slate-950"
+                    className="w-full border-1 border-gray-400 h-[90px] p-3 outline-none rounded-[12px] bg-gray-200 mb-[10px] accent-slate-950"
                     id="title"
                     placeholder="Write here...."
-                    autoFocus
                     value={loveToVisit}
                     onChange={(e)=>{setLoveToVisit(e.target.value)}}
                   />
@@ -310,7 +304,6 @@ const Across_Quiz_Show = () => {
                     className="w-full border-1 border-gray-400 h-[45px] px-3 outline-none rounded-[12px] bg-gray-200 mb-[10px] accent-slate-950"
                     id="Whatsapp phone"
                     placeholder="+000 000..."
-                    autoFocus
                     value={whatsappPhone}
                     onChange={(e)=>{setWhatsappPhone(e.target.value)}}
                   />
