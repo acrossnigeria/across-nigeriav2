@@ -35,14 +35,14 @@ const Info = () => {
   return (
     <div className="relative h-full  grid grid-cols-1 top-0 border-b-1 pb-1 px-3 border-b-gray">
         
-      <div className="flex lg:w-full  w-full font-bold text-[30px] md:text-[50px] right-0   text-pretty">
-        <span className="w-full bg-clip-text bg-gradient-to-tr from-green-600 text-transparent to-green-200 font-extrabold tracking-wider">HOWFA?</span> 
+      <div className="flex lg:w-full  w-full text-[30px] md:text-[50px] right-0   text-pretty">
+        <span className="w-full bg-clip-text bg-gradient-to-tr from-green-600 text-transparent to-green-200 font-bold tracking-wider">HOWFA?</span> 
       </div>
-      <p className="font-semibold text-left md:text-[21px] text-[15px] mb-3 text-gray-800">{data.paragraph}</p>
+      <p className="text-left md:text-[21px] text-[16px] mb-3 text-gray-800">{data.paragraph}</p>
       <div className={`flex flex-row ${isMobile?'justify-center':''} `}>
-        <button style={{ display:( session?.user? 'none': 'block')}} className="w-[85%] md:w-[300px] px-[40px] font-extrabold text-white text-[20px] rounded-[30px] h-[60px] flex flex-row justify-center items-center tracking-wider bg-green-600 border-l-3 border-b-3 hover:border-b-0 hover:border-l-0 border-b-green-800 border-l-green-800  hover:bg-green-700">
+        <button style={{ display:( session?.user? 'none': 'block')}} className="w-[85%] md:w-[300px] px-[40px] text-white text-[20px] rounded-[30px] h-[60px] flex flex-row justify-center items-center tracking-wider bg-green-600 border-l-3 border-b-3 hover:border-b-0 hover:border-l-0 border-b-green-800 border-l-green-800  hover:bg-green-700">
             <Link  href="/account/reg">
-              Register now
+              Register Now
             </Link>
         </button> 
       </div>

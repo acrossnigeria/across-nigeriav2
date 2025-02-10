@@ -87,12 +87,12 @@ export default function Home() {
           </div>
         <div className="md:w-[900px] w-[100%] mx-auto">
           <Info/>
-          <p className="grid w-full mx-auto text-center bg-clip-text text-transparent mt-[40px] bg-gradient-to-tr from-yellow-200 to-orange-600 ">
-            <span style={{lineHeight:'30px'}} id="products" className="flex text-center text-[28px] font-sans font-extrabold mx-auto "> 
+          <p className="grid w-full mx-auto text-center bg-clip-text text-transparent mt-[40px] bg-gradient-to-b from-green-400 to-green-600 ">
+            <span id="products" className="flex text-center text-[25px] font-sans font-bold mx-auto "> 
                 OUR AMAZING PRODUCTS
             </span>
           </p>
-          <div className="mt-[10px] mb-[40px] grid left-0 grid-cols-1 gap-[30px] border-b-1 pb-3 md:grid-cols-2 lg:grid-cols-2 md:gap-4 mx-auto items-center px-4">
+          <div className="mt-[25px] mb-[40px] grid left-0 grid-cols-1 gap-[30px] border-b-1 pb-3 md:grid-cols-2 lg:grid-cols-2 md:gap-4 mx-auto items-center px-4">
               { games.map((card)=>(<Cards key={card.title} isOpen={card.isOpen} date={card.date} title={card.title} 
               link={card.link} image={card.image}/>))}
           </div>

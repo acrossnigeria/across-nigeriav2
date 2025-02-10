@@ -43,22 +43,22 @@ const toggleMenu=()=>{
             </Link>
             <div className="flex flex-row gap-[2rem]">
               <Link href={'/'}>
-                  <div className="flex font-mono text-[17px] h-full font-extrabold hover:text-green-400 hover:scale-110">
+                  <div className="flex text-[18px] h-full hover:text-green-400 hover:scale-110">
                     Home
                   </div>
               </Link>
               <Link href={'/giveaway-quiz'}>
-                  <div className="flex font-mono text-[17px] font-extrabold hover:text-green-400 hover:scale-110">
+                  <div className="flex text-[18px] hover:text-green-400 hover:scale-110">
                     Giveaway-quiz
                   </div>
               </Link>
               <Link href={'/shoutout'}>
-                  <div className="flex font-mono text-[17px] font-extrabold hover:text-green-400 hover:scale-110">
+                  <div className="flex text-[18px] hover:text-green-400 hover:scale-110">
                     Shout-out
                   </div>
               </Link>
               <Link href={'/about'}>
-                  <div className="flex font-mono text-[17px] font-extrabold hover:text-green-400 hover:scale-110">
+                  <div className="flex text-[18px] hover:text-green-400 hover:scale-110">
                     About
                   </div>
               </Link>
@@ -81,20 +81,20 @@ const toggleMenu=()=>{
                   <NotifyIcon/>
                   <div className={`absolute ml-[23px] mb-[23px] ${notification?(notification.unread === 0?'bg-gray-500':'bg-red-500 animate-pulse'):'bg-gray-500 animate-pulse'} flex flex-row justify-center items-center font-bold rounded-full p-2 h-[23px] text-[13px] w-[23px]`}>{notification?.unread}</div>
                 </Link> */}
-                <div style={{alignItems:'center'}} className="flex flex-row justify-between gap-2 h-[37px] pl-3 pr-[2px] cursor-pointer font-bold  text-white bg-green-800 transition duration-100 rounded-[30px] text-[16px]">
+                <div style={{alignItems:'center'}} className="flex flex-row justify-between gap-2 h-[37px] pl-3 pr-[2px] cursor-pointer  text-white bg-green-800 transition duration-100 rounded-[30px] text-[17px]">
                   <Link className="hover:scale-105" href={'/user/profile'}>{session.user.name}</Link>
                     <div className="hover:scale-105 hover:bg-green-900 rounded-[50%]"><Profile/></div>
                 </div>
               </div>
             ) : (
               <div style={{height:'fit-content', display:'flex', justifyContent:'space-between', alignItems:'center', gap:'1rem'}} >
-                <div className="flex  w-[100px] px-4 py-2 cursor-pointer items-center font-bold justify-center uppercase text-white transition duration-100  rounded-lg text-[12px]
+                <div className="flex  w-[100px] px-4 py-2 cursor-pointer items-center justify-center uppercase text-white transition duration-100  rounded-lg text-[12px]
                 ease-in-out hover:scale-125" >
                   <Link href="/account/reg" className="cursor-pointer" legacyBehavior>
                     <a>Register</a>
                   </Link>
                 </div>
-                <div className="flex  w-[100px] px-4 py-2 cursor-pointer items-center font-bold justify-center uppercase text-white  bg-yellow-400 transition duration-100  rounded-[30px] text-[12px]
+                <div className="flex  w-[100px] px-4 py-2 cursor-pointer items-center justify-center uppercase text-white  bg-yellow-400 transition duration-100  rounded-[30px] text-[12px]
                 ease-in-out hover:border-white hover:py-1 hover:bg-transparent hover:border-2" >
                   <Link href="/account/login" className="cursor-pointer" legacyBehavior>
                     <a>Login</a>
