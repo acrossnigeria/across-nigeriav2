@@ -3,15 +3,11 @@ import { useRouter } from "next/router";
 import React, { useEffect, useReducer, useState } from "react";
 import { useForm } from "react-hook-form";
 import { getError } from "../../../utils/error";
-import { CloseButton, toast } from "react-toastify";
-import Layout from "@/components/Layout";
-import { Textarea } from "@nextui-org/react";
 import PaystackBtn from "@/components/PaystackBtn"; 
 import { useSession } from "next-auth/react";
 import FileIcon from "../../../public/images/icon/FileIcon";
 import Upload from "../../../public/images/icon/Upload";
 import DeleteIcon from "../../../public/images/icon/DeleteIcon";
-import CreatorIcon from "../../../public/images/icon/CreatorIcon";
 import Link from "next/link";
 import ImgIcon from "../../../public/images/icon/ImgIcon";
 import CycleLoader from "@/components/CycleLoader";
@@ -22,29 +18,31 @@ import UploadLoader from "@/components/UploadLoader";
 
 const Across_Quiz_Show = () => {
     const { query } = useRouter();
-    const [ dataUrl, setDataUrl] = useState(null);
-    const [ title, setTitle ] = useState("");
-    const [description,setDescription] = useState("");
     const [ selectedFile, setSelectedFile ] = useState(null);
     const [ uploadProgress, SetUploadProgress ] = useState('1%');
     const [ isDeleting, setIsDeleting ] = useState(false);
     const [ anError, setAnError ] = useState(null);
     const [ loading, setLoading ] = useState(false)
-    const [ loadingUpdate, setLoadingUpdate ] = useState(false);
     const [ loadingPay, setLoadingPay ] = useState(false);
     const [ loadingUpload, setLoadingUpload ] = useState(false);
-
-    const {
-      register,
-      handleSubmit,
-      formState: { errors },
-      setValue,
-    } = useForm();
-    const[ postUrl, setPostUrl]=useState("")
     const[ showPreview, setShowPreview]=useState(false)
     const router = useRouter();
     const { data: session } = useSession();
-  
+
+    // form states
+    const [ status, setStatus ] = useState('');
+    const [ whatsappPhone, setWhatsappPhone ] = useState('');
+    const [ knowledgeOfNigeria, setKnowledgeOfNigeria ] = useState('');
+    const [referralSource, setReferralSource ] = useState('');
+    const [confidenceInKnowledge, setConfidenceInKnowledge ] = useState('');
+    const [ loveToVisit,  setLoveToVisit ] = useState('');
+    const [introVideoUrl, setIntroVideoUrl ] = useState('');
+    const [agreedToTerms, setAgreedToTerms ] = useState(false);
+    const [user, setUser ] = useState('');
+    const [paymentRef, setPaymentRef ] = useState('');
+    const isFormFilled = status !== '' && whatsappPhone !== '' && knowledgeOfNigeria !== '' && referralSource !== '' && confidenceInKnowledge !== '' && loveToVisit !== '' && introVideoUrl !== '' && agreedToTerms !== false
+
+    
     function extractPublicId(url) {
       const match = url.split('upload/')[1].split('/')[1];
       return match
@@ -54,16 +52,16 @@ const Across_Quiz_Show = () => {
       e.preventDefault();
       setIsDeleting(true);
       try {
-        if (dataUrl) {
-          const publicId = extractPublicId(dataUrl);
+        if (introVideoUrl) {
+          const publicId = extractPublicId(introVideoUrl);
           const response = await axios.patch('/api/media/delete-video', { publicId });
         }
         setSelectedFile(null);
         document.getElementById('videoFile').value = '';
-        setDataUrl(null);
+        setIntroVideoUrl(null);
         setIsDeleting(false);
       } catch (err) {
-        console.log(error);
+        console.log(err.message);
         toast.error('Failed to delete file, try again')
       }
     }
@@ -90,7 +88,7 @@ const Across_Quiz_Show = () => {
       try {
         const {
             data: { signature, timestamp },
-            } = await axios('/api/admin/cloudinary-sign?type=vid');
+            } = await axios('/api/admin/cloudinary-sign?type=quizShow');
      
         const file = e.target.files[0];
         const formData = new FormData();
@@ -98,6 +96,7 @@ const Across_Quiz_Show = () => {
         formData.append('signature', signature);
         formData.append('timestamp', timestamp);
         formData.append('api_key', process.env.NEXT_PUBLIC_CLOUDINARY_API_KEY);
+        formData.append('folder', 'quiz_show_uploads')
   
         const { data } = await axios.post(url, formData, 
           {
@@ -108,7 +107,7 @@ const Across_Quiz_Show = () => {
           }
         );
   
-        setDataUrl( data.secure_url);
+        setintroVideoUrl( data.secure_url);
         toast.success('File uploaded successfully');
         
       } catch (err) {
@@ -121,50 +120,34 @@ const Across_Quiz_Show = () => {
      
     };
   
-    const submitHandler=({title, description})=>{
+    const submitHandler=()=>{
       setTitle(title);
-      setDescription(description);
     };
   
-    const newData = {
-      name:session?.user.name?? null, 
-      userId:session?.user._id?? null, 
-      email:session?.user.email?? null,
-      url: dataUrl,
-    }
   
     const paySuccesAction = async (ref,) => {
         try {
-          const oldData = {
-            ...newData,
-            referencePay:ref.reference,
-            title:title, 
-            description:description, 
-            payment: true
-          }
-  
-          const data = oldData;
-          const response = await axios.post(`/api/skits`,data);
+          const data = {
+                status,
+                whatsappPhone,
+                knowledgeOfNigeria,
+                referralSource,
+                confidenceInKnowledge,
+                loveToVisit,
+                introVideoUrl,
+                agreedToTerms,
+                user:session?.user?._id,
+                paymentRef,
+              }
+          const response = await axios.post(`/api/across_quiz_show/handler`,data);
           console.log(response.data.id)
           toast.success('Product updated successfully');
-          const baseUrl = window.location.origin;
-          const url = `https://acrossnig.com/skits/${response.data.id}`;
-          setPostUrl(url)
           setShowPreview(true);
         } catch (err) {
-          toast.error(getError(err));
+          toast.error(`Something went wrong: ${err.message}`);
         }
       };
   
-    const copyToClipboard = () => {
-      navigator.clipboard.writeText(postUrl)
-        .then(() => {
-         toast.success('Link copied to clipboard!');
-        })
-        .catch((error) => {
-          console.error('Unable to copy link: ', error);
-        });
-    };
   
     const selectVideo = (e) => {
       e.preventDefault();
@@ -179,48 +162,43 @@ const Across_Quiz_Show = () => {
               <div className="alert-error">{anError}</div>
             ) : (
            <div>   
-            <form className="mx-auto align-middle snap-center flex flex-col self-center justify-center text-center content-center max-w-screen-md" onSubmit={handleSubmit(submitHandler)} >
+            <form className="mx-auto align-middle snap-center flex flex-col self-center justify-center text-center content-center max-w-screen-md" onSubmit={submitHandler} >
                 <div className="w-[100%] text-center gap-2 text-[22px] font-bold text-green-600 border-b-1 border-b-gray-400 pb-[20px]">Across Nigeria Quiz Show</div>
                 <span className="w-[100%] text-left gap-2 text-[30px] mt-[20px] mb-[10px] font-light text-black">Form</span>
                 <div className="text-[14px] text-left text-gray-500 italic mb-[35px] border-t-1 border-t-green-400 pt-[10px] rounded-[10px] px-[10px]">Thank you for your interest in participating in the Across Nigeria Quiz Show! Please take a few moments to complete the registration form below. be sure to review your information before submitting the form.</div>
                 
                 <div className="text-left flex flex-col gap-2">
-                  <label htmlFor="title">What is your current occupation/ Current status ? </label>
+                  <label htmlFor="title"><span className="font-bold">1. </span>What is your current occupation/ Current status ? </label>
                   <input
                     type="text"
                     className="w-full border-1 border-gray-400 h-[45px] px-3 outline-none rounded-[12px] bg-gray-200 mb-[10px] accent-slate-950"
                     id="title"
                     placeholder="Are you a student, worker, farmer or enterprenuer...."
                     autoFocus
-                    {...register('title', {
-                      required: 'Please enter your occupation or status',
-                    })}
+                    value={status}
+                    onChange={(e)=>{setStatus(e.target.value)}}
                   />
-                  {errors.title && (
-                    <div className="text-red-500">{errors.title.message}</div>
-                  )}
                 </div>
 
                 <div className="text-left flex flex-col mt-[10px] gap-2">
-                  <label htmlFor="title">How well do you know about Nigeria? Give us a sense of your knowledge about Nigeria. What aspects of Nigerian history,
+                  <label htmlFor="title"><span className="font-bold">2. </span>How well do you know about Nigeria? Give us a sense of your knowledge about Nigeria. What aspects of Nigerian history,
                     culture, geography, or politics do you find most fascinating? </label>
                   <textarea
                     className="w-full border-1 border-gray-400 h-[90px] px-3 outline-none rounded-[12px] bg-gray-200 mb-[10px] accent-slate-950"
                     id="title"
                     placeholder="Write here...."
                     autoFocus
-                    {...register('title', {
-                      required: 'Please enter your occupation or status',
-                    })}
+                    value={knowledgeOfNigeria}
+                    onChange={(e)=>{setKnowledgeOfNigeria(e.target.value)}}
                   />
-                  {errors.title && (
-                    <div className="text-red-500">{errors.title.message}</div>
-                  )}
                 </div>
 
                 <div className="text-left flex flex-col gap-2 mt-[10px]">
-                  <label htmlFor="title">How did you hear about Across Nigeria Quiz Show?</label>
-                  <select className="w-full border-1 border-gray-400 h-[45px] px-3 outline-none rounded-[12px] bg-gray-200 mb-[10px] accent-slate-950">
+                  <label htmlFor="title"><span className="font-bold">3. </span>How did you hear about Across Nigeria Quiz Show?</label>
+                  <select 
+                    value={referralSource} 
+                    onChange={(e)=>{setReferralSource(e.target.value)}}
+                    className="w-full border-1 border-gray-400 h-[45px] px-3 outline-none rounded-[12px] bg-gray-200 mb-[10px] accent-slate-950">
                     <option value="" disabled>-Select choice-</option>
                     <option value='social media'>Social Media</option>
                     <option value='from a friend'>From a Friend</option>
@@ -231,8 +209,10 @@ const Across_Quiz_Show = () => {
                 </div>
 
                 <div className="text-left flex flex-col gap-2 mt-[10px]">
-                  <label htmlFor="title">How confident are you in answering questions about Nigeria? </label>
-                  <select className="w-full border-1 border-gray-400 h-[45px] px-3 outline-none rounded-[12px] bg-gray-200 mb-[10px] accent-slate-950">
+                  <label htmlFor="title"><span className="font-bold">4. </span>How confident are you in answering questions about Nigeria? </label>
+                  <select value={confidenceInKnowledge}
+                    onChange={(e)=>{e.target.value}}
+                    className="w-full border-1 border-gray-400 h-[45px] px-3 outline-none rounded-[12px] bg-gray-200 mb-[10px] accent-slate-950">
                     <option value="" disabled>-Select choice-</option>
                     <option value='very confident'>Very Confident</option>
                     <option value='somewhat confident'>Somewhat Confident</option>
@@ -241,37 +221,33 @@ const Across_Quiz_Show = () => {
                 </div>
 
                 <div className="text-left flex flex-col mt-[10px] gap-2">
-                  <label htmlFor="title">What Nigerian city or landmark would you love to visit the most and why ? This could be an iconic location, a historical site, or a place rich in culture. </label>
+                  <label htmlFor="title"><span className="font-bold">5. </span>What Nigerian city or landmark would you love to visit the most and why ? This could be an iconic location, a historical site, or a place rich in culture. </label>
                   <textarea
                     className="w-full border-1 border-gray-400 h-[90px] px-3 outline-none rounded-[12px] bg-gray-200 mb-[10px] accent-slate-950"
                     id="title"
                     placeholder="Write here...."
                     autoFocus
-                    {...register('title', {
-                      required: 'Please enter your occupation or status',
-                    })}
+                    value={loveToVisit}
+                    onChange={(e)=>{setLoveToVisit(e.target.value)}}
                   />
-                  {errors.title && (
-                    <div className="text-red-500">{errors.title.message}</div>
-                  )}
                 </div>
                
                 <div className="mb-4 mt-[20px] text-left">
-                  <label htmlFor="imageFile">Upload a short video (1 minute max) introducing yourself, and share why you&apos;re excited to be part of the show</label>
+                  <label htmlFor="imageFile"><span className="font-bold">6. </span>Upload a short video (1 minute max) introducing yourself, and share why you&apos;re excited to be part of the show</label>
                   <div className="flex flex-col text-[15px] mt-[10px] mb-[10px]">
                     <span>In your video, we&apos;d love to hear:</span>
                     <span>- Who you are and where you&apos;re from</span>
                     <span>- Why you want to participate in the quiz show</span>
-                    <span>- How well do you know about nigeria</span>
+                    <span>- How well you know about nigeria</span>
                   </div>
                   <input accept=".mp4" type="file" className="w-full hidden" id="videoFile" onChange={uploadHandler}/>
                   <button onClick={selectVideo} className='bg-green-600 w-full mb-2 border-green-400 border-b-2 rounded-[25px] hover:bg-green-700 hover:border-none h-[50px] gap-[10px] flex text-white flex-row justify-center items-center'>
                     <span>Select a Video</span>
                     <Upload/>
                   </button>
-                   { dataUrl ? (
+                   { introVideoUrl ? (
                       <div className=' w-[100%]' style={{ position: "relative", height: "250px" }}>
-                        <VidThumbnail url={dataUrl}/>
+                        <VidThumbnail url={introVideoUrl}/>
                       </div>
                     ) : (
                       <div className='w-[100%] rounded-[20px] border-gray-400 border-1 h-[250px] flex flex-col justify-center text-gray-400 items-center'>
@@ -307,16 +283,35 @@ const Across_Quiz_Show = () => {
                   </div>
                 )}
                 {isDeleting && <span>Deleting video...</span>}
+
+                <div className="text-left flex flex-col mt-[10px] gap-2">
+                  <label htmlFor="title"><span className="font-bold">7. </span>Enter your Current Whatsapp Number here. (Note: participant will be contacted through they Whatsapp and email) </label>
+                  <input
+                    type="tel"
+                    className="w-full border-1 border-gray-400 h-[45px] px-3 outline-none rounded-[12px] bg-gray-200 mb-[10px] accent-slate-950"
+                    id="Whatsapp phone"
+                    placeholder="+000 000..."
+                    autoFocus
+                    value={whatsappPhone}
+                    onChange={(e)=>{setWhatsappPhone(e.target.value)}}
+                  />
+                </div>
+
                 <div className="mb-[20px] mt-[20px] text-left flex flex-row w-[100%] gap-3 items-top">
-                  <input className="h-[25px] w-[25px]" checked={false} type="checkbox"/>
+                  <input 
+                    className="h-[25px] cursor-pointer w-[25px]" 
+                    checked={agreedToTerms} 
+                    onClick={()=>{setAgreedToTerms(!agreedToTerms)}}
+                    type="checkbox"/>
                   <span className="text-left">
                     I agree to the <span className="text-green-500 underline">Terms and Conditions </span>
                     before proceeding.
                   </span>
                 </div>
                 <div className="mb-4 flex-row flex justify-center items-center">
-                  <button className="bg-green-500 h-[45px] mb-[80px] rounded-[25px] hover:border-l-0 hover:border-b-0 text-white hover:bg-green-600 border-l-3 border-b-3 border-b-green-800 border-l-green-800 w-[100%]" disabled={loadingUpdate||loadingUpload}>
-                    {loadingUpdate||loadingUpload ? 'Submiting...' : 'Submit'}
+                  <button 
+                  className={`${isFormFilled?'bg-green-500 hover:border-l-0 cursor-pointer hover:border-b-0 hover:bg-green-600 border-l-3 border-b-3 border-b-green-800 border-l-green-800':'bg-gray-300 cursor-not-allowed'} h-[45px] mb-[80px] rounded-[25px] text-white w-[100%]`} disabled={!isFormFilled}>
+                    Submit
                   </button>
                 </div>
             </form>

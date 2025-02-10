@@ -143,7 +143,7 @@ const [{ loading, error, loadingUpdate, loadingPay, loadingUpload }, dispatch] =
       dispatch({ type: 'UPLOAD_REQUEST' });
       const {
         data: { signature, timestamp },
-      } = await axios('/api/admin/cloudinary-sign');
+      } = await axios('/api/admin/cloudinary-sign?type=shoutOutImage');
    
       const file = e.target.files[0];
       const formData = new FormData();
@@ -151,7 +151,7 @@ const [{ loading, error, loadingUpdate, loadingPay, loadingUpload }, dispatch] =
       formData.append('signature', signature);
       formData.append('timestamp', timestamp);
       formData.append('api_key', process.env.NEXT_PUBLIC_CLOUDINARY_API_KEY);
-      formData.append('folder', 'temp_image_uploads');
+      formData.append('folder', 'shoutout_image_uploads');
       const { data } = await axios.post(url, formData);
       const user = session?.user?._id;
       console.log(user);
