@@ -20,7 +20,7 @@ const Handler = async (req, res) => {
                 paymentRef,
             } = req.body
             await db.connect();
-            const updatedData = await QuizShowParticipant.findByIdAndUpdate( tempId, {
+            const updatedData = await QuizShowParticipant.create({
                 status,
                 whatsappPhone,
                 knowledgeOfNigeria,
@@ -31,10 +31,10 @@ const Handler = async (req, res) => {
                 agreedToTerms,
                 user,
                 payment: true,
-                paymentRefernce,
+                paymentRef,
             } ) 
             await db.disconnect();
-            res.status(200).json( { success:true, message: 'user registered successfully', neededData:{ whatsappPhone:updatedData.whatsappPhone } })
+            res.status(200).json( { success:true, message: 'user registered successfully' })
 
         } else if (req.method === 'PUT') {
             res.status(400).json({ success:false, error:'invalid method'})
