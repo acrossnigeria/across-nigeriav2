@@ -51,9 +51,9 @@ const AmbassadorInfo = () => {
 
 
     useEffect(()=>{
-        if (session) {
+        setTimeout(() => {
             getAmbassadors();
-        }
+        }, 5000);
     }, [ session ])
 
     return (

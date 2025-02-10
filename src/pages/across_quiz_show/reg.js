@@ -2,7 +2,6 @@ import axios from "axios";
 import { useRouter } from "next/router";
 import React, { useEffect, useReducer, useState } from "react";
 import { toast } from "react-toastify";
-import { getError } from "../../../utils/error";
 import PaystackBtn from "@/components/PaystackBtn"; 
 import { useSession } from "next-auth/react";
 import FileIcon from "../../../public/images/icon/FileIcon";
@@ -16,7 +15,36 @@ import Close from "../../../public/images/icon/Close";
 import SuccessIcon from "../../../public/images/icon/SuccessIcon";
 import UploadLoader from "@/components/UploadLoader";
 import ExitConfirmScreen from "@/components/ExitConfirmScreen";
-import Support from "../../../public/images/illustration/Support";;
+import { getSession } from "next-auth/react";
+
+export async function  getServerSideProps(context) {
+    const session = await getSession(context);
+    const userId = session?.user?._id??false;
+    if ( userId ) {
+      const response = await axios.get(`http://localhost:3000/api/across_quiz_show/handler?type=CHECKUSER&userId=${userId}`);
+      const isUserRegistered = response.data.isUserFound;
+
+      if ( isUserRegistered ) {
+          return {
+              redirect: {
+                  destination: '/across_quiz_show',
+                  permanent: false,
+              }
+          };
+      };
+    } else {
+      return {
+        redirect: {
+            destination: '/account/login',
+            permanent: false,
+        }
+    };
+    }
+
+
+    return { props: { user: session?.user } };
+   
+} 
 
 const funFacts = [
   { id:1, text: "Did you know? A shout out isn't just for ads. its the perfect way to celebrate birthdays, achievements, or just to spread some love" },
@@ -114,7 +142,7 @@ const Across_Quiz_Show = () => {
         const { data } = await axios.post(url, formData, 
           {
             onUploadProgress: (progressEvent) => {
-              const percentage = Math.round( (progressEvent.loaded / progressEvent.total)*100);
+              const percentage = Math.round( ((progressEvent.loaded / progressEvent.total)*100)-2);
               SetUploadProgress(`${percentage}%`);
             },
           }
@@ -122,6 +150,7 @@ const Across_Quiz_Show = () => {
   
         setIntroVideoUrl( data.secure_url);
         setVideoId(data.public_id)
+        SetUploadProgress(`100%`);
         
       } catch (err) {
         handleRemoveFile();

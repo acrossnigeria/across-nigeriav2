@@ -13,7 +13,11 @@ const participantSchema = new mongoose.Schema({
     payment:{ type:Boolean, default:false },
     isSelected:{ type:Boolean, default:false },
     paymentRef:{ type:String, default:'temp_data'}
-})
+    },
+    {
+        timestamps:true,
+    }
+)
 
 const QuizShowParticipant = mongoose.models.QuizShowParticipant || mongoose.model( 'QuizShowParticipant', participantSchema );
 

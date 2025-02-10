@@ -5,7 +5,42 @@ const Handler = async (req, res) => {
     try {
 
         if (req.method === 'GET') {
-            res.status(400).json({ success:false, error:'invalid method'})
+            const type = req.query.type
+            console.log(type)
+            if ( type === 'CHECKUSER' ) {
+                const userId =  req.query.userId;
+                await db.connect();
+                const user = await QuizShowParticipant.findOne({ user:userId });
+                await db.disconnect();
+                if (user) {
+                    res.status(200).json( { success:true, isUserFound:true } );
+                } else {
+                    res.status(200).json( { success:true, isUserFound:false } );
+                }
+
+            } else if ( type === 'GETPARTICIPANTS' ) {
+                await db.connect();
+                const collection = await QuizShowParticipant.find().populate('User');
+                await db.disconnect();
+                const participants = [];
+                collection.map( (doc)=> {
+                    const data = {
+                        fullname:`${doc.user.name} ${doc.user.surname}`,
+                        whatsappPhone:doc.user.phone,
+                        email:doc.user.email,
+                        regAt:doc.createdAt,
+                        payRef:doc.paymentRef,
+                        status:doc.status,
+                        knowledgeOfNigeria:doc.knowledgeOfNigeria,
+                        referralSource:doc.referralSource,
+                        confidenceInKnowledge:doc.confidenceInKnowledge,
+                        loveToVisit:doc.loveToVisit,
+                        introVideoUrl:doc.introVideoUrl,
+                    }
+                    participants.push(data);
+                })
+                res.status(200).json( { success:true, participants } );
+            }
         } else if (req.method === 'POST') {
             const {
                 status,
