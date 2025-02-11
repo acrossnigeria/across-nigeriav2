@@ -21,7 +21,7 @@ export async function  getServerSideProps(context) {
     const session = await getSession(context);
     const userId = session?.user?._id??false;
     if ( userId ) {
-      const response = await axios.get(`http://localhost:3000/api/across_quiz_show/handler?type=CHECKUSER&userId=${userId}`);
+      const response = await axios.get(`http://acrossnig.com/api/across_quiz_show/handler?type=CHECKUSER&userId=${userId}`);
       const isUserRegistered = response.data.isUserFound;
 
       if ( isUserRegistered ) {
@@ -31,6 +31,8 @@ export async function  getServerSideProps(context) {
                   permanent: false,
               }
           };
+      } else {
+        return { props: { message: 'user not registered, proceed.'} }
       }
     } else {
       return {
@@ -40,7 +42,6 @@ export async function  getServerSideProps(context) {
         }
     };
     }
-    return { props: { message: 'user not registered, proceed.'} };
    
 } 
 
