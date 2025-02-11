@@ -31,7 +31,9 @@ export async function  getServerSideProps(context) {
                   permanent: false,
               }
           };
-      };
+      } else {
+        return { props: { message: 'user not registered.'}}
+      }
     } else {
       return {
         redirect: {
@@ -54,7 +56,7 @@ const funFacts = [
   { id:1, text:"Shout outs are the perfect way to celebrate life's small wins, big momments, or just a random act of kindeness!"}
 ]
 
-const Across_Quiz_Show = () => {
+const Across_Quiz_Show = ( { props } ) => {
     const { query } = useRouter();
     const [ selectedFile, setSelectedFile ] = useState(null);
     const [ uploadProgress, SetUploadProgress ] = useState('1%');
