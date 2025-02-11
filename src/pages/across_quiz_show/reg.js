@@ -31,8 +31,6 @@ export async function  getServerSideProps(context) {
                   permanent: false,
               }
           };
-      } else {
-        return { props: { message: 'user not registered, proceed.'} }
       }
     } else {
       return {
@@ -42,6 +40,7 @@ export async function  getServerSideProps(context) {
         }
     };
     }
+    return { props: { message: 'user not registered, proceed.'} };
    
 } 
 
