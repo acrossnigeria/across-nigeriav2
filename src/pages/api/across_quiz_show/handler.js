@@ -13,7 +13,7 @@ const Handler = async (req, res) => {
                 const user = await QuizShowParticipant.findOne({ user:userId });
                 await db.disconnect();
                 if (user) {
-                    res.status(200).json( { success:true, isUserFound:true } );
+                    res.status(200).json( { success:true, isUserFound:true, isUserSelected:user.isSelected } );
                 } else {
                     res.status(200).json( { success:true, isUserFound:false } );
                 }

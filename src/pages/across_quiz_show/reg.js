@@ -1,13 +1,12 @@
 import axios from "axios";
 import { useRouter } from "next/router";
-import React, { useEffect, useReducer, useState } from "react";
+import React, { useState } from "react";
 import { toast } from "react-toastify";
 import PaystackBtn from "@/components/PaystackBtn"; 
 import { useSession } from "next-auth/react";
 import FileIcon from "../../../public/images/icon/FileIcon";
 import Upload from "../../../public/images/icon/Upload";
 import DeleteIcon from "../../../public/images/icon/DeleteIcon";
-import Link from "next/link";
 import ImgIcon from "../../../public/images/icon/ImgIcon";
 import CycleLoader from "@/components/CycleLoader";
 import VidThumbnail from "@/components/VidThumbnail";
@@ -21,7 +20,7 @@ export async function  getServerSideProps(context) {
     const session = await getSession(context);
     const userId = session?.user?._id??false;
     if ( userId ) {
-      const response = await axios.get(`http://acrossnig.com/api/across_quiz_show/handler?type=CHECKUSER&userId=${userId}`);
+      const response = await axios.get(`https://acrossnig.com/api/across_quiz_show/handler?type=CHECKUSER&userId=${userId}`);
       const isUserRegistered = response.data.isUserFound;
 
       if ( isUserRegistered ) {
