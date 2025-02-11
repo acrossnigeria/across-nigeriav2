@@ -32,7 +32,7 @@ export async function  getServerSideProps(context) {
               }
           };
       } else {
-        return { props: { message: 'user not registered.'} }
+        return { props: { message: 'user not registered, proceed.'} }
       }
     } else {
       return {
