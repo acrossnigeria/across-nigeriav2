@@ -15,7 +15,7 @@ const Handler = async (req, res) => {
                 if (user) {
                     res.status(200).json( { success:true, isUserFound:true, isUserSelected:user.isSelected } );
                 } else {
-                    res.status(200).json( { success:true, isUserFound:false } );
+                    res.status(200).json( { success:true, isUserFound:false, isUserSelected:false } );
                 }
 
             } else if ( type === 'GETPARTICIPANTS' ) {
