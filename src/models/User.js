@@ -20,6 +20,9 @@ const userSchema = new mongoose.Schema(
     refCode:{type:String, required:false},
     references:{type:Number, required:false, default:0},  
     referredBy:{type:String, default:''},
+    bank:{type:String, default:null},
+    bankName:{type:String, default:null},
+    bankAccNo:{type:String, default:null},
   },
   {
     timestamps: true,

@@ -26,6 +26,7 @@ import NoShoutOut from "@/components/shout-out/NoShoutOut";
 import AmbassadorInfo from "@/components/AmbassadorInfo";
 import NoticeBanner from "@/components/NoticeBanner";
 import AddAccDetails from "@/components/notifiers/AddAccountDetails";
+import { useSession } from "next-auth/react";
 
 
 
@@ -49,7 +50,8 @@ export default function Home() {
   const [ isMobile, setIsMobile ] =useState(false);
   const [ shoutOut, setShoutOut ] = useState(null);
   const [ networkError, setNetworkError ] = useState(false);
-  const [ notify, setNotify ] = useState(false);
+  const [ notify, setNotify ] = useState(true);
+  const { data:session } = useSession();
 
   async function getShoutOuts() {
     try {
@@ -136,7 +138,7 @@ export default function Home() {
             <Testimonials/>
             <NoticeBanner/>
           </div>
-          { notify && <AddAccDetails state={notify} closeFunction={setNotify}/> }
+          { notify && <AddAccDetails userId={session?.user?._id} state={notify} closeFunction={setNotify}/> }
         </Layout> 
   );
 }

@@ -44,16 +44,6 @@ export async function  getServerSideProps(context) {
    
 } 
 
-const funFacts = [
-  { id:1, text: "Did you know? A shout out isn't just for ads. its the perfect way to celebrate birthdays, achievements, or just to spread some love" },
-  { id:2, text:"85% of people love receiving a shout out from their friends or family! Who doesn't enjoy being noticed?" },
-  { id:1, text:"Shout outs have been shown to boost your mood by 30%! send one today and make someone's day a little brighter!" },
-  { id:1, text:"Shout outs aren't just for business! From birthdays to 'just because' it's a fun way to share special moments" },
-  { id:1, text:"People are 40% more likely to remember a special shouout than a traditional message. make your shoutout unforgettable" },
-  { id:1, text:"Think a shoutout is just for big occasions? Think again You can send a shout out for literally anything from 'Good morning!' to 'You nailed it!'" },
-  { id:1, text:"A shout can be a great way to make someone feel special, no matter the occasion. it's like sending a hug through the internet!" },
-  { id:1, text:"Shout outs are the perfect way to celebrate life's small wins, big momments, or just a random act of kindeness!"}
-]
 
 const Across_Quiz_Show = ( { message } ) => {
     console.log( message )

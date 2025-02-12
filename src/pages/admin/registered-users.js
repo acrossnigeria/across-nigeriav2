@@ -19,8 +19,8 @@ export async function  getServerSideProps(context) {
     };
 
     return { props: { user: session?.user } };
-    
-}
+   
+} 
 
 
 export default function Users( { user } ) {
