@@ -21,7 +21,7 @@ export default function PaystackBtn(props) {
       reference: new Date().getTime().toString(),
       email: email,
       amount: amount * 100, //Amount is in the country's lowest currency. E.g Kobo, so 20000 kobo = N200
-      publicKey: testKey
+      publicKey: process.env.PAYSTACK_LIVE
     };
   const handlePaystackSuccessAction = async (ref) => {
     props.pay(ref);
