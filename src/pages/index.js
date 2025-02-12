@@ -31,7 +31,7 @@ import AddAccDetails from "@/components/notifiers/AddAccountDetails";
 
 export const games=[
   {title:"GIVE AWAY QUIZZES", image:image1,link:"/giveaway-quiz", date:'Live', isOpen:true },
-  {title:"ACROSS NIGERIA QUIZ SHOW",image:image12,link:"/soon", date:'February 2025', isOpen:false },
+  {title:"ACROSS NIGERIA QUIZ SHOW",image:image12,link:"/across_quiz_show", date:'February 2025', isOpen:true },
   {title:"ACROSS NIGERIA KING AND QUEEN", image:image3, link:"/soon", date:'2025', isOpen:false },
   {title:"SKITS ACROSS NIGERIA",image:image2,link:"/soon", date:'2025', isOpen:false },
   {title:"NAIJA VIBES", image:image8,link:"/soon", date:'2025', isOpen:false },
@@ -49,6 +49,7 @@ export default function Home() {
   const [ isMobile, setIsMobile ] =useState(false);
   const [ shoutOut, setShoutOut ] = useState(null);
   const [ networkError, setNetworkError ] = useState(false);
+  const [ notify, setNotify ] = useState(false);
 
   async function getShoutOuts() {
     try {
@@ -130,12 +131,12 @@ export default function Home() {
             </div>
             <NoticeBanner/>
             <span className="w-full mx-auto text-center mt-[35px] flex justify-center items-center md:flex-row flex-col mb-6 font-serif font-light text-[35px] text-green-800">
-              {"Testimonials".toUpperCase()}
+                {"Testimonials".toUpperCase()}
             </span>
             <Testimonials/>
             <NoticeBanner/>
           </div>
-          <AddAccDetails/>
+          { notify && <AddAccDetails state={notify} closeFunction={setNotify}/> }
         </Layout> 
   );
 }
