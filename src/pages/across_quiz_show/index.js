@@ -12,8 +12,10 @@ import answerIllus from "../../../public/images/illustration/answer.svg";
 import winnerIllus from "../../../public/images/illustration/winner.svg";
 import FaqCard from "@/components/FaqCard";
 import useCountdown from "./hooks/CountDown";
+import dynamic from "next/dynamic";
 
 
+const CountDownTimer = dynamic(() => import('./CountDownTimer'), { ssr:false });
 const faq = [
   {
       q:'How do i register?',
@@ -48,7 +50,6 @@ export async function  getServerSideProps(context) {
 
 const Index = ( { isUserRegistered, isUserSelected, username }) => {
   const [ isMobile, setIsMobile ] = useState(false);
-  const { days, hours, minutes, seconds } = useCountdown('February 22, 2025 00:00:00');
   const router = useRouter();
 
   useEffect(()=>{
@@ -83,12 +84,7 @@ const Index = ( { isUserRegistered, isUserSelected, username }) => {
               </div>
               <div className="flex flex-col md:items-center items-end md:w-[50%] md:mt-0 mt-2 w-[85%]">
                 <span className="md:text-[20px] text-[18px]">Next Quiz Show Begins In</span>
-                <div className="md:text-[28px] text-[20px] text-gray-700">
-                  <span>{days}{days>1?'Days':'Day'} : </span>
-                  <span>{hours}h : </span>
-                  <span>{minutes}m : </span>
-                  <span>{seconds}s</span>
-                </div>
+                <CountDownTimer/>
               </div> 
             </div>
             <div className="text-[29px] md:text-[40px] mx-auto text-center mt-[40px]">How It Works?</div>
