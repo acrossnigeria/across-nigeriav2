@@ -1,7 +1,7 @@
 import React from "react";
 import useCountdown from "./hooks/CountDown";
 
-export default function CountDownTimer() {
+const  CountDownTimer = () => {
     const { days, hours, minutes, seconds } = useCountdown('February 22, 2025 00:00:00');
 
     return (
@@ -13,3 +13,5 @@ export default function CountDownTimer() {
       </div>
     )
 }
+
+export default CountDownTimer;
