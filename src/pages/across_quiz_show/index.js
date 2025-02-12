@@ -126,7 +126,7 @@ const Index = ( { isUserRegistered, isUserSelected, username }) => {
                     <Image style={{borderRadius:'22px'}} alt='banner' layout="fill" objectFit="fill" src={winnerIllus}/>
                 </div> 
               </div>
-              { !isUserRegistered && <button className="bg-green-500 hover:bg-green-700 hover:scale-95 md:w-[50%] md:ml-[25%] ml-[7%] w-[86%] h-[55px] rounded-[30px] mx-auto mt-[20px] text-white text-[20px]">Register Now</button> }
+              { !isUserRegistered && <button onClick={toReg} className="bg-green-500 hover:bg-green-700 hover:scale-95 md:w-[50%] md:ml-[25%] ml-[7%] w-[86%] h-[55px] rounded-[30px] mx-auto mt-[20px] text-white text-[20px]">Register Now</button> }
             </div>
 
             <div className="rounded-[15px] border-green-600 mt-[35px] flex flex-col border-[2px] md:w-[50%] md:ml-[25%] w-[94%] ml-[3%] p-3">
