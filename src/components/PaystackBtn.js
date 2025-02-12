@@ -9,7 +9,6 @@ export default function PaystackBtn(props) {
     const [price, setPrice]=useState(0);
     const [localePayment, setLocalePayment]=useState('');
     const liveKey = 'pk_live_09ba874adcdca43ec856e37e480ec1e17dc13eda';
-    const testKey = 'pk_test_cbdf33dbafe37c266634416e1b99f1f6b87e709a';
 
     useEffect(()=>{
       setPrice(parseFloat(amount))
@@ -21,7 +20,7 @@ export default function PaystackBtn(props) {
       reference: new Date().getTime().toString(),
       email: email,
       amount: amount * 100, //Amount is in the country's lowest currency. E.g Kobo, so 20000 kobo = N200
-      publicKey: process.env.PAYSTACK_LIVE
+      publicKey: liveKey
     };
   const handlePaystackSuccessAction = async (ref) => {
     props.pay(ref);

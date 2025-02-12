@@ -74,8 +74,8 @@ const Index = ( { isUserRegistered, isUserSelected, username }) => {
             </div> 
             <div className="md:flex-row flex-col flex w-[96%] ml-[2%] py-[3%] md:px-[50px] px-[3%] rounded-r-[70px] bg-gradient-to-l from-gray-200 to-white mt-[50px]">
               <div className="flex flex-col md:w-[50%] w-[100%]">
-                <button onClick={!isUserRegistered && toReg } className={`md:text-[25px] ${isUserRegistered?'text-[18px]':'text-[20px]'} text-green-500 flex flex-row gap-2 hover:text-green-800`} >
-                  {isUserRegistered?`${username} You're registered for this month`:'Register Now with 1,000 Naira'}
+                <button onClick={!isUserRegistered && toReg } className={`md:text-[25px] ${isUserRegistered?'text-[18px]':'text-[20px] items-center'} text-green-500 flex flex-row gap-2 hover:text-green-800`} >
+                  {isUserRegistered?`${username>10?`${username.slice(0, 10)}..`:username} You're Registered`:'Register Now with 1,000 Naira'}
                   { !isUserRegistered && <Next bg={'black'} size={'15px'}/> }
                 </button> 
                 <span className="font-light text-[17px]">{isUserRegistered?(isUserSelected?'You Have been selected':'Selection Pending'):'Make it big and bright'}</span>
