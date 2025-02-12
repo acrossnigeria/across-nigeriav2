@@ -25,6 +25,7 @@ import RegularShoutout from "@/components/shout-out/RegularShoutout";
 import NoShoutOut from "@/components/shout-out/NoShoutOut";
 import AmbassadorInfo from "@/components/AmbassadorInfo";
 import NoticeBanner from "@/components/NoticeBanner";
+import AddAccDetails from "@/components/notifiers/AddAccountDetails";
 
 
 
@@ -134,7 +135,7 @@ export default function Home() {
             <Testimonials/>
             <NoticeBanner/>
           </div>
-   
+          <AddAccDetails/>
         </Layout> 
   );
 }

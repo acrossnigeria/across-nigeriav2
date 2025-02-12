@@ -33,4 +33,4 @@ const useCountdown = ( targetDate ) => {
     return timeLeft;
   }
 
-  export { useCountdown };
+  export default useCountdown;

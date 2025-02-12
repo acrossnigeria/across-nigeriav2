@@ -11,7 +11,7 @@ import flagillust from "../../../public/images/illustration/flagged.svg";
 import answerIllus from "../../../public/images/illustration/answer.svg";
 import winnerIllus from "../../../public/images/illustration/winner.svg";
 import FaqCard from "@/components/FaqCard";
-import { useCountdown } from "./hooks/CountDown";
+import useCountdown from "./hooks/CountDown";
 
 
 const faq = [
