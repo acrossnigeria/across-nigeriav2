@@ -21,7 +21,7 @@ const FaqCard = ( { data } ) => {
             <div className="flex flex-col text-white mt-[15px] justify-center items-center">
                 { data.map( (qa, index) => {
                     return (
-                        <div className="md:w-[50%] mt-[15px] w-[90%]">
+                        <div key={index} className="md:w-[50%] mt-[15px] w-[90%]">
                             <div onClick={()=>{buttons[index][1](!buttons[index][0])}} className="w-[100%] border-1 border-green-600 bg-gradient-to-t from-green-700 cursor-pointer to-green-800 rounded-[5px] flex flex-row justify-between items-center font-light p-2">
                                 <span>{qa.q}</span>
                                 <span className="text-[20px]">{buttons[index][0]?'-':'+'}</span>
