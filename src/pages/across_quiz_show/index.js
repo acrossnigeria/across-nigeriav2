@@ -11,10 +11,9 @@ import flagillust from "../../../public/images/illustration/flagged.svg";
 import answerIllus from "../../../public/images/illustration/answer.svg";
 import winnerIllus from "../../../public/images/illustration/winner.svg";
 import FaqCard from "@/components/FaqCard";
-import dynamic from "next/dynamic";
+import CountDownTimer from "./CountDownTimer";
 
 
-const CountDownTimer = dynamic(() => import('./CountDownTimer'), { ssr:false });
 const faq = [
   {
       q:'How do i register?',
