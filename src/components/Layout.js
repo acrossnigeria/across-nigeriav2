@@ -9,7 +9,7 @@ import Loader from "./Loader";
 import axios from "axios";
 import { useSession } from "next-auth/react";
 
-export default function Layout({ title, children, image, desc }) {
+export default function Layout({ title, children, image, desc, bg }) {
   const [isOpen, setIsOpen] = useState(false);
   const [ noti, setNoti ] = useState(null);
   const [ networkError, setNetworkError ] = useState(false);
@@ -77,7 +77,7 @@ export default function Layout({ title, children, image, desc }) {
         {isMobile&&<Navbar/>} */}
       <div className="flex left-0 ml-0 w-full overflow-hidden flex-col justify-between">
         <Loader/>
-        <main className="h-[100%] w-screen overflow-hidden pb-[100px] bg-gray-100 my-0 left-0 mx-auto">{children}</main>
+        <main className={`h-[100%] w-screen overflow-hidden ${bg?bg:'bg-gray-100'} my-0 left-0 mx-auto`}>{children}</main>
        
       </div> 
       <div className="flex-grow"></div><Footer/>

@@ -1,17 +1,6 @@
 import axios from "axios";
 import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
-import FileIcon from "../../../public/images/icon/FileIcon";
-import Upload from "../../../public/images/icon/Upload";
-import DeleteIcon from "../../../public/images/icon/DeleteIcon";
-import Link from "next/link";
-import ImgIcon from "../../../public/images/icon/ImgIcon";
-import CycleLoader from "@/components/CycleLoader";
-import VidThumbnail from "@/components/VidThumbnail";
-import Close from "../../../public/images/icon/Close";
-import SuccessIcon from "../../../public/images/icon/SuccessIcon";
-import UploadLoader from "@/components/UploadLoader";
-import ExitConfirmScreen from "@/components/ExitConfirmScreen";
 import { getSession } from "next-auth/react";
 import Layout from "@/components/Layout";
 import image1 from "../../../public/images/across_quiz_show.jpg";
@@ -21,33 +10,59 @@ import registerIllustration from "../../../public/images/illustration/register.s
 import flagillust from "../../../public/images/illustration/flagged.svg";
 import answerIllus from "../../../public/images/illustration/answer.svg";
 import winnerIllus from "../../../public/images/illustration/winner.svg";
+import FaqCard from "@/components/FaqCard";
+import { useCountdown } from "./hooks/CountDown";
 
-// export async function  getServerSideProps(context) {
-//     const session = await getSession(context);
-//     const userId = session?.user?._id??false;
-//       const response = await axios.get(`http://localhost:3000/api/across_quiz_show/handler?type=CHECKUSER&userId=${userId}`);
-//       const isUserRegistered = response.data.isUserFound;
-//       const isUserSelected = response.data.isUserSelected;
-//       const data = { isUserRegistered, isUserSelected }
 
-//       if ( isUserRegistered ) {
-//         return { props: { ...data } }
-//       } else {
-//         return { props: { ...data } }
-//       }
+const faq = [
+  {
+      q:'How do i register?',
+      a:'Click the Register Now button, fill the form and pay 1000 naira to enter '
+  },
+  {
+      q:'When will the quiz take place?',
+      a:'The quiz happens between the 22nd and 25th of every month. The next one is on february 22!'
+  },
+  {
+      q:'How do i get my winnings?',
+      a:'Winners receive their prize via bank transfer!. make sure to update your bank details in your account'
+  },
+]
+
+export async function  getServerSideProps(context) {
+    const session = await getSession(context);
+    const userId = session?.user?._id??false;
+    const username = session?.user?.name;
+    const response = await axios.get(`https://acrossnig.com/api/across_quiz_show/handler?type=CHECKUSER&userId=${userId}`);
+    const isUserRegistered = response.data.isUserFound;
+    const isUserSelected = response.data.isUserSelected;
+    const data = { isUserRegistered, isUserSelected, username  }
+
+      if ( isUserRegistered ) {
+        return { props: { ...data } }
+      } else {
+        return { props: { ...data } }
+      }
    
-// } 
+} 
 
-const Index = ( { isUserRegistered, isUserSelected }) => {
+const Index = ( { isUserRegistered, isUserSelected, username }) => {
   const [ isMobile, setIsMobile ] = useState(false);
+  const { days, hours, minutes, seconds } = useCountdown('February 22, 2025 00:00:00');
+  const router = useRouter();
+
   useEffect(()=>{
     if(/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)&&window.matchMedia("(max-width: 600px)").matches){ 
     setIsMobile(true)
   } else{setIsMobile(false)}
 // console.log(isMobile, navigator.userAgent)
   },[ isMobile ])
+
+  const toReg = () => {
+    router.push('/across_quiz_show/reg');
+  }
   return (
-    <Layout>
+    <Layout bg='white'>
         <div className={`pb-[50px] bg-white`}>
             <div className={`flex ${isMobile?'flex-col':'flex-row'} rounded-bl-[30px] bg-gradient-to-t from-gray-200 to-white h-[fit-content] justify-center ${isMobile?'':'px-[10%]'} py-[20px]`}>
                 <div className={` border-black ${isMobile?'w-[94%]':'w-[40%]'} self-center flex flex-col h-[fit-content] mb-[15px]`}>
@@ -58,25 +73,29 @@ const Index = ( { isUserRegistered, isUserSelected }) => {
                     <Image className="bg-gray-300" style={{borderRadius:'22px'}} alt='banner' layout="fill" objectFit="fill" src={image1}/>
                 </div> 
             </div> 
-            <div className="md:flex-row flex-col flex md:w-[100%] py-[3%] md:px-[50px] px-[3%] rounded-r-[70px] bg-gradient-to-l from-gray-200 to-white mt-[50px]">
+            <div className="md:flex-row flex-col flex w-[96%] ml-[2%] py-[3%] md:px-[50px] px-[3%] rounded-r-[70px] bg-gradient-to-l from-gray-200 to-white mt-[50px]">
               <div className="flex flex-col md:w-[50%] w-[100%]">
-                <button className="md:text-[25px] text-[20px] text-green-500 items-center flex flex-row gap-2 hover:text-green-800 ">Register Now for &#8358;1000 <Next bg={'black'} size={'15px'}/></button> 
-                <span className="font-light text-[17px]">Make it big and bright</span>
+                <button onClick={!isUserRegistered && toReg } className={`md:text-[25px] ${isUserRegistered?'text-[18px]':'text-[20px]'} text-green-500 items-center flex flex-row gap-2 hover:text-green-800`} >
+                  {isUserRegistered?`${username} You have registered for this months show`:'Register Now with 1,000 Naira'}
+                  { !isUserRegistered && <Next bg={'black'} size={'15px'}/> }
+                </button> 
+                <span className="font-light text-[17px]">{isUserRegistered?(isUserSelected?'You Have been selected':'Selection Pending'):'Make it big and bright'}</span>
               </div>
               <div className="flex flex-col md:items-center items-end md:w-[50%] md:mt-0 mt-2 w-[85%]">
                 <span className="md:text-[20px] text-[18px]">Next Quiz Show Begins In</span>
-                <div className="md:text-[30px] text-[25px] text-gray-700">
-                  <span>00 hrs : </span>
-                  <span>00 mins : </span>
-                  <span>00 secs</span>
+                <div className="md:text-[28px] text-[20px] text-gray-700">
+                  <span>{days}{days>1?'Days':'Day'} : </span>
+                  <span>{hours}h : </span>
+                  <span>{minutes}m : </span>
+                  <span>{seconds}s</span>
                 </div>
               </div> 
             </div>
-            <div className="text-[33px] md:text-[40px] mx-auto text-center mt-[40px]">How It Works?</div>
+            <div className="text-[29px] md:text-[40px] mx-auto text-center mt-[40px]">How It Works?</div>
             <div className="mt-[10px] py-5 px-[2%]">
               <div className="flex md:flex-row items-center rounded-l-[50px] py-[20px] bg-gradient-to-r from-gray-200 to-white justify-center flex-col">
                 <div className="flex flex-col md:w-[35%] w-[90%] gap-2">
-                  <span className="md:text-[30px] text-[20px] md:text-left text-center font-bold">Step 1. Register for &#8358;1,000 </span>
+                  <span className="md:text-[25px] text-[20px] md:text-left text-center font-bold">Step 1. Register with &#8358;1,000 </span>
                   <span className="md:text-[25px] md:text-left text-center text-[18px]">Register now to secure your spot!</span>
                 </div>
                 <div style={{height:(isMobile?'200px':'250px')}} className={`${isMobile?'w-[70%] left-[1%]':'w-[35%]'} mt-[20px] relative`}>
@@ -86,7 +105,7 @@ const Index = ( { isUserRegistered, isUserSelected }) => {
 
               <div className="flex md:flex-row mt-[30px] items-center rounded-r-[50px] py-[20px] bg-gradient-to-l from-gray-200 to-white justify-center flex-col">
                 <div className="flex flex-col md:w-[35%] w-[90%] gap-2">
-                  <span className="md:text-[30px] text-[20px] md:text-left text-center font-bold">Step 2. Join the quiz for the month </span>
+                  <span className="md:text-[25px] text-[20px] md:text-left text-center font-bold">Step 2. Join the quiz for the month </span>
                   <span className="md:text-[25px] md:text-left text-center text-[18px]">You will receive all the details after registration</span>
                 </div>
                 <div style={{height:(isMobile?'200px':'250px')}} className={`${isMobile?'w-[70%] left-[1%]':'w-[35%]'} mt-[20px] relative`}>
@@ -96,7 +115,7 @@ const Index = ( { isUserRegistered, isUserSelected }) => {
 
               <div className="flex md:flex-row mt-[30px] items-center rounded-l-[50px] py-[20px] bg-gradient-to-r from-gray-200 to-white justify-center flex-col">
                 <div className="flex flex-col md:w-[35%] w-[90%] gap-2">
-                  <span className="md:text-[30px] text-[20px] md:text-left text-center font-bold">Step 3. Answer 10 Questions on Nigeria </span>
+                  <span className="md:text-[25px] text-[20px] md:text-left text-center font-bold">Step 3. Answer 10 Questions on Nigeria </span>
                   <span className="md:text-[25px] md:text-left text-center text-[18px]">Test you knowledge about history, culture, music, politics and more</span>
                 </div>
                 <div style={{height:(isMobile?'200px':'250px')}} className={`${isMobile?'w-[70%] left-[1%]':'w-[35%]'} mt-[20px] relative`}>
@@ -106,17 +125,24 @@ const Index = ( { isUserRegistered, isUserSelected }) => {
 
               <div className="flex md:flex-row mt-[30px] items-center rounded-r-[50px] py-[20px] bg-gradient-to-l from-gray-200 to-white justify-center flex-col">
                 <div className="flex flex-col md:w-[35%] w-[90%] gap-2">
-                  <span className="md:text-[30px] text-[20px] md:text-left text-center font-bold">Step 4. Win &#8358;5,000 for Every Correct Answer! </span>
+                  <span className="md:text-[25px] text-[20px] md:text-left text-center font-bold">Step 4. Win &#8358;5,000 for Every Correct Answer! </span>
                   <span className="md:text-[25px] md:text-left text-center text-[18px]">Get all 10 right? That&apos;s &#8358;50,000! </span>
                 </div>
                 <div style={{height:(isMobile?'200px':'250px')}} className={`${isMobile?'w-[70%] left-[1%]':'w-[35%]'} mt-[20px] relative`}>
                     <Image style={{borderRadius:'22px'}} alt='banner' layout="fill" objectFit="fill" src={winnerIllus}/>
                 </div> 
               </div>
-              <button className="bg-green-500 hover:bg-green-700 hover:scale-95 md:w-[50%] md:ml-[25%] ml-[7%] w-[86%] h-[50px] rounded-[30px] mx-auto mt-[20px] text-white text-[20px]">Register Now</button>
+              { !isUserRegistered && <button className="bg-green-500 hover:bg-green-700 hover:scale-95 md:w-[50%] md:ml-[25%] ml-[7%] w-[86%] h-[55px] rounded-[30px] mx-auto mt-[20px] text-white text-[20px]">Register Now</button> }
             </div>
-      
+
+            <div className="rounded-[15px] border-green-600 mt-[35px] flex flex-col border-[2px] md:w-[50%] md:ml-[25%] w-[94%] ml-[3%] p-3">
+              <div className="mb-[10px] flex flex-col text-[25px]">Why Join?</div>
+              <span className="">&#9755; <span className="font-bold">Cash Rewards! </span> Win money just for answering questions!</span>
+              <span className="">&#9755; <span className="font-bold">Learn & Have Fun! </span> Discover amazing facts about Nigeria!</span>
+              <span className="">&#9755; <span className="font-bold">Happens Every Month! </span> Missed this one? Join the next!</span>
+            </div>
         </div>
+        <FaqCard data={faq}/>
     </Layout>
   )
 }
