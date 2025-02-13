@@ -118,7 +118,7 @@ const Page = () => {
                 </div>
             ):(
                 <div className="mt-[40px] h-[150px] text-[19px] text-gray-500 text-center">
-                    <span>You have'nt added any bank details</span>
+                    <span>You have&apos;nt added any bank details</span>
                 </div>
             ))
             }

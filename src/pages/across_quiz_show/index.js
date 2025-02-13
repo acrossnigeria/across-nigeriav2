@@ -65,8 +65,8 @@ const Index = ( { isUserRegistered, isUserSelected, username }) => {
         <div className={`pb-[50px] bg-white`}>
             <div className={`flex ${isMobile?'flex-col':'flex-row'} rounded-bl-[30px] bg-gradient-to-t from-gray-200 to-white h-[fit-content] justify-center ${isMobile?'':'px-[10%]'} py-[20px]`}>
                 <div className={` border-black ${isMobile?'w-[94%]':'w-[40%]'} self-center flex flex-col h-[fit-content] mb-[15px]`}>
-                    <span style={{lineHeight:(isMobile?'28px':'35px')}} className={`font-bold ${isMobile?'text-[25px] text-center':'text-[37px]'} text-pretty bg-gradient-to-bl from-green-400 to-green-700 bg-clip-text text-transparent`}>Nigeria&apos;s Ultimate Quiz Challenge! Win Up to &#8358;50,000! </span> 
-                    <span style={{lineHeight:'24px'}} className={`${isMobile?'text-center text-[20px]':'text-[25px]'} mt-3`} >Think you know Nigeria? Prove it! Answer 10 questions, win &#8358;5,000 per correct answer!</span>
+                    <span style={{lineHeight:(isMobile?'28px':'35px')}} className={`font-bold ${isMobile?'text-[25px] text-center':'text-[37px]'} text-pretty bg-gradient-to-bl from-green-400 to-green-700 bg-clip-text text-transparent`}>Nigeria&apos;s Ultimate Quiz Challenge! play and Win BIG! </span> 
+                    <span style={{lineHeight:'24px'}} className={`${isMobile?'text-center text-[20px]':'text-[25px]'} mt-3`} >Think you know Nigeria? Answer as many questions in 1 minute. win &#8358;5,000 per correct answer!!</span>
                 </div>
                 <div style={{height:(isMobile?'200px':'400px')}} className={`${isMobile?'w-[98%] left-[1%]':'w-[60%]'} mt-[20px] relative`}>
                     <Image className="bg-gray-300" style={{borderRadius:'22px'}} alt='banner' layout="fill" objectFit="fill" src={image1}/>
