@@ -90,7 +90,7 @@ const Index = ( { isUserRegistered, isUserSelected, username }) => {
               <div className="flex md:flex-row items-center rounded-l-[50px] py-[20px] bg-gradient-to-r from-gray-200 to-white justify-center flex-col">
                 <div className="flex flex-col md:w-[35%] w-[90%] gap-2">
                   <span className="md:text-[25px] text-[20px] md:text-left text-center font-bold">Step 1. Register with &#8358;1,000 </span>
-                  <span className="md:text-[25px] md:text-left text-center text-[18px]">Register now to secure your spot!</span>
+                  <span className="md:text-[25px] md:text-left text-center text-[18px]">Click on Register now to register for the show by paying &#8358;1000. Register now to secure your spot!</span>
                 </div>
                 <div style={{height:(isMobile?'200px':'250px')}} className={`${isMobile?'w-[70%] left-[1%]':'w-[35%]'} mt-[20px] relative`}>
                     <Image style={{borderRadius:'22px'}} alt='banner' layout="fill" objectFit="fill" src={registerIllustration}/>
@@ -99,8 +99,8 @@ const Index = ( { isUserRegistered, isUserSelected, username }) => {
 
               <div className="flex md:flex-row mt-[30px] items-center rounded-r-[50px] py-[20px] bg-gradient-to-l from-gray-200 to-white justify-center flex-col">
                 <div className="flex flex-col md:w-[35%] w-[90%] gap-2">
-                  <span className="md:text-[25px] text-[20px] md:text-left text-center font-bold">Step 2. Join the quiz for the month </span>
-                  <span className="md:text-[25px] md:text-left text-center text-[18px]">You will receive all the details after registration</span>
+                  <span className="md:text-[25px] text-[20px] md:text-left text-center font-bold">Step 2.Registration and Introduction </span>
+                  <span className="md:text-[25px] md:text-left text-center text-[18px]">Fill the form, Upload an introduction video stating your name, age, loaction, occupation, and why you're participating. Upload the video.</span>
                 </div>
                 <div style={{height:(isMobile?'200px':'250px')}} className={`${isMobile?'w-[70%] left-[1%]':'w-[35%]'} mt-[20px] relative`}>
                     <Image style={{borderRadius:'22px'}} alt='banner' layout="fill" objectFit="fill" src={flagillust}/>
@@ -109,8 +109,8 @@ const Index = ( { isUserRegistered, isUserSelected, username }) => {
 
               <div className="flex md:flex-row mt-[30px] items-center rounded-l-[50px] py-[20px] bg-gradient-to-r from-gray-200 to-white justify-center flex-col">
                 <div className="flex flex-col md:w-[35%] w-[90%] gap-2">
-                  <span className="md:text-[25px] text-[20px] md:text-left text-center font-bold">Step 3. Answer 10 Questions on Nigeria </span>
-                  <span className="md:text-[25px] md:text-left text-center text-[18px]">Test you knowledge about history, culture, music, politics and more</span>
+                  <span className="md:text-[25px] text-[20px] md:text-left text-center font-bold">Step 3. Participation and Winning </span>
+                  <span className="md:text-[25px] md:text-left text-center text-[18px]">Answering as many questions as possible within 1 minute to win &#8358;5,000 per correct answer. &#8358;10,000 for JOKER questions</span>
                 </div>
                 <div style={{height:(isMobile?'200px':'250px')}} className={`${isMobile?'w-[70%] left-[1%]':'w-[35%]'} mt-[20px] relative`}>
                     <Image style={{borderRadius:'22px'}} alt='banner' layout="fill" objectFit="fill" src={answerIllus}/>
@@ -119,8 +119,8 @@ const Index = ( { isUserRegistered, isUserSelected, username }) => {
 
               <div className="flex md:flex-row mt-[30px] items-center rounded-r-[50px] py-[20px] bg-gradient-to-l from-gray-200 to-white justify-center flex-col">
                 <div className="flex flex-col md:w-[35%] w-[90%] gap-2">
-                  <span className="md:text-[25px] text-[20px] md:text-left text-center font-bold">Step 4. Win &#8358;5,000 for Every Correct Answer! </span>
-                  <span className="md:text-[25px] md:text-left text-center text-[18px]">Get all 10 right? That&apos;s &#8358;50,000! </span>
+                  <span className="md:text-[25px] text-[20px] md:text-left text-center font-bold">Step 4. Testimonial and Payment </span>
+                  <span className="md:text-[25px] md:text-left text-center text-[18px]">After the show, send a testimonial with your name, winnings, experience, and rating of the show. Your cash prize will be paid via bank transfer upon receipt of your testimonial.</span>
                 </div>
                 <div style={{height:(isMobile?'200px':'250px')}} className={`${isMobile?'w-[70%] left-[1%]':'w-[35%]'} mt-[20px] relative`}>
                     <Image style={{borderRadius:'22px'}} alt='banner' layout="fill" objectFit="fill" src={winnerIllus}/>
