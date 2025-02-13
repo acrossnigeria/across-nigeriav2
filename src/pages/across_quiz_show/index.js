@@ -100,7 +100,7 @@ const Index = ( { isUserRegistered, isUserSelected, username }) => {
               <div className="flex md:flex-row mt-[30px] items-center rounded-r-[50px] py-[20px] bg-gradient-to-l from-gray-200 to-white justify-center flex-col">
                 <div className="flex flex-col md:w-[35%] w-[90%] gap-2">
                   <span className="md:text-[25px] text-[20px] md:text-left text-center font-bold">Step 2.Registration and Introduction </span>
-                  <span className="md:text-[25px] md:text-left text-center text-[18px]">Fill the form, Upload an introduction video stating your name, age, loaction, occupation, and why you're participating. Upload the video.</span>
+                  <span className="md:text-[25px] md:text-left text-center text-[18px]">Fill the form, Upload an introduction video stating your name, age, loaction, occupation, and why you&apos;re participating. Upload the video.</span>
                 </div>
                 <div style={{height:(isMobile?'200px':'250px')}} className={`${isMobile?'w-[70%] left-[1%]':'w-[35%]'} mt-[20px] relative`}>
                     <Image style={{borderRadius:'22px'}} alt='banner' layout="fill" objectFit="fill" src={flagillust}/>
@@ -110,7 +110,7 @@ const Index = ( { isUserRegistered, isUserSelected, username }) => {
               <div className="flex md:flex-row mt-[30px] items-center rounded-l-[50px] py-[20px] bg-gradient-to-r from-gray-200 to-white justify-center flex-col">
                 <div className="flex flex-col md:w-[35%] w-[90%] gap-2">
                   <span className="md:text-[25px] text-[20px] md:text-left text-center font-bold">Step 3. Participation and Winning </span>
-                  <span className="md:text-[25px] md:text-left text-center text-[18px]">Answering as many questions as possible within 1 minute to win &#8358;5,000 per correct answer. &#8358;10,000 for JOKER questions</span>
+                  <span className="md:text-[25px] md:text-left text-center text-[18px]">Answering as many questions as possible within 1 minute to win &#8358;5,000 per correct answer. ( &#8358;10,000 for JOKER question )</span>
                 </div>
                 <div style={{height:(isMobile?'200px':'250px')}} className={`${isMobile?'w-[70%] left-[1%]':'w-[35%]'} mt-[20px] relative`}>
                     <Image style={{borderRadius:'22px'}} alt='banner' layout="fill" objectFit="fill" src={answerIllus}/>
