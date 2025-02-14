@@ -29,21 +29,6 @@ import AddAccDetails from "@/components/notifiers/AddAccountDetails";
 import { useSession } from "next-auth/react";
 
 
-
-export const games=[
-  {title:"GIVE AWAY QUIZZES", image:image1,link:"/giveaway-quiz", date:'Live', isOpen:true },
-  {title:"ACROSS NIGERIA QUIZ SHOW",image:image12,link:"/across_quiz_show", date:'February 2025', isOpen:true },
-  {title:"ACROSS NIGERIA KING AND QUEEN", image:image3, link:"/soon", date:'2025', isOpen:false },
-  {title:"SKITS ACROSS NIGERIA",image:image2,link:"/soon", date:'2025', isOpen:false },
-  {title:"NAIJA VIBES", image:image8,link:"/soon", date:'2025', isOpen:false },
-  {title:"MYSTERY BOXES",image:image4,link:"/soon", date:'2026', isOpen:false },
-  {title:"STATE TREASURE HUNT SHOW",image:image5,link:"/soon", date:'2025', isOpen:false },
-  {title:"MEGA CASH OUT",image:image6,link:"/soon", date:'2025', isOpen:false },
-  {title:"ACROSS NIGERIA REALITY SHOW",image:image7,link:"/soon", date:'2027', isOpen:false },
-  {title:"SHOPPING HUSTLE",image:image9,link:"/soon", date:'2025', isOpen:false },
-  {title:"I DON HAMMA",image:image10,link:"/soon", date:'2026', isOpen:false },
-  {title:"KNOW YOUR LOCAL GOVERNMENT",image:image11,link:"/soon", date:'2025', isOpen:false },
-]
 const inter = Inter({ subsets: ["latin"] });
 
 export default function Home() {
@@ -52,6 +37,21 @@ export default function Home() {
   const [ networkError, setNetworkError ] = useState(false);
   const [ notify, setNotify ] = useState(true);
   const { data:session } = useSession();
+
+  const games = [
+    {title:"GIVE AWAY QUIZZES", image:image1,link:"/giveaway-quiz", date:'Live', isOpen:true },
+    {title:"ACROSS NIGERIA QUIZ SHOW",image:image12,link:"/across_quiz_show", date:'February 2025', isOpen:true },
+    {title:"ACROSS NIGERIA KING AND QUEEN", image:image3, link:"/soon", date:'2025', isOpen:false },
+    {title:"SKITS ACROSS NIGERIA",image:image2,link:"/soon", date:'2025', isOpen:false },
+    {title:"NAIJA VIBES", image:image8,link:"/soon", date:'2025', isOpen:false },
+    {title:"MYSTERY BOXES",image:image4,link:"/soon", date:'2026', isOpen:false },
+    {title:"STATE TREASURE HUNT SHOW",image:image5,link:"/soon", date:'2025', isOpen:false },
+    {title:"MEGA CASH OUT",image:image6,link:"/soon", date:'2025', isOpen:false },
+    {title:"ACROSS NIGERIA REALITY SHOW",image:image7,link:"/soon", date:'2027', isOpen:false },
+    {title:"SHOPPING HUSTLE",image:image9,link:"/soon", date:'2025', isOpen:false },
+    {title:"I DON HAMMA",image:image10,link:"/soon", date:'2026', isOpen:false },
+    {title:"KNOW YOUR LOCAL GOVERNMENT",image:image11,link:"/soon", date:'2025', isOpen:false },
+  ]
 
   async function getShoutOuts() {
     try {
@@ -76,13 +76,13 @@ export default function Home() {
     getShoutOuts();
   }, [])
 
-  useEffect( ()=>{
+  useEffect( () => {
 
     if(/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)&&window.matchMedia("(max-width: 600px)").matches){
       setIsMobile(true)
     } else{setIsMobile(false)}
 
-    },[ isMobile ])
+  },[ isMobile ])
 
   return (
         <Layout title={"Home Page"}>
