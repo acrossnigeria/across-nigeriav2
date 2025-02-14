@@ -34,10 +34,10 @@ export async function  getServerSideProps(context) {
     const session = await getSession(context);
     const userId = session?.user?._id??false;
     const username = session?.user?.name;
-    const response = await axios.get(`https://acrossnig.com/api/across_quiz_show/handler?type=CHECKUSER&userId=${userId}`);
+    const response = await axios.get(`http://localhost:3000/api/across_quiz_show/handler?type=CHECKUSER&userId=${userId}`);
     const isUserRegistered = response.data.isUserFound;
     const isUserSelected = response.data.isUserSelected;
-    const data = { isUserRegistered, isUserSelected, username  }
+    const data = { isUserRegistered, isUserSelected, username, userId  }
 
       if ( isUserRegistered ) {
         return { props: { ...data } }
@@ -47,7 +47,7 @@ export async function  getServerSideProps(context) {
    
 } 
 
-const Index = ( { isUserRegistered, isUserSelected, username }) => {
+const Index = ( { isUserRegistered, isUserSelected, username, userId }) => {
   const [ isMobile, setIsMobile ] = useState(false);
   const router = useRouter();
 
@@ -138,7 +138,7 @@ const Index = ( { isUserRegistered, isUserSelected, username }) => {
             </div>
         </div>
         <FaqCard data={faq}/>
-        <AddAccDetails userId={session?.user?._id} />
+        <AddAccDetails userId={userId} />
     </Layout>
   )
 }
