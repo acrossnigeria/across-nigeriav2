@@ -8,7 +8,20 @@ const nextConfig = {
   experimental: {
     turbo: false,
     outputFileTracing:true,
-  }
+  },
+  async headers() {
+    return [
+      {
+        source: '/', // Applies to the homepage
+        headers: [
+          {
+            key: 'Cache-Control',
+            value: 'no-store, max-age=0', // Disable caching
+          },
+        ],
+      },
+    ];
+  },
 };
 
 export default withNextVideo(nextConfig);
