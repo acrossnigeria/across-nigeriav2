@@ -6,7 +6,7 @@ const nextConfig = {
     domains: ['images.unsplash.com','i.imgur.com','res.cloudinary.com',], // Add the hostname(s) here
   },
   experimental: {
-    turbo: true,
+    turbo: false,
     outputFileTracing:true,
   }
 };
