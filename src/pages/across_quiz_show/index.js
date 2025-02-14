@@ -12,6 +12,7 @@ import answerIllus from "../../../public/images/illustration/answer.svg";
 import winnerIllus from "../../../public/images/illustration/winner.svg";
 import FaqCard from "@/components/FaqCard";
 import CountDownTimer from "./CountDownTimer";
+import AddAccDetails from "@/components/notifiers/AddAccountDetails";
 
 
 const faq = [
@@ -137,6 +138,7 @@ const Index = ( { isUserRegistered, isUserSelected, username }) => {
             </div>
         </div>
         <FaqCard data={faq}/>
+        <AddAccDetails userId={session?.user?._id} />
     </Layout>
   )
 }
