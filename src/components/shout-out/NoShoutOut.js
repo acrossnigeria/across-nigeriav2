@@ -28,7 +28,7 @@ const NoShoutOut = () => {
                 withoutControls
                 wrapAround={true}>
                     { funFacts.map( (fact)=>{
-                        return <span key={fact.key}>{fact.text}</span>
+                        return <span key={fact.id}>{fact.text}</span>
                     })}
                 </Carousel>
             </div>

@@ -2,26 +2,29 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import axios from "axios";
 
-export default function AddAccDetails( { closeFunction, state, userId }) {
+export default function AddAccDetails( { userId }) {
     const [ modPosition, setModPosition ] = useState('pt-0');
     const [ modOpacity, setModOpacity ] = useState('opacity-0');
     const [ modBlur, setModBlur ] = useState('backdrop-blur-[0px]');
+    const [ show, setShow ] = useState(false);
 
     const router = useRouter();
+    
 
     const animation = (type) => {
         if ( type==='in') {
+            setShow(true);
             setTimeout(() => {
                 setModPosition('pt-[8%]');
                 setModOpacity('opacity-100');
-                setModBlur('backdrop-blur-[2px]')
+                setModBlur('backdrop-blur-[2px]');
             }, 100);
         } else {
             setModPosition('pt-0');
             setModOpacity('opacity-50');
             setModBlur('backdrop-blur-0')
             setTimeout(() => {
-                closeFunction(!state);
+                setShow(false);
             }, 200);
         }
     }
@@ -63,7 +66,7 @@ export default function AddAccDetails( { closeFunction, state, userId }) {
         }
     }, [ userId ])
     return (
-        <div className={`h-screen flex transition-all duration-500 ease-in-out flex-col items-center ${modPosition} ${modOpacity} w-screen z-[3000] bg-black/10 ${modBlur} top-0 fixed`}>
+        <div className={`h-screen ${show?'':'hidden'} flex transition-all duration-500 ease-in-out flex-col items-center ${modPosition} ${modOpacity} w-screen z-[3000] bg-black/10 ${modBlur} top-0 fixed`}>
             <div className="bg-gray-100 flex flex-col p-4 text-center items-center rounded-[15px] md:w-[50%] w-[95%]">
                 <span className="text-[19px] font-bold">Receive Your Winnings Securely</span>
                 <div className="mt-[10px">

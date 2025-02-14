@@ -52,9 +52,9 @@ const Navbar = () => {
             <Logo/>
           </Link>
               {/* Search Bar */}
-          <button onClick={toggleMenu} style={{alignItems:'center'}} className='h-[40px] px-1 flex flex-row justify-center'>
+          <div onClick={toggleMenu} style={{alignItems:'center'}} className='h-[40px] px-1 flex flex-row justify-center'>
             <Search/>
-          </button>
+          </div>
         </div>
         {status === 'loading' ? (
           <div className=" w-[120px] h-[35px] items-center rounded-full justify-center uppercase text-white  bg-green-500 text-[14px] animate-pulse  ">

@@ -24,4 +24,3 @@ const Card = ( { title, image, link, date, isOpen } ) => {
 };
 
 export default Card;
-<div className=''></div>

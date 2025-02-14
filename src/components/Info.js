@@ -39,13 +39,11 @@ const Info = () => {
         <span className="w-full bg-clip-text bg-gradient-to-tr from-green-600 text-transparent to-green-200 font-bold tracking-wider">HOWFA?</span> 
       </div>
       <p className="text-left md:text-[21px] text-[18px] mb-5 text-gray-800">{data.paragraph}</p>
-      <div className={`flex flex-row ${isMobile?'justify-center':''} `}>
         <button style={{ display:( session?.user? 'none': 'block')}} className="w-[85%] md:w-[300px] px-[40px] text-white text-[20px] rounded-[30px] h-[60px] flex flex-row justify-center items-center tracking-wider bg-green-600 border-l-3 border-b-3 hover:border-b-0 hover:border-l-0 border-b-green-800 border-l-green-800  hover:bg-green-700">
             <Link  href="/account/reg">
               Register Now
             </Link>
         </button> 
-      </div>
       
       <div style={{gap:'10px'}} className="text-8xl mt-6 mb-1 mx-auto rounded-md justify-between flex">
           <Link href=''>

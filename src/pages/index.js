@@ -35,7 +35,6 @@ export default function Home() {
   const [ isMobile, setIsMobile ] =useState(false);
   const [ shoutOut, setShoutOut ] = useState(null);
   const [ networkError, setNetworkError ] = useState(false);
-  const [ notify, setNotify ] = useState(true);
   const { data:session } = useSession();
 
   const games = [
@@ -138,7 +137,7 @@ export default function Home() {
             <Testimonials/>
             <NoticeBanner/>
           </div>
-          { notify && <AddAccDetails userId={session?.user?._id} state={notify} closeFunction={setNotify}/> }
+          <AddAccDetails userId={session?.user?._id} />
         </Layout> 
   );
 }
