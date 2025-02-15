@@ -3,15 +3,24 @@ import db from "../../../../utils/db"
 
 const Handler = async (req, res) => {
     try {
-        if (req.method==='PUT') {
-            const { id, bank, bankName, bankAccNo } = req.body;
+        if (req.method==='GET') {
             await db.connect();
-            const user = await User.findByIdAndUpdate( id, { bank, bankName, bankAccNo });
-            if (user) {
-                res.status(200).json( { success:true, message:'Bank details updated successfully'});
-            } else {
-                res.status(200).json( { success:false, message:'Something Went wrong when updating info'});
-            }
+            const users = await User.find();
+            const docs = []
+            users.map( async (user) => {
+                if (user.refCode.includes(' ')) {
+                    const data = user.refCode.split(' ');
+                    const refCode = data[data.length-1];
+                    const doc = await User.findById( user._id.toString(), { refCode });
+                    docs.push(doc);
+                    console.log('success', refCode, doc);
+                } else {
+                    docs.push( { name:user.name, ref:user.refCode})
+                }
+            })
+            await db.disconnect();
+            res.status(200).json( { success:true, docs });
+
         } else {
             res.status(403).json({success:false, error:'Method not allowed'})
         }

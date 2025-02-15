@@ -228,7 +228,7 @@ const Register = () => {
 
     const referee = ref?ref:undefined;
     const randomCode = generateRandomCode();
-    const refCode= firstname.trim()+randomCode;
+    const refCode= firstname.slice(0, 3).trim()+randomCode;
     const refInfo = 'free reg';
 
     Cookies.set('refCode',refCode, {expires:1});
