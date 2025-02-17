@@ -70,16 +70,16 @@ const Handler = async ( req, res ) => {
             res.status(500).json( { success: false, error:err.message } );
         }
     } else if ( req.method === 'GET') {
-        const user = req.query?.user??false;
+        const user = req.query.user;
         try {
             await db.connect();
             const response = await ProductData.findOne( { name: 'topAmbassadorsFeb'} );
             let isAmbassador;
             let refs;
             if (user) {
-                const userData = await Ambassador.findOne({user:user}).populate('user');
-                isAmbassador = userData? true:false;
-                refs = userData.user.references;
+                const userData = await Ambassador.find( { user:user } ).populate('user');
+                isAmbassador = userData[0]?.user? true:false;
+                refs = userData[0]?.user?userData[0]?.user.references:0;
             } else {
                 isAmbassador = false;
                 refs = 0;
