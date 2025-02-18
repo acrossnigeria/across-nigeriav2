@@ -7,12 +7,13 @@ import { useSession } from "next-auth/react";
 
 const images = [
   { id: 1, image: "/images/ambassador.jpg" },
-  { id: 2, image: "/images/landing/gq-banner.JPG" },
-  { id: 3, image: "/images/landing/image1.jpg" },
-  { id: 4, image: "/images/landing/image4.jpg" },
-  { id: 5, image: "/images/landing/image5.jpg" },
-  { id: 6, image: "/images/landing/image6.jpg" },
-  { id: 7, image: "/images/landing/image7.jpg" },
+  { id: 2, image: "/images/adbanner.jpg" },
+  { id: 3, image: "/images/landing/gq-banner.JPG" },
+  { id: 4, image: "/images/landing/image1.jpg" },
+  { id: 5, image: "/images/admid1.jpg" },
+  { id: 6, image: "/images/landing/image5.jpg" },
+  { id: 7, image: "/images/landing/image6.jpg" },
+  { id: 8, image: "/images/admid2.jpg" },
 ];
 
 const bearSlideItemData = images.map((row) => {

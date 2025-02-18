@@ -27,6 +27,7 @@ import AmbassadorInfo from "@/components/AmbassadorInfo";
 import NoticeBanner from "@/components/NoticeBanner";
 import AddAccDetails from "@/components/notifiers/AddAccountDetails";
 import { useSession } from "next-auth/react";
+import banner1 from '../../public/images/adbanner.jpg';
 
 
 const inter = Inter({ subsets: ["latin"] });
@@ -99,7 +100,7 @@ export default function Home() {
               { games.map((card)=>(<Cards key={card.title} isOpen={card.isOpen} date={card.date} title={card.title} 
               link={card.link} image={card.image}/>))}
           </div>
-          <NoticeBanner/>
+          <NoticeBanner banner={banner1}/>
           <div className="my-[40px]">
             <AmbassadorInfo/>
           </div>
@@ -130,12 +131,12 @@ export default function Home() {
                 }
               
             </div>
-            <NoticeBanner/>
+            <NoticeBanner banner={banner1}/>
             <span className="w-full mx-auto text-center mt-[35px] flex justify-center items-center md:flex-row flex-col mb-6 font-serif font-light text-[35px] text-green-800">
                 {"Testimonials".toUpperCase()}
             </span>
             <Testimonials/>
-            <NoticeBanner/>
+            <NoticeBanner banner={banner1}/>
           </div>
           <AddAccDetails userId={session?.user?._id} />
         </Layout> 

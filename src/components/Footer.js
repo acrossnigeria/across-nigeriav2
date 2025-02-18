@@ -1,6 +1,7 @@
 import Image from "next/image";
 import React from "react";
 import img from "../../public/images/logo1.png"
+import ChangingBottomNoticeBanner from "./ChangingBottomNoticeBanner";
 
 export const Products = [
   {
@@ -18,7 +19,7 @@ function Footer() {
   return (
     
 
-<footer className="relative bg-green-950 backdrop-blur-3xl mb-0 bottom-0 backdrop-opacity-0 bg-opacity-100 text-white transition duration-700 
+<footer className="relative bg-green-950 backdrop-blur-3xl mb-0 pb-[30px] bottom-0 backdrop-opacity-0 bg-opacity-100 text-white transition duration-700 
         ease-in-out border-t-4 border-yellow-600">
     <div className="mx-auto w-full max-w-screen-xl p-4 py-6 lg:py-8">
         <div className="md:flex md:justify-between">
@@ -74,6 +75,7 @@ function Footer() {
           </div>
       </div>
     </div>
+    <ChangingBottomNoticeBanner/>
 </footer>
 
     );
