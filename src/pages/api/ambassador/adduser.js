@@ -29,7 +29,9 @@ const Handler = async (req, res) => {
     } else if ( req.method === 'GET') {
 
         try {
+            await db.connect();
             const ambassadors = await Ambassador.find().populate('user', 'name phone surname email references refCode');
+            await db.disconnect();
             let screeningList = [];
             ambassadors.map( ambassador => {
                 let data = { 

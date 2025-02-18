@@ -37,7 +37,7 @@ const Container = ( { children, admin, page } ) => {
                 <Link href={'/admin'}><button className={`${page==='dashboard'?'bg-red-600':''} flex p-2 w-[100%] pl-3 hover:border-b-1 hover:border-b-[#b4bedf] hover:bg-gray-900 transition-background duration-1000 flex-row items-center gap-2`}><AnIcon/>Dashboard</button></Link>
                 <Link href={'/admin/gqrs'}><button className={`${page==='gqrs'?'bg-red-600':''} flex p-2 w-[100%] pl-3 hover:border-b-1 hover:border-b-[#b4bedf] hover:bg-gray-900 transition-background duration-1000 flex-row items-center gap-2`}><RandomIcon/>GQ Random selector</button></Link>
                 <Link href={'/admin/ambassador-stats'}><button className={`${page==='amb'?'bg-red-600':''} flex p-2 w-[100%] pl-3 hover:border-b-1 hover:border-b-[#b4bedf] hover:bg-gray-900 transition-background duration-1000 flex-row items-center gap-2`}><RandomIcon/>Ambassador Stats</button></Link>
-                <Link href={'/admin/quiz_show_stats'}><button className={`${page==='amb'?'bg-red-600':''} flex p-2 w-[100%] pl-3 hover:border-b-1 hover:border-b-[#b4bedf] hover:bg-gray-900 transition-background duration-1000 flex-row items-center gap-2`}><RandomIcon/>Quiz show Stats</button></Link>
+                <Link href={'/admin/quiz_show_stats'}><button className={`${page==='qs'?'bg-red-600':''} flex p-2 w-[100%] pl-3 hover:border-b-1 hover:border-b-[#b4bedf] hover:bg-gray-900 transition-background duration-1000 flex-row items-center gap-2`}><RandomIcon/>Quiz show Stats</button></Link>
             </div>
             <div className="w-[100%] h-fit min-h-screen overflow-y-scroll bg-gray-200 text-gray-700">
                 {children}

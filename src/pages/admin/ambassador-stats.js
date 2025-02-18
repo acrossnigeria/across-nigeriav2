@@ -22,12 +22,6 @@ export async function  getServerSideProps(context) {
     
 }
 
-const tp = [ { fullname: 'Ali bayo', refs:'30', orgName:'Ahmadu bello university', status:'student', residence:'nasarawa', city:'Auta balefi', phone:'2349014349736', email:'example@email.com' },
-            { fullname: 'Ali bayo', refs:'30', orgName:'Ahmadu bello university', status:'student', residence:'nasarawa', city:'Auta balefi', phone:'2349014349736', email:'example@email.com' },
-            { fullname: 'Ali bayo', refs:'30', orgName:'Ahmadu bello university', status:'student', residence:'nasarawa', city:'Auta balefi', phone:'2349014349736', email:'example@email.com' },
-            { fullname: 'Ali bayo', refs:'30', orgName:'Ahmadu bello university', status:'student', residence:'nasarawa', city:'Auta balefi', phone:'2349014349736', email:'example@email.com' },
-            { fullname: 'Ali bayo', refs:'30', orgName:'Ahmadu bello university', status:'student', residence:'nasarawa', city:'Auta balefi', phone:'2349014349736', email:'example@email.com' },
-          ]
 
 const Amb = ( { user }) => {
     const [ isLoading, setIsLoading ] = useState(false);
