@@ -2,6 +2,13 @@ import QuizShowParticipant from "@/models/QuizShowParticipant";
 import db from "../../../../utils/db";
 
 const Handler = async (req, res) => {
+    function formatDate(date) {
+        const dateObj = new Date(date);
+        const options = { weekday: 'short', year: 'numeric', month: 'short', day: '2-digit'};
+        const brokenDateStr = dateObj.toLocaleDateString('en-US', options).split(', ');
+        const formatedDate = `${brokenDateStr[0]} ${brokenDateStr[1]} ${brokenDateStr[2]}`
+        return formatedDate;
+    }
     try {
 
         if (req.method === 'GET') {
@@ -20,7 +27,7 @@ const Handler = async (req, res) => {
 
             } else if ( type === 'GETPARTICIPANTS' ) {
                 await db.connect();
-                const collection = await QuizShowParticipant.find().populate('User');
+                const collection = await QuizShowParticipant.find().populate('user');
                 await db.disconnect();
                 const participants = [];
                 collection.map( (doc)=> {
@@ -28,7 +35,7 @@ const Handler = async (req, res) => {
                         fullname:`${doc.user.name} ${doc.user.surname}`,
                         whatsappPhone:doc.user.phone,
                         email:doc.user.email,
-                        regAt:doc.createdAt,
+                        regAt:formatDate(doc.createdAt),
                         payRef:doc.paymentRef,
                         status:doc.status,
                         knowledgeOfNigeria:doc.knowledgeOfNigeria,
