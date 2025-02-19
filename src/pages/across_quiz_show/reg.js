@@ -48,12 +48,16 @@ export async function  getServerSideProps(context) {
 const Across_Quiz_Show = ( { message } ) => {
     console.log( message )
     const { query } = useRouter();
-    const [ selectedFile, setSelectedFile ] = useState(null);
-    const [ uploadProgress, SetUploadProgress ] = useState('1%');
-    const [ isDeleting, setIsDeleting ] = useState(false);
+
+    // const [ selectedFile, setSelectedFile ] = useState(null);
+    // const [ uploadProgress, SetUploadProgress ] = useState('1%');
+    // const [ loadingUpload, setLoadingUpload ] = useState(false);
+    // const [ isDeleting, setIsDeleting ] = useState(false);
     const [ anError, setAnError ] = useState(null);
+    // const [ videoId, setVideoId ] = useState('');
+    const [ introVideoUrl, setIntroVideoUrl ] = useState('No introduction');
+
     const [ startPayment, setStartPayment ] = useState(false);
-    const [ loadingUpload, setLoadingUpload ] = useState(false);
     const [ regSuccess, setRegSuccess ] = useState(false);
     const [ startRegistration, setStartRegistration ] = useState(false)
     const router = useRouter();
@@ -67,88 +71,86 @@ const Across_Quiz_Show = ( { message } ) => {
     const [referralSource, setReferralSource ] = useState('');
     const [confidenceInKnowledge, setConfidenceInKnowledge ] = useState('');
     const [ loveToVisit,  setLoveToVisit ] = useState('');
-    const [ introVideoUrl, setIntroVideoUrl ] = useState('');
-    const [ videoId, setVideoId ] = useState('');
     const [agreedToTerms, setAgreedToTerms ] = useState(false);
-    const isFormFilled = status !== '' && whatsappPhone !== '' && knowledgeOfNigeria !== '' && referralSource !== '' && confidenceInKnowledge !== '' && loveToVisit !== '' && introVideoUrl !== '' && agreedToTerms !== false
+    const isFormFilled = status !== '' && whatsappPhone !== '' && knowledgeOfNigeria !== '' && referralSource !== '' && confidenceInKnowledge !== '' && loveToVisit !== '' && agreedToTerms !== false
 
     
-    function extractPublicId(url) {
-      const match = url.split('upload/')[1].split('/')[1];
-      return match
-    }
+    // function extractPublicId(url) {
+    //   const match = url.split('upload/')[1].split('/')[1];
+    //   return match
+    // }
   
-    const handleRemoveFile = async (e) => {
-      if (e) {
-        e.preventDefault();
-      }
-      setIsDeleting(true);
-      try {
-        if (introVideoUrl) {
-          const publicId = extractPublicId(introVideoUrl);
-          const response = await axios.patch('/api/media/delete-video', { publicId });
-        }
-        setSelectedFile(null);
-        document.getElementById('videoFile').value = '';
-        setIntroVideoUrl(null);
-        setIsDeleting(false);
-      } catch (err) {
-        console.log(err.message);
-        toast.error('Failed to delete file, try again')
-      }
-    }
+    // const handleRemoveFile = async (e) => {
+    //   if (e) {
+    //     e.preventDefault();
+    //   }
+    //   setIsDeleting(true);
+    //   try {
+    //     if (introVideoUrl) {
+    //       const publicId = extractPublicId(introVideoUrl);
+    //       const response = await axios.patch('/api/media/delete-video', { publicId });
+    //     }
+    //     setSelectedFile(null);
+    //     document.getElementById('videoFile').value = '';
+    //     setIntroVideoUrl(null);
+    //     setIsDeleting(false);
+    //   } catch (err) {
+    //     console.log(err.message);
+    //     toast.error('Failed to delete file, try again')
+    //   }
+    // }
     
-    const uploadHandler = async (e) => {
-      setSelectedFile(e.target.files[0]);
+    // const uploadHandler = async (e) => {
+    //   setSelectedFile(e.target.files[0]);
   
-      if (!e.target.files || e.target.files.length === 0) {
-      toast.error('Please select a VIDEO file to upload.');
-      return;
-      }
-      // Check file size
-      const fileSize = e.target.files[0].size; // Size in bytes
-      const maxSize = 35 * 1024 * 1024; // 30 MB in bytes
-      if (fileSize > maxSize) {
-        toast.error('File size exceeds 35MB limit.');
+    //   if (!e.target.files || e.target.files.length === 0) {
+    //   toast.error('Please select a VIDEO file to upload.');
+    //   return;
+    //   }
+    //   // Check file size
+    //   const fileSize = e.target.files[0].size; // Size in bytes
+    //   const maxSize = 35 * 1024 * 1024; // 30 MB in bytes
+    //   if (fileSize > maxSize) {
+    //     toast.error('File size exceeds 35MB limit.');
   
-        e.target.files[0].value = "";  
-          return;
-      };
-      const result = window.confirm(`Do you want to proceed with uploading ${e.target.files[0].name}?`);
-      if (result) {
-        const url = `https://api.cloudinary.com/v1_1/${process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME}/upload`;
-      try {
-        const { data: { signature, timestamp } } = await axios('/api/admin/cloudinary-sign?type=quizShow');
+    //     e.target.files[0].value = "";  
+    //       return;
+    //   };
+    //   const result = window.confirm(`Do you want to proceed with uploading ${e.target.files[0].name}?`);
+    //   if (result) {
+    //     const url = `https://api.cloudinary.com/v1_1/${process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME}/upload`;
+    //   try {
+    //     const { data: { signature, timestamp } } = await axios('/api/admin/cloudinary-sign?type=quizShow');
      
-        const file = e.target.files[0];
-        const formData = new FormData();
-        formData.append('file', file);
-        formData.append('signature', signature);
-        formData.append('timestamp', timestamp);
-        formData.append('api_key', process.env.NEXT_PUBLIC_CLOUDINARY_API_KEY);
-        formData.append('folder', 'quiz_show_uploads')
+    //     const file = e.target.files[0];
+    //     const formData = new FormData();
+    //     formData.append('file', file);
+    //     formData.append('signature', signature);
+    //     formData.append('timestamp', timestamp);
+    //     formData.append('api_key', process.env.NEXT_PUBLIC_CLOUDINARY_API_KEY);
+    //     formData.append('folder', 'quiz_show_uploads')
   
-        const { data } = await axios.post(url, formData, 
-          {
-            onUploadProgress: (progressEvent) => {
-              const percentage = Math.round( ((progressEvent.loaded / progressEvent.total)*100)-2);
-              SetUploadProgress(`${percentage}%`);
-            },
-          }
-        );
+    //     const { data } = await axios.post(url, formData, 
+    //       {
+    //         onUploadProgress: (progressEvent) => {
+    //           const percentage = Math.round( ((progressEvent.loaded / progressEvent.total)*100)-2);
+    //           SetUploadProgress(`${percentage}%`);
+    //         },
+    //       }
+    //     );
   
-        setIntroVideoUrl( data.secure_url);
-        setVideoId(data.public_id)
-        SetUploadProgress(`100%`);
+    //     setIntroVideoUrl( data.secure_url);
+    //     setVideoId(data.public_id)
+    //     SetUploadProgress(`100%`);
         
-      } catch (err) {
-        handleRemoveFile();
-      }
-      } else {
-        return;
-      }
+    //   } catch (err) {
+    //     handleRemoveFile();
+    //   }
+    //   } else {
+    //     return;
+    //   }
      
-    };
+    // };
   
     const submitHandler=(e)=>{
       e.preventDefault();
@@ -263,7 +265,7 @@ const Across_Quiz_Show = ( { message } ) => {
                   />
                 </div>
                
-                <div className="mb-4 mt-[20px] text-left">
+                {/* <div className="mb-4 mt-[20px] text-left">
                   <label htmlFor="imageFile"><span className="font-bold">6. </span>Upload a short video (1 minute max) introducing yourself, and share why you&apos;re excited to be part of the show</label>
                   <div className="flex flex-col text-[15px] mt-[10px] mb-[10px]">
                     <span>In your video, we&apos;d love to hear:</span>
@@ -293,30 +295,30 @@ const Across_Quiz_Show = ( { message } ) => {
                     )
                       }
                 </div>
-                {selectedFile && (
-                  <div className={`${isDeleting?'animate-pulse opacity-50':''} flex flex-col justify-between items-center bg-gray-200 h-fit py-[10px] px-[10px] mt-[5px]`}>
-                    <div className="flex w-full flex-row justify-between items-center">
-                      <div className='flex flex-row gap-[15px] items-center'>
-                        <FileIcon/>
-                        <div className='flex flex-col text-left text-[12px] text-gray-500'>
-                          <span>{selectedFile.name.length>50?selectedFile.name.slice(0, 45)+' ...mp4':selectedFile.name}</span>
-                          <span>{((selectedFile.size/1024)/1024).toFixed(2)} mb</span>
+                  {/* {selectedFile && ( */}
+                    {/* <div className={`${isDeleting?'animate-pulse opacity-50':''} flex flex-col justify-between items-center bg-gray-200 h-fit py-[10px] px-[10px] mt-[5px]`}>
+                      <div className="flex w-full flex-row justify-between items-center">
+                        <div className='flex flex-row gap-[15px] items-center'>
+                          <FileIcon/>
+                          <div className='flex flex-col text-left text-[12px] text-gray-500'>
+                            <span>{selectedFile.name.length>50?selectedFile.name.slice(0, 45)+' ...mp4':selectedFile.name}</span>
+                            <span>{((selectedFile.size/1024)/1024).toFixed(2)} mb</span>
+                          </div>
+                          
                         </div>
-                        
+                        <button disabled={!(uploadProgress==='100%')} className={`cursor-pointer border-2 rounded-[50%] p-[11px] hover:bg-gray-400 transition-background duration-500 ease-in-out ${uploadProgress==='100%'?'opacity-[100%]':'opacity-[0%]'}`} onClick={handleRemoveFile}><DeleteIcon/></button>
                       </div>
-                      <button disabled={!(uploadProgress==='100%')} className={`cursor-pointer border-2 rounded-[50%] p-[11px] hover:bg-gray-400 transition-background duration-500 ease-in-out ${uploadProgress==='100%'?'opacity-[100%]':'opacity-[0%]'}`} onClick={handleRemoveFile}><DeleteIcon/></button>
+                      <div className=" bg-gray-200 flex flex-col w-full text-left text-[14px]">
+                        <UploadLoader percentage={uploadProgress}/>
+                        <span className={`text-red-600 ${uploadProgress === '100%'?'hidden':''} text-[12px]`}>Please don&apos;t Navigate from this page, your file is uploading</span>
+                      </div>
+    
                     </div>
-                    <div className=" bg-gray-200 flex flex-col w-full text-left text-[14px]">
-                      <UploadLoader percentage={uploadProgress}/>
-                      <span className={`text-red-600 ${uploadProgress === '100%'?'hidden':''} text-[12px]`}>Please don&apos;t Navigate from this page, your file is uploading</span>
-                    </div>
-  
-                  </div>
-                )}
-                {isDeleting && <span>Deleting video...</span>}
+                  )} */} 
+                {/* {isDeleting && <span>Deleting video...</span>} */}
 
                 <div className="text-left flex flex-col mt-[10px] gap-2">
-                  <label htmlFor="title"><span className="font-bold">7. </span>Enter your Current Whatsapp Number here. (Note: participant will be contacted through they Whatsapp and email) </label>
+                  <label htmlFor="title"><span className="font-bold">6. </span>Enter your Current Whatsapp Number here. (Note: participant will be contacted through they Whatsapp and email) </label>
                   <input
                     type="tel"
                     className="w-full border-1 border-gray-400 h-[45px] px-3 outline-none rounded-[12px] bg-gray-200 mb-[10px] accent-slate-950"
@@ -353,7 +355,7 @@ const Across_Quiz_Show = ( { message } ) => {
                       { regSuccess ? (
                         <div className="flex flex-col justify-center text-center px-[5%] items-center">
                           <SuccessIcon size={'30px'}/>
-                          <span className="font-bold text-gray-800 text-[20px]">Congratulations! You&apos;re officially registered for the Febraury Across Nigeria Quiz Show</span>
+                          <span className="font-bold text-gray-800 text-[20px]">Congratulations! {session?.user?.name} You&apos;re officially registered for the Febraury Across Nigeria Quiz Show</span>
                           <p className="flex w-full text-left mt-[20px]">Thank you for completing your registration. You&apos;ve secured your spot and now in the running!</p>
                           <p className="flex w-full text-left mt-[20px]">Our team will review all entries and the selected participants will be announced soon. Keep an eye on home page and your inbox for updates. Good luck, and stay tuned</p>
                           <button className="px-[15px] py-[15px] mt-[20px] text-white bg-green-500 hover:bg-green-700 rounded-[30px]" onClick={()=>{router.push('/across_quiz_show')}}>Okay got it</button>
