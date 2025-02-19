@@ -107,9 +107,9 @@ const Across_Quiz_Show = ( { message } ) => {
       }
       // Check file size
       const fileSize = e.target.files[0].size; // Size in bytes
-      const maxSize = 30 * 1024 * 1024; // 30 MB in bytes
+      const maxSize = 35 * 1024 * 1024; // 30 MB in bytes
       if (fileSize > maxSize) {
-        toast.error('File size exceeds 30MB limit.');
+        toast.error('File size exceeds 35MB limit.');
   
         e.target.files[0].value = "";  
           return;
@@ -286,7 +286,7 @@ const Across_Quiz_Show = ( { message } ) => {
                           <>
                           <span className="mb-2">video thumbnail</span>
                           <ImgIcon/>
-                          <span className="mt-3 text-[13px] text-gray-500">video should not exceed 30MB and 1 minute</span>
+                          <span className="mt-3 text-[13px] text-gray-500">video should not exceed 35MB and 1 minute</span>
                           </>) 
                         }
                       </div>
