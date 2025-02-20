@@ -30,7 +30,7 @@ const Page = ( { user } ) => {
         setIsGettingData(true);
         setData(null)
         try {
-            const response = await axios.get('/api/across_quiz_show/handler?type=GETPARTICIPANTS');
+            const response = await axios.get('/api/across_quiz_show/getParticipants');
             if (response.data.success) {
                 setData(response.data.participants);
             } else {
