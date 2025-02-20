@@ -12,8 +12,7 @@ const Handler = async (req, res) => {
     try {
 
         if (req.method === 'GET') {
-            const type = req.query.type
-            console.log(type)
+            const type = req.query.type;
             if ( type === 'CHECKUSER' ) {
                 const userId =  req.query.userId;
                 await db.connect();
