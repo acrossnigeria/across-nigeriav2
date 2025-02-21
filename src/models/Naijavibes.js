@@ -15,5 +15,5 @@ const naijavibesSchema=new mongoose.Schema({
     timestamps: true,
   });
 
-  const Naijavibes=mongoose.models.Naijavibes || mongoose.model('Naijavibes',naijavibesSchema);
+  const Naijavibes = mongoose.models.Naijavibes || mongoose.model('Naijavibes', naijavibesSchema);
   export default Naijavibes;

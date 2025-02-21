@@ -168,12 +168,11 @@ const Across_Quiz_Show = ( { message } ) => {
                 referralSource,
                 confidenceInKnowledge,
                 loveToVisit,
-                introVideoUrl,
                 agreedToTerms,
                 user:session?.user?._id,
                 paymentRef:ref.reference,
               }
-          const response = await axios.post(`/api/across_quiz_show/handler`, data);
+          const response = await axios.post(`/api/across_quiz_show/regParticipant`, data);
           setRegSuccess(true);
         } catch (err) {
           toast.error(`Something went wrong: ${err.message}`);

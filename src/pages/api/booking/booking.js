@@ -69,8 +69,6 @@ const handler = async (req, res) => {
             await db.connect();
             const booking = await Booking.findByIdAndUpdate(bookingId, finalizedBooking, { new: true} );
             await db.disconnect();
-            console.log('success booking shout out');
-            console.log(booking);
             res.send({ message: 'Shout out booked successfully!' }); // Send the response back to the client
         } catch (error) {
             console.error("Error Uploading data:", error);
