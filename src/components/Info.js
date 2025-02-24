@@ -25,20 +25,25 @@ const Info = () => {
 
   const { status, data: session } = useSession();
   const data={
-  paragraph: ` We offer a variety of giveaways, game show and reality shows that
-            cater to different tastes and interests. Whether you want to win
-            amazing prizes, test your skills and knowledge about Nigeria, or
-            watch captivating stories unfold, we have something to entertain and
-            put a smile on everyone’s face.`,
-  reversed:true
+      paragraph: ` We offer a variety of giveaways, game show and reality shows that
+                cater to different tastes and interests. Whether you want to win
+                amazing prizes, test your skills and knowledge about Nigeria, or
+                watch captivating stories unfold, we have something to entertain and
+                put a smile on everyone’s face.`,
+      paragraph2: `We provide a wide range of giveaways, game shows, and reality shows
+                designed to suit diverse tastes and interests. Whether you're looking 
+                to win incredible prizes, challenge your knowledge and skills about
+                Nigeria, or enjoy captivating stories, we have something to entertain 
+                and bring joy to everyone`,
+      reversed:true
     };
   return (
     <div className="relative h-full  grid grid-cols-1 top-0 border-b-1 pb-1 px-3 border-b-gray">
         
-      <div className="flex lg:w-full  w-full text-[30px] md:text-[50px] right-0   text-pretty">
+      <div className="flex lg:w-full  w-full text-[35px] md:text-[50px] right-0   text-pretty">
         <span className="w-full bg-clip-text bg-gradient-to-tr from-green-600 text-transparent to-green-200 font-bold tracking-wider">HOWFA?</span> 
       </div>
-      <p className="text-left md:text-[21px] text-[18px] mb-5 text-gray-800">{data.paragraph}</p>
+      <p className="text-left text-[21px] mt-[4px] mb-5 text-gray-800">{data.paragraph2}</p>
         <button style={{ display:( session?.user? 'none': 'block')}} className="w-[85%] md:w-[300px] px-[40px] text-white text-[20px] rounded-[30px] h-[60px] flex flex-row justify-center items-center tracking-wider bg-green-600 border-l-3 border-b-3 hover:border-b-0 hover:border-l-0 border-b-green-800 border-l-green-800  hover:bg-green-700">
             <Link  href="/account/reg">
               Register Now

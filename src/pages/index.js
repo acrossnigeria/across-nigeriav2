@@ -24,10 +24,10 @@ import CycleLoader from "@/components/CycleLoader";
 import RegularShoutout from "@/components/shout-out/RegularShoutout";
 import NoShoutOut from "@/components/shout-out/NoShoutOut";
 import AmbassadorInfo from "@/components/AmbassadorInfo";
-import NoticeBanner from "@/components/NoticeBanner";
 import AddAccDetails from "@/components/notifiers/AddAccountDetails";
 import { useSession } from "next-auth/react";
-import banner1 from '../../public/images/adbanner.jpg';
+import AdBanner1 from "@/components/adBanner1";
+import AdBanner2 from "@/components/AdBanner2";
 
 
 const inter = Inter({ subsets: ["latin"] });
@@ -86,10 +86,10 @@ export default function Home() {
 
   return (
         <Layout title={"Home Page"}>
-          <div className="bg-gradient-to-b pt-1 from-green-600 to-gray-100">
+          <div className="bg-gradient-to-b pt-[20px] from-green-600 to-gray-100">
             <ReviewSlider/>
           </div>
-        <div className="md:w-[900px] w-[100%] mx-auto">
+        <div className="md:w-[900px] mt-[25px] w-[100%] mx-auto">
           <Info/>
           <p className="grid w-full mx-auto text-center bg-clip-text text-transparent mt-[40px] bg-gradient-to-b from-green-400 to-green-600 ">
             <span id="products" className="flex text-center text-[25px] font-sans font-bold mx-auto "> 
@@ -100,7 +100,7 @@ export default function Home() {
               { games.map((card)=>(<Cards key={card.title} isOpen={card.isOpen} date={card.date} title={card.title} 
               link={card.link} image={card.image}/>))}
           </div>
-          <NoticeBanner banner={banner1}/>
+          <AdBanner1/>
           <div className="my-[40px]">
             <AmbassadorInfo/>
           </div>
@@ -131,12 +131,12 @@ export default function Home() {
                 }
               
             </div>
-            <NoticeBanner banner={banner1}/>
+            <AdBanner2/>
             <span className="w-full mx-auto text-center mt-[35px] flex justify-center items-center md:flex-row flex-col mb-6 font-serif font-light text-[35px] text-green-800">
                 {"Testimonials".toUpperCase()}
             </span>
             <Testimonials/>
-            <NoticeBanner banner={banner1}/>
+            <AdBanner1/>
           </div>
           <AddAccDetails userId={session?.user?._id} />
         </Layout> 
