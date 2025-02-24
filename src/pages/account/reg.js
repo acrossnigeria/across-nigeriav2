@@ -3,7 +3,6 @@ import { useRouter } from 'next/router';
 import axios from 'axios';
 import Cookies from 'js-cookie';
 import { Store } from '../../../utils/Store';
-import Layout from '@/components/Layout';
 import { PhoneInput } from 'react-international-phone';
 import 'react-international-phone/style.css';
 import Checkbox from '@/components/Checkbox';
@@ -16,6 +15,9 @@ import { signIn } from 'next-auth/react';
 import BackIcon from '../../../public/images/icon/BackIcon';
 import CycleLoader from '@/components/CycleLoader';
 import { setConfig } from 'next/config';
+import logo1 from "../../../public/images/logo1.png";
+import Image from 'next/image';
+import Next from '../../../public/images/icon/Next';
 
 const Register = () => {
    const nigeriaStates = [
@@ -52,18 +54,69 @@ const Register = () => {
   const [ toConfirmPage, setToConfirmPage ] = useState(false);
   const [ toAuthPage, setToAuthPage ] = useState(false);
   const [toFormPage, setToFormPage ] = useState(true);
-  const [ otp, setOtp ] = useState('');
-  const [ isOtpSent, setIsOtpSent ] = useState(false);
+
   const [ confirmText, setConfirmText ] = useState('Confirm');
   const [ requestText, setRequestText ] = useState('Request code');
   const [ regText, setRegText ] = useState('Register');
   const [loading, setLoading ] = useState(false);
+
   const [ isOtpInvalid, setIsOtpInvalid ] = useState(false);
   const [ showEmailExistError, setShowEmailExistError ] = useState(false);
+  const [ activeInput, setActiveInput ] = useState(0);
+  const [ boxArray, setBoxArray ] = useState(['', '', '', '', '', '']);
+  const [ isOtpSent, setIsOtpSent ] = useState(false);
   
   const [ timer, setTimer ] = useState(60);
   const [ timerDisplay, setTimerDisplay ] = useState(true);
   const [ allowSubmit, setAllowSubmit ] = useState(true);
+
+  // Update otp focus
+  useEffect( () => {
+    const inputBox = document.getElementById(`otp-${activeInput}`);
+    if (inputBox) {
+        inputBox.focus();
+    }
+  }, [activeInput]);
+
+  const otpBorderRed = (notVerified) => {
+    if (notVerified) {
+      boxArray.map( (_, index) => {
+        const inputBox = document.getElementById(`otp-${index}`);
+        inputBox.style.borderColor = 'red';
+      })
+    } else {
+      boxArray.map( (_, index) => {
+        const inputBox = document.getElementById(`otp-${index}`);
+        inputBox.style.borderColor = 'gray';
+      })
+    }
+  }
+
+  const handleInput = ( e, index) => {
+    if (isOtpInvalid) {
+        otpBorderRed(false)
+        setIsOtpInvalid(false);
+    }
+    const str = e.target.value;
+    // only accept digits. if non-digit ignore
+    if (!/^\d*$/.test(e.target.value)) return 
+
+    // update the OTP state and take only the last digit
+    const newOtp = [...boxArray];
+    newOtp[index] = str.slice(-1);
+    setBoxArray(newOtp);
+
+    // if digit was entered and was not the last digit move to the next box
+    if ( str && (index < boxArray.length-1) ) {
+        setActiveInput(index+1);
+    }
+  };
+
+  const handleKeyDown = ( e, index ) => {
+    if ( e.key === 'Backspace' && boxArray[index] === '' ) {
+        setActiveInput(index-1);
+    }
+  }
 
     // loads the confirm page
   const today=new Date();
@@ -178,7 +231,12 @@ const Register = () => {
 
   const verifyOtp = async () => {
     setConfirmText('Verifying...');
-    const data = { token:otp, email };
+    let otpCode = ''
+    boxArray.map((val)=>{
+        otpCode = otpCode.concat(val)
+    });
+    console.log(otpCode)
+    const data = { token:otpCode, email };
     let response;
     let isVerified;
     try {
@@ -188,6 +246,7 @@ const Register = () => {
         initiateReg();
       } else {
         setIsOtpInvalid(true);
+        otpBorderRed(true);
         const count = setTimeout(() => {
           setIsOtpInvalid(false);
         }, 10000);
@@ -259,7 +318,7 @@ const Register = () => {
       if (result.error) {
           console.log(result.error);
       }
-      router.push('/success')
+      router.push('/account/registration-success');
 
     } catch (err) {
       setLoading(false)
@@ -335,21 +394,28 @@ const Register = () => {
   // }
 
   return (
-    <div className='flex flex-col'>
+    <div className='flex flex-col bg-white'>
       <Loader/>
       <div className={`${toAuthPage || toConfirmPage ? 'hidden':''} flex flex-row justify-end px-8 py-3`}>
           <Link href={'/'}><Close/></Link> 
       </div>
-      <div className={`${toFormPage?'':'hidden'} pt-4 pb-10`}>
-        <div className='border-b-1 border-green-100 py-3 text-center text-[17px] font-bold text-green-600'>
-          <span>ACROSS NIGERIA REALITY SHOW</span>
+      <div className={`${toFormPage?'':'hidden'} pt-[40px]`}>
+        <div className='text-center flex flex-row justify-center gap-1 items-center'>
+          <Image src={logo1} alt='logo' placeholder='blur' className='h-[45px] w-[50px]' />
+          <div className='flex flex-col justify-center items-start'>
+            <span className='text-[16px] font-bold text-green-700'>ACROSS NIGERIA</span>
+            <span className='text-[14px] text-green-500'>REALITY SHOW</span>
+          </div>
         </div>
 
         {/* <Layout> */}
-        <div className="max-w-[90%] mx-auto">
+        <div className="mx-auto bg-gray-100 mt-[50px] border-t-1 border-t-gray-500 rounded-t-[30px] pb-[50px]">
           {/* handleSubmit */}
-          <form onSubmit={toConfirmDetails} className="md:max-w-xl flex flex-col max-w-full mx-auto  m-4 p-2">
-            <h1 className="text-2xl text-left font-bold mb-9">Register</h1>
+          <form onSubmit={toConfirmDetails} className="md:max-w-[517px] flex px-4 flex-col mt-[20px] max-w-full mx-auto">
+            <div className='flex flex-col md:w-[100%] w-[300px] mx-auto mt-[5px]'>
+              <span className="text-center font-bold text-[19px]">Welcome!</span>
+              <span style={{lineHeight:'22px'}} className="text-center mt-1 mb-9 text-[16px]">Giveaways, game shows, and entertainment. Your journey starts here.</span>
+            </div>
             <div className="mb-4">
               <label htmlFor="name" className="block mb-2">Name</label>
               <input
@@ -359,7 +425,7 @@ const Register = () => {
                 name="name"
                 value={firstname}
                 onChange={(e) => setFirstname(e.target.value)}
-                className="rounded-[8px] h-[52px] text-[19px] px-4  w-full focus:outline-gray-600 bg-gray-200"
+                className="w-full border-gray-400 border-1 h-[45px] px-3 outline-none rounded-[15px] bg-gray-200"
                 required
                 autoFocus
               />
@@ -373,7 +439,7 @@ const Register = () => {
                 name="surname"
                 value={lastname}
                 onChange={ (e)=>setLastname(e.target.value) }
-                className="bg-gray-200 rounded-[8px] h-[52px] text-[19px] px-4 w-full focus:outline-gray-600"
+                className="w-full border-gray-400 border-1 h-[45px] px-3 outline-none rounded-[15px] bg-gray-200"
                 required
               />
             </div>
@@ -386,27 +452,27 @@ const Register = () => {
                 name="email"
                 value={email}
                 onChange={ (e)=>setEmail(e.target.value) }
-                className="bg-gray-200 rounded-[8px] h-[52px] text-[19px] px-4 w-full focus:outline-gray-600"
+                className="w-full border-gray-400 border-1 h-[45px] px-3 outline-none rounded-[15px] bg-gray-200"
                 required
               />
-              <div className={`${showEmailExistError?'':'hidden'} text-red-500 italic text-[14px]`}>An account with this email already exists. please try logging in or use a different email to create a new account.</div>
+              <div className={`${showEmailExistError?'':'hidden'} text-red-500 text-[14px]`}>An account with this email already exists. please try logging in or use a different email to create a new account.</div>
             </div>
     <div className='mb-4'>
       <label htmlFor="dob" className="block mb-2">Date of Birth</label>
-          <div className="flex space-x-2 bg-gray-200 rounded-[8px] border contain flex-shrink">
+          <div className="flex space-x-2 bg-gray-200 rounded-[15px] border contain flex-shrink">
             <input
               type="number"
               value={day}
               onChange={handleDayChange}
               placeholder="Day"
               className="col-span-1 border h-[48px] text-[18px] md:text-lg w-[50px] sm:w-32 md:w-32  block appearance-none bg-gray-100 pl-1 py-0
-              md:px-4 md:py-2 rounded shadow leading-tight focus:outline-none focus:shadow-outline"
+              md:px-4 md:py-2 rounded-[15px] shadow leading-tight focus:outline-none focus:shadow-outline"
             /><span className='text-3xl font-thin'>/</span>
             <select
               value={month}
               onChange={(e) => setMonth(e.target.value)}
               className="col-span-1 border text-[18px] text-gray-700 md:text-lg md:w-40 w-[120px] block appearance-none bg-gray-100 pl-1 py-0
-              md:px-4 md:py-2 rounded leading-tight focus:outline-none focus:shadow-outline"
+              md:px-4 md:py-2 rounded-[15px] leading-tight focus:outline-none focus:shadow-outline"
 
             >
               <option className='focus:bg-green-500 checked:bg-green-500' value="" disabled>-Select Month-</option>
@@ -429,7 +495,7 @@ const Register = () => {
               onChange={handleYearChange}
               placeholder="Year"
               className="col-span-1 border h-[48px] text-[18px] md:text-lg md:w-40 flex-grow w-full md:max-w-[140px] appearance-none bg-gray-100 px-2 
-              py-0 md:px-4 md:py-2 rounded shadow leading-tight focus:outline-none focus:shadow-outline"
+              py-0 md:px-4 md:py-2 rounded-[15px] shadow leading-tight focus:outline-none focus:shadow-outline"
             />
           </div></div>
 
@@ -438,12 +504,12 @@ const Register = () => {
             
             <div className="mb-4">
               <label htmlFor="phone" className="block mb-2">Phone Number</label>
-              <div className='w-full bg-gray-200 rounded-[5px] '>
+              <div className='w-full bg-gray-200 rounded-[15px] px-1 border-gray-400 border-1'>
               <PhoneInput 
               defaultCountry='ng'
               required
               inputStyle={{fontSize:'18px', backgroundColor:'#e5e7eb', height:'48px', borderTop:'none', borderLeft:'1px solid gray', borderRight:'none', borderBottom:'none'}}
-              countrySelectorStyleProps={{ buttonStyle:{backgroundColor:'#e5e7eb', height:'48px', width:'100%', borderTop:'none', borderLeft:'none', borderBottom:'none'}}}
+              countrySelectorStyleProps={{ buttonStyle:{backgroundColor:'#e5e7eb', height:'48px', width:'100%', borderTop:'none', borderLeft:'none', borderBottom:'none', borderRadius:'15px'}}}
               onChange={ (phone)=>setPhone(phone)}
               name='phone'
               value={phone}/></div>
@@ -456,7 +522,7 @@ const Register = () => {
                 value={residence}
                 placeholder='Residence'
                 onChange={ (e)=>setResidence(e.target.value) }
-                className="border rounded-[8px] h-[52px] text-[19px] px-4 bg-gray-200 py-2 w-full"
+                className="w-full border-gray-400 border-1 h-[45px] px-3 outline-none rounded-[15px] bg-gray-200"
                 required
               >
                 <option value="">Select State</option>
@@ -504,7 +570,7 @@ const Register = () => {
             </div> */}
             <div className="mb-4">
               <label htmlFor="password" className="block mb-2">Password</label>
-              <div className='rounded-[8px] h-[52px] bg-gray-200 flex flex-row justify-between'>
+              <div className=' bg-gray-200 flex flex-row justify-between w-full border-gray-400 border-1 h-[45px] px-3 outline-none rounded-[15px]'>
                 <input type={showPassword?'text':'password'}
                   id="password"
                   name="password"
@@ -527,7 +593,7 @@ const Register = () => {
             </div>
             <div className="mb-4">
               <label htmlFor="confirmPassword" className="block mb-2">Confirm Password</label>
-              <div className='rounded-[8px] h-[52px] bg-gray-200 flex flex-row justify-between'>
+              <div className=' bg-gray-200 flex flex-row justify-between w-full border-gray-400 border-1 h-[45px] px-3 outline-none rounded-[15px]'>
                 <input
                   type={showPassword2?'text':'password'}
                   id="confirmPassword"
@@ -535,7 +601,7 @@ const Register = () => {
                   value={confirmPassword}
                   placeholder='Confirm Password'
                   onChange={ (e)=>setConfirmPassword(e.target.value) }
-                  className="w-[75%] h-[52px] text-[19px] outline-none bg-gray-200 rounded px-4 py-2"
+                  className="w-[75%] text-[19px] outline-none bg-gray-200 rounded px-4 py-2"
                   required
                 />
                 <button
@@ -560,7 +626,7 @@ const Register = () => {
                 password.length && phone.length>11 && gender.length && residence.length && password.length>5 && password===confirmPassword && acceptTerms? (
                 <button
                   type="submit"
-                  className="font-semibold text-white w-[100%] h-[48px] py-2 rounded-[5px] bg-green-700 hover:bg-green-900 active:bg-green-950"
+                  className="text-white w-[100%] h-[45px] py-2 rounded-[30px] bg-green-700 hover:bg-green-900 active:bg-green-950"
                 >
                   {regText}
                 </button>
@@ -568,72 +634,80 @@ const Register = () => {
                 <button
                   type="submit"
                   disabled={true}
-                  className="font-semibold text-white w-[100%] h-[48px] py-2 rounded-[5px] bg-gray-300"
+                  className="text-white w-[100%] h-[45px] py-2 rounded-[30px] bg-gray-300"
                 >
-                  REGISTER
+                  Sign Up
                 </button>
               )}
             </div>
-            <div className='mt-3 text-[16px]'>Already have an Account? <Link className="text-green-500 underline font-semibold" href="#" onClick={()=>router.push("/account/login")}>Login</Link></div> 
+            <div className='mt-[30px] text-center'>Already have an Account? <Link className="text-green-500 underline font-semibold" href="#" onClick={()=>router.push("/account/login")}>Login</Link></div> 
           </form>
         </div>
         {/* </Layout> */}
       </div>
 
         {/* Email aunthentication */}
-      <div className='flex flex-col max-w-[700px] px-[5%] pt-[50px]' style={{ display:(toAuthPage?'flex':'none'), alignSelf:'center'}}>
+      <div className='flex flex-col max-w-[700px] h-screen w-[100%] px-4 md:pt-[50px] pt-[30px] pb-[50%]' style={{ display:(toAuthPage?'flex':'none'), alignSelf:'center'}}>
         <div>
-          <button onClick={()=>{setToAuthPage(false);setToConfirmPage(true)}} className='flex flex-row justify-center items-center border-1 border-black px-2'><BackIcon/>Back</button>
+          <button onClick={()=>{setToAuthPage(false);setToConfirmPage(true)}} className='flex flex-row justify-center items-center gap-2'>
+            <div className='rotate-180'>
+              <Next bg={'black'} size={'25px'}/>
+            </div>
+            <span className='md:flex hidden'>Go Back</span>
+            </button>
         </div>
-        <div className='flex mt-[70px] flex-col'>
-          <span className='text-[25px] text-green-600 mb-2'>Verify your identity</span>
-          <span>For your security, we&apos;ve sent a One-Time Password (OTP) to <span className='text-blue-600'>{email}</span>.Please enter the code below to complete the authentication process and secure your account.</span>
+
+        <div className='flex mt-[30px] md:text-center text-left flex-col'>
+          <span className='text-[23px] font-bold mb-2'>Verify your identity</span>
+          <span>We sent you a 6-digit code via your email </span>
+          <span className='font-bold'>{email}</span>
         </div>
+
         <div>
-          <div className={`${isOtpInvalid?'opacity-100':'opacity-0'} mt-1 italic text-[15px] text-red-500 ml-2`}>Invalid OTP code</div>
-          <div className="mt-1 pt-8 border-t-1 border-gray-300 flex flex-row justify-between gap-7">
-            <input
-              type="text"
-              id="otp"
-              placeholder='Enter OTP code here...'
-              name="otp"
-              value={otp}
-              onChange={ (e)=>setOtp(e.target.value) }
-              className="bg-gray-200 rounded-[30px] h-[48px] text-[19px] px-5 w-full focus:outline-none"
-              required
-            />
-            <button onClick={verifyOtp}  className={`text-white hover:bg-green-700 bg-green-600 rounded-[30px] w-[150px] h-[48px]`}>{confirmText}</button>
-          </div>
+          <div className={`${isOtpInvalid?'opacity-100':'opacity-0'} text-[15px] text-red-500 ml-2`}>Invalid OTP code</div>
+           <div className="flex flex-row gap-2 w-[95%] mt-[10px] mx-auto justify-center items-center">
+              { boxArray.map( (_, index) => {
+                  return <input key={index} pattern="\d*" onKeyDown={(e) => handleKeyDown(e, index)} inputMode="numeric" id={`otp-${index}`} value={boxArray[index]} onChange={(e)=>{handleInput(e, index)}} className='h-[50px] md:w-[50px] w-[15%] border-[1px] border-gray-400 rounded-[5px] text-center bg-transparent' type="tel" maxLength={1} />
+              
+              })}
+            </div>
           <div className={`${isOtpSent?'opacity-100':'opacity-0'} mt-1 text-[14px] text-green-500 ml-2`}>a new code has been sent to {email} ✔</div>
-          <div className='flex md:flex-row flex-col gap-3 justify-center mt-5 items-center border-gray-300 pt-[10px] border-t-1'>
-            <span className={`${timerDisplay?'opacity-100':'opacity-20'}`}>You can request a new OTP code in {timer}s </span>
-            <button disabled={allowSubmit?false:true} onClick={requestNewOtp} className={`${allowSubmit?'bg-blue-500 hover:bg-blue-700':'bg-gray-500 cursor-not-allowed'} text-white p-1 px-3 rounded-[30px]`}>{requestText}</button>
+          <div className='flex flex-col gap-2 justify-start'>
+            <span className={`${timerDisplay?'opacity-100':'opacity-0'}`}>You can request a new OTP code in {timer}s </span>
+            <button disabled={allowSubmit?false:true} onClick={requestNewOtp} className={`${allowSubmit?'hover:text-green-700 hover:scale-95':'text-gray-500 cursor-not-allowed'} w-fit text-green-600 font-semibold`}>{requestText}</button>
           </div>
+        </div>
+        <div className='mt-[70px]'>
+          <button onClick={verifyOtp}  className={`text-white hover:bg-green-700 bg-green-600 rounded-[30px] w-[100%] h-[50px]`}>{confirmText}</button>
         </div>
 
       </div>
 
 
     {/* confirmation page */}
-      <div className='flex mt-[120px] flex-col max-w-[700px]' style={{ display:(toConfirmPage?'block':'none'), alignSelf:'center'}}>
-        <div className="text-[25px] border-b-1 pb-4 text-green-600 mt-[30px]">Confirm your details</div>
-        <div className='bg-gray-100 py-4 rounded-[5px]'>
-          <div className='px-5 text-[20px]'><span className='pr-2 text-gray-500 font-semibold'>Name: </span>{firstname}</div>
-          <div className='px-5 text-[20px]'><span className='pr-2 text-gray-500 font-semibold'>Surname: </span>{lastname}</div>
-          <div className='px-5 text-[20px]'><span className='pr-2 text-gray-500 font-semibold'>Date of Birth: </span>{dob}</div>
-          <div className='px-5 text-[20px]'><span className='pr-2 text-gray-500 font-semibold'>Email: </span>{email}</div>
-          <div className='px-5 text-[20px]'><span className='pr-2 text-gray-500 font-semibold'>Phone Number: </span>{phone}</div>
-          <div className='px-5 text-[20px]'><span className='pr-2 text-gray-500 font-semibold'>Residence: </span>{residence}</div> 
-          <div className='px-5 text-[20px]'><span className='pr-2 text-gray-500 font-semibold'>Gender: </span>{gender}</div>
+      <div className='flex flex-col w-screen h-screen md:pt-[50px] px-4 pt-[30px] bg-gray-100' style={{ display:(toConfirmPage?'block':'none'), alignSelf:'center'}}>
+        <div>
+          <button onClick={()=>{setToConfirmPage(false);setToFormPage(true)}} className='flex flex-row justify-center items-center gap-2'>
+            <div className='rotate-180'>
+              <Next bg={'black'} size={'25px'}/>
+            </div>
+            <span className='md:flex hidden'>Go Back</span>
+            </button>
+        </div>
+        <div className="text-[23px] font-bold mt-[25px]">Confirm your details</div>
+       <div className='mt-[10px]'> <span>Please, we&apos;d like you to verify your details below.</span></div>
+        <div className='mt-[25px]'>
+          <div><span className='text-gray-600 font-semibold'>Name: </span>{firstname}</div>
+          <div className='mt-[5px]'><span className='text-gray-600 font-semibold'>Surname: </span>{lastname}</div>
+          <div className='mt-[5px]'><span className='text-gray-600 font-semibold'>Date of Birth: </span>{dob}</div>
+          <div className='mt-[5px]'><span className='text-gray-600 font-semibold'>Email: </span>{email}</div>
+          <div className='mt-[5px]'><span className='text-gray-600 font-semibold'>Phone Number: </span>{phone}</div>
+          <div className='mt-[5px]'><span className='text-gray-600 font-semibold'>Residence: </span>{residence}</div> 
+          <div className='mt-[5px]'><span className='text-gray-600 font-semibold'>Gender: </span>{gender}</div>
         </div>
 
         
-        <p className='px-5 text-[20px] text-blue-500'>*Please verify your details above.</p>
-        <div className='px-5 flex flex-row justify-around mt-[35px]'>
-          <button className='bg-transparent text-green-700 font-bold border-2 border-green-700 hover:bg-green-700 hover:text-white rounded-[30px] w-[120px] text-[20px] py-2' onClick={()=>{setToConfirmPage(false);setToFormPage(true)}}>Edit</button> 
-          <button className=' bg-green-600 font-bold text-white text-[21px] py-2 rounded-[30px] w-[120px]' onClick={toVerificationPage}>Next</button>  
-        </div>
-
+          <button className=' bg-green-600 text-white h-[50px] rounded-[30px] w-[100%] mt-[70px]' onClick={toVerificationPage}>Continue</button>  
       </div>
 
       { /* Loader */} 

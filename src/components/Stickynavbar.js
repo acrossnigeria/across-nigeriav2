@@ -2,14 +2,12 @@
 // components/Navbar.js
 import Image from "next/image";
 import Link from "next/link";
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import logo from "../../public/images/logo1.png";
-import SearchIcon from "@heroicons/react/24/outline/MagnifyingGlassIcon";
 import { signOut, useSession } from "next-auth/react";
 import { useRouter } from "next/router";
 import Search from '../../public/images/icon/Search';
 import Profile from "../../public/images/icon/Profile";
-import NotifyIcon from "../../public/images/icon/NotifyIcon";
 
 
 const StickyNavbar = ( { notification }) => {

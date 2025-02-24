@@ -108,16 +108,6 @@ const Profile = () => {
               <button onClick={copyRefLink} className='border-1 rounded-[10px] md:w-fit w-[100%] border-gray-600 bg-gray-300 py-1 px-4 hover:opacity-70'>Copy My Referral link<span className={`px-4 bg-green-400 text-green-900 py-1 border-1 absolute ml-[-90px] mt-[30px] border-green-900 ${isCopied}`}>Link copied</span></button>
             </div>
           </div>
-          {/* <div style={{borderRadius:'5px', alignItems:'center'}} className={`${isMobile?'w-[95%]':'w-[70%]'} h-[300px] mt-[10px] text-left flex flex-col bg-gray-200 p-[5px]`}>
-            <span className='font-bold text-gray-500 text-[16px] border-green-950'>Notifications</span>
-            <div className=' mt-2 flex flex-col justify-start w-[100%]'>
-              { notifications ? (notifications.length === 0? <span className='text-gray-400 text-center mt-[100px]'>No notifications for you</span>:<span>Notification will show here</span>) : <div>
-                <div className={`w-[100%] h-[70px] mt-2 bg-gray-300 animate-pulse rounded-[20px]`}></div>
-                <div className={`w-[100%] h-[70px] mt-2 bg-gray-300 animate-pulse rounded-[20px]`}></div>
-                <div className={`w-[100%] h-[70px] mt-2 bg-gray-300 animate-pulse rounded-[20px]`}></div>
-                </div>}
-            </div>
-          </div> */}
           <div className='flex flex-col gap-[15px] md:w-[70%] w-[100%] pl-[25px] justify-left items-start border-t-1 border-t-gray-300 pt-[20px]'>
             <div className='font-bold w-fit text-gray-600 items-center flex flex-row gap-2 hover:text-gray-800 hover:scale-105 text-[15px]'><SettingsIcon/> Edit profile</div>
             <button onClick={logoutClickHandler} className='font-bold w-fit items-center text-red-600 flex flex-row gap-2 hover:text-red-800 hover:scale-105 text-[15px]'><LogoutIcon/>Log out</button>

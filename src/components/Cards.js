@@ -16,7 +16,7 @@ const Card = ( { title, image, link, date, isOpen } ) => {
           <span className="w-full text-[14px] text-green-700 font-semibold">{title}</span>
           <span style={{fontSize:'14px', color:'black'}}>Starting: {date} </span>
         </div>
-        <Link href={link} className={`${isOpen?'bg-gradient-to-r hover:border-l-0 hover:border-b-0 from-green-400 border-b-2 border-b-green-500 border-l-2 border-l-green-500 to-yellow-400':'bg-gray-300 hover:cursor-default'} h-[37px] font-light md:h-[33px] flex justify-center items-center text-[18px] w-[90px] rounded-[18px] text-white`}>Join</Link>
+        <Link href={link} className={`${isOpen?'bg-gradient-to-r hover:border-l-0 hover:border-b-0 from-green-400 border-b-2 border-b-green-500 border-l-2 border-l-green-500 to-yellow-400':'bg-gray-300 hover:cursor-default'} h-[39px] font-light md:h-[33px] flex justify-center items-center text-[18px] w-[120px] rounded-[18px] text-white`}>Join</Link>
       </div>
     </div>
   );
