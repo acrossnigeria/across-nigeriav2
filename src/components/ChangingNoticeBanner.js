@@ -1,16 +1,12 @@
 import Image from 'next/image';
+import adpt1 from '../../public/images/adpt1.jpg';
+import adpt2 from '../../public/images/adpt2.jpg';
 
-const ChangingNoticeBanner = ( { banner } ) => {
+const ChangingNoticeBanner = () => {
     return (
-        <div className='h-[200px] flex-row flex w-[100%] mt-[30px] mb-[30px]'>
-            <div className="h-[100%] relative w-[50%]">
-                <Image src={banner} alt='advert placement' fill />
-            </div> 
-            <div className="h-[100%] relative w-[50%]">
-                <Image src={banner} alt='advert placement' fill />
-            </div>
+        <div className="h-[100%] relative w-[48%]">
+            <Image src={adpt2} alt='advert placement' fill />
         </div>
-
     )
 }
 
