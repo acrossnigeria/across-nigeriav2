@@ -51,9 +51,9 @@ const Register = () => {
 
   const [showPassword, setShowPassword] = useState(false);
   const [showPassword2, setShowPassword2] = useState(false);
-  const [ toConfirmPage, setToConfirmPage ] = useState(false);
+  const [ toConfirmPage, setToConfirmPage ] = useState(true);
   const [ toAuthPage, setToAuthPage ] = useState(false);
-  const [toFormPage, setToFormPage ] = useState(true);
+  const [toFormPage, setToFormPage ] = useState(false);
 
   const [ confirmText, setConfirmText ] = useState('Confirm');
   const [ requestText, setRequestText ] = useState('Request code');
@@ -686,28 +686,29 @@ const Register = () => {
 
     {/* confirmation page */}
       <div className='flex flex-col w-screen h-screen md:pt-[50px] px-4 pt-[30px] bg-gray-100' style={{ display:(toConfirmPage?'block':'none'), alignSelf:'center'}}>
-        <div>
-          <button onClick={()=>{setToConfirmPage(false);setToFormPage(true)}} className='flex flex-row justify-center items-center gap-2'>
-            <div className='rotate-180'>
-              <Next bg={'black'} size={'25px'}/>
-            </div>
-            <span className='md:flex hidden'>Go Back</span>
-            </button>
-        </div>
-        <div className="text-[23px] font-bold mt-[25px]">Confirm your details</div>
-       <div className='mt-[10px]'> <span>Please, we&apos;d like you to verify your details below.</span></div>
-        <div className='mt-[25px]'>
-          <div><span className='text-gray-600 font-semibold'>Name: </span>{firstname}</div>
-          <div className='mt-[5px]'><span className='text-gray-600 font-semibold'>Surname: </span>{lastname}</div>
-          <div className='mt-[5px]'><span className='text-gray-600 font-semibold'>Date of Birth: </span>{dob}</div>
-          <div className='mt-[5px]'><span className='text-gray-600 font-semibold'>Email: </span>{email}</div>
-          <div className='mt-[5px]'><span className='text-gray-600 font-semibold'>Phone Number: </span>{phone}</div>
-          <div className='mt-[5px]'><span className='text-gray-600 font-semibold'>Residence: </span>{residence}</div> 
-          <div className='mt-[5px]'><span className='text-gray-600 font-semibold'>Gender: </span>{gender}</div>
-        </div>
-
-        
+        <div className='md:w-[400px] mx-auto w-[100%] flex flex-col justify-center'>
+          <div>
+            <button onClick={()=>{setToConfirmPage(false);setToFormPage(true)}} className='flex flex-row justify-center items-center gap-2'>
+              <div className='rotate-180'>
+                <Next bg={'black'} size={'25px'}/>
+              </div>
+              <span className='md:flex hidden'>Go Back</span>
+              </button>
+          </div>
+          <div className="text-[23px] font-bold mt-[25px]">Confirm your details</div>
+          <div className='mt-[10px]'> <span>Please, we&apos;d like you to verify your details below.</span></div>
+          <div className='mt-[25px]'>
+            <div><span className='text-gray-600 font-semibold'>Name: </span>{firstname}</div>
+            <div className='mt-[5px]'><span className='text-gray-600 font-semibold'>Surname: </span>{lastname}</div>
+            <div className='mt-[5px]'><span className='text-gray-600 font-semibold'>Date of Birth: </span>{dob}</div>
+            <div className='mt-[5px]'><span className='text-gray-600 font-semibold'>Email: </span>{email}</div>
+            <div className='mt-[5px]'><span className='text-gray-600 font-semibold'>Phone Number: </span>{phone}</div>
+            <div className='mt-[5px]'><span className='text-gray-600 font-semibold'>Residence: </span>{residence}</div> 
+            <div className='mt-[5px]'><span className='text-gray-600 font-semibold'>Gender: </span>{gender}</div>
+          </div>
           <button className=' bg-green-600 text-white h-[50px] rounded-[30px] w-[100%] mt-[70px]' onClick={toVerificationPage}>Continue</button>  
+        </div>
+    
       </div>
 
       { /* Loader */} 
