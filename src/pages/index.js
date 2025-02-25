@@ -26,7 +26,7 @@ import NoShoutOut from "@/components/shout-out/NoShoutOut";
 import AmbassadorInfo from "@/components/AmbassadorInfo";
 import AddAccDetails from "@/components/notifiers/AddAccountDetails";
 import { useSession } from "next-auth/react";
-import AdBanner1 from "@/components/adBanner1";
+import AdBanner1 from "@/components/AdBanner1";
 import AdBanner2 from "@/components/AdBanner2";
 
 
