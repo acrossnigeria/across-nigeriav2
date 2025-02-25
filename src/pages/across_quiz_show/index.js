@@ -39,7 +39,7 @@ export async function  getServerSideProps(context) {
     let isUserSelected;
     let data;
     if (userId) {
-      response = await axios.get(`http://localhost:3000/api/across_quiz_show/handler?type=CHECKUSER&userId=${userId}`);
+      response = await axios.get(`https://acrossnig.com/api/across_quiz_show/handler?type=CHECKUSER&userId=${userId}`);
       isUserRegistered = response.data.isUserFound;
       isUserSelected = response.data.isUserSelected;
       data = { isUserRegistered, isUserSelected, username, userId  };
