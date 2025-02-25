@@ -42,15 +42,12 @@ export async function  getServerSideProps(context) {
       response = await axios.get(`http://localhost:3000/api/across_quiz_show/handler?type=CHECKUSER&userId=${userId}`);
       isUserRegistered = response.data.isUserFound;
       isUserSelected = response.data.isUserSelected;
-      data = { isUserRegistered, isUserSelected, username, userId  }
-    } else {
-      isUserRegistered = false;
-      isUserSelected = false;
-      data = {};
-    }
-
-    if ( isUserRegistered ) {
-      return { props: { ...data } }
+      data = { isUserRegistered, isUserSelected, username, userId  };
+      if ( isUserRegistered ) {
+        return { props: { ...data } }
+      } else {
+        return { props: { ...data } }
+      }
     } else {
       return {
         redirect: {
