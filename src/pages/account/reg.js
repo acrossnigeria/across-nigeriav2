@@ -51,9 +51,9 @@ const Register = () => {
 
   const [showPassword, setShowPassword] = useState(false);
   const [showPassword2, setShowPassword2] = useState(false);
-  const [ toConfirmPage, setToConfirmPage ] = useState(true);
+  const [ toConfirmPage, setToConfirmPage ] = useState(false);
   const [ toAuthPage, setToAuthPage ] = useState(false);
-  const [toFormPage, setToFormPage ] = useState(false);
+  const [toFormPage, setToFormPage ] = useState(true);
 
   const [ confirmText, setConfirmText ] = useState('Confirm');
   const [ requestText, setRequestText ] = useState('Request code');
