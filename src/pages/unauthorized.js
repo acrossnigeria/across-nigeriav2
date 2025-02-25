@@ -12,7 +12,7 @@ export default function Unauthorized() {
     const timer = setTimeout(() => {
       setRedirectMessage("Redirecting you to the Login Page...")
       router.push('/account/login') // change this to your desired path
-    }, 1000)
+    }, 5000)
     return () => clearTimeout(timer)
   }, [router])
 
