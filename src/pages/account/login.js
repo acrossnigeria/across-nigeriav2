@@ -112,7 +112,7 @@ export default function LoginScreen() {
             )}
           </div>
           <div className="flex flex-row justify-end">
-            <button className="text-[17px] hover:text-green-900 hover:scale-105"><Link href="/user/passreset" className="mt-2 mr-2">Forgot Password?</Link></button>
+            <button className="text-[17px] hover:text-green-900 hover:scale-105"><Link href="/user/password-reset" className="mt-2 mr-2">Forgot Password?</Link></button>
           </div>
           <div className="mt-2">
             {loading?(<button disabled className="text-slate-100 h-[49px] animate-pulse w-[100%] text-[19px] py-1 rounded-[30px] bg-gray-500">Please Wait...</button>):(<button className="text-white w-[100%] h-[49px] rounded-[30px] bg-green-700 hover:bg-green-900 active:bg-green-950">Log In</button>)} 

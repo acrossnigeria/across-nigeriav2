@@ -6,6 +6,8 @@ import { center } from '@cloudinary/url-gen/qualifiers/textAlignment';
 import Close from '../../../public/images/icon/Close';
 import Loader from '@/components/Loader';
 import Link from 'next/link';
+import logo1 from "../../../public/images/logo1.png";
+import Image from 'next/image';
 
 const EmailForm = () => {
   const [email, setEmail] = useState('');
@@ -93,34 +95,39 @@ const EmailForm = () => {
   };
 
   return (
-    <div >
+    <div className='h-screen w-screen flex flex-col justify-center items-center'>
       <Loader/>
-      <div className='flex flex-row justify-end px-8 py-3'>
+      <div className='flex flex-row absolute top-[5%] right-[5%]'>
           <Link href={'/'}><Close/></Link> 
       </div>
-      <div style={{width:'100%', placeSelf:'center'}} >
-        <div className='border-b-1 border-green-100 py-3 text-center text-[17px] font-bold text-green-600'>
-          <span>ACROSS NIGERIA REALITY SHOW</span>
+      <div >
+        <div className='text-center mb-[10px] font-bold text-green-600'>
+          <div className='text-center flex flex-row justify-center gap-1 items-center'>
+            <Image src={logo1} alt='logo' placeholder='blur' className='h-[45px] w-[50px]' />
+            <div className='flex flex-col justify-center items-start'>
+              <span className='text-[16px] font-bold text-green-700'>ACROSS NIGERIA</span>
+              <span className='text-[14px] text-green-500'>REALITY SHOW</span>
+            </div>
+          </div>
         </div>
-        <form style={{alignItems: 'center'}}className='flex flex-col' 
+        <form style={{alignItems: 'center'}} className='flex flex-col' 
         onSubmit={allowSubmit? handleSubmit : (e)=>{e.preventDefault()}}>
-          <h2 style={{fontSize:'23px', textAlign:'center', margin:'15px 0px'}} className="w-full font-semibold tracking-wider">Reset your password</h2>
-          <p className='mb-[20px] pb-[10px] border-b-[2px]' style={{alignSelf:'left', width:'315px', fontSize:'16px'}}>
+          <div style={{fontSize:'20px', textAlign:'center'}} className="w-full mt-[10px] md:text-center font-semibold">Reset your password</div>
+          <div className='pb-[10px] md:text-center text-left' style={{width:'315px', fontSize:'16px'}}>
             If the account exist, we will email you instructions to reset the password.
-          </p>
-          <label style={{alignSelf:'left', width:'315px', fontSize:'19px'}}>Email </label>
+          </div>
+          <label style={{alignSelf:'left', width:'315px', fontSize:'17px', marginLeft:'10px'}}>Email </label>
             <input
-            placeholder='Enter your email'
+            placeholder='example@domain.com'
               style={{width:'320px'}}
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
-              className='mb-4 ml-1 h-[49px] pl-[10px] bg-gray-200 text-[19px] font-thin font-sans border-none rounded-[5px]'
+              className="w-full border-gray-400 border-1 h-[45px] px-3 outline-none rounded-[15px] bg-gray-200"
             />
           <div className="flex flex-row justify-between w-full px-[20px] md:w-[400px]">
-          <button className="text-[16px] rounded-[5px] h-[49px] hover:bg-green-700 hover:border-none hover:text-white text-green-700 border-1 border-green-700 w-[48%]"><Link href="/account/login" className="mt-3">Return to login</Link></button>
-          <button style={{backgroundColor:(allowSubmit?'#166534':'grey'), fontSize:'19px', width:'48%'}}  className='block hover:opacity-80 text-white cursor-pointer rounded' type="submit">
+          <button style={{backgroundColor:(allowSubmit?'#166534':'grey'),}}  className='block hover:opacity-80  text-white cursor-pointer rounded-[30px] h-[45px] md:w-[100%] mt-[30px] w-[80%]' type="submit">
             {loading?'Submiting...':'Submit'}
           </button> 
           </div>
@@ -129,6 +136,7 @@ const EmailForm = () => {
             <p style={{textAlign:'center', color:'grey', fontSize:'17px', visibility:(timerDisplay)}}>You can submit a new request in {timer}s</p>
         </div>
         </form>
+        <div className="text-[16px] mt-[50px] mx-auto text-center">Remember your password? <Link className='text-green-600' href="/account/login" >Log In</Link></div>
       </div>
     </div>
   );
