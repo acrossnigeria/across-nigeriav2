@@ -44,7 +44,7 @@ const Navbar = () => {
     <>
     <nav id="top" style={{paddingBottom:'0px'}} className={`bg-green-600 overflow-hidden  py-3`} onClick={()=>{open&&setOpen(false)}}>
 
-      <div style={{alignItems:'center', flexDirection:'row', justifyContent:'space-between'}} className={`flex px-[10px] transition-background ease-in-out ${isFixed?'fixed top-0 z-40 bg-green-600/80 py-[7px] w-[100%]':'pb-[10px]'}`}>
+      <div style={{alignItems:'center', flexDirection:'row', justifyContent:'space-between'}} className={`flex px-[10px] transition-background ease-in-out ${isFixed?'fixed top-0 z-40 bg-green-600/80 h-[45px] w-[100%]':'pb-[10px]'}`}>
         <div className='flex flex-row justify-between gap-[12px]'>
             {/* Logo */}
           <Link href="/" style={{}} onClick={()=>(router.push("/"))} className="flex items-center justify-center">
@@ -52,12 +52,12 @@ const Navbar = () => {
             <Logo/>
           </Link>
               {/* Search Bar */}
-          <div onClick={toggleMenu} style={{alignItems:'center'}} className='h-[40px] px-1 flex flex-row justify-center'>
+          <div onClick={toggleMenu} style={{alignItems:'center'}} className='h-[30px] px-1 flex flex-row justify-center'>
             <Search/>
           </div>
         </div>
         {status === 'loading' ? (
-          <div className=" w-[120px] h-[35px] items-center rounded-full justify-center uppercase text-white  bg-green-500 text-[14px] animate-pulse  ">
+          <div className=" w-[120px] h-[30px] items-center rounded-full justify-center uppercase text-white  bg-green-500 text-[14px] animate-pulse  ">
           </div>
           ) : session?.user ? (
           <div className="relative flex flex-row items-center gap-2">
@@ -65,25 +65,25 @@ const Navbar = () => {
               <NotifyIcon/>
               <div className={`absolute ml-[23px] text-white mb-[23px] bg-red-500 flex flex-row justify-center items-center rounded-full p-2 h-[23px] text-[13px] w-[23px]`}>1</div>
             </Link> */}
-            <div style={{alignItems:'center'}} className="flex flex-row justify-between gap-2 h-[40px] px-[25px] pr-[2px] cursor-pointer  text-white bg-gradient-to-br from-green-500 to-yellow-400 transition duration-100 rounded-[30px] text-[16px]">
+            <div style={{alignItems:'center'}} className="flex flex-row justify-between gap-2 h-[35px] px-[25px] pr-[2px] cursor-pointer  text-white bg-gradient-to-br from-green-500 to-yellow-400 transition duration-100 rounded-[30px] text-[16px]">
               <Link href={'/user/profile'}>{session.user.name}</Link>
-               <Profile/>
+               <Profile size={'30px'}/>
             </div>
           </div>
         ) : (
           <div className='w-[fit-content] flex flex-row gap-2'>
             <div className="flex px-[10px] h-[40px] cursor-pointer items-center 
-            justify-center text-white bg-transparent transition duration-100 rounded-[40px] text-[18px]
+            justify-center text-white bg-transparent transition duration-100 rounded-[40px]
             ease-in-out hover:scale-105">
               <Link href="/account/login" className="cursor-pointer" legacyBehavior>
                 <a>Login</a>
               </Link>
             </div>
             <button onClick={()=>{router.push("/account/reg")}} className="cursor-pointer" >
-              <div className="flex w-[100px] h-[40px] cursor-pointer items-center 
-              justify-center text-green-800 bg-gradient-to-r from-green-400 border-b-2 border-b-green-500 border-l-2 border-l-green-500 to-yellow-300 hover:border-l-0 hover:border-b-0 transition duration-100 rounded-[18px] text-[18px]
-              ease-in-out hover:bg-yellow-300  hover:scale-105">
-                <>Register</>
+              <div className="flex w-[100px] h-[30px] cursor-pointer items-center 
+              justify-center text-green-900 bg-white hover:bg-gray-200 transition duration-100 rounded-[25px]
+              ease-in-out  hover:scale-105">
+                Register
               </div>
             </button>
             
