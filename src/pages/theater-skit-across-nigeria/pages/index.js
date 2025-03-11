@@ -88,11 +88,11 @@ function SkitsPage() {
 
   return (
     <Layout>
-      <div className='ml-[3%] mr-[3%] md:ml-[5%] md:mr-[5%] mt-3'>
-        <Link href="/upload" className='cursor-pointer mb-2 w-fit hover:bg-green-200 bg-tranparent border-2 flex flex-row justify-center items-center border-green-700 text-green-700 px-4 h-[40px] rounded-[30px]'>
+      <div className='md:ml-[5%] md:mr-[5%] mt-3'>
+        <Link href="/upload" className='cursor-pointer mb-2 ml-[2.5%] w-fit hover:bg-green-200 bg-tranparent border-2 flex flex-row justify-center items-center border-green-700 text-green-700 px-4 h-[40px] rounded-[30px]'>
           <span>Click Here to participate</span>
         </Link>
-        <div className='w-full flex flex-col bg-gradient-to-t from-green-800 to-green-400 px-2 pb-2 rounded-[10px]'>
+        <div className='w-[95%] md:w-full mx-auto flex flex-col bg-gradient-to-t from-green-800 to-green-400 px-2 pb-2 rounded-[10px]'>
           <div className='text-white font-bold text-center text-[20px]'>Leader Board</div>
           <div className='mt-2 flex flex-row flex-wrap gap-2 justify-center'>
             <TopSkitCard strUrl={oneUser?.url} exist={oneUser?true:false} votes={oneUser?.votes} position={1} creator={oneUser?.creator} description={oneUser?.description}/>
@@ -116,8 +116,8 @@ function SkitsPage() {
           </div>
          
         </div>
-        <h2 className="text-[20px] mt-4 mb-2 font-bold">All Skits</h2>
-        <div className="flex-wrap flex md:flex-row flex-col gap-[5px] md:gap-[20px] justify-center pt-[6px]">
+        <h2 className="text-[21px] mt-[25px] ml-[2.5%] mb-2 font-bold">All Videos</h2>
+        <div className="flex-wrap flex md:flex-row flex-col gap-[25px] md:gap-[20px] justify-center pt-[6px]">
           {currentSkits.map((skit) => (
               <VideoCard key={skit._id} watch={watch} content={skit} link={`/skits/${skit._id}`}/>
           ))}

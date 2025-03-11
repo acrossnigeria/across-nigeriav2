@@ -9,7 +9,7 @@ import Loader from "./Loader";
 import axios from "axios";
 import { useSession } from "next-auth/react";
 
-export default function Layout({ title, children, image, desc, bg }) {
+export default function Layout({ title, children, image, desc, bg, hideNav }) {
   const [isOpen, setIsOpen] = useState(false);
   const [ noti, setNoti ] = useState(null);
   const [ networkError, setNetworkError ] = useState(false);
@@ -72,7 +72,7 @@ export default function Layout({ title, children, image, desc, bg }) {
       </Head>
        <ToastContainer position="top-center" limit={1} />
        <div className="md:block hidden"><StickyNavbar/></div>
-       <div className="md:hidden block"><Navbar/></div>
+       <div className="md:hidden block"><Navbar hideNav={hideNav}/></div>
         {/* {!isMobile&&<StickyNavbar/>}
         {isMobile&&<Navbar/>} */}
       <div className="flex left-0 ml-0 w-full overflow-hidden flex-col justify-between">

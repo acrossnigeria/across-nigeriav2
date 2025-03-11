@@ -13,7 +13,7 @@ import Profile from '../../public/images/icon/Profile';
 import Login from '../../public/images/icon/Login';
 import NotifyIcon from '../../public/images/icon/NotifyIcon';
 
-const Navbar = () => {
+const Navbar = ( { hideNav } ) => {
   const { status, data: session } = useSession();
   const router = useRouter();
   const [ open, setOpen ] = useState(false);
@@ -93,30 +93,30 @@ const Navbar = () => {
     </div>
       <div >
                 {/* Menus */}
-        <div className={` flex px-2 pt-2 flex-row w-[100%] justify-start gap-2 bg-gray-100 overflow-x-scroll`}>
+        <div className={`px-2 pt-1 ${hideNav?'hidden':'flex'} flex-row w-[100%] justify-start gap-2 bg-gray-100 overflow-x-scroll`}>
           {/* First Line Menus */}
-            <Link href="#products" className="rounded-[15px] px-4 py-1 w-[33%] flex flex-row justify-center items-center bg-gray-200 text-gray-500">
+            <Link href="#products" className="rounded-[15px] px-4 py-1 text-[14px] w-[33%] flex flex-row justify-center items-center bg-gray-200 text-gray-500">
               Products
             </Link>
-            <Link href="/" className="rounded-[15px] px-4 py-1 w-[33%] flex flex-row justify-center items-center bg-gray-200 text-gray-500">
+            <Link href="/" className="rounded-[15px] px-4 py-1 w-[33%] text-[14px] flex flex-row justify-center items-center bg-gray-200 text-gray-500">
               Home
             </Link>
-            <Link href="/about" className="rounded-[15px] px-4 w-[33%] flex flex-row justify-center items-center py-1 bg-gray-200 text-gray-500">
+            <Link href="/about" className="rounded-[15px] px-4 w-[33%] text-[14px] flex flex-row justify-center items-center py-1 bg-gray-200 text-gray-500">
               About
             </Link>
         </div>
 
         <div className="mt-2 fixed bottom-0 rounded-t-[5px] w-[100%] flex z-[1000] bg-green-600 flex-row font-sans h-[50px] items-center justify-around">
           {/* Second Line Menus */}
-            <Link style={{alignItems:'center'}} href="/giveaway-quiz" className="text-green-200 hover:scale-105 items-center flex flex-col justify-center">
+            <Link style={{alignItems:'center'}} href="/giveaway-quiz" className="text-green-200 text-[14px] hover:scale-105 items-center flex flex-col justify-center">
               <Money/>
               Giveaway Quiz
             </Link>
-            <Link style={{alignItems:'center'}} href="/soon" className="text-green-200 hover:scale-105 items-center flex flex-col justify-center">
+            <Link style={{alignItems:'center'}} href="/soon" className="text-green-200 text-[14px] hover:scale-105 items-center flex flex-col justify-center">
               <Video/>
               Skits Across Naija
             </Link>
-            <Link style={{alignItems:'center'}} href="/shoutout" className="text-green-200 hover:scale-105 items-center flex flex-col justify-center">
+            <Link style={{alignItems:'center'}} href="/shoutout" className="text-green-200 text-[14px] hover:scale-105 items-center flex flex-col justify-center">
               <ShoutMic/>
             Shout Out
             </Link>

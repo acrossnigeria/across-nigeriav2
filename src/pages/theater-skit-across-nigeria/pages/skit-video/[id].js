@@ -17,6 +17,7 @@ import VotedIcon from "../../../../../public/images/icon/VotedIcon";
 import VoteIcon from "../../../../../public/images/icon/VoteIcon";
 import ShareIcon from "../../../../../public/images/icon/ShareIcon";
 import Link from "next/link";
+import Next from "../../../../../public/images/icon/Next";
 const sampleVid = '/sample.MP4'
 
 const prototype = {
@@ -32,7 +33,7 @@ export default function SkitScreen(props){
   const { query } = useRouter();
   const router= useRouter();
   const [ isMobile, setIsMobile ] = useState(false);
-  const [ descriptionLength, setDescriptionLength ] = useState(100);
+  const [ descriptionLength, setDescriptionLength ] = useState(40);
   const [ voted, setVoted ] = useState(false);
   const [ voteLoading, setVoteLoading ] = useState(false);
   const [ shareNotifyBottom, setShareNotifyBottom ] = useState('bottom-[-50px]');
@@ -121,35 +122,37 @@ const voteHandler = async()=>{
      }
 
   return(
-        <Layout title={skit.title}>
-          <div className={`flex md:w-[50%] pt-[10px] bg-gray-100 mx-auto rounded-[20px] justify-center items-center gap-4 flex-col`}>
+        <Layout hideNav={true} title={skit.title}>
+          <div className={`flex md:w-[50%] bg-gray-100 mx-auto rounded-[20px] justify-center items-center gap-4 flex-col`}>
+            <div className={`bg-gray-100`}>
+              <ReactPlayer autoPlay url={skit.url} width={'100%'} height={isMobile?280:300}  controls={true} />
+            </div> 
             <div className={`fixed ${shareNotifyBottom} ${shareNotifyOpacity} transition-all ease-in-out duration-500 bg-gray-100 text-gray-600 rounded-[30px] md:w-fit w-[80%] border-1 border-green-500 h-fit p-3`}>
                 <span>Link copied, you can now share it</span>
-            </div>
-            <div className="inline-flex bg-gray-300 rounded-[25px] md:w-[100%] w-[94%] text-gray-800 p-2 mt-[10px] gap-2 items-center"><ContestIcon/>Contesting for Best Drama in Theater Drama Across Nigeria</div>
-            <div className={`bg-gray-100 px-[3%] md:px-0 rounded-[7px]`}>
-              <ReactPlayer autoPlay url={skit.url} width={'100%'} height={isMobile?280:300}  controls={true} />
-            </div>  
+            </div> 
             <div className={`w-full md:w-[100%] flex flex-col px-[3%] md:px-0 md:pb-[80px] pb-[150px]`}>
                 <div className="flex flex-col mb-[10px] gap-1">
-                    <span style={{lineHeight:'20px'}} className="font-extrabold text-[21px]">{skit.title}</span>
+                    <span style={{lineHeight:'21px'}} className="text-[21px]">{skit.title}</span>
                 </div>
-                <div className="flex flex-row font-bold md:text-[18px] items-center gap-2"><Profile size={'40px'}/>{skit.name}</div>
-                <div className="flex flex-row justify-between pb-[5px] items-center">
+                <span style={{lineHeight:'20px'}} onClick={descriptionView} className="hover:cursor-pointer text-gray-700">{ skit.description.slice(0, descriptionLength) + (descriptionLength!==skit.description.length?'... See more':'') }</span>
+                <div className="flex flex-row justify-between mt-[10px] items-center">
+                    <div className="flex flex-row text-[18px] items-center gap-2"><Profile size={'40px'}/>{skit.name}</div>
+                    <button onClick={handleVote} className={`${voted?'text-gray-300 bg-gray-800 hover:bg-gray-900':'text-gray-700 hover:bg-gray-400 bg-gray-300'} w-[130px] flex flex-row gap-2 items-center justify-center h-[40px] rounded-[25px] hover:scale-105`}>
+                        { voteLoading?(
+                            <CycleLoader size={'20px'}/>
+                        ): (
+                            voted?<VotedIcon/>:<VoteIcon/>
+                        )}
+                        <span>{ voted? 'Voted':'Vote' }</span>
+                    </button>
+                </div>
+                <div className="flex flex-row justify-between pb-[5px] pt-[5px] items-center">
                     <div className="text-gray-800 text-[16px] font-bold" >• 123 votes •</div>
                     <div className="flex flex-row gap-2 w-fit">
-                        <button onClick={handleVote} className={`${voted?'text-gray-300 bg-gray-800 hover:bg-gray-900':'text-gray-700 hover:bg-gray-400 bg-gray-300'} w-[100px] flex flex-row gap-1 items-center justify-center py-2 rounded-[25px] hover:scale-105`}>
-                            { voteLoading?(
-                                <CycleLoader size={'20px'}/>
-                            ): (
-                                voted?<VotedIcon/>:<VoteIcon/>
-                            )}
-                            <span>{ voted? 'Voted':'Vote' }</span>
-                        </button>
-                        <button onClick={copyShareLink} className='w-[100px] flex flex-row gap-1 items-center justify-center py-2 rounded-[25px] text-gray-700 bg-gray-300 hover:scale-105 hover:bg-gray-400'><ShareIcon/> Share</button>
+                        <button onClick={copyShareLink} className='w-[100px] flex flex-row gap-1 items-center justify-center py-2 rounded-[25px] text-gray-700 hover:scale-105 hover:bg-gray-400'><ShareIcon/> Share</button>
                     </div>
                 </div>
-                <span style={{lineHeight:'20px'}} onClick={descriptionView} className="hover:cursor-pointer">{ skit.description.slice(0, descriptionLength) + (descriptionLength!==skit.description.length?'... See more':'') }</span>
+                <div className="inline-flex bg-gray-300 rounded-[25px] w-[100%] text-[13px] text-gray-800 p-2 mt-[5px] gap-2 items-center"><ContestIcon />Contesting for Best Drama in Theater Drama Across Nigeria</div>
                 <Link href={'/theater-skit-across-nigeria/pages'} className="bg-green-600 rounded-[25px] flex flex-col justify-center items-center py-1 hover:bg-green-800 w-[150px] mt-[20px] text-white">Watch others</Link>
             </div>      
           </div>

@@ -20,18 +20,21 @@ export default function VideoCard(props) {
 
     return(
             <div className="flex flex-col items-center h-[300px] md:w-[350px] w-full">
-                <Link className="w-[100%] hover:opacity-85" href={link}>
+                <Link className="w-[100%] hover:opacity-85 flex flex-col" href={link}>
                     <Image 
-                    className="h-[200px] md:h-[220px] rounded-[5px] w-full p-0" 
+                    className="h-[225px] w-full p-0" 
                     src={sampleThumbnail} 
                     alt={content.description}
                     unoptimized
                     />
+                    <div className="w-fit h-fit p-2 bg-black/50 text-white text-[13px] absolute mt-[180px] ml-[10px] rounded-[4px]">
+                        <span>5:09</span>
+                    </div>
                 </Link>
                 <div className="w-full flex flex-row items-start justify-between gap-2 pt-[10px] px-2">
                     <div className="flex flex-row gap-2 items-start">
                         <Image 
-                        className="h-[40px] w-[40px] rounded-full  p-0" 
+                        className="h-[45px] w-[45px] rounded-full  p-0" 
                         src={sampleThumbnail} 
                         width={20} 
                         height={20} 
@@ -40,9 +43,9 @@ export default function VideoCard(props) {
                         />
                         <div className="flex flex-col">
                             <div>
-                                <Link href={link} className="font-semibold hover:opacity-50 hover:font-bold duration-300 transition-all ease-in-out">{content.title.length>30?content.title.slice(0, 30).concat('..'):content.title}</Link>
+                                <Link href={link} className="text-[20px] hover:opacity-50 hover:font-bold duration-300 transition-all ease-in-out">{content.title.length>30?content.title.slice(0, 30).concat('..'):content.title}</Link>
                             </div>
-                            <span style={{lineHeight:'19px'}} className="text-gray-600">
+                            <span style={{lineHeight:'19px'}} className="text-gray-700">
                                 <span className="">{"Alimam ahmed"} • </span>
                                 <span>123 votes • </span>
                                 <span>4 days ago</span>
