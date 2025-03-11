@@ -93,30 +93,30 @@ const Navbar = () => {
     </div>
       <div >
                 {/* Menus */}
-        <div className={` flex py-1 justify-center text-[18px] gap-5`}>
+        <div className={` flex px-2 pt-2 flex-row w-[100%] justify-start gap-2 bg-gray-100 overflow-x-scroll`}>
           {/* First Line Menus */}
-            <Link href="#products" className="text-white px-3 py-1  hover:scale(105%)">
+            <Link href="#products" className="rounded-[15px] px-4 py-1 w-[33%] flex flex-row justify-center items-center bg-gray-200 text-gray-500">
               Products
             </Link>
-            <Link href="/" className="text-white px-3 py-1  hover:scale(105%)">
+            <Link href="/" className="rounded-[15px] px-4 py-1 w-[33%] flex flex-row justify-center items-center bg-gray-200 text-gray-500">
               Home
             </Link>
-            <Link href="/about" className="text-white px-3 py-1 hover:scale(105%)">
+            <Link href="/about" className="rounded-[15px] px-4 w-[33%] flex flex-row justify-center items-center py-1 bg-gray-200 text-gray-500">
               About
             </Link>
         </div>
 
-        <div className="mt-2 fixed bottom-0 rounded-t-[5px] w-[100%] flex z-[1000] bg-green-600 flex-row font-sans h-[57px] items-center text-[14px] justify-around">
+        <div className="mt-2 fixed bottom-0 rounded-t-[5px] w-[100%] flex z-[1000] bg-green-600 flex-row font-sans h-[50px] items-center justify-around">
           {/* Second Line Menus */}
-            <Link style={{alignItems:'center'}} href="/giveaway-quiz" className="text-green-200 px-1 rounded-[15px] hover:bg-green-800 py-1 flex flex-col justify-center">
+            <Link style={{alignItems:'center'}} href="/giveaway-quiz" className="text-green-200 hover:scale-105 items-center flex flex-col justify-center">
               <Money/>
               Giveaway Quiz
             </Link>
-            <Link style={{alignItems:'center'}} href="/soon" className="text-green-200 px-1 rounded-[15px] hover:bg-green-800 flex py-1 flex-col justify-center">
+            <Link style={{alignItems:'center'}} href="/soon" className="text-green-200 hover:scale-105 items-center flex flex-col justify-center">
               <Video/>
               Skits Across Naija
             </Link>
-            <Link style={{alignItems:'center'}} href="/shoutout" className="text-green-200 px-1 rounded-[15px] hover:bg-green-800 py-1 flex flex-col justify-center">
+            <Link style={{alignItems:'center'}} href="/shoutout" className="text-green-200 hover:scale-105 items-center flex flex-col justify-center">
               <ShoutMic/>
             Shout Out
             </Link>

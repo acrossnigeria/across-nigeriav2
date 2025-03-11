@@ -20,6 +20,7 @@ import VidThumbnail from "@/components/VidThumbnail";
 import Close from "../../../../public/images/icon/Close";
 import SuccessIcon from "../../../../public/images/icon/SuccessIcon";
 import UploadLoader from "@/components/UploadLoader";
+import Next from "../../../../public/images/icon/Next";
  
 function reducer(state, action) {
   switch (action.type) {
@@ -81,10 +82,41 @@ export default function UploadScreen() {
   const router = useRouter();
   const { data: session } = useSession();
 
+  const [ modalHeight, setModalHeight ] = useState('h-[10%]');
+  const [ modalOpacity, setModalOpacity ] = useState('opacity-0');
+  const [ modalBlur, setModalBlur ] = useState('backdrop-blur-[0px]');
+  const [ isBankInfo, setIsBankInfo ] = useState(null);
+  const [ isLoading, setIsLoading ] = useState(true);
+  const [ updateSuccess, setUpdateSuccess ] = useState(false);
+  const [ isSaving, setIsSaving ] = useState(false);
+  const [ showUpdateModal, setShowUpdateModal ] = useState(false);
+  const [ isFormFilled, setIsFormFilled ] = useState(false);
+
+
   function extractPublicId(url) {
     const match = url.split('upload/')[1].split('/')[1];
     return match
   }
+
+  const modal = (type) => {
+    if (type==='in') {
+        setShowUpdateModal(true);
+
+        setTimeout(() => {
+            setModalHeight('h-[85%]');
+            setModalOpacity('opacity-[100%]');
+            setModalBlur('backdrop-blur-[2px]');
+        }, 300);
+    } else {
+        setModalHeight('h-[10%]');
+        setModalOpacity('opacity-0');
+        setModalBlur('backdrop-blur-[0px]');
+
+        setTimeout(() => {
+            setShowUpdateModal(false);
+        }, 500);
+    }
+}
 
   const handleRemoveFile = async (e) => {
     e.preventDefault();
@@ -201,124 +233,93 @@ export default function UploadScreen() {
 
 
   return (
-    <Layout title={`Upload Skit`}>
-      {/* <WelcomeScreen2 section="Skits Across Nigeria" toc="Coming soon" /> */}
-      <div className="mt-5 flex flex-col md:px-0 px-[5%] bg-gray-100 justify-center md:gap-5">
-        <div className="md:col-span-3">
-          {error ? (
-            <div className="alert-error">{error}</div>
-          ) : (
-         <div>   
-          <form className="mx-auto align-middle snap-center self-center justify-center content-center md:w-[50%] w-[100%] md:px-0 px-[3%]" onSubmit={handleSubmit(submitHandler)} >
-              <div className="mb-4 flex flex-row items-center gap-2 text-[20px] font-bold text-green-600">Upload a video<CreatorIcon color={'#16a34a'}/></div>
-              <div className="mb-4">
-                <input accept=".mp4" type="file" className="w-full hidden" id="videoFile" onChange={uploadHandler}/>
-                <button onClick={selectVideo} className='bg-green-500 w-full mb-3 rounded-[15px] text-white hover:bg-green-500 h-[45px] gap-[10px] flex flex-row justify-center items-center'>
-                  <Upload />
-                  <span>Select video</span>
-                </button>
-                 { dataUrl ? (
-                    <div className=' w-[100%]' style={{ position: "relative", height: "300px" }}>
-                      <VidThumbnail url={dataUrl} videoId={videoId}/>
-                    </div>
-                  ) : (
-                    <div className='w-[100%] rounded-[5px] border-gray-400 border-1 h-[300px] flex flex-col justify-center text-gray-400 items-center'>
-                      { loadingUpload ?  <CycleLoader size={'40px'}/> : (
-                        <>
-                        <ImgIcon />
-                        <span className="mt-3 text-[13px] text-gray-500">Skits should not exceed 50MB</span>
-                        </>) 
-                      }
-                    </div>
-                  )
+      <div className="flex flex-col md:px-0 px-[3%] pt-[25px] h-screen bg-gray-100 items-center md:gap-5">  
+        <div className="mx-auto align-middle flex flex-col h-[100%] md:w-[50%] w-[100%] md:px-0" >
+            <div className="mb-[20px]">
+              <button onClick={()=>{modal('out')}} className="w-fit flex flex-row items-center transition-all duration-500 ease-in-out hover:scale-105 gap-2"><div className="rotate-180"><Next bg={'black'} size={'20px'}/></div>Go back</button>
+            </div>
+            <div className="mb-5 flex flex-row items-center gap-2 text-[20px] font-semibold text-green-600">Upload your masterpiece video!<CreatorIcon color={'#16a34a'}/></div>
+            <div className="mb-4">
+              <input accept=".mp4" type="file" className="w-full hidden" id="videoFile" onChange={uploadHandler}/>
+              <button onClick={selectVideo} className='bg-green-500 hover:bg-green-600 w-full mb-3 rounded-[15px] text-white transition-all ease-in-out duration-300 h-[40px] gap-[10px] flex flex-row justify-center items-center'>
+                <Upload />
+                <span>Select video</span>
+              </button>
+              { dataUrl ? (
+                  <div className=' w-[100%]' style={{ position: "relative", height: "200px" }}>
+                    <VidThumbnail url={dataUrl} videoId={videoId}/>
+                  </div>
+                ) : (
+                  <div className='w-[100%] rounded-[5px] border-gray-400 border-1 h-[200px] flex flex-col justify-center text-gray-400 items-center'>
+                    { loadingUpload ?  <CycleLoader size={'30px'}/> : (
+                      <>
+                      <ImgIcon />
+                      <span className="mt-3 text-[13px] text-gray-500">Video should not exceed 50MB</span>
+                      </>) 
                     }
-              </div>
-              {selectedFile && (
-                <div className={`${isDeleting?'animate-pulse opacity-50':''} flex flex-col justify-between items-center bg-gray-200 h-fit py-[10px] px-[10px] mt-[5px]`}>
-                  <div className="flex w-full flex-row justify-between items-center">
-                    <div className='flex flex-row gap-[15px] items-center'>
-                      <FileIcon/>
-                      <div className='flex flex-col text-[12px] text-gray-500'>
-                        <span>{selectedFile.name.length>50?selectedFile.name.slice(0, 45)+' ...mp4':selectedFile.name}</span>
-                        <span>{((selectedFile.size/1024)/1024).toFixed(2)} mb</span>
-                      </div>
-                      
+                  </div>
+                )
+                  }
+            </div>
+            {selectedFile && (
+              <div className={`${isDeleting?'animate-pulse opacity-50':''} flex flex-col justify-between items-center bg-gray-200 h-fit py-[10px] px-[10px] mt-[5px]`}>
+                <div className="flex w-full flex-row justify-between items-center">
+                  <div className='flex flex-row gap-[15px] items-center'>
+                    <FileIcon/>
+                    <div className='flex flex-col text-[12px] text-gray-500'>
+                      <span>{selectedFile.name.length>50?selectedFile.name.slice(0, 45)+' ...mp4':selectedFile.name}</span>
+                      <span>{((selectedFile.size/1024)/1024).toFixed(2)} mb</span>
                     </div>
-                    <button disabled={!(uploadProgress==='100%')} className={`cursor-pointer border-2 rounded-[50%] p-[11px] hover:bg-gray-400 transition-background duration-500 ease-in-out ${uploadProgress==='100%'?'opacity-[100%]':'opacity-[0%]'}`} onClick={handleRemoveFile}><DeleteIcon/></button>
+                    
                   </div>
-                  <div className=" bg-gray-200 flex flex-col w-full text-[14px]">
-                    <UploadLoader percentage={uploadProgress}/>
-                    <span className={`text-red-600 ${uploadProgress === '100%'?'hidden':''} text-[12px]`}>Please don&apos;t Navigate from this page, your file is uploading</span>
-                  </div>
-
+                  <button disabled={!(uploadProgress==='100%')} className={`cursor-pointer border-2 rounded-[50%] p-[11px] hover:bg-gray-400 transition-background duration-500 ease-in-out ${uploadProgress==='100%'?'opacity-[100%]':'opacity-[0%]'}`} onClick={handleRemoveFile}><DeleteIcon/></button>
                 </div>
-              )}
-              {isDeleting && <span>Deleting video...</span>}
-              <div className="mb-4">
-                <label htmlFor="title">Title</label>
-                <input
-                  type="text"
-                  className="w-full border-1 border-gray-400 h-[45px] px-2 outline-none rounded-[5px]"
-                  id="title"
-                  placeholder="Enter title of your video here.."
-                  {...register('title', {
-                    required: 'Please enter Skit title',
-                  })}
-                />
-                {errors.title && (
-                  <div className="text-red-500">{errors.title.message}</div>
-                )}
+                <div className=" bg-gray-200 flex flex-col w-full text-[14px]">
+                  <UploadLoader percentage={uploadProgress}/>
+                  <span className={`text-red-600 ${uploadProgress === '100%'?'hidden':''} text-[12px]`}>Please don&apos;t Navigate from this page, your file is uploading</span>
+                </div>
+
               </div>
-              <div className="mb-4 mt-4">
-                <label htmlFor="description">Caption</label>
-                <textarea
-                  type="text"
-                  className="w-full border-1 px-2 border-gray-400 h-[100px] pt-2 outline-none rounded-[5px] p-0"
-                  id="description"
-                  placeholder="Write your caption here..."
-                  {...register('description', {
-                    required: 'Please write a caption for your video',
-                  })}
-                />
-                {errors.description && (
-                  <div className="text-red-500">
-                    {errors.description.message}
+            )}
+            {isDeleting && <span>Deleting video...</span>}
+            <div className="mb-[40px] mt-auto flex-row flex justify-center items-center">
+              <button onClick={()=>{modal('in')}} className="bg-green-500 h-[40px] rounded-[25px] hover:bg-green-600 text-white hover:scale-95 transition-all duration-300 ease-in-out w-[100%]">
+                Next
+              </button>
+            </div>
+        </div>
+         { showUpdateModal && 
+          <div className={`h-screen w-screen transition-all duration-300 ease-in-out bg-black/10 flex flex-col justify-end ${modalBlur} fixed top-0`}>
+              <div className={`${modalHeight} ${modalOpacity} transition-all overflow-hidden duration-500 ease-in-out w-[100%] rounded-t-[30px] pt-[30px] md:px-[25%] px-[3%] bg-gray-100`}>
+                  <div className="mb-[20px]">
+                      <button onClick={()=>{modal('out')}} className="w-fit flex flex-row items-center transition-all duration-500 ease-in-out hover:scale-105 gap-2"><div className="rotate-180"><Next bg={'black'} size={'20px'}/></div>Go back</button>
                   </div>
-                )}
+                  <span className="text-[23px] font-bold">Add a title and caption to your skit.</span>
+                  <div className="mt-[20px] text-[18px]">
+                      <div>
+                          <label htmlFor="bank">Title</label>
+                          <input 
+                              type="text"
+                              className="h-[48px] mt-[7px] px-3 outline-none w-[100%] bg-gray-200 rounded-[15px] border-1 border-gray-400"
+                              placeholder="A beautiful story..."
+                          />
+                      </div>
+                      <div className="mt-[10px]">
+                          <label htmlFor="bank">Add caption</label>
+                          <textarea
+                              type="text"
+                              className="h-[100px] mt-[7px] p-3 outline-none w-[100%] bg-gray-200 rounded-[15px] border-1 border-gray-400"
+                              placeholder="Add caption here...."
+                          />
+                      </div>
+                      <button className={`h-[45px] w-[100%] mt-[30px] flex flex-row justify-center items-center text-white ${isSaving || updateSuccess ?'bg-gray-400':(isFormFilled?'bg-green-500 hover:scale-105 hover:bg-green-700 transition-all':'bg-gray-400')} duration-500 ease-in-out rounded-[30px]`}>
+                        Upload
+                      </button>
+                  </div>
               </div>
-              <div className="mb-4 flex-row flex justify-center items-center">
-                <button className="bg-green-500 h-[45px] rounded-[25px] text-green-900 hover:bg-green-600 hover:text-white hover:scale-95 transition-all duration-300 ease-in-out w-[70%]" disabled={loadingUpdate||loadingUpload}>
-                  {loadingUpdate||loadingUpload ? <CycleLoader size={'25px'}/> : 'Create'}
-                </button>
-              </div>
-          </form>
-                { showPreview && (
-                    <div className="fixed inset-0 z-50 flex items-center justify-center bg-gray-200">
-                        <button className="w-[50px] flex flex-row justify-center items-center h-[50px] rounded-full cursor-pointer absolute right-[20px] top-[20px] z-50 bg-gray-300" 
-                        onClick={()=>(router.push("/skitsPage"))}><Close/></button>
-                        <div className="flex flex-col items-center space-x-2">
-                            <SuccessIcon/>
-                            <span className="font-extrabold text-gray-600 text-[22px]">Success, Your skit has been created</span>
-                            <p className="flex w-full mt-[20px]">Copy the Link below and send it to your friends to view and vote for your skit</p>
-                            <input type="text" value={postUrl} readOnly className="border border-gray-300 mt-[5px] rounded-[30px] px-2 h-[50px] w-[250px]"/>
-                            <div>
-                            <button onClick={copyToClipboard} className="bg-transparent border-gray-700 rounded-[30px] hover:bg-gray-300 text-gray-800 mt-[10px] border-1 px-4 h-[50px]">
-                                Copy link
-                            </button>
-                            <Link href={postUrl}>
-                                <button className="bg-transparent border-gray-700 rounded-[30px] hover:bg-gray-300 text-gray-800 mt-[10px] border-1 px-4 h-[50px]">
-                                Open skit
-                                </button>
-                            </Link>
-                            </div>
-                        </div>
-                    </div>
-                )}  
-            </div>     
-        )}
+          </div>
+      }
       </div>
-    </div>
-  </Layout>
   );
 }
 

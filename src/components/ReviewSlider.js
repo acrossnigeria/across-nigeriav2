@@ -19,7 +19,7 @@ const images = [
 const bearSlideItemData = images.map((row) => {
   return {
     key: row.id,
-    children: <BearSlideImage style={{ borderRadius:'10px'}} imageUrl={row.image} />
+    children: <BearSlideImage style={{ borderRadius:'0px'}} imageUrl={row.image} />
   };
 });
 
@@ -35,15 +35,15 @@ const CustomBanner = () => {
   },[isMobile])
 
   return (
-    <div className="rounded-[10px] md:w-[900px] w-[100%] mx-auto" style={{padding:'0px 7px', marginTop:'5px', display:'flex', flexDirection:'column'}}>
+    <div className="rounded-[0px] md:w-[900px] w-[100%] mx-auto" style={{padding:'0px 0px', marginTop:'5px', display:'flex', flexDirection:'column'}}>
       <BearCarousel
-        className="rounded-[10px]"
+        className="rounded-[0px]"
         data={bearSlideItemData}
         isEnableLoop
         autoPlayTime={5000}
         isEnableAutoPlay
         isEnablePagination
-        height={ isMobile?{ widthRatio: 12, heightRatio:8 }:{widthRatio:11, heightRatio:4}}
+        height={ isMobile?{ widthRatio: 12, heightRatio:6.8 }:{widthRatio:11, heightRatio:4}}
         //look for logic to make it work differently on pc and phone
       />
     </div>

@@ -1,6 +1,6 @@
 export default function ShoutMic() {
     return (
-        <svg height="23px" width="23px" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512.003 512.003" fill='#bbf7d0'>
+        <svg height="20px" width="20px" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512.003 512.003" fill='#bbf7d0'>
 
         <g id="SVGRepo_bgCarrier" strokeWidth="0"/>
         

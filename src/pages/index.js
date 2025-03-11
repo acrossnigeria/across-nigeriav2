@@ -86,13 +86,13 @@ export default function Home() {
 
   return (
         <Layout title={"Home Page"}>
-          <div className="bg-gradient-to-b pt-[20px] from-green-600 to-gray-100">
+          <div className="bg-gradient-to-b pt-[5px]">
             <ReviewSlider/>
           </div>
         <div className="md:w-[900px] mt-[25px] w-[100%] mx-auto">
           <Info/>
           <p className="grid w-full mx-auto text-center bg-clip-text text-transparent mt-[40px] bg-gradient-to-b from-green-400 to-green-600 ">
-            <span id="products" className="flex text-center text-[25px] font-sans font-bold mx-auto "> 
+            <span id="products" className="flex text-center text-[24px] font-sans font-bold mx-auto "> 
                 OUR AMAZING PRODUCTS
             </span>
           </p>

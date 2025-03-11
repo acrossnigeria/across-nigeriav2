@@ -13,6 +13,7 @@ import telegram from "../../public/images/soc_media/icons8-telegram.gif";
 import { useSession } from "next-auth/react";
 import Image from "next/image";
 import { useState, useEffect } from "react";
+import Next from "../../public/images/icon/Next";
 
 const Info = () => {
   const [isMobile, setIsMobile]=useState(false);
@@ -43,14 +44,15 @@ const Info = () => {
       <div className="flex lg:w-full  w-full text-[35px] md:text-[50px] right-0   text-pretty">
         <span className="w-full bg-clip-text bg-gradient-to-tr from-green-600 text-transparent to-green-200 font-bold tracking-wider">HOWFA?</span> 
       </div>
-      <p className="text-left text-[21px] mt-[4px] mb-5 text-gray-800">{data.paragraph2}</p>
-        <button style={{ display:( session?.user? 'none': 'block')}} className="w-[85%] md:w-[300px] px-[40px] text-white text-[20px] rounded-[30px] h-[60px] flex flex-row justify-center items-center tracking-wider bg-green-600 border-l-3 border-b-3 hover:border-b-0 hover:border-l-0 border-b-green-800 border-l-green-800  hover:bg-green-700">
-            <Link  href="/account/reg">
-              Register Now
-            </Link>
-        </button> 
+      <p className="text-left text-[17px] mt-[4px] mb-[30px] text-gray-800">{data.paragraph2}</p>
+      <Link  href="/account/reg" style={{ display:( session?.user? 'none': 'flex')}} className="w-[100%] md:w-[300px] text-[18px] text-white rounded-[30px] gap-2 h-[45px] flex-row justify-center items-center bg-green-500 hover:bg-green-600">
+          <span>
+            Register Now
+          </span>
+          <Next size={'15px'} bg={'white'}/>
+      </Link> 
       
-      <div style={{gap:'10px'}} className="text-8xl mt-6 mb-1 mx-auto rounded-md justify-between flex">
+      <div style={{gap:'10px'}} className="text-8xl mt-[30px] mb-1 mx-auto rounded-md justify-between flex">
           <Link href=''>
             <Image  quality={100}  className="cursor-pointer" src={facebook} height={20} width={30} alt="facebook"/>
           </Link>
