@@ -118,8 +118,7 @@ export default function UploadScreen() {
     }
 }
 
-  const handleRemoveFile = async (e) => {
-    e.preventDefault();
+  const handleRemoveFile = async () => {
     setIsDeleting(true);
     try {
       if (dataUrl) {
@@ -157,13 +156,14 @@ export default function UploadScreen() {
       const url = `https://api.cloudinary.com/v1_1/${process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME}/upload`;
     try {
       dispatch({ type: 'UPLOAD_REQUEST' });
-      const { data: { signature, timestamp },  } = await axios('/api/admin/cloudinary-sign?type=vid');
+      const { data: { signature, timestamp },  } = await axios('/api/admin/cloudinary-sign?type=theaterSkitCompetition');
    
       const file = e.target.files[0];
       const formData = new FormData();
       formData.append('file', file);
       formData.append('signature', signature);
       formData.append('timestamp', timestamp);
+      formData.append('folder', 'theater_skit_uploads');
       formData.append('api_key', process.env.NEXT_PUBLIC_CLOUDINARY_API_KEY);
 
       const { data } = await axios.post(url, formData, 
@@ -183,7 +183,7 @@ export default function UploadScreen() {
     } catch (err) {
       dispatch({ type: 'UPLOAD_FAIL', payload: getError(err) });
       handleRemoveFile();
-      toast.error(`${getError(err)}, please check your internet connection and try again`);
+      console.error('Upload failed:', err.response ? err.response.data : err.message);
     }
     } else {
       return;

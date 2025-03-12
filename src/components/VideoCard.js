@@ -1,6 +1,5 @@
 import Link from "next/link";
 import { Cloudinary } from "@cloudinary/url-gen";
-import sampleThumbnail from "../../public/images/sample.PNG";
 import Image from "next/image";
 import OptionsIcon from "../../public/images/icon/OptionsIcon";
 
@@ -14,6 +13,7 @@ const cld = new Cloudinary( {
 export default function VideoCard(props) {
     
     const {content, link} = props;
+    const sampleThumbnail = 'https://res.cloudinary.com/dcxz7qndp/video/upload/sp_auto/v1741771808/theater_skit_uploads/zznkbb7idozhpuklmsal.m3u8';
     // const videoId = content?.url.split('/upload/')[1].replace('mp4','jpeg').split('/')[1];
     // const thumbnailUrl = cld.image(videoId).setAssetType('video').format('auto:image').toURL().concat('.jpeg');
     // console.log(thumbnailUrl)

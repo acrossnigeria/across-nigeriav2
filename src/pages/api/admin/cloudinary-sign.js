@@ -26,6 +26,18 @@ export default function signature(req, res) {
   
     res.statusCode = 200;
     res.json({ signature, timestamp });
+  } else if (req.query.type === 'theaterSkitCompetition') {
+    const timestamp = Math.round(new Date().getTime() / 1000);
+    const signature = cloudinary.utils.api_sign_request(
+      {
+        timestamp: timestamp,
+        folder: 'theater_skit_uploads',
+      }, 
+      process.env.CLOUDINARY_SECRET
+    );
+  
+    res.statusCode = 200;
+    res.json({ signature, timestamp });
   }
 
 }

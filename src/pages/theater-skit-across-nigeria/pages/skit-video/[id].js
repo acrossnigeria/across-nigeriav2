@@ -6,24 +6,22 @@ import { getError } from "../../../../../utils/error";
 import axios from "axios";
 import 'next-cloudinary/dist/cld-video-player.css';
 import { useState, useEffect } from "react";
-import ReactPlayer from "react-player";
-import PaystackBtn from "@/components/PaystackBtn";
-import InfoIcon from "../../../../../public/images/icon/InfoIcon";
 import ContestIcon from "../../../../../public/images/icon/ContestIcon";
 import Profile from "../../../../../public/images/icon/Profile";
-import Close from "../../../../../public/images/icon/Close";
 import CycleLoader from "@/components/CycleLoader";
 import VotedIcon from "../../../../../public/images/icon/VotedIcon";
 import VoteIcon from "../../../../../public/images/icon/VoteIcon";
 import ShareIcon from "../../../../../public/images/icon/ShareIcon";
 import Link from "next/link";
-import Next from "../../../../../public/images/icon/Next";
-const sampleVid = '/sample.MP4'
+import dynamic from 'next/dynamic'; // Import dynamic
+
+// Dynamically import ReactPlayer with SSR disabled
+const ReactPlayer = dynamic(() => import('react-player'), { ssr: false });
 
 const prototype = {
     email:'aliman2952003@gmail.com',
     description:"The rocks are formed as a result of transportation agents like wind, water and ice which moves loosed weathered rock materials and deposit them in the form of layers called sediments which when subjected to heavy pressure undergo compaction and cementation",
-    url: sampleVid,
+    url: 'https://res.cloudinary.com/dcxz7qndp/video/upload/sp_auto/v1741771808/theater_skit_uploads/zznkbb7idozhpuklmsal.m3u8',
     title: 'Gauss Jordan Elimination & Reduced Row Echelon Form',
     name: 'Aliman ahmed'
 }
@@ -121,11 +119,23 @@ const voteHandler = async()=>{
         }
      }
 
+    useEffect(() => {
+        // Ensure this code only runs on the client
+        if (typeof window !== "undefined") {
+            const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent) && window.matchMedia("(max-width: 600px)").matches;
+            setIsMobile(isMobile);
+        }
+    }, []);
+
+    if (!skit) {
+    return <Layout title="Skit not Found"><div>Skit not found</div></Layout>;
+    }
+
   return(
         <Layout hideNav={true} title={skit.title}>
           <div className={`flex md:w-[50%] bg-gray-100 mx-auto rounded-[20px] justify-center items-center gap-4 flex-col`}>
-            <div className={`bg-gray-100`}>
-              <ReactPlayer autoPlay url={skit.url} width={'100%'} height={isMobile?280:300}  controls={true} />
+            <div className={`${isMobile ? 'h-[245px]' : 'h-[300px]'} w-[100%] bg-gray-900 md:mt-[15px]`}>
+                { typeof window !== "undefined" && <ReactPlayer autoPlay url={skit.url} pip={true} width={'100%'} height={'100%'} controls={true} /> }
             </div> 
             <div className={`fixed ${shareNotifyBottom} ${shareNotifyOpacity} transition-all ease-in-out duration-500 bg-gray-100 text-gray-600 rounded-[30px] md:w-fit w-[80%] border-1 border-green-500 h-fit p-3`}>
                 <span>Link copied, you can now share it</span>
