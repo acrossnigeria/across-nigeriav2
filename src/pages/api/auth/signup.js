@@ -63,7 +63,6 @@ async function handler(req, res) {
   let userDoc;
   try {
     userDoc = await User.create( newUser );
-    console.log("saved to database");
   } catch ( err ) {
     console.log(err.message);
     res.status(500).json(' something went wrong while trying to create user account')
@@ -73,7 +72,6 @@ async function handler(req, res) {
 
     const referer = await User.findOne({refCode:referee});
     if (!referer) {
-      console.log("Referee not found");
       await db.disconnect();
     } else {
       console.log("Success in checking referee",referer);

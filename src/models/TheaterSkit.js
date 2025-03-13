@@ -1,12 +1,13 @@
 import mongoose from "mongoose";
 
 const theaterSkitSchema = new mongoose.Schema({
-        title:{ type:String, required: true },
+        vidTitle:{ type:String, required: true },
         creator: { type:mongoose.Schema.Types.ObjectId, required:true, ref:"User" },
-        url:{ type:String, required:true },
-        description:{ type:String, required:true },
+        vidUrl:{ type:String, required:true },
+        vidLength:{ type:String, required:true },
         votes:{ type:Array, required:false, default:[] },
-        comments:{ type:Array, required:false, default:[] }
+        comments:{ type:Array, required:false, default:[] },
+        vidCaption:{ type:String, required:false, default:""}
     },
     {
         timestamps: true,

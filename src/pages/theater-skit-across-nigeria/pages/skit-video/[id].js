@@ -38,13 +38,6 @@ export default function SkitScreen(props){
   const [ shareNotifyOpacity, setShareNotifyOpacity ] = useState('opacity-0');
   const [ shareLink, setShareLink ] = useState('https//sample');
 
-  useEffect(()=>{
-    if ( /iPhone|iPad|iPod|Android/i.test(navigator.userAgent)&&window.matchMedia("(max-width: 600px)" ).matches) {
-        setIsMobile(true);
-    } else{setIsMobile(false)}
-// console.log(isMobile, navigator.userAgent)
-  },[ isMobile ])
-
   if (!skit){
     return<Layout title="Skit not Found"><div>Skit not found</div></Layout>;
   }
@@ -125,6 +118,7 @@ const voteHandler = async()=>{
             const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent) && window.matchMedia("(max-width: 600px)").matches;
             setIsMobile(isMobile);
         }
+        
     }, []);
 
     if (!skit) {

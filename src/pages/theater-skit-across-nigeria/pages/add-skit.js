@@ -70,32 +70,59 @@ export default function UploadScreen() {
     error: '',
   });
   const [ dataUrl, setDataUrl] = useState(null);
-  const [title, setTitle] = useState("");
-  const [description,setDescription] = useState("");
   const [ selectedFile, setSelectedFile ] = useState(null);
   const [ uploadProgress, SetUploadProgress ] = useState('1%');
   const [ isDeleting, setIsDeleting ] = useState(false);
   const [ videoId, setVideoId ] = useState('');
-  const { register, handleSubmit, formState: { errors }, setValue, } = useForm();
-  const[ postUrl, setPostUrl]=useState("")
-  const[ showPreview, setShowPreview]=useState(false)
+  const [ vidTitle, setVidTitle ] = useState("");
+  const [ vidCaption, setVidCaption ] = useState("");
+  const [ vidLength, setVidLength ] = useState("");
   const router = useRouter();
   const { data: session } = useSession();
 
   const [ modalHeight, setModalHeight ] = useState('h-[10%]');
   const [ modalOpacity, setModalOpacity ] = useState('opacity-0');
   const [ modalBlur, setModalBlur ] = useState('backdrop-blur-[0px]');
-  const [ isBankInfo, setIsBankInfo ] = useState(null);
-  const [ isLoading, setIsLoading ] = useState(true);
-  const [ updateSuccess, setUpdateSuccess ] = useState(false);
+  const [ saveSuccess, setSaveSuccess ] = useState(false);
   const [ isSaving, setIsSaving ] = useState(false);
   const [ showUpdateModal, setShowUpdateModal ] = useState(false);
-  const [ isFormFilled, setIsFormFilled ] = useState(false);
 
+  const isFormFilled = vidTitle!=="" && vidCaption!=="";
+  const isVideoUploaded = dataUrl !== null;
+
+  const [ displayMessage, setDisplayMessage ] = useState(false);
+  const [ message, setMessage ] = useState('Unknown message');
+  const [ messageType, setMessageType ] = useState('neutral');
+
+  const showInfo = (text, type) => {
+    setDisplayMessage(true);
+    setMessage(text);
+    setMessageType(type);
+    setTimeout(() => {
+      setDisplayMessage(false);
+      setMessage('Unknown message');
+      setMessageType('neutral');
+    }, 5000);
+  }
 
   function extractPublicId(url) {
     const match = url.split('upload/')[1].split('/')[1];
     return match
+  }
+
+  const convertToVideoLengthFormat = ( seconds ) => {
+    const hours = Math.floor(seconds/3600);
+    const minutes = Math.floor( ( seconds % 3600 )/60);
+    const secondsLeft = seconds % 60;
+
+    const hoursStr = hours.toString().padStart(2, '0');
+    const minutesStr = minutes.toString().padStart(2, '0');
+    const secondsLeftStr = secondsLeft.toString().padStart(2, '0');
+    if ( hours > 0 ) {
+      return `${hoursStr}:${minutesStr}:${secondsLeftStr}`;
+    } else {
+      return `${minutesStr}:${secondsLeftStr}`;
+    }
   }
 
   const modal = (type) => {
@@ -130,8 +157,7 @@ export default function UploadScreen() {
       setDataUrl(null);
       setIsDeleting(false);
     } catch (err) {
-      console.log(error);
-      toast.error('Failed to delete file, try again')
+      showInfo('Failed to delete file, try again', 'error');
     }
   }
   
@@ -139,12 +165,12 @@ export default function UploadScreen() {
     setSelectedFile(e.target.files[0]);
 
     if (!e.target.files || e.target.files.length === 0) {
-    toast.error('Please select a VIDEO file to upload.');
+      showInfo('Please select a video file to upload.', 'error');
     return;
     }
     // Check file size
     const fileSize = e.target.files[0].size; // Size in bytes
-    const maxSize = 30 * 1024 * 1024; // 30 MB in bytes
+    const maxSize = 60 * 1024 * 1024; // 30 MB in bytes
     if (fileSize > maxSize) {
       toast.error('File size exceeds 30MB limit.');
 
@@ -174,16 +200,15 @@ export default function UploadScreen() {
           },
         }
       );
-
-      dispatch({ type: 'UPLOAD_SUCCESS' });
       setDataUrl( data.secure_url);
-      setVideoId(data.public_id)
-      toast.success('File uploaded successfully');
+      setVideoId(data.public_id);
+      const duration = data.duration;
+      setVidLength( convertToVideoLengthFormat( duration ) );
+      showInfo('File uploaded successfully', 'success');
       
     } catch (err) {
-      dispatch({ type: 'UPLOAD_FAIL', payload: getError(err) });
       handleRemoveFile();
-      console.error('Upload failed:', err.response ? err.response.data : err.message);
+      showInfo(`Upload failed: ${err.message}`, 'error');
     }
     } else {
       return;
@@ -191,52 +216,49 @@ export default function UploadScreen() {
    
   };
 
-  const submitHandler=({title, description})=>{
-    dispatch({type:'PAY_REQUEST'})
-    setTitle(title);
-    setDescription(description);
-  };
 
-  const newData = {
-    name:session?.user.name?? null, 
-    userId:session?.user._id?? null, 
-    email:session?.user.email?? null,
-    url: dataUrl,
-  }
-
-  const videoUpload = async (ref,) => {
-        const data = oldData;
-        const response = await axios.post(`/api/skits`,data);
-        console.log(response.data.id)
-        dispatch({ type: 'UPDATE_SUCCESS' });
-        toast.success('Product updated successfully');
-        const baseUrl = window.location.origin;
-        const url = `https://acrossnig.com/skits/${response.data.id}`;
-        setPostUrl(url)
-        setShowPreview(true);
-    };
-
-  const copyToClipboard = () => {
-    navigator.clipboard.writeText(postUrl)
-      .then(() => {
-       toast.success('Link copied to clipboard!');
-      })
-      .catch((error) => {
-        console.error('Unable to copy link: ', error);
-      });
+  const videoUpload = async () => {
+    const data = { 
+      userId:session?.user._id?? null, 
+      email:session?.user.email?? null,
+      vidUrl: dataUrl,
+      vidCaption,
+      vidTitle,
+      vidLength,
+    }
+    try {
+      setIsSaving(true);
+      const response = await axios.post(`/api/media/upload-theater-skit`,data);
+      const vidId = response.data.id;
+      const url = `/theater-skit-across-nigeria/pages/skit-video/${vidId}`;
+      setSaveSuccess(true);
+      router.push(url);
+    } catch (error) {
+      setIsSaving(false);
+      setSaveSuccess(false);
+      showInfo('Something went wrong, check your internet and try again.', 'error');
+    }
+        
   };
 
   const selectVideo = (e) => {
     e.preventDefault();
     document.getElementById('videoFile').click()
   }
-
+  const enterVidDetails = () => {
+    if (isVideoUploaded) {
+      modal('in');
+    }
+  }
 
   return (
       <div className="flex flex-col md:px-0 px-[3%] pt-[25px] h-screen bg-gray-100 items-center md:gap-5">  
         <div className="mx-auto align-middle flex flex-col h-[100%] md:w-[50%] w-[100%] md:px-0" >
             <div className="mb-[20px]">
               <button onClick={()=>{modal('out')}} className="w-fit flex flex-row items-center transition-all duration-500 ease-in-out hover:scale-105 gap-2"><div className="rotate-180"><Next bg={'black'} size={'20px'}/></div>Go back</button>
+            </div>
+            <div className={`absolute z-10 ${displayMessage?'top-[50px] opacity-100':'top-[-10px] opacity-0'} ${messageType==='neutral'?'border-b-yellow-200':(messageType==='error'?'border-b-red-500':'border-b-green-500')} transition-all duration-300 ease-in-out border-[1px] border-gray-300 mx-auto md:w-[50%] w-[80%] bg-white border-b-[2px] h-fit p-2 rounded-[3px]`}>
+              <span>{message}</span>
             </div>
             <div className="mb-5 flex flex-row items-center gap-2 text-[20px] font-semibold text-green-600">Upload your masterpiece video!<CreatorIcon color={'#16a34a'}/></div>
             <div className="mb-4">
@@ -282,8 +304,8 @@ export default function UploadScreen() {
               </div>
             )}
             {isDeleting && <span>Deleting video...</span>}
-            <div className="mb-[40px] mt-auto flex-row flex justify-center items-center">
-              <button onClick={()=>{modal('in')}} className="bg-green-500 h-[40px] rounded-[25px] hover:bg-green-600 text-white hover:scale-95 transition-all duration-300 ease-in-out w-[100%]">
+            <div className="mb-[40px] mt-[40px] flex-row flex justify-center items-center">
+              <button onClick={enterVidDetails} className={`${isVideoUploaded?'bg-green-500 hover:scale-95 hover:bg-green-600 cursor-pointer':'bg-gray-400 cursor-not-allowed'} h-[40px] rounded-[25px] text-white transition-all duration-300 ease-in-out w-[100%]`}>
                 Next
               </button>
             </div>
@@ -302,6 +324,8 @@ export default function UploadScreen() {
                               type="text"
                               className="h-[48px] mt-[7px] px-3 outline-none w-[100%] bg-gray-200 rounded-[15px] border-1 border-gray-400"
                               placeholder="A beautiful story..."
+                              onChange={(e) => {setVidTitle(e.target.value)}}
+                              value={vidTitle}
                           />
                       </div>
                       <div className="mt-[10px]">
@@ -310,10 +334,13 @@ export default function UploadScreen() {
                               type="text"
                               className="h-[100px] mt-[7px] p-3 outline-none w-[100%] bg-gray-200 rounded-[15px] border-1 border-gray-400"
                               placeholder="Add caption here...."
+                              onChange={(e) => {setVidCaption(e.target.value)}}
+                              value={vidCaption}
                           />
                       </div>
-                      <button className={`h-[45px] w-[100%] mt-[30px] flex flex-row justify-center items-center text-white ${isSaving || updateSuccess ?'bg-gray-400':(isFormFilled?'bg-green-500 hover:scale-105 hover:bg-green-700 transition-all':'bg-gray-400')} duration-500 ease-in-out rounded-[30px]`}>
-                        Upload
+                      <button onClick={videoUpload} className={`h-[45px] w-[100%] gap-2 mt-[30px] flex flex-row justify-center items-center text-white ${isSaving ?'bg-gray-400':(isFormFilled?'bg-green-500 hover:scale-105 hover:bg-green-700 transition-all':'bg-gray-400')} duration-500 ease-in-out rounded-[30px]`}>
+                        { isSaving? <CycleLoader size={'20px'}/> : ''}
+                        <span>Submit</span>
                       </button>
                   </div>
               </div>
