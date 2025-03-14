@@ -38,6 +38,20 @@ export default function SkitScreen(props){
   const [ shareNotifyOpacity, setShareNotifyOpacity ] = useState('opacity-0');
   const [ shareLink, setShareLink ] = useState('https//sample');
 
+  const [isClient, setIsClient] = useState(false); // State to track client-side rendering
+
+  useEffect(() => {
+    // This will only run on the client
+    setIsClient(true); // Update the state to indicate we're on the client
+  }, []);
+
+  useEffect(() => {
+    if (isClient) { // Only run this code after the component is mounted on the client
+      const isMobileDevice = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent) && window.matchMedia('(max-width: 600px)').matches;
+      setIsMobile(isMobileDevice);
+    }
+  }, [isClient]); // Run this effect after `isClient` changes to true
+
   if (!skit){
     return<Layout title="Skit not Found"><div>Skit not found</div></Layout>;
   }
@@ -112,14 +126,6 @@ const voteHandler = async()=>{
         }
      }
 
-    useEffect(() => {
-        // Ensure this code only runs on the client
-        if (typeof window !== "undefined") {
-            const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent) && window.matchMedia("(max-width: 600px)").matches;
-            setIsMobile(isMobile);
-        }
-        
-    }, []);
 
     if (!skit) {
     return <Layout title="Skit not Found"><div>Skit not found</div></Layout>;
@@ -166,18 +172,5 @@ const voteHandler = async()=>{
 }
 
 
-// export async function getServerSideProps(context) {
-//   const { params } = context;
-
-//   const { id } = params;
-//   await db.connect();
-//   const skit = await Skits.findById(id ).lean();
-//   await db.disconnect();
-//   return {
-//     props: {
-//       skit: skit ? db.convertDocToObj(skit) : null,
-//     },
-//   };
-// }
 
 
