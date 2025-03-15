@@ -28,11 +28,14 @@ export default function signature(req, res) {
     res.json({ signature, timestamp });
   } else if (req.query.type === 'theaterSkitCompetition') {
     const timestamp = Math.round(new Date().getTime() / 1000);
+    console.log('generating signature and signing it')
+
+    const params = {
+      timestamp: timestamp,
+      folder: 'theater_skit_uploads',  
+    }
     const signature = cloudinary.utils.api_sign_request(
-      {
-        timestamp: timestamp,
-        folder: 'theater_skit_uploads',
-      }, 
+      params, 
       process.env.CLOUDINARY_SECRET
     );
   
