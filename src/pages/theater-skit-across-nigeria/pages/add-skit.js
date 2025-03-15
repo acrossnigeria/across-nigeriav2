@@ -63,12 +63,9 @@ function reducer(state, action) {
 };
 
 export default function UploadScreen() {
-  const { query } = useRouter();
-  const [{ loading, error, loadingUpdate, loadingUpload }, dispatch] =
-  useReducer(reducer, {
-    loading:false,
-    error: '',
-  });
+  const router = useRouter();
+  const { data: session } = useSession();
+
   const [ dataUrl, setDataUrl] = useState(null);
   const [ selectedFile, setSelectedFile ] = useState(null);
   const [ uploadProgress, SetUploadProgress ] = useState('1%');
@@ -77,8 +74,7 @@ export default function UploadScreen() {
   const [ vidTitle, setVidTitle ] = useState("");
   const [ vidCaption, setVidCaption ] = useState("");
   const [ vidLength, setVidLength ] = useState("");
-  const router = useRouter();
-  const { data: session } = useSession();
+  const [ loadingUpload, setLoadingUpload ] = useState(false);
 
   const [ modalHeight, setModalHeight ] = useState('h-[10%]');
   const [ modalOpacity, setModalOpacity ] = useState('opacity-0');
@@ -147,6 +143,7 @@ export default function UploadScreen() {
 
   const handleRemoveFile = async () => {
     setIsDeleting(true);
+    setLoadingUpload(true);
     try {
       if (dataUrl) {
         const publicId = extractPublicId(dataUrl);
@@ -156,6 +153,7 @@ export default function UploadScreen() {
       document.getElementById('videoFile').value = '';
       setDataUrl(null);
       setIsDeleting(false);
+      setLoadingUpload(false);
     } catch (err) {
       showInfo('Failed to delete file, try again', 'error');
     }
@@ -181,7 +179,7 @@ export default function UploadScreen() {
     if (result) {
       const url = `https://api.cloudinary.com/v1_1/${process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME}/upload`;
     try {
-      dispatch({ type: 'UPLOAD_REQUEST' });
+      setLoadingUpload(true);
       const { data: { signature, timestamp },  } = await axios('/api/admin/cloudinary-sign?type=theaterSkitCompetition');
    
       const file = e.target.files[0];
@@ -205,6 +203,7 @@ export default function UploadScreen() {
       const duration = data.duration;
       setVidLength( convertToVideoLengthFormat( duration ) );
       showInfo('File uploaded successfully', 'success');
+      setLoadingUpload(false);
       
     } catch (err) {
       handleRemoveFile();
@@ -232,7 +231,12 @@ export default function UploadScreen() {
       const vidId = response.data.id;
       const url = `/theater-skit-across-nigeria/pages/skit-video/${vidId}`;
       setSaveSuccess(true);
-      router.push(url);
+      router.push( {
+        pathname:url,
+        query: {
+          isNew:true
+        }
+      });
     } catch (error) {
       setIsSaving(false);
       setSaveSuccess(false);
@@ -257,7 +261,7 @@ export default function UploadScreen() {
             <div className="mb-[20px]">
               <button onClick={()=>{modal('out')}} className="w-fit flex flex-row items-center transition-all duration-500 ease-in-out hover:scale-105 gap-2"><div className="rotate-180"><Next bg={'black'} size={'20px'}/></div>Go back</button>
             </div>
-            <div className={`absolute z-10 ${displayMessage?'top-[50px] opacity-100':'top-[-10px] opacity-0'} ${messageType==='neutral'?'border-b-yellow-200':(messageType==='error'?'border-b-red-500':'border-b-green-500')} transition-all duration-300 ease-in-out border-[1px] border-gray-300 mx-auto md:w-[50%] w-[80%] bg-white border-b-[2px] h-fit p-2 rounded-[3px]`}>
+            <div className={`absolute z-10 ${displayMessage?'top-[50px] opacity-100':'top-[-10px] opacity-0'} ${messageType==='neutral'?'border-b-yellow-200':(messageType==='error'?'border-b-red-500':'border-b-green-500')} transition-all duration-300 ease-in-out border-[1px] border-gray-300 md:w-[50%] w-[80%] bg-white border-b-[2px] h-fit p-2 rounded-[3px]`}>
               <span>{message}</span>
             </div>
             <div className="mb-5 flex flex-row items-center gap-2 text-[20px] font-semibold text-green-600">Upload your masterpiece video!<CreatorIcon color={'#16a34a'}/></div>
@@ -267,11 +271,12 @@ export default function UploadScreen() {
                 <Upload />
                 <span>Select video</span>
               </button>
-              { dataUrl ? (
+              { dataUrl !== null &&
                   <div className=' w-[100%]' style={{ position: "relative", height: "200px" }}>
                     <VidThumbnail url={dataUrl} videoId={videoId}/>
-                  </div>
-                ) : (
+                  </div> 
+              }
+              { dataUrl === null &&
                   <div className='w-[100%] rounded-[5px] border-gray-400 border-1 h-[200px] flex flex-col justify-center text-gray-400 items-center'>
                     { loadingUpload ?  <CycleLoader size={'30px'}/> : (
                       <>
@@ -280,8 +285,7 @@ export default function UploadScreen() {
                       </>) 
                     }
                   </div>
-                )
-                  }
+              }
             </div>
             {selectedFile && (
               <div className={`${isDeleting?'animate-pulse opacity-50':''} flex flex-col justify-between items-center bg-gray-200 h-fit py-[10px] px-[10px] mt-[5px]`}>

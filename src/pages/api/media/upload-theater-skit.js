@@ -7,7 +7,7 @@ const Handler = async ( req, res ) => {
             const { userId, vidUrl, email, vidTitle, vidCaption, vidLength } = req.body;
             await db.connect();
             const skitObj = await TheaterSkit.create({ 
-                creator:userId, 
+                user:userId, 
                 vidUrl, 
                 email, 
                 vidTitle, 
@@ -18,12 +18,55 @@ const Handler = async ( req, res ) => {
 
             res.status(200).json( { success:true, id:skitObj._id } );
             
+        } else if( req.method === 'GET' ) {
+            const { id, type } = req.query;
+            if ( type === "single" ) {
+
+                await db.connect();
+                const video = await TheaterSkit.findById(id).populate('user', 'name surname');
+                await db.disconnect();
+
+                const vidData = {
+                    vidLength:video.vidLength, 
+                    vidTitle: video.vidTitle,
+                    vidLength:video.vidLength, 
+                    vidCaption:video.vidCaption,
+                    vidUrl:video.vidUrl,
+                    fullname:`${video.user.name} ${video.user.surname}`,
+                    votes:video.votes,
+                };
+                res.status(200).json( { success:true, vidData });
+            } else if ( type ==='multi') {
+
+                await db.connect();
+                const videos = await TheaterSkit.find().populate('user', 'name surname');
+                await db.disconnect();
+
+                const allvideosSort = [];
+                videos.map( (e)=> {
+                    let data = {
+                        vidLength:e.vidLength, 
+                        vidTitle: e.vidTitle,
+                        vidLength:e.vidLength, 
+                        vidCaption:e.vidCaption,
+                        vidUrl:e.vidUrl,
+                        votes:e.votes,
+                        fullname:`${e.user.name} ${e.user.surname}`,
+                        id:e._id
+                    };
+                    allvideosSort.push(data);
+                })
+
+                res.status(200).json( { success:true, vidData:allvideosSort })
+            }
+
         } else {
-            res.status(500).json( { success:false, error:error.message } );
+            res.status(500).json( { success:false, error:'failed to run operation'} );
         }
 
     } catch( error ) {
         res.status(500).json( { success:false, error:error.message } );
+        console.log(error);
     }
 }
 

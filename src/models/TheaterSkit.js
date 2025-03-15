@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 
 const theaterSkitSchema = new mongoose.Schema({
         vidTitle:{ type:String, required: true },
-        creator: { type:mongoose.Schema.Types.ObjectId, required:true, ref:"User" },
+        user: { type:mongoose.Schema.Types.ObjectId, required:true, ref:"User" },
         vidUrl:{ type:String, required:true },
         vidLength:{ type:String, required:true },
         votes:{ type:Array, required:false, default:[] },

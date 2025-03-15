@@ -14,6 +14,7 @@ import VoteIcon from "../../../../../public/images/icon/VoteIcon";
 import ShareIcon from "../../../../../public/images/icon/ShareIcon";
 import Link from "next/link";
 import dynamic from 'next/dynamic'; // Import dynamic
+import { useParams } from "next/navigation";
 
 // Dynamically import ReactPlayer with SSR disabled
 const ReactPlayer = dynamic(() => import('react-player'), { ssr: false });
@@ -28,7 +29,6 @@ const prototype = {
 
 export default function SkitScreen(props){
   const skit = prototype;
-  const { query } = useRouter();
   const router= useRouter();
   const [ isMobile, setIsMobile ] = useState(false);
   const [ descriptionLength, setDescriptionLength ] = useState(40);
@@ -37,6 +37,13 @@ export default function SkitScreen(props){
   const [ shareNotifyBottom, setShareNotifyBottom ] = useState('bottom-[-50px]');
   const [ shareNotifyOpacity, setShareNotifyOpacity ] = useState('opacity-0');
   const [ shareLink, setShareLink ] = useState('https//sample');
+  const [ data, setData ] = useState(null);
+  const [ loadingData, setLoadingData ] = useState(true);
+  const [ dataSuccess, setDataSuccess ] = useState(true);
+
+
+  const params = router.query;
+  console.log(params);
 
   const [isClient, setIsClient] = useState(false); // State to track client-side rendering
 
@@ -49,6 +56,7 @@ export default function SkitScreen(props){
     if (isClient) { // Only run this code after the component is mounted on the client
       const isMobileDevice = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent) && window.matchMedia('(max-width: 600px)').matches;
       setIsMobile(isMobileDevice);
+      getVideoData(); // get datas for video
     }
   }, [isClient]); // Run this effect after `isClient` changes to true
 
@@ -56,38 +64,20 @@ export default function SkitScreen(props){
     return<Layout title="Skit not Found"><div>Skit not found</div></Layout>;
   }
 
-const handleChange = (e) => {
-    const { name, value } = e.target;
-    // Update state based on input field name
-    if (name === 'amount') {
-    if (/^\d*$/.test(value)) {
-    setAmount(value);
-    setPayment(value * 100); // Calculate payment amount
-    } else {
-    alert('Please enter only whole numbers.');
-    }
-    } else if (name === 'email') {
-    setEmail(value);
-    }
-    // Check if the entered value is a whole number
-   
-};
-      
-const voteHandler = async()=>{
-    try{
-        setLoadVote(true)
-        const id=skit._id;
-        const result=await axios.post('/api/vote',{ id,amount});
-        console.log("Result is:", result)
-        toast.success("success")
-        setLoadPay(false)
-        setEmail('');
-        setAmount("");
-        setLoadVote(false);
-        router.push("/skitsPage")
-    }
-    catch (err){
-        toast.error(getError(err));
+const getVideoData = async () => {
+    try {
+        if ( params.id ) {
+            setLoadingData(true)
+            const response = await axios.get(`/api/media/upload-theater-skit?id=${ params?.id }&type=single`);
+            const videoData = response.data.vidData;
+            setData(videoData);
+            setLoadingData(false);
+            setDataSuccess(true);
+        }
+    } catch(error) {
+        setLoadingData(false);
+        setDataSuccess(false);
+        console.log(error.message);
     }
 }
     
@@ -131,22 +121,63 @@ const voteHandler = async()=>{
     return <Layout title="Skit not Found"><div>Skit not found</div></Layout>;
     }
 
+    const modifyTitle = ( str ) => {
+        const firstWord = str.slice(0, 1).toUpperCase();
+        return `${firstWord}${str.slice(1)}`;
+    }
+    const title = modifyTitle(data?.vidTitle);
+
   return(
-        <Layout hideNav={true} title={skit.title}>
+        <Layout hideNav={true} title={title}>
           <div className={`flex md:w-[50%] bg-gray-100 mx-auto rounded-[20px] justify-center items-center gap-4 flex-col`}>
             <div className={`${isMobile ? 'h-[245px]' : 'h-[300px]'} w-[100%] bg-gray-900 md:mt-[15px]`}>
-                { typeof window !== "undefined" && <ReactPlayer autoPlay url={skit.url} pip={true} width={'100%'} height={'100%'} controls={true} /> }
+                { typeof window !== "undefined" && ( loadingData ? ( 
+                        <div className="h-full w-full flex flex-col justify-center items-center">
+                            <CycleLoader size={'35px'}/>
+                        </div>
+                    ) : (
+                        ( dataSuccess ? (
+                            <ReactPlayer autoPlay url={data?.vidUrl} pip={true} width={'100%'} height={'100%'} controls={true} />
+                            ): (
+                            <div className="flex flex-col h-full w-full justify-center items-center">
+                                    <span>An error occurred</span>
+                            </div> 
+                            )
+                        )
+                    )
+                )
+                }
             </div> 
             <div className={`fixed ${shareNotifyBottom} ${shareNotifyOpacity} transition-all ease-in-out duration-500 bg-gray-100 text-gray-600 rounded-[30px] md:w-fit w-[80%] border-1 border-green-500 h-fit p-3`}>
                 <span>Link copied, you can now share it</span>
             </div> 
             <div className={`w-full md:w-[100%] flex flex-col px-[3%] md:px-0 md:pb-[80px] pb-[150px]`}>
                 <div className="flex flex-col mb-[10px] gap-1">
-                    <span style={{lineHeight:'21px'}} className="text-[21px]">{skit.title}</span>
+                   { loadingData ? (
+                        <div className="h-[25px] w-full bg-gray-300 animate-pulse rounded-[7px]"></div>
+                   ): (
+                        <span style={{lineHeight:'21px'}} className="text-[21px]">{title}</span>
+                   )}
                 </div>
-                <span style={{lineHeight:'20px'}} onClick={descriptionView} className="hover:cursor-pointer text-gray-700">{ skit.description.slice(0, descriptionLength) + (descriptionLength!==skit.description.length?'... See more':'') }</span>
+                { loadingData ? (
+                    <>
+                        <div className="h-[20px] w-full bg-gray-200 animate-pulse rounded-[7px]"></div>
+                        <div className="h-[20px] w-full bg-gray-200 animate-pulse rounded-[7px]"></div>
+                        <div className="h-[20px] w-full bg-gray-200 animate-pulse rounded-[7px]"></div>
+                    </>
+                   ): (
+                    <span style={{lineHeight:'20px'}} onClick={descriptionView} className="hover:cursor-pointer text-gray-700">{ skit.description.slice(0, descriptionLength) + (descriptionLength!==skit.description.length?'... See more':'') }</span>
+                )}
                 <div className="flex flex-row justify-between mt-[10px] items-center">
-                    <div className="flex flex-row text-[18px] items-center gap-2"><Profile size={'40px'}/>{skit.name}</div>
+                    <div className="flex flex-row text-[18px] items-center gap-2">
+                        <Profile size={'40px'}/>
+                        { loadingData ? (
+                            <div className="h-[20px] w-[30%] bg-gray-300 animate-pulse rounded-[7px]"></div>
+                        ): (
+                            <span>{data?.fullname}</span>
+                        )}
+                        </div>
+                    
                     <button onClick={handleVote} className={`${voted?'text-gray-300 bg-gray-800 hover:bg-gray-900':'text-gray-700 hover:bg-gray-400 bg-gray-300'} w-[130px] flex flex-row gap-2 items-center justify-center h-[40px] rounded-[25px] hover:scale-105`}>
                         { voteLoading?(
                             <CycleLoader size={'20px'}/>
@@ -157,7 +188,11 @@ const voteHandler = async()=>{
                     </button>
                 </div>
                 <div className="flex flex-row justify-between pb-[5px] pt-[5px] items-center">
-                    <div className="text-gray-800 text-[16px] font-bold" >• 123 votes •</div>
+                    { loadingData ? (
+                        <div className="h-[20px] w-[20%] bg-gray-300 animate-pulse rounded-[7px]"></div>
+                    ): (
+                        <div className="text-gray-800 text-[16px] font-bold" >• {data?.votes.length} votes •</div>
+                    )}
                     <div className="flex flex-row gap-2 w-fit">
                         <button onClick={copyShareLink} className='w-[100px] flex flex-row gap-1 items-center justify-center py-2 rounded-[25px] text-gray-700 hover:scale-105 hover:bg-gray-400'><ShareIcon/> Share</button>
                     </div>

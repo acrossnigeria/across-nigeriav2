@@ -2,52 +2,55 @@ import Link from "next/link";
 import { Cloudinary } from "@cloudinary/url-gen";
 import Image from "next/image";
 import OptionsIcon from "../../public/images/icon/OptionsIcon";
+import Profile from "../../public/images/icon/Profile";
+import { thumbnail } from "@cloudinary/url-gen/actions/resize";
+import { AdvancedImage } from "@cloudinary/react";
 
 const cld = new Cloudinary( {
     cloud: {
         cloudName:'dcxz7qndp'
     }
 });
+const cldName = process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME;
 
+export default function VideoCard( { content }) {
+    const link = `/theater-skit-across-nigeria/pages/skit-video/${content?.id}?isNew=false`;
+    const parts = content.vidUrl.split("/");
+    const videoId = `${parts[parts.length-3]}/${parts[parts.length-2]}/${parts[parts.length-1]}`.replace(".mp4", "");
+    const thumbnailUrl = cld.image(videoId).setAssetType('video').format('auto:image').toURL().concat('.jpeg');
+    console.log(thumbnailUrl)
 
-export default function VideoCard(props) {
-    
-    const {content, link} = props;
-    const sampleThumbnail = 'https://res.cloudinary.com/dcxz7qndp/video/upload/sp_auto/v1741771808/theater_skit_uploads/zznkbb7idozhpuklmsal.m3u8';
-    // const videoId = content?.url.split('/upload/')[1].replace('mp4','jpeg').split('/')[1];
-    // const thumbnailUrl = cld.image(videoId).setAssetType('video').format('auto:image').toURL().concat('.jpeg');
-    // console.log(thumbnailUrl)
+    const modifyTitle = ( str ) => {
+        const firstWord = str.slice(0, 1).toUpperCase();
+        return `${firstWord}${str.slice(1)}`;
+    }
+    const title = modifyTitle(content.vidTitle);
 
     return(
             <div className="flex flex-col items-center h-[300px] md:w-[350px] w-full">
                 <Link className="w-[100%] hover:opacity-85 flex flex-col" href={link}>
                     <Image 
                     className="h-[225px] w-full p-0" 
-                    src={sampleThumbnail} 
-                    alt={content.description}
+                    width={225}
+                    height={100}
+                    src={thumbnailUrl} 
+                    alt={content?.vidTitle}
                     unoptimized
                     />
                     <div className="w-fit h-fit p-2 bg-black/50 text-white text-[13px] absolute mt-[180px] ml-[10px] rounded-[4px]">
-                        <span>5:09</span>
+                        <span>{content?.vidLength}</span>
                     </div>
                 </Link>
                 <div className="w-full flex flex-row items-start justify-between gap-2 pt-[10px] px-2">
                     <div className="flex flex-row gap-2 items-start">
-                        <Image 
-                        className="h-[45px] w-[45px] rounded-full  p-0" 
-                        src={sampleThumbnail} 
-                        width={20} 
-                        height={20} 
-                        alt={content.description}
-                        unoptimized
-                        />
+                        <Profile size={'45px'}/>
                         <div className="flex flex-col">
                             <div>
-                                <Link href={link} className="text-[20px] hover:opacity-50 hover:font-bold duration-300 transition-all ease-in-out">{content.title.length>30?content.title.slice(0, 30).concat('..'):content.title}</Link>
+                                <Link href={link} style={{lineHeight:'19px'}} className="text-[18px] font-semibold hover:opacity-70 duration-300 transition-all ease-in-out">{title.length>30?title.slice(0, 30).concat('..'):title}</Link>
                             </div>
-                            <span style={{lineHeight:'19px'}} className="text-gray-700">
-                                <span className="">{"Alimam ahmed"} • </span>
-                                <span>123 votes • </span>
+                            <span style={{lineHeight:'19px'}} className="text-gray-700 text-[14px]">
+                                <span >{content?.fullname} • </span>
+                                <span>{content?.votes.length} votes • </span>
                                 <span>4 days ago</span>
                             </span>
                         </div>
