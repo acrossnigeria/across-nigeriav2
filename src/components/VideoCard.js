@@ -3,22 +3,39 @@ import { Cloudinary } from "@cloudinary/url-gen";
 import Image from "next/image";
 import OptionsIcon from "../../public/images/icon/OptionsIcon";
 import Profile from "../../public/images/icon/Profile";
-import { thumbnail } from "@cloudinary/url-gen/actions/resize";
-import { AdvancedImage } from "@cloudinary/react";
+import axios from "axios";
+import { useEffect, useState } from "react";
 
-const cld = new Cloudinary( {
-    cloud: {
-        cloudName:'dcxz7qndp'
-    }
-});
-const cldName = process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME;
+// const cld = new Cloudinary( {
+//     cloud: {
+//         cloudName:'dcxz7qndp'
+//     }
+// });
 
 export default function VideoCard( { content }) {
+    const [ thumbnailUrl, setThumbnailUrl ] = useState('');
     const link = `/theater-skit-across-nigeria/pages/skit-video/${content?.id}?isNew=false`;
-    const parts = content.vidUrl.split("/");
-    const videoId = `${parts[parts.length-3]}/${parts[parts.length-2]}/${parts[parts.length-1]}`.replace(".mp4", "");
-    const thumbnailUrl = cld.image(videoId).setAssetType('video').format('auto:image').toURL().concat('.jpeg');
-    console.log(thumbnailUrl)
+
+    const getThumbnail = async () => {
+        const parts = content.vidUrl.split("/");
+        const videoId = `${parts[parts.length-3]}/${parts[parts.length-2]}/${parts[parts.length-1]}`.replace(".mp4", "");
+        try {
+            const { data } = await axios.get(`/api/cldThumbnail?videoId=${videoId}`);
+            setThumbnailUrl(data.thumbnailUrl);
+            console.log(data.thumbnailUrl)
+        } catch (error) {
+            console.log('error generating png'+ error.message);
+        }
+
+    }
+
+    useEffect( () => {
+        getThumbnail();
+    }, [])
+
+    console.log(thumbnailUrl);
+    // const thumbnailUrl = cld.image(videoId).setAssetType('video').format('auto:image').toURL().concat('.jpeg');
+    // console.log(thumbnailUrl)
 
     const modifyTitle = ( str ) => {
         const firstWord = str.slice(0, 1).toUpperCase();
