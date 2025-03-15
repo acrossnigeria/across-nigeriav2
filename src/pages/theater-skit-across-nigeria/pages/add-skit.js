@@ -189,6 +189,8 @@ export default function UploadScreen() {
       formData.append('timestamp', timestamp);
       formData.append('folder', 'theater_skit_uploads');
       formData.append('api_key', process.env.NEXT_PUBLIC_CLOUDINARY_API_KEY);
+      formData.append('resource_type', 'video');
+      formData.append('format', 'mp4');// Explicitly convert to MP4 format
 
       const { data } = await axios.post(url, formData, 
         {
