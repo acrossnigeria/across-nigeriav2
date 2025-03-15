@@ -136,7 +136,22 @@ export default function SkitScreen(props){
                         </div>
                     ) : (
                         ( dataSuccess ? (
-                            <ReactPlayer autoPlay url={data?.vidUrl} pip={true} width={'100%'} height={'100%'} controls={true} />
+                            <ReactPlayer
+                                url={data?.vidUrl} 
+                                pip={true} 
+                                width={'100%'} 
+                                height={'100%'} 
+                                controls={true}
+                                config={{
+                                    file: {
+                                        attributes: {
+                                          // Disable fullscreen by default
+                                          disablekb: 1,  // Disable keyboard shortcuts
+                                          fullscreen: false,  // Disable fullscreen
+                                        }
+                                      }
+                                }}
+                                 />
                             ): (
                             <div className="flex flex-col h-full w-full justify-center items-center">
                                     <span>An error occurred</span>
