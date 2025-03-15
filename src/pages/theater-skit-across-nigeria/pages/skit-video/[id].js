@@ -30,6 +30,7 @@ const prototype = {
 export default function SkitScreen(props){
   const skit = prototype;
   const router= useRouter();
+  const params = router.query;
   const [ isMobile, setIsMobile ] = useState(false);
   const [ descriptionLength, setDescriptionLength ] = useState(40);
   const [ voted, setVoted ] = useState(false);
@@ -40,10 +41,8 @@ export default function SkitScreen(props){
   const [ data, setData ] = useState(null);
   const [ loadingData, setLoadingData ] = useState(true);
   const [ dataSuccess, setDataSuccess ] = useState(true);
+  const [ title, setTitle ] = useState('');
 
-
-  const params = router.query;
-  console.log(params);
 
   const [isClient, setIsClient] = useState(false); // State to track client-side rendering
 
@@ -52,34 +51,40 @@ export default function SkitScreen(props){
     setIsClient(true); // Update the state to indicate we're on the client
   }, []);
 
-  useEffect(() => {
-    if (isClient) { // Only run this code after the component is mounted on the client
-      const isMobileDevice = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent) && window.matchMedia('(max-width: 600px)').matches;
-      setIsMobile(isMobileDevice);
-      getVideoData(); // get datas for video
-    }
-  }, [isClient]); // Run this effect after `isClient` changes to true
-
-  if (!skit){
-    return<Layout title="Skit not Found"><div>Skit not found</div></Layout>;
-  }
-
-const getVideoData = async () => {
-    try {
-        if ( params.id ) {
-            setLoadingData(true)
-            const response = await axios.get(`/api/media/upload-theater-skit?id=${ params?.id }&type=single`);
-            const videoData = response.data.vidData;
-            setData(videoData);
-            setLoadingData(false);
-            setDataSuccess(true);
+    useEffect(() => {
+        if (isClient) { // Only run this code after the component is mounted on the client
+        const isMobileDevice = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent) && window.matchMedia('(max-width: 600px)').matches;
+        setIsMobile(isMobileDevice);
+        getVideoData(); // get datas for video
         }
-    } catch(error) {
-        setLoadingData(false);
-        setDataSuccess(false);
-        console.log(error.message);
+    }, [isClient]); // Run this effect after `isClient` changes to true
+
+    if (!skit){
+        return<Layout title="Skit not Found"><div>Skit not found</div></Layout>;
     }
-}
+
+    const modifyTitle = ( str ) => {
+        const firstWord = str.slice(0, 1).toUpperCase();
+        return `${firstWord}${str.slice(1)}`;
+    }
+
+    const getVideoData = async () => {
+        try {
+            if ( params.id ) {
+                setLoadingData(true)
+                const response = await axios.get(`/api/media/upload-theater-skit?id=${ params?.id }&type=single`);
+                const videoData = response.data.vidData;
+                setData(videoData);
+                setLoadingData(false);
+                setDataSuccess(true);
+                setTitle(videoData.vidTitle);
+            }
+        } catch(error) {
+            setLoadingData(false);
+            setDataSuccess(false);
+            console.log(error.message);
+        }
+    }
     
     const descriptionView = () => {
         if (descriptionLength===data?.vidCaption.length) {
@@ -121,12 +126,6 @@ const getVideoData = async () => {
     return <Layout title="Skit not Found"><div>Skit not found</div></Layout>;
     }
 
-    const modifyTitle = ( str ) => {
-        const firstWord = str.slice(0, 1).toUpperCase();
-        return `${firstWord}${str.slice(1)}`;
-    }
-    const title = modifyTitle(data?.vidTitle);
-
   return(
         <Layout hideNav={true} title={title}>
           <div className={`flex md:w-[50%] bg-gray-100 mx-auto rounded-[20px] justify-center items-center gap-4 flex-col`}>
@@ -166,7 +165,7 @@ const getVideoData = async () => {
                         <div className="h-[20px] w-full bg-gray-200 animate-pulse rounded-[7px]"></div>
                     </>
                    ): (
-                    <span style={{lineHeight:'20px'}} onClick={descriptionView} className="hover:cursor-pointer text-gray-700">{ data?.vidCaption.slice(0, descriptionLength) + (descriptionLength!==data?.vidCaption.length?'... See more':'') }</span>
+                    <span style={{lineHeight:'20px'}} onClick={descriptionView} className="hover:cursor-pointer text-gray-700">{ data?.vidCaption?.slice(0, descriptionLength) + (descriptionLength!==data?.vidCaption.length?'... See more':'') }</span>
                 )}
                 <div className="flex flex-row justify-between mt-[10px] items-center">
                     <div className="flex flex-row text-[18px] items-center gap-2">
