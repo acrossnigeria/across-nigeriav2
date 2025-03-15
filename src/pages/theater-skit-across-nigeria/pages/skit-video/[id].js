@@ -82,10 +82,10 @@ const getVideoData = async () => {
 }
     
     const descriptionView = () => {
-        if (descriptionLength===skit.description.length) {
+        if (descriptionLength===data?.vidCaption.length) {
             setDescriptionLength(120);
         } else {
-            setDescriptionLength(skit.description.length)
+            setDescriptionLength(data?.vidCaption.length)
         }
     }
 
@@ -166,7 +166,7 @@ const getVideoData = async () => {
                         <div className="h-[20px] w-full bg-gray-200 animate-pulse rounded-[7px]"></div>
                     </>
                    ): (
-                    <span style={{lineHeight:'20px'}} onClick={descriptionView} className="hover:cursor-pointer text-gray-700">{ skit.description.slice(0, descriptionLength) + (descriptionLength!==skit.description.length?'... See more':'') }</span>
+                    <span style={{lineHeight:'20px'}} onClick={descriptionView} className="hover:cursor-pointer text-gray-700">{ data?.vidCaption.slice(0, descriptionLength) + (descriptionLength!==data?.vidCaption.length?'... See more':'') }</span>
                 )}
                 <div className="flex flex-row justify-between mt-[10px] items-center">
                     <div className="flex flex-row text-[18px] items-center gap-2">
