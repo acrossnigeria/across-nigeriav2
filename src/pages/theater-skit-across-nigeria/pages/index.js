@@ -70,7 +70,14 @@ function SkitsPage() {
       // Get current skits
     if ( list.length > skitsPerPage ) {
       let indexOfLastSkit = pageNumber * skitsPerPage;
-      const indexOfFirstSkit = indexOfLastSkit - skitsPerPage;
+      let indexOfFirstSkit;
+      // check if calulated last index is greater than length else use calculated last index
+      if ( indexOfLastSkit > list.length ) {
+        indexOfFirstSkit = list.length;
+        indexOfFirstSkit = indexOfLastSkit - ( indexOfLastSkit % list.length );
+      } else {
+        indexOfFirstSkit = indexOfLastSkit - skitsPerPage;
+      }
       if ( indexOfLastSkit > allSkits.length - 1) {
         indexOfLastSkit = allSkits.length - 1;
       };
@@ -203,8 +210,8 @@ function SkitsPage() {
             }
             { isGettingSkits &&
               <div className="flex-wrap flex md:flex-row flex-col gap-[25px] md:gap-[20px] border-t-1 border-t-gray-300 justify-center pt-[6px]">
-                {[0,0,0].map((skit) => (
-                    <VideoCardLoader/>
+                {[0,0,0].map((_, index) => (
+                    <VideoCardLoader key={index}/>
                 ))}
               </div>
             }
