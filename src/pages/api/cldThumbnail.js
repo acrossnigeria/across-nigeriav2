@@ -23,7 +23,7 @@ const Handler = async (req, res) => {
             resource_type: 'video',
             format: 'jpg',
             transformation: [
-              { width: 225, height: 100, crop: 'fill' },
+              { width: 400, height: 100, crop: 'fill' },
               { video_sampling: 10 } // Use the 10th frame
             ]
           });
