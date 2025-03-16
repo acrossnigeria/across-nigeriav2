@@ -280,11 +280,11 @@ export default function UploadScreen() {
             <div className="mb-4">
               <input accept=".mp4" type="file" className="w-full hidden" id="videoFile" onChange={uploadHandler}/>
               <div className="flex flex-row justify-between mb-3 items-center">
-                <button onClick={selectVideo} className='bg-green-500 hover:bg-green-600 w-[60%] rounded-[20px] text-white transition-all ease-in-out duration-300 h-[40px] gap-2 flex flex-row justify-center items-center'>
+                <button onClick={selectVideo} className='bg-green-500 hover:bg-green-600 w-[48%] rounded-[20px] text-white transition-all ease-in-out duration-300 h-[40px] gap-2 flex flex-row justify-center items-center'>
                   <Upload />
                   <span>Select video</span>
                 </button>
-                <button onClick={enterVidDetails} className={`${isVideoUploaded?'bg-green-500 hover:scale-95 hover:bg-green-600 cursor-pointer':'bg-gray-400 cursor-not-allowed'} h-[40px] rounded-[20px] flex flex-row gap-2 items-center justify-center text-white transition-all duration-300 ease-in-out w-[35%]`}>
+                <button onClick={enterVidDetails} className={`${isVideoUploaded?'bg-green-500 hover:scale-95 hover:bg-green-600 cursor-pointer':'bg-gray-400 cursor-not-allowed'} h-[40px] rounded-[20px] flex flex-row gap-2 items-center justify-center text-white transition-all duration-300 ease-in-out w-[48%]`}>
                   Next
                   <Next size={'20px'} bg={'white'}/>
                 </button>

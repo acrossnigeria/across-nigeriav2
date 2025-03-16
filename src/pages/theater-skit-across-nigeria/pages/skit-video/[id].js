@@ -142,10 +142,10 @@ export default function SkitScreen(props){
                                 width={'100%'} 
                                 height={'100%'} 
                                 controls={true}
+                                playsinline={true}
                                 config={{
                                     file: {
                                         attributes: {
-                                          // Disable fullscreen by default
                                           disablekb: 1,  // Disable keyboard shortcuts
                                           fullscreen: false,  // Disable fullscreen
                                         }
