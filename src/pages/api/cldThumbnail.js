@@ -23,10 +23,13 @@ const Handler = async (req, res) => {
             resource_type: 'video',
             format: 'jpg',
             transformation: [
-              { width: 400, height: 100, crop: 'fill' },
-              { video_sampling: 10 } // Use the 10th frame
+              { video_sampling: "5s" }, // Get frame at 5 seconds
+              { width: 800, height: 450, crop: "fill" }, // Higher resolution
+              { quality: "auto:good" }, // Auto-adjust for better quality
+              { fetch_format: "auto" } // Optimize format
             ]
           });
+          
       
         res.status(200).json({ thumbnailUrl });
     } else {

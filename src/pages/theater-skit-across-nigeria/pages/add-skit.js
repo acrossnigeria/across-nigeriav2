@@ -279,17 +279,23 @@ export default function UploadScreen() {
             <div className="mb-5 flex flex-row items-center gap-2 text-[20px] font-semibold text-green-600">Upload your masterpiece video!<CreatorIcon color={'#16a34a'}/></div>
             <div className="mb-4">
               <input accept=".mp4" type="file" className="w-full hidden" id="videoFile" onChange={uploadHandler}/>
-              <button onClick={selectVideo} className='bg-green-500 hover:bg-green-600 w-full mb-3 rounded-[15px] text-white transition-all ease-in-out duration-300 h-[40px] gap-[10px] flex flex-row justify-center items-center'>
-                <Upload />
-                <span>Select video</span>
-              </button>
+              <div className="flex flex-row justify-between mb-3 items-center">
+                <button onClick={selectVideo} className='bg-green-500 hover:bg-green-600 w-[60%] rounded-[20px] text-white transition-all ease-in-out duration-300 h-[40px] gap-2 flex flex-row justify-center items-center'>
+                  <Upload />
+                  <span>Select video</span>
+                </button>
+                <button onClick={enterVidDetails} className={`${isVideoUploaded?'bg-green-500 hover:scale-95 hover:bg-green-600 cursor-pointer':'bg-gray-400 cursor-not-allowed'} h-[40px] rounded-[20px] flex flex-row gap-2 items-center justify-center text-white transition-all duration-300 ease-in-out w-[35%]`}>
+                  Next
+                  <Next size={'20px'} bg={'white'}/>
+                </button>
+              </div>
               { dataUrl !== null &&
-                  <div className=' w-[100%]' style={{ position: "relative", height: "200px" }}>
+                  <div className='md:w-[50%] w-[100%] mx-auto' style={{ position: "relative", height: "350px" }}>
                     <VidThumbnail url={dataUrl} videoId={videoId}/>
                   </div> 
               }
               { dataUrl === null &&
-                  <div className='w-[100%] rounded-[5px] border-gray-400 border-1 h-[200px] flex flex-col justify-center text-gray-400 items-center'>
+                  <div className='md:w-[50%] w-[100%] mx-auto rounded-[5px] border-gray-400 border-1 h-[350px] flex flex-col justify-center text-gray-400 items-center'>
                     { loadingUpload ?  <CycleLoader size={'30px'}/> : (
                       <>
                       <ImgIcon />
@@ -320,11 +326,6 @@ export default function UploadScreen() {
               </div>
             )}
             {isDeleting && <span>Deleting video...</span>}
-            <div className="mb-[40px] mt-[40px] flex-row flex justify-center items-center">
-              <button onClick={enterVidDetails} className={`${isVideoUploaded?'bg-green-500 hover:scale-95 hover:bg-green-600 cursor-pointer':'bg-gray-400 cursor-not-allowed'} h-[40px] rounded-[25px] text-white transition-all duration-300 ease-in-out w-[100%]`}>
-                Next
-              </button>
-            </div>
         </div>
          { showUpdateModal && 
           <div className={`h-screen w-screen transition-all duration-300 ease-in-out bg-black/10 flex flex-col justify-end ${modalBlur} fixed top-0`}>
