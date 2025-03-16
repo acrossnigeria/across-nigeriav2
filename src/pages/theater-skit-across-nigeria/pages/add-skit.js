@@ -175,16 +175,21 @@ export default function UploadScreen() {
       e.target.files[0].value = "";  
         return;
     };
-    const result = window.confirm(`Do you want to proceed with uploading ${e.target.files[0].name}?`);
+
+    const originalFile = e.target.files[0];
+    const sanitizedName = originalFile.name.replace(/\s+/g, '_').replace(/[^a-zA-Z0-9_\-.]/g, '');
+    const renamedFile = new File( [originalFile], sanitizedName, { type: originalFile.type });
+
+    const result = window.confirm(`Do you want to proceed with uploading ${sanitizedName}?`);
     if (result) {
       const url = `https://api.cloudinary.com/v1_1/${process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME}/upload`;
     try {
       setLoadingUpload(true);
       const { data: { signature, timestamp },  } = await axios('/api/admin/cloudinary-sign?type=theaterSkitCompetition');
    
-      const file = e.target.files[0];
+
       const formData = new FormData();
-      formData.append('file', file);
+      formData.append('file', renamedFile, renamedFile.name);
       formData.append('signature', signature);
       formData.append('timestamp', timestamp);
       formData.append('folder', 'theater_skit_uploads');

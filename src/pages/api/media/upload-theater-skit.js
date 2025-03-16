@@ -25,13 +25,14 @@ const Handler = async ( req, res ) => {
                 await db.connect();
                 const video = await TheaterSkit.findById(id).populate('user', 'name surname');
                 await db.disconnect();
+                const vidUrl = video.vidUrl.replace("mp4", "m3u8");
 
                 const vidData = {
                     vidLength:video.vidLength, 
                     vidTitle: video.vidTitle,
                     vidLength:video.vidLength, 
                     vidCaption:video.vidCaption,
-                    vidUrl:video.vidUrl,
+                    vidUrl,
                     fullname:`${video.user.name} ${video.user.surname}`,
                     votes:video.votes,
                 };
