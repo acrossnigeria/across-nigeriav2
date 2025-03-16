@@ -63,7 +63,7 @@ export default function VideoCard( { content }) {
                         <Profile size={'45px'}/>
                         <div className="flex flex-col">
                             <div>
-                                <Link href={link} style={{lineHeight:'19px'}} className="text-[18px] font-semibold hover:opacity-70 duration-300 transition-all ease-in-out">{title.length>30?title.slice(0, 30).concat('..'):title}</Link>
+                                <Link href={link} style={{lineHeight:'19px'}} className="text-[15px] font-semibold hover:opacity-70 duration-300 transition-all ease-in-out">{title.length>35?title.slice(0, 35).concat('..'):title}</Link>
                             </div>
                             <span style={{lineHeight:'19px'}} className="text-gray-700 text-[14px]">
                                 <span >{content?.fullname} • </span>

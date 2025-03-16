@@ -8,6 +8,9 @@ import Image from 'next/image';
 import TopSkitCard from '@/components/TopSkitCard';
 import VideoIcon from '../../../../public/images/icon/VideoIcon';
 import axios from 'axios';
+import VideoCardLoader from '@/components/VideoCardLoader';
+import ReloadIcon from '../../../../public/images/icon/ReloadIcon';
+import { get } from 'react-hook-form';
 
 function SkitsPage() {
   const router = useRouter();
@@ -24,6 +27,8 @@ function SkitsPage() {
 
   // loaders states
   const [ isGettingSkits, setIsGettingSkits ] = useState(true);
+  const [ errorGettingSkit, setErrorGettingSkit ] = useState(false);
+  const [ errorMessage, setErrorMessage ] = useState('');
   
   function bubbleSort(arr) {
     for (let i = 0; i < arr.length - 1; i++) {
@@ -84,12 +89,17 @@ function SkitsPage() {
   };
 
   const getAllSkits = async () => {
+    setIsGettingSkits(true);
     try {
       const response = await axios.get('/api/media/upload-theater-skit?type=multi');
       setAllSkits(response.data.vidData);
       sortSkitByVotes(response.data.vidData);
+      setIsGettingSkits(false)
     } catch (error) {
       console.log(error.message)
+      setIsGettingSkits(false);
+      setErrorGettingSkit(true);
+      setErrorMessage('Something went wrong, '+error.message)
     }
   }
   
@@ -107,48 +117,106 @@ function SkitsPage() {
     })
   }
 
+  const reload = () => {
+    setErrorGettingSkit(false);
+    getAllSkits();
+  }
+
   return (
     <Layout>
-      <div className='md:ml-[5%] md:mr-[5%] mt-3'>
-        <Link href="/upload" className='cursor-pointer mb-2 ml-[2.5%] w-fit hover:bg-green-200 bg-tranparent border-2 flex flex-row justify-center items-center border-green-700 text-green-700 px-4 h-[40px] rounded-[30px]'>
-          <span>Click Here to participate</span>
-        </Link>
-        <div className='w-[95%] md:w-full mx-auto flex flex-col bg-gradient-to-t from-green-800 to-green-400 px-2 pb-2 rounded-[10px]'>
-          <div className='text-white font-bold text-center text-[20px]'>Leader Board</div>
-          <div className='mt-2 flex flex-row flex-wrap gap-2 justify-center'>
-            { [oneUser, twoUser, thirdUser].map( (position, index)=> {
-              return  <TopSkitCard key={index} strUrl={position?.vidUrl} exist={position?true:false} votes={position?.votes} position={index+1} creator={position?.fullname} description={position?.vidTitle}/>
-            })}
+      <div className='md:ml-[5%] md:mr-[5%] bg-gray-100 mt-3'>
+        { errorGettingSkit && 
+          <div className='h-[550px] w-full pt-[30px] flex flex-col gap-10'>
+            <div className='text-red-500 font-light text-center md:w-[30%] w-[90%] mx-auto text-[13px]'>{errorMessage}. please check your internet connection</div>
+            <button onClick={reload} className='flex flex-col justify-center hover:scale-105 transition-all ease-in-out duration-300 hover:opacity-50 items-center gap-3'>
+              <span className=']'>Tap to retry</span>
+              <ReloadIcon/>
+            </button>
           </div>
-          <div className='mt-3 bg-black/20 text-white p-2 rounded-[20px]'>
-            <div className='w-full flex flex-row items-center gap-3 px-2 py-2 border-b-1 border-b-black'>
-              <span className='font-bold'>4</span>
-              <VideoIcon/>
-              <span className='font-bold text-[14px]'>{fourUser?(fourUser.votes>0 ? fourUser.fullname:''):''}</span>
-              <span className='text-[13px]'>{fourUser?(fourUser.votes>0 ? (fourUser.vidTitle.slice(0, 40) + '...'):'Position empty'):'Position empty'}</span>
-            </div> 
-            
-            <div className='w-full flex flex-row items-center px-2 gap-3 py-2'>
-              <span className='font-bold'>5</span>
-              <VideoIcon/>
-              <span className='font-bold text-[14px]'>{fiveUser?(fiveUser.votes>0 ? fiveUser.fullname:''):''}</span>
-              <span className='text-[13px]'>{fiveUser?(fiveUser.votes>0 ? (fiveUser.vidTitle.slice(0, 40) + '...'):'Position empty'):'Position empty'}</span>
-            </div> 
+        }
+        { !errorGettingSkit &&
+          <div>
+            <Link href="/upload" className='cursor-pointer mb-2 ml-[2.5%] w-fit hover:bg-green-200 bg-tranparent border-2 flex flex-row justify-center items-center border-green-700 text-green-700 px-4 h-[40px] rounded-[30px]'>
+              <span>Click Here to participate</span>
+            </Link>
+            { !isGettingSkits &&
+              <div className='w-[95%] md:w-full mx-auto flex flex-col bg-gradient-to-t from-green-800 to-green-400 px-2 pb-2 rounded-[5px]'>
+                <div className='text-white font-semibold text-center text-[18px]'>Leader Board</div>
+                <div className='mt-2 flex flex-row flex-wrap gap-2 justify-center'>
+                  { [oneUser, twoUser, thirdUser].map( (position, index)=> {
+                    return  <TopSkitCard key={index} strUrl={position?.vidUrl} exist={position?true:false} votes={position?.votes} position={index+1} creator={position?.fullname} description={position?.vidTitle}/>
+                  })}
+                </div>
+                <div className='mt-3 bg-black/20 text-white p-1 rounded-[5px]'>
+                  <div className='w-full flex flex-row items-center gap-3 px-2 py-1 border-b-1 border-b-black'>
+                    <span className=''>4</span>
+                    <VideoIcon/>
+                    <span className=' text-[14px]'>{fourUser?(fourUser.votes>0 ? fourUser.fullname:''):''}</span>
+                    <span className='text-[13px]'>{fourUser?(fourUser.votes>0 ? (fourUser.vidTitle.slice(0, 40) + '...'):'Position empty'):'Position empty'}</span>
+                  </div> 
+                  
+                  <div className='w-full flex flex-row items-center px-2 gap-3 py-1'>
+                    <span className=''>5</span>
+                    <VideoIcon/>
+                    <span className=' text-[14px]'>{fiveUser?(fiveUser.votes>0 ? fiveUser.fullname:''):''}</span>
+                    <span className='text-[13px]'>{fiveUser?(fiveUser.votes>0 ? (fiveUser.vidTitle.slice(0, 40) + '...'):'Position empty'):'Position empty'}</span>
+                  </div> 
+                </div>
+              
+              </div>
+            }
+
+            {  isGettingSkits &&
+              <div className='w-[95%] md:w-full mx-auto flex flex-col animate-pulse bg-green-600 px-2 pb-2 rounded-[5px]'>
+                <div className='text-white font-semibold text-center text-[18px]'>Leader Board</div>
+                <div className='mt-2 flex flex-row flex-wrap gap-2 justify-center'>
+                  { [oneUser, twoUser, thirdUser].map( (_, index)=> {
+                    return  <div key={index} className='bg-white rounded-[20px] shadow-lg shadow-black/50 animate-pulse items-center  w-full md:w-[300px] h-[45px]'></div>
+                  })}
+                </div>
+                <div className='mt-3 bg-black/20 text-white p-1 rounded-[5px]'>
+                  <div className='w-full flex flex-row items-center gap-3 px-2 py-1 border-b-1 border-b-black'>
+                    <span className=''>4</span>
+                    <VideoIcon/>
+                    <div className='h-[15px] rounded-[10px] w-[10%] bg-green-600 animate-pulse'></div>
+                    <div className='h-[15px] rounded-[10px] w-[20%] bg-green-600 animate-pulse'></div>
+                  </div> 
+                  
+                  <div className='w-full flex flex-row items-center px-2 gap-3 py-1'>
+                    <span className=''>5</span>
+                    <VideoIcon/>
+                    <div className='h-[15px] rounded-[10px] w-[10%] bg-green-600 animate-pulse'></div>
+                    <div className='h-[15px] rounded-[10px] w-[20%] bg-green-600 animate-pulse'></div>
+                  </div> 
+                </div>
+              
+              </div>
+            }
+        
+            <h2 className="text-[22px] mt-[25px] ml-[2.5%] mb-2 ">All Skits</h2>
+            { !isGettingSkits &&
+              <div className="flex-wrap flex md:flex-row flex-col gap-[25px] md:gap-[20px] border-t-1 border-t-gray-300 justify-center pt-[6px]">
+                {currentSkits.map((skit) => (
+                    <VideoCard key={skit.id} watch={watch} content={skit}/>
+                ))}
+              </div>
+            }
+            { isGettingSkits &&
+              <div className="flex-wrap flex md:flex-row flex-col gap-[25px] md:gap-[20px] border-t-1 border-t-gray-300 justify-center pt-[6px]">
+                {[0,0,0].map((skit) => (
+                    <VideoCardLoader/>
+                ))}
+              </div>
+            }
+
+            {/* Pagination */}
+            <div className="flex justify-center flex-row gap-2 mt-[10px] mb-[40px]">
+              {Array.from({ length: Math.ceil(allSkits.length / skitsPerPage) }, (_, i) => (
+                <button key={i} onClick={() => paginate(i + 1)} className={`w-[50px] rounded-[3px] text-[19px] py-1 ${currentPage === i + 1 ? 'bg-transparent border-1 border-green-600 text-green-800' : 'bg-green-600 hover:bg-green-900 text-white'}`}>{i + 1}</button>
+              ))}
+            </div>
           </div>
-         
-        </div>
-        <h2 className="text-[21px] mt-[25px] ml-[2.5%] mb-2 font-bold">All Videos</h2>
-        <div className="flex-wrap flex md:flex-row flex-col gap-[25px] md:gap-[20px] justify-center pt-[6px]">
-          {currentSkits.map((skit) => (
-              <VideoCard key={skit.id} watch={watch} content={skit}/>
-          ))}
-        </div>
-        {/* Pagination */}
-        <div className="flex justify-center flex-row gap-2 mt-[10px] mb-[40px]">
-          {Array.from({ length: Math.ceil(allSkits.length / skitsPerPage) }, (_, i) => (
-            <button key={i} onClick={() => paginate(i + 1)} className={`w-[50px] rounded-[3px] text-[19px] py-1 ${currentPage === i + 1 ? 'bg-transparent border-1 border-green-600 text-green-800' : 'bg-green-600 hover:bg-green-900 text-white'}`}>{i + 1}</button>
-          ))}
-        </div>
+        }
       </div>
     </Layout>
   );

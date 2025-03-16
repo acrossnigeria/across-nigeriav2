@@ -109,7 +109,7 @@ export default function UploadScreen() {
   const convertToVideoLengthFormat = ( seconds ) => {
     const hours = Math.floor(seconds/3600);
     const minutes = Math.floor( ( seconds % 3600 )/60);
-    const secondsLeft = seconds % 60;
+    const secondsLeft = Math.floor(seconds % 60);
 
     const hoursStr = hours.toString().padStart(2, '0');
     const minutesStr = minutes.toString().padStart(2, '0');
@@ -252,7 +252,7 @@ export default function UploadScreen() {
     } catch (error) {
       setIsSaving(false);
       setSaveSuccess(false);
-      showInfo('Something went wrong, check your internet and try again.', 'error');
+      showInfo('Something went wrong, ', error.message);
     }
         
   };
@@ -271,22 +271,24 @@ export default function UploadScreen() {
       <div className="flex flex-col md:px-0 px-[3%] pt-[25px] h-screen bg-gray-100 items-center md:gap-5">  
         <div className="mx-auto align-middle flex flex-col h-[100%] md:w-[50%] w-[100%] md:px-0" >
             <div className="mb-[20px]">
-              <button onClick={()=>{modal('out')}} className="w-fit flex flex-row items-center transition-all duration-500 ease-in-out hover:scale-105 gap-2"><div className="rotate-180"><Next bg={'black'} size={'20px'}/></div>Go back</button>
+              <button onClick={()=>{router.push('/theater-skit-across-nigeria/pages')}} className="w-fit flex flex-row items-center transition-all duration-500 ease-in-out hover:scale-105 gap-2"><div className="rotate-180"><Next bg={'black'} size={'20px'}/></div>Go back</button>
             </div>
-            <div className={`absolute z-10 ${displayMessage?'top-[50px] opacity-100':'top-[-10px] opacity-0'} ${messageType==='neutral'?'border-b-yellow-200':(messageType==='error'?'border-b-red-500':'border-b-green-500')} transition-all duration-300 ease-in-out border-[1px] border-gray-300 md:w-[50%] w-[80%] bg-white border-b-[2px] h-fit p-2 rounded-[3px]`}>
+            <div className={`fixed z-10 ${displayMessage?'top-[50px] opacity-100':'top-[-10px] opacity-0'} ${messageType==='neutral'?'border-b-yellow-200':(messageType==='error'?'border-b-red-500':'border-b-green-500')} transition-all duration-300 ease-in-out border-[1px] border-gray-300 md:w-[50%] w-[80%] bg-white border-b-[2px] h-fit p-2 rounded-[3px]`}>
               <span>{message}</span>
             </div>
-            <div className="mb-5 flex flex-row items-center gap-2 text-[20px] font-semibold text-green-600">Upload your masterpiece video!<CreatorIcon color={'#16a34a'}/></div>
+            <div className="mb-5 flex flex-row items-center gap-3 text-[20px] text-green-600">Upload your skit<CreatorIcon color={'#16a34a'}/></div>
             <div className="mb-4">
               <input accept=".mp4" type="file" className="w-full hidden" id="videoFile" onChange={uploadHandler}/>
               <div className="flex flex-row justify-between mb-3 items-center">
-                <button onClick={selectVideo} className='bg-green-500 hover:bg-green-600 w-[48%] rounded-[20px] text-white transition-all ease-in-out duration-300 h-[40px] gap-2 flex flex-row justify-center items-center'>
+                <button onClick={selectVideo} className='bg-green-500 hover:bg-green-600 w-[48%] rounded-[10px] text-white transition-all ease-in-out duration-300 h-[40px] text-[14px] gap-2 flex flex-row justify-center items-center'>
                   <Upload />
                   <span>Select video</span>
                 </button>
-                <button onClick={enterVidDetails} className={`${isVideoUploaded?'bg-green-500 hover:scale-95 hover:bg-green-600 cursor-pointer':'bg-gray-400 cursor-not-allowed'} h-[40px] rounded-[20px] flex flex-row gap-2 items-center justify-center text-white transition-all duration-300 ease-in-out w-[48%]`}>
+                <button onClick={enterVidDetails} className={`${isVideoUploaded?'hover:scale-95 cursor-pointer border-gray-400 text-black':'text-gray-400 border-gray-400 cursor-not-allowed'} text-[14px] rounded-[10px] border-1 h-[40px] flex flex-row gap-2 items-center justify-center transition-all duration-300 ease-in-out w-[48%]`}>
                   Next
-                  <Next size={'20px'} bg={'white'}/>
+                  <div className={`w-fit h-fit ${isVideoUploaded?'opacity-100':'opacity-50'}`}>
+                    <Next size={'15px'} bg={'black'}/>
+                  </div>
                 </button>
               </div>
               { dataUrl !== null &&
