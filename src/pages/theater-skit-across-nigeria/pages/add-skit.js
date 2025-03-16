@@ -163,64 +163,69 @@ export default function UploadScreen() {
     setSelectedFile(e.target.files[0]);
 
     if (!e.target.files || e.target.files.length === 0) {
-      showInfo('Please select a video file to upload.', 'error');
-    return;
+        showInfo('Please select a video file to upload.', 'error');
+        return;
     }
+
     // Check file size
     const fileSize = e.target.files[0].size; // Size in bytes
     const maxSize = 60 * 1024 * 1024; // 30 MB in bytes
     if (fileSize > maxSize) {
-      toast.error('File size exceeds 30MB limit.');
-
-      e.target.files[0].value = "";  
+        toast.error('File size exceeds 30MB limit.');
+        e.target.value = "";  
         return;
-    };
+    }
 
     const originalFile = e.target.files[0];
-    const sanitizedName = originalFile.name.replace(/\s+/g, '_').replace(/[^a-zA-Z0-9_\-.]/g, '');
-    const renamedFile = new File( [originalFile], sanitizedName, { type: originalFile.type });
 
-    const result = window.confirm(`Do you want to proceed with uploading ${sanitizedName}?`);
-    if (result) {
-      const url = `https://api.cloudinary.com/v1_1/${process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME}/upload`;
+    // Convert file to Blob
+    const videoBlob = new Blob([originalFile], { type: originalFile.type });
+
+    // Generate a random name with the same file extension
+    const fileExtension = originalFile.name.split('.').pop();
+    const randomFileName = `${crypto.randomUUID()}.${fileExtension}`;
+
+    // Create a new File object with the Blob
+    const renamedFile = new File([videoBlob], randomFileName, { type: originalFile.type });
+
+    const result = window.confirm(`Do you want to proceed with uploading ${randomFileName}?`);
+    if (!result) return;
+
+    const url = `https://api.cloudinary.com/v1_1/${process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME}/upload`;
+
     try {
-      setLoadingUpload(true);
-      const { data: { signature, timestamp },  } = await axios('/api/admin/cloudinary-sign?type=theaterSkitCompetition');
-   
+        setLoadingUpload(true);
 
-      const formData = new FormData();
-      formData.append('file', renamedFile, renamedFile.name);
-      formData.append('signature', signature);
-      formData.append('timestamp', timestamp);
-      formData.append('folder', 'theater_skit_uploads');
-      formData.append('api_key', process.env.NEXT_PUBLIC_CLOUDINARY_API_KEY);
-      // formData.append('resource_type', 'video');
-      // formData.append('format', 'mp4');// Explicitly convert to MP4 format
+        // Get Cloudinary signature
+        const { data: { signature, timestamp } } = await axios('/api/admin/cloudinary-sign?type=theaterSkitCompetition');
 
-      const { data } = await axios.post(url, formData, 
-        {
-          onUploadProgress: (progressEvent) => {
-            const percentage = Math.round( (progressEvent.loaded / progressEvent.total)*100);
-            SetUploadProgress(`${percentage}%`);
-          },
-        }
-      );
-      setDataUrl( data.secure_url);
-      setVideoId(data.public_id);
-      const duration = data.duration;
-      setVidLength( convertToVideoLengthFormat( duration ) );
-      showInfo('File uploaded successfully', 'success');
-      setLoadingUpload(false);
-      
+        const formData = new FormData();
+        formData.append('file', renamedFile, renamedFile.name);
+        formData.append('signature', signature);
+        formData.append('timestamp', timestamp);
+        formData.append('folder', 'theater_skit_uploads');
+        formData.append('api_key', process.env.NEXT_PUBLIC_CLOUDINARY_API_KEY);
+
+        const { data } = await axios.post(url, formData, {
+            onUploadProgress: (progressEvent) => {
+                const percentage = Math.round((progressEvent.loaded / progressEvent.total) * 100);
+                SetUploadProgress(`${percentage}%`);
+            },
+        });
+
+        setDataUrl(data.secure_url);
+        setVideoId(data.public_id);
+        setVidLength(convertToVideoLengthFormat(data.duration));
+
+        showInfo('File uploaded successfully', 'success');
+        setLoadingUpload(false);
+        
     } catch (err) {
-      handleRemoveFile();
-      showInfo(`Upload failed: ${err.message}`, 'error');
+        handleRemoveFile();
+        showInfo(`Upload failed: ${err.message}`, 'error');
     }
-    } else {
-      return;
-    }
-   
-  };
+};
+
 
 
   const videoUpload = async () => {
