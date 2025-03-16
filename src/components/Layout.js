@@ -9,7 +9,7 @@ import Loader from "./Loader";
 import axios from "axios";
 import { useSession } from "next-auth/react";
 
-export default function Layout({ title, children, image, desc, bg, hideNav }) {
+export default function Layout({ title, children, image, desc, bg, hideNav=false }) {
   const [isOpen, setIsOpen] = useState(false);
   const [ noti, setNoti ] = useState(null);
   const [ networkError, setNetworkError ] = useState(false);

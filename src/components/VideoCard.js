@@ -45,7 +45,7 @@ export default function VideoCard( { content }) {
 
     return(
             <div className="flex flex-col items-center h-[300px] md:w-[350px] w-full">
-                { thumbnailUrl? (
+                { thumbnailUrl ? (
                     <Link className="w-[100%] hover:opacity-85 flex flex-col" href={link}>
                         <Image 
                         className="h-[225px] w-full p-0" 
@@ -60,7 +60,7 @@ export default function VideoCard( { content }) {
                         </div>
                     </Link>
                 ):(
-                    <Link className="w-[100%] hover:opacity-85 flex flex-col" href={link}>
+                    <Link className="w-[100%] hover:opacity-85 h-fit flex flex-col" href={link}>
                         <div className="h-[225px] bg-gray-300 animate-pulse w-full p-0"></div>
                         <div className="w-fit h-fit p-2 bg-black/50 text-white text-[13px] absolute mt-[180px] ml-[10px] rounded-[4px]">
                             <span>{content?.vidLength}</span>

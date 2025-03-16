@@ -11,6 +11,9 @@ import axios from 'axios';
 import VideoCardLoader from '@/components/VideoCardLoader';
 import ReloadIcon from '../../../../public/images/icon/ReloadIcon';
 import { get } from 'react-hook-form';
+import AddIcon from '../../../../public/images/icon/AddIcon';
+import HomeIcon from '../../../../public/images/icon/HomeIcon';
+import ProfileIcon from '../../../../public/images/icon/ProfileIcon';
 
 function SkitsPage() {
   const router = useRouter();
@@ -117,7 +120,7 @@ function SkitsPage() {
     setCurrentPage(pageNumber);
     getCurrentSkit(allSkits, pageNumber);
     window.scrollTo( {
-      top:30,
+      top:0,
       behavior:'smooth'
     })
   }
@@ -128,10 +131,10 @@ function SkitsPage() {
   }
 
   return (
-    <Layout>
+    <Layout hideNav={true}>
       <div className='md:ml-[5%] md:mr-[5%] bg-gray-100 mt-3'>
         { errorGettingSkit && 
-          <div className='h-[550px] w-full pt-[30px] flex flex-col gap-10'>
+          <div className='h-screen w-full pt-[30px] flex flex-col gap-10'>
             <div className='text-red-500 font-light text-center md:w-[30%] w-[90%] mx-auto text-[13px]'>{errorMessage}. please check your internet connection</div>
             <button onClick={reload} className='flex flex-col justify-center hover:scale-105 transition-all ease-in-out duration-300 hover:opacity-50 items-center gap-3'>
               <span className=']'>Tap to retry</span>
@@ -220,8 +223,24 @@ function SkitsPage() {
                 <button key={i} onClick={() => paginate(i + 1)} className={`w-[50px] rounded-[3px] text-[19px] py-1 ${currentPage === i + 1 ? 'bg-transparent border-1 border-green-600 text-green-800' : 'bg-green-600 hover:bg-green-900 text-white'}`}>{i + 1}</button>
               ))}
             </div>
+
           </div>
         }
+        <div className={`flex mt-2 fixed bottom-0 rounded-t-[5px] w-[100%] z-[1000] bg-green-600 flex-row font-sans h-[50px] pb-1 items-end justify-around`}>
+            {/* Second Line Menus */}
+              <Link style={{alignItems:'center'}} href="/" className="text-green-200 text-[13px] hover:scale-105 items-center flex flex-col justify-center">
+                <HomeIcon bg={'#bbf7d0'} size={'22px'}/>
+                Home
+              </Link>
+              <Link style={{alignItems:'center'}} href="/theater-skit-across-nigeria/add-skit" className="text-green-200 text-[13px] pt-2 px-2 rounded-full bg-green-600 hover:scale-105 items-center flex flex-col justify-center">
+                <AddIcon bg={'#bbf7d0'} size={'35px'}/>
+                Add Skit 
+              </Link>
+              <Link style={{alignItems:'center'}} href="//theater-skit-across-nigeria/creator" className="text-green-200 text-[13px] hover:scale-105 items-center flex flex-col justify-center">
+                <ProfileIcon size={'22px'}/>
+                you
+              </Link>
+          </div>
       </div>
     </Layout>
   );
