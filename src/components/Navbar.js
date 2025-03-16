@@ -31,7 +31,11 @@ const Navbar = ( { hideNav } ) => {
   useEffect( () => {
     const handleScroll = () => {
       const scrollThreshold = 140;
-      setIsFixed(window.scrollY >= scrollThreshold);
+      if ( hideNav ) {
+        setIsFixed(false);
+      } else {
+        setIsFixed(window.scrollY >= scrollThreshold);
+      }
     };
     window.addEventListener('scroll', handleScroll);
 
@@ -106,7 +110,7 @@ const Navbar = ( { hideNav } ) => {
             </Link>
         </div>
 
-        <div className="mt-2 fixed bottom-0 rounded-t-[5px] w-[100%] flex z-[1000] bg-green-600 flex-row font-sans h-[50px] items-center justify-around">
+        <div className={`${hideNav?'hidden':''} mt-2 fixed bottom-0 rounded-t-[5px] w-[100%] flex z-[1000] bg-green-600 flex-row font-sans h-[50px] items-center justify-aroun`}>
           {/* Second Line Menus */}
             <Link style={{alignItems:'center'}} href="/giveaway-quiz" className="text-green-200 text-[14px] hover:scale-105 items-center flex flex-col justify-center">
               <Money/>

@@ -13,7 +13,7 @@ import { useEffect, useState } from "react";
 // });
 
 export default function VideoCard( { content }) {
-    const [ thumbnailUrl, setThumbnailUrl ] = useState('');
+    const [ thumbnailUrl, setThumbnailUrl ] = useState(null);
     const link = `/theater-skit-across-nigeria/pages/skit-video/${content?.id}?isNew=false`;
 
     const getThumbnail = async () => {
@@ -45,19 +45,28 @@ export default function VideoCard( { content }) {
 
     return(
             <div className="flex flex-col items-center h-[300px] md:w-[350px] w-full">
-                <Link className="w-[100%] hover:opacity-85 flex flex-col" href={link}>
-                    <Image 
-                    className="h-[225px] w-full p-0" 
-                    width={225}
-                    height={100}
-                    src={thumbnailUrl} 
-                    alt={content?.vidTitle}
-                    unoptimized
-                    />
-                    <div className="w-fit h-fit p-2 bg-black/50 text-white text-[13px] absolute mt-[180px] ml-[10px] rounded-[4px]">
-                        <span>{content?.vidLength}</span>
-                    </div>
-                </Link>
+                { thumbnailUrl? (
+                    <Link className="w-[100%] hover:opacity-85 flex flex-col" href={link}>
+                        <Image 
+                        className="h-[225px] w-full p-0" 
+                        width={225}
+                        height={100}
+                        src={thumbnailUrl} 
+                        alt={content?.vidTitle}
+                        unoptimized
+                        />
+                        <div className="w-fit h-fit p-2 bg-black/50 text-white text-[13px] absolute mt-[180px] ml-[10px] rounded-[4px]">
+                            <span>{content?.vidLength}</span>
+                        </div>
+                    </Link>
+                ):(
+                    <Link className="w-[100%] hover:opacity-85 flex flex-col" href={link}>
+                        <div className="h-[225px] bg-gray-300 animate-pulse w-full p-0"></div>
+                        <div className="w-fit h-fit p-2 bg-black/50 text-white text-[13px] absolute mt-[180px] ml-[10px] rounded-[4px]">
+                            <span>{content?.vidLength}</span>
+                        </div>
+                    </Link>
+                )}
                 <div className="w-full flex flex-row items-start justify-between gap-2 pt-[10px] px-2">
                     <div className="flex flex-row gap-2 items-start">
                         <Profile size={'45px'}/>

@@ -72,17 +72,15 @@ function SkitsPage() {
       let indexOfLastSkit = pageNumber * skitsPerPage;
       let indexOfFirstSkit;
       // check if calulated last index is greater than length else use calculated last index
-      if ( indexOfLastSkit > list.length ) {
-        indexOfFirstSkit = list.length;
+      if ( indexOfLastSkit > list.length-1 ) {
+        indexOfLastSkit = list.length;
         indexOfFirstSkit = indexOfLastSkit - ( indexOfLastSkit % list.length );
+        setCurrentSkits(list.slice(indexOfFirstSkit-1, indexOfLastSkit));
       } else {
         indexOfFirstSkit = indexOfLastSkit - skitsPerPage;
+        setCurrentSkits(list.slice(indexOfFirstSkit, indexOfLastSkit));
       }
-      if ( indexOfLastSkit > allSkits.length - 1) {
-        indexOfLastSkit = allSkits.length - 1;
-      };
       console.log('first skit: ' + indexOfFirstSkit, 'last skit: '+ indexOfLastSkit);
-      setCurrentSkits(list.slice(indexOfFirstSkit, indexOfLastSkit));
     } else {
       let indexOfLastSkit = list.length;
       const indexOfFirstSkit = 0;
