@@ -15,25 +15,27 @@ import ShareIcon from "../../../../../public/images/icon/ShareIcon";
 import Link from "next/link";
 import dynamic from 'next/dynamic'; // Import dynamic
 import { useParams } from "next/navigation";
+import { useSession } from "next-auth/react";
+import ReloadIcon from "../../../../../public/images/icon/ReloadIcon";
+import HomeIcon from "../../../../../public/images/icon/HomeIcon";
+import AddIcon from "../../../../../public/images/icon/AddIcon";
+import ProfileIcon from "../../../../../public/images/icon/ProfileIcon";
+import Image from "next/image";
+import logo1 from "../../../../../public/images/logo1.png";
+import Close from "../../../../../public/images/icon/Close";
 
 // Dynamically import ReactPlayer with SSR disabled
 const ReactPlayer = dynamic(() => import('react-player'), { ssr: false });
 
-const prototype = {
-    email:'aliman2952003@gmail.com',
-    description:"The rocks are formed as a result of transportation agents like wind, water and ice which moves loosed weathered rock materials and deposit them in the form of layers called sediments which when subjected to heavy pressure undergo compaction and cementation",
-    url: 'https://res.cloudinary.com/dcxz7qndp/video/upload/sp_auto/v1741771808/theater_skit_uploads/zznkbb7idozhpuklmsal.m3u8',
-    title: 'Gauss Jordan Elimination & Reduced Row Echelon Form',
-    name: 'Aliman ahmed'
-}
 
 export default function SkitScreen(props){
-  const skit = prototype;
+
   const router= useRouter();
   const params = router.query;
+  const { status, data: session } = useSession();
+
   const [ isMobile, setIsMobile ] = useState(false);
   const [ descriptionLength, setDescriptionLength ] = useState(40);
-  const [ voted, setVoted ] = useState(false);
   const [ voteLoading, setVoteLoading ] = useState(false);
   const [ shareNotifyBottom, setShareNotifyBottom ] = useState('bottom-[-50px]');
   const [ shareNotifyOpacity, setShareNotifyOpacity ] = useState('opacity-0');
@@ -42,6 +44,21 @@ export default function SkitScreen(props){
   const [ loadingData, setLoadingData ] = useState(true);
   const [ dataSuccess, setDataSuccess ] = useState(true);
   const [ title, setTitle ] = useState('');
+
+
+  const [ isUserVoted, setIsUserVoted ] = useState({});
+  const [ votes, setVotes ] = useState(0);
+  const [ voted, setVoted ] = useState(false);
+
+  const [ comments, setComments ] = useState([]);
+  const [ errorGettingSkit, setErrorGettingSkit ] = useState(true);
+  const [ errorMessage, setErrorMessage ] = useState('');
+
+  const [ nlModalOpacity, setNlModalOpacity ] = useState('opacity-0');
+  const [ nlBgOpacity, setNlBgOpacity ] = useState('opacity-0');
+  const [ showModal, setShowModal ] = useState(false);
+  const [ cvOpacity, setCvOpacity ] = useState('opacity-0');
+  const [ cantVote, setCantVote ] = useState(false);
 
 
   const [isClient, setIsClient] = useState(false); // State to track client-side rendering
@@ -59,9 +76,6 @@ export default function SkitScreen(props){
         }
     }, [isClient]); // Run this effect after `isClient` changes to true
 
-    if (!skit){
-        return<Layout title="Skit not Found"><div>Skit not found</div></Layout>;
-    }
 
     const modifyTitle = ( str ) => {
         const firstWord = str.slice(0, 1).toUpperCase();
@@ -69,20 +83,32 @@ export default function SkitScreen(props){
     }
 
     const getVideoData = async () => {
-        try {
-            if ( params.id ) {
-                setLoadingData(true)
-                const response = await axios.get(`/api/media/upload-theater-skit?id=${ params?.id }&type=single`);
-                const videoData = response.data.vidData;
-                setData(videoData);
+        async function getData(user) {
+            try {
+                if ( params.id ) {
+                    setLoadingData(true)
+                    const response = await axios.get(`/api/media/upload-theater-skit?id=${ params?.id }&type=single${user?`&user=${user}`:''}`);
+                    const videoData = response.data.vidData;
+                    const voteData = response.data.voteData;
+                    setIsUserVoted(voteData);
+                    setData(videoData);
+                    setLoadingData(false);
+                    setDataSuccess(true);
+                    setTitle(videoData.vidTitle);
+                    setErrorGettingSkit(false);
+                }
+            } catch(error) {
                 setLoadingData(false);
-                setDataSuccess(true);
-                setTitle(videoData.vidTitle);
+                setDataSuccess(false);
+                setErrorGettingSkit(true);
+                setErrorMessage('Something went wrong, '+error.message)
             }
-        } catch(error) {
-            setLoadingData(false);
-            setDataSuccess(false);
-            console.log(error.message);
+        }
+        if ( session?.user?.name ) {
+            const user = session?.user?._id;
+            getData(user);
+        } else {
+            getData(null);
         }
     }
     
@@ -92,15 +118,6 @@ export default function SkitScreen(props){
         } else {
             setDescriptionLength(data?.vidCaption.length)
         }
-    }
-
-    const handleVote = () => {
-        setVoteLoading(true);
-
-        setTimeout(() => {
-            setVoted(!voted);
-            setVoteLoading(false)
-        }, 5000);
     }
 
     const displayShareNotifier = () => {
@@ -121,14 +138,97 @@ export default function SkitScreen(props){
         }
      }
 
+     const castVote = async () => {
+        if ( session?.user?.name ) {
+            if ( isUserVoted.authorized ) {
+                try {
+                    const data = {
+                        user:session?.user?._id,
+                        toVote:isUserVoted?.hasVotedThisSkit?false:true,
+                        theaterSkit:params?.id,
+                    }
+                    const response = await axios.post('/api/theater-skit/castVote', data);
+                    const voteData = response.data.voteData;
+                    setIsUserVoted(voteData);
+                    setVoteLoading(false);
+                } catch(error) {
+                    setVoteLoading(false)
+                }
+            } else {
+                ShowCantVoteModal();
+            }
+        } else {
+            notLoggedIn('in');
+        }
+     }
 
-    if (!skit) {
-    return <Layout title="Skit not Found"><div>Skit not found</div></Layout>;
-    }
+     const reload = () => {
+        getVideoData();
+     }
+
+     const notLoggedIn = (transiton) => {
+        if (transiton==='in') {
+            setShowModal(true);
+            setTimeout(() => {
+                setNlBgOpacity('opacity-100');
+                setNlModalOpacity('opacity-100');
+            }, 300);
+        } else {
+            setNlBgOpacity('opacity-0');
+            setNlModalOpacity('opacity-0');
+            setTimeout(() => {
+                setShowModal(false);
+            }, 1000);
+        }
+     }
+
+     const ShowCantVoteModal = () => {
+        setShowModal(true);
+        setCvOpacity('opacity-100');
+        setTimeout(() => {
+            setCvOpacity('opacity-0');
+            setTimeout(() => {
+                setShowModal(false);
+            }, 2000);
+        }, 5000);
+     }
 
   return(
         <Layout hideNav={true} title={title}>
-          <div className={`flex md:w-[50%] bg-gray-100 mx-auto rounded-[20px] justify-center items-center gap-4 flex-col`}>
+          <div className={`flex md:w-[50%] bg-gray-100 pb-[100px] mx-auto rounded-[20px] justify-center items-center gap-4 flex-col`}>
+            { showModal && 
+                <div className={`fixed ${nlBgOpacity} transition-all duration-300 ease-in-out backdrop-blur-sm h-screen w-screen flex flex-co items-center justify-center gap-3 bg-black/50 z-[1000] top-0`}>
+                    <div className="h-fit flex flex-col justify-center w-[100%] items-center">
+                        <button onClick={()=>{notLoggedIn('out')}} className="border-1 text-[14px] flex flex-row gap-2 text-white hover:bg-green-600/50 hover:scale-105 transition-all duration-300 ease-in-out justify-center items-center px-[20px] py-1 rounded-[20px] mb-[20px] border-gray-100">
+                            <Close bg={'white'} size={'15px'}/>
+                            Close
+                        </button>
+                        <div className={`overflow-hidden h-[400px] md:w-[400px] transition-all duration-500 ease-in-out w-[80%] text-center ${nlModalOpacity} p-3 flex flex-col justify-center items-center bg-gray-100 rounded-[5px]`}>
+                            <div className='text-center mb-[35px] flex flex-row justify-center gap-1 items-center'>
+                                <Image src={logo1} alt='logo' placeholder='blur' className='h-[30px] w-[35px]' />
+                                <div className='flex flex-col justify-center items-start gap-0'>
+                                    <span className='text-[12px] font-semibold text-green-700'>ACROSS NIGERIA</span>
+                                    <span className='text-[10px] text-green-500'>REALITY SHOW</span>
+                                </div>
+                            </div>
+                            <span>Oops! You have to Log In or Register</span>
+                            <div className="flex mt-[20px] flex-col items-center gap-2">
+                                <button className="h-[40px] px-[20px] text-white bg-green-500 hover:bg-green-700 rounded-[20px]">Register Now</button>
+                                <button className="text-gray-600 hover:text-black">Log In</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                }
+            { errorGettingSkit && 
+                <div className='h-screen w-full pt-[30px] flex flex-col gap-10'>
+                <div className='text-red-500 font-light text-center md:w-[30%] w-[90%] mx-auto text-[13px]'>{errorMessage}. please check your internet connection</div>
+                    <button onClick={reload} className='flex flex-col justify-center hover:scale-105 transition-all ease-in-out duration-300 hover:opacity-50 items-center gap-3'>
+                        <span className=']'>Tap to retry</span>
+                        <ReloadIcon/>
+                    </button>
+                </div>
+            }
             <div className={`${isMobile ? 'h-[245px]' : 'h-[300px]'} w-[100%] bg-gray-900 md:mt-[15px]`}>
                 { typeof window !== "undefined" && ( loadingData ? ( 
                         <div className="h-full w-full flex flex-col justify-center items-center">
@@ -170,14 +270,14 @@ export default function SkitScreen(props){
                    { loadingData ? (
                         <div className="h-[25px] w-full bg-gray-300 animate-pulse rounded-[7px]"></div>
                    ): (
-                        <span style={{lineHeight:'21px'}} className="text-[21px]">{title}</span>
+                        <span style={{lineHeight:'21px'}} className="text-[21px]">{modifyTitle(title)}</span>
                    )}
                 </div>
                 { loadingData ? (
                     <>
                         <div className="h-[20px] w-full bg-gray-200 animate-pulse rounded-[7px]"></div>
-                        <div className="h-[20px] w-full bg-gray-200 animate-pulse rounded-[7px]"></div>
-                        <div className="h-[20px] w-full bg-gray-200 animate-pulse rounded-[7px]"></div>
+                        <div className="h-[20px] w-full bg-gray-200 animate-pulse rounded-[7px] mt-1"></div>
+                        <div className="h-[20px] w-full bg-gray-200 animate-pulse rounded-[7px] mt-1"></div>
                     </>
                    ): (
                     <span style={{lineHeight:'20px'}} onClick={descriptionView} className="hover:cursor-pointer text-gray-700">{ data?.vidCaption?.slice(0, descriptionLength) + (descriptionLength!==data?.vidCaption.length?'... See more':'') }</span>
@@ -186,34 +286,63 @@ export default function SkitScreen(props){
                     <div className="flex flex-row text-[18px] items-center gap-2">
                         <Profile size={'40px'}/>
                         { loadingData ? (
-                            <div className="h-[20px] w-[30%] bg-gray-300 animate-pulse rounded-[7px]"></div>
+                            <div className="h-[20px] w-[100px] bg-gray-300 animate-pulse rounded-[7px]"></div>
                         ): (
                             <span>{data?.fullname}</span>
                         )}
-                        </div>
+                    </div>
+
+                    { loadingData ? (
+                        <div className=" bg-gray-300 h-[40px] animate-pulse rounded-[25px] w-[130px] mt-[5px]"></div>
+                    ):(
+                        <button onClick={castVote} className={`${isUserVoted?.hasVotedThisSkit?'text-gray-300 bg-gray-800 hover:bg-gray-900':'text-gray-700 hover:bg-gray-400 bg-gray-300'} w-[130px] flex flex-row gap-2 items-center justify-center h-[40px] rounded-[25px] hover:scale-105`}>
+                            { showCantVote && 
+                                <div className="absolute p-2 flex flex-row justify-center items-center h-[80px] w-[200px] mt-[-90px] bg-black/40 text-[white] rounded-t-[20px] rounded-bl-[20px] ml-[-290px]">
+                                    <span>Oops! You can't vote for more than one Ski.t</span>{}
+                                </div>
+                            }
+                            { voteLoading?(
+                                <CycleLoader size={'20px'}/>
+                            ): (
+                                isUserVoted?.hasVotedThisSkit?<VotedIcon/>:<VoteIcon/>
+                            )}
+                            <span>{ isUserVoted?.hasVotedThisSkit? 'Voted':'Vote' }</span>
+                        </button>
+                    )}
                     
-                    <button onClick={handleVote} className={`${voted?'text-gray-300 bg-gray-800 hover:bg-gray-900':'text-gray-700 hover:bg-gray-400 bg-gray-300'} w-[130px] flex flex-row gap-2 items-center justify-center h-[40px] rounded-[25px] hover:scale-105`}>
-                        { voteLoading?(
-                            <CycleLoader size={'20px'}/>
-                        ): (
-                            voted?<VotedIcon/>:<VoteIcon/>
-                        )}
-                        <span>{ voted? 'Voted':'Vote' }</span>
-                    </button>
                 </div>
                 <div className="flex flex-row justify-between pb-[5px] pt-[5px] items-center">
                     { loadingData ? (
                         <div className="h-[20px] w-[20%] bg-gray-300 animate-pulse rounded-[7px]"></div>
                     ): (
-                        <div className="text-gray-800 text-[16px] font-bold" >• {data?.votes.length} votes •</div>
+                        <div className="text-gray-800 text-[16px] font-bold" >• {isUserVoted?.votes} votes •</div>
                     )}
                     <div className="flex flex-row gap-2 w-fit">
-                        <button onClick={copyShareLink} className='w-[100px] flex flex-row gap-1 items-center justify-center py-2 rounded-[25px] text-gray-700 hover:scale-105 hover:bg-gray-400'><ShareIcon/> Share</button>
+                        { !loadingData && <button onClick={copyShareLink} className='w-[100px] flex flex-row gap-1 items-center justify-center py-2 rounded-[25px] text-gray-700 hover:scale-105 hover:bg-gray-400'><ShareIcon/> Share</button> }
                     </div>
                 </div>
-                <div className="inline-flex bg-gray-300 rounded-[25px] w-[100%] text-[13px] text-gray-800 p-2 mt-[5px] gap-2 items-center"><ContestIcon />Contesting for Best Drama in Theater Drama Across Nigeria</div>
+                { loadingData ? (
+                    <div className=" bg-gray-300 rounded-[25px] w-[100%] animate-pulse mt-[5px] h-[20px]"></div>
+                ):(
+                    <div className="inline-flex bg-gray-300 rounded-[25px] w-[100%] text-[13px] text-gray-800 p-2 mt-[5px] gap-2 items-center"><ContestIcon />Contesting for Best Skit</div>
+                )}
                 <Link href={'/theater-skit-across-nigeria/pages'} className="bg-green-600 rounded-[25px] flex flex-col justify-center items-center py-1 hover:bg-green-800 w-[150px] mt-[20px] text-white">Watch others</Link>
-            </div>      
+            </div> 
+            <div className={`flex mt-2 fixed bottom-0 rounded-t-[5px] w-[100%] z-[1000] bg-green-600 flex-row font-sans h-[50px] pb-1 items-end justify-around`}>
+            {/* Second Line Menus */}
+                <Link style={{alignItems:'center'}} href="/" className="text-green-200 text-[13px] hover:scale-105 items-center flex flex-col justify-center">
+                <HomeIcon bg={'#bbf7d0'} size={'22px'}/>
+                Home
+                </Link>
+                <Link style={{alignItems:'center'}} href="/theater-skit-across-nigeria/pages/add-skit" className="text-green-200 text-[13px] pt-2 px-2 rounded-full bg-green-600 hover:scale-105 items-center flex flex-col justify-center">
+                <AddIcon bg={'#bbf7d0'} size={'30px'}/>
+                Add Skit 
+                </Link>
+                <Link style={{alignItems:'center'}} href="//theater-skit-across-nigeria/pages/creator" className="text-green-200 text-[13px] hover:scale-105 items-center flex flex-col justify-center">
+                <ProfileIcon size={'22px'}/>
+                you
+                </Link>
+            </div>     
           </div>
      
         </Layout>

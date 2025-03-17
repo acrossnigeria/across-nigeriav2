@@ -2,18 +2,16 @@ import Layout from '@/components/Layout';
 import React, { useEffect, useState } from 'react';
 import VideoCard from '@/components/VideoCard';
 import { useRouter } from 'next/router';
-import Link from 'next/link';
-import { getSession } from 'next-auth/react';
-import Image from 'next/image';
+import Link from 'next/link'; 
 import TopSkitCard from '@/components/TopSkitCard';
 import VideoIcon from '../../../../public/images/icon/VideoIcon';
 import axios from 'axios';
 import VideoCardLoader from '@/components/VideoCardLoader';
 import ReloadIcon from '../../../../public/images/icon/ReloadIcon';
-import { get } from 'react-hook-form';
 import AddIcon from '../../../../public/images/icon/AddIcon';
 import HomeIcon from '../../../../public/images/icon/HomeIcon';
 import ProfileIcon from '../../../../public/images/icon/ProfileIcon';
+
 
 function SkitsPage() {
   const router = useRouter();
@@ -133,6 +131,7 @@ function SkitsPage() {
   return (
     <Layout hideNav={true}>
       <div className='md:ml-[5%] md:mr-[5%] bg-gray-100 mt-3'>
+
         { errorGettingSkit && 
           <div className='h-screen w-full pt-[30px] flex flex-col gap-10'>
             <div className='text-red-500 font-light text-center md:w-[30%] w-[90%] mx-auto text-[13px]'>{errorMessage}. please check your internet connection</div>
@@ -144,9 +143,6 @@ function SkitsPage() {
         }
         { !errorGettingSkit &&
           <div>
-            <Link href="/upload" className='cursor-pointer mb-2 ml-[2.5%] w-fit hover:bg-green-200 bg-tranparent border-2 flex flex-row justify-center items-center border-green-700 text-green-700 px-4 h-[40px] rounded-[30px]'>
-              <span>Click Here to participate</span>
-            </Link>
             { !isGettingSkits &&
               <div className='w-[95%] md:w-full mx-auto flex flex-col bg-gradient-to-t from-green-800 to-green-400 px-2 pb-2 rounded-[5px]'>
                 <div className='text-white font-semibold text-center text-[18px]'>Leader Board</div>
@@ -232,11 +228,11 @@ function SkitsPage() {
                 <HomeIcon bg={'#bbf7d0'} size={'22px'}/>
                 Home
               </Link>
-              <Link style={{alignItems:'center'}} href="/theater-skit-across-nigeria/add-skit" className="text-green-200 text-[13px] pt-2 px-2 rounded-full bg-green-600 hover:scale-105 items-center flex flex-col justify-center">
-                <AddIcon bg={'#bbf7d0'} size={'35px'}/>
+              <Link style={{alignItems:'center'}} href="/theater-skit-across-nigeria/pages/add-skit" className="text-green-200 text-[13px] pt-2 px-2 rounded-full bg-green-600 hover:scale-105 items-center flex flex-col justify-center">
+                <AddIcon bg={'#bbf7d0'} size={'30px'}/>
                 Add Skit 
               </Link>
-              <Link style={{alignItems:'center'}} href="//theater-skit-across-nigeria/creator" className="text-green-200 text-[13px] hover:scale-105 items-center flex flex-col justify-center">
+              <Link style={{alignItems:'center'}} href="//theater-skit-across-nigeria/pages/creator" className="text-green-200 text-[13px] hover:scale-105 items-center flex flex-col justify-center">
                 <ProfileIcon size={'22px'}/>
                 you
               </Link>

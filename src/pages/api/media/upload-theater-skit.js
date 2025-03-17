@@ -1,7 +1,31 @@
 import db from "../../../../utils/db";
 import TheaterSkit from "@/models/TheaterSkit";
+import TheaterSkitVote from "@/models/TheaterSkitVote";
+import mongoose from "mongoose";
 
 const Handler = async ( req, res ) => {
+
+    const getEngagementData = async (user, skitId) => {
+        // check is user has voted for the specified skit
+        let authorized ;
+        let hasVotedThisSkit;
+        const hasVotedAnySkit = await TheaterSkitVote.findOne( { user:user } )
+        if ( hasVotedAnySkit ) {
+            if ( hasVotedAnySkit?.theaterSkit?.toString() === skitId  ) {
+                authorized = true;
+                hasVotedThisSkit = true;
+            } else {
+                authorized = false;
+                hasVotedThisSkit = false;
+            }
+        } else {
+            authorized = true;
+            hasVotedThisSkit = false;
+        }
+
+        return { authorized, hasVotedThisSkit };
+    }
+
     try {
         if ( req.method === "POST" ) {
             const { userId, vidUrl, email, vidTitle, vidCaption, vidLength } = req.body;
@@ -19,11 +43,24 @@ const Handler = async ( req, res ) => {
             res.status(200).json( { success:true, id:skitObj._id } );
             
         } else if( req.method === 'GET' ) {
-            const { id, type } = req.query;
+            const type = req.query.type;
             if ( type === "single" ) {
+                const id = req.query.id;
+                const user = req.query?.user;
+                let voteData;
 
                 await db.connect();
                 const video = await TheaterSkit.findById(id).populate('user', 'name surname');
+                if (!video) {
+                    res.status(404).json( { success:false, error:'No video found' } );
+                }
+                const votes = await TheaterSkitVote.find( { theaterSkit:id });
+                if ( user ) {
+                    const { authorized, hasVotedThisSkit, hasVotedDifSkit } = await getEngagementData( user, id );
+                    voteData = { authorized, hasVotedThisSkit, hasVotedDifSkit, votes:votes.length };
+                } else {
+                    voteData = { authorized:false, hasVotedThisSkit:false, votes:votes.length };
+                };
                 await db.disconnect();
                 const vidUrl = video.vidUrl.replace("mp4", "m3u8");
 
@@ -34,9 +71,8 @@ const Handler = async ( req, res ) => {
                     vidCaption:video.vidCaption,
                     vidUrl,
                     fullname:`${video.user.name} ${video.user.surname}`,
-                    votes:video.votes,
                 };
-                res.status(200).json( { success:true, vidData });
+                res.status(200).json( { success:true, vidData, voteData });
             } else if ( type ==='multi') {
 
                 await db.connect();
