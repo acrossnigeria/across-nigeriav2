@@ -18,6 +18,7 @@ const Navbar = ( { hideNav } ) => {
   const router = useRouter();
   const [ open, setOpen ] = useState(false);
   const [ isFixed, setIsFixed ] = useState(false);
+  const [ notifications, setNotifications ] = useState(0);
 
   const logoutClickHandler = () => {
     signOut();
@@ -64,9 +65,9 @@ const Navbar = ( { hideNav } ) => {
           </div>
           ) : session?.user ? (
           <div className="relative flex flex-row items-center gap-3">
-            <Link href={'/notifications'} className='flex h-[35px] w-[35px] rounded-full justify-center items-center hover:bg-green-800 flex-row'>
+            <Link href={'/user/notifications'} className='flex h-[35px] w-[35px] rounded-full justify-center items-center hover:bg-green-800 flex-row'>
               <NotifyIcon/>
-              <div className={`absolute ml-[23px] text-white mb-[23px] bg-red-500 flex flex-row justify-center items-center rounded-full p-2 h-[21px] text-[11px] w-[21px]`}>3</div>
+              <div className={`absolute ml-[23px] text-white mb-[23px] ${notifications>0?'bg-red-500':'bg-gray-500'} flex flex-row justify-center items-center rounded-full p-2 h-[21px] text-[11px] w-[21px]`}>{notifications}</div>
             </Link>
             <div style={{alignItems:'center'}} className="flex flex-row justify-between gap-2 h-[30px] px-[10px] cursor-pointer  text-white bg-gradient-to-br from-green-500 to-yellow-400 transition duration-100 rounded-[30px] text-[16px]">
               <Link href={'/user/profile'}>{session.user.name}</Link>
