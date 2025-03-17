@@ -51,14 +51,14 @@ export default function SkitScreen(props){
   const [ voted, setVoted ] = useState(false);
 
   const [ comments, setComments ] = useState([]);
-  const [ errorGettingSkit, setErrorGettingSkit ] = useState(true);
+  const [ errorGettingSkit, setErrorGettingSkit ] = useState(false);
   const [ errorMessage, setErrorMessage ] = useState('');
 
   const [ nlModalOpacity, setNlModalOpacity ] = useState('opacity-0');
   const [ nlBgOpacity, setNlBgOpacity ] = useState('opacity-0');
   const [ showModal, setShowModal ] = useState(false);
   const [ cvOpacity, setCvOpacity ] = useState('opacity-0');
-  const [ cantVote, setCantVote ] = useState(false);
+  const [ showCantVote, setShowCantVote ] = useState(false);
 
 
   const [isClient, setIsClient] = useState(false); // State to track client-side rendering
@@ -141,6 +141,7 @@ export default function SkitScreen(props){
      const castVote = async () => {
         if ( session?.user?.name ) {
             if ( isUserVoted.authorized ) {
+                setVoteLoading(true);
                 try {
                     const data = {
                         user:session?.user?._id,
@@ -163,6 +164,7 @@ export default function SkitScreen(props){
      }
 
      const reload = () => {
+        setErrorGettingSkit(false);
         getVideoData();
      }
 
@@ -183,12 +185,12 @@ export default function SkitScreen(props){
      }
 
      const ShowCantVoteModal = () => {
-        setShowModal(true);
+        setShowCantVote(true);
         setCvOpacity('opacity-100');
         setTimeout(() => {
             setCvOpacity('opacity-0');
             setTimeout(() => {
-                setShowModal(false);
+                setShowCantVote(false);
             }, 2000);
         }, 5000);
      }
@@ -297,8 +299,8 @@ export default function SkitScreen(props){
                     ):(
                         <button onClick={castVote} className={`${isUserVoted?.hasVotedThisSkit?'text-gray-300 bg-gray-800 hover:bg-gray-900':'text-gray-700 hover:bg-gray-400 bg-gray-300'} w-[130px] flex flex-row gap-2 items-center justify-center h-[40px] rounded-[25px] hover:scale-105`}>
                             { showCantVote && 
-                                <div className="absolute p-2 flex flex-row justify-center items-center h-[80px] w-[200px] mt-[-90px] bg-black/40 text-[white] rounded-t-[20px] rounded-bl-[20px] ml-[-290px]">
-                                    <span>Oops! You can't vote for more than one Ski.t</span>{}
+                                <div className={`absolute ${cvOpacity} transition-all ease-in-out duration-500 text-[14px] p-2 flex flex-row justify-center items-center h-[80px] w-[150px] mt-[-80px] bg-black/40 text-[white] rounded-t-[20px] rounded-bl-[20px] ml-[-230px]`}>
+                                    <span>Oops! You can't vote for more than one Skit</span>{}
                                 </div>
                             }
                             { voteLoading?(
