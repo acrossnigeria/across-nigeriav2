@@ -17,7 +17,7 @@ const SkitSuccessModal = ( { closeFunction, bgOpacity, modalOpacity } ) => {
                             <span className='text-[10px] text-green-500'>REALITY SHOW</span>
                         </div>
                     </div>
-                    <span className="text-[17px]">🎉 Your skit has been successfully uploaded! 🚀🔥 Share your skit, gather votes, and claim your prize! Don't wait <br></br> <span className="font-bold">spread the word now!🎤</span></span>
+                    <span className="text-[17px]">🎉 Your skit has been successfully uploaded! 🚀🔥 Share your skit, gather votes, and claim your prize! Don&apos;t wait <br></br> <span className="font-bold">spread the word now!🎤</span></span>
                 </div>
             </div>
         </div>
