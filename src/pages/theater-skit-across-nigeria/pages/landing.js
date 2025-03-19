@@ -89,8 +89,8 @@ const Landing = () => {
                 </div>
 
             <div className="flex flex-col md:w-[50%] w-[94%] mb-[30px] mx-auto">
-                <span className="font-bold text-[20px] mt-[30px] mb-[10px] text-center">🎬 Theme: "What Not to Do When Dating in Nigeria"</span>
-                <span className="text-center text-[18px]">Think you’ve got the best take on this? Create, upload, and let the world decide!</span>
+                <span className="font-bold text-[20px] mt-[30px] mb-[10px] text-center">🎬 Theme: &quot;What Not to Do When Dating in Nigeria&quot;</span>
+                <span className="text-center text-[18px]">Think you&apos;ve got the best take on this? Create, upload, and let the world decide!</span>
                 <div className="flex flex-col gap-2 bg-gray-200 rounded-[10px] p-2 py-3 mt-[20px] items-start">
                     <span className="font-semibold">✅ Open to Theatre Arts students & skit makers</span>
                     <span className="font-semibold">✅ Participation & Voting are FREE!</span>
@@ -101,7 +101,7 @@ const Landing = () => {
             </div>
             <div className="flex flex-col justify-center items-center gap-2 mb-[20px] md:w-[50%] w-[94%] mx-auto text-center">
                 <span className="text-[19px] font-bold">🌟 Got a Favorite? Vote & Support a Skit!</span>
-                <span className="text-[15px] text-gray-500">Only ONE vote per user – make it count! Help your favorite creator win BIG!</span>
+                <span className="text-[15px] text-gray-500">Only ONE vote per user, make it count! Help your favorite creator win BIG!</span>
                 { session?.user?.name ? (
                     <button onClick={()=>{router.push('/theater-skit-across-nigeria/pages')}} className="h-[45px] mt-[20px] px-[40px] bg-transparent hover:bg-gray-300 rounded-[25px] mx-auto border-1 border-black hover:scale-105 transition-all duration-250 ease-in-out">Watch Skits</button>
                 ):(

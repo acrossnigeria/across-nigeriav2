@@ -199,7 +199,7 @@ function SkitsPage() {
                   <div className='h-[800px] flex flex-col md:w-[50%] w-[95%] gap-2 items-center pt-[25px] text-center mx-auto'>
                     <span className='font-bold text-center text-[15px]'>No Skits Yet? Be the First to Upload!</span>
                     <div className='mx-w-[70%] text-[14px] text-center mt-[15px]'>⏳ The stage is set! the competition starts now.</div>
-                    <div className='mx-w-[70%] text-[14px] text-center'>🚀 Be the first to showcase your talent! Upload your skit now and compete for amazing cash prizes on Across Nigeria Reality Show! 🏆 Don't miss this chance to shine!</div>
+                    <div className='mx-w-[70%] text-[14px] text-center'>🚀 Be the first to showcase your talent! Upload your skit now and compete for amazing cash prizes on Across Nigeria Reality Show! 🏆 Don&apos;t miss this chance to shine!</div>
                     <div className='flex md:flex-row flex-col mt-[10px] gap-2 justify-between items-center'>
                       <button onClick={()=>{router.push('/theater-skit-across-nigeria/pages/add-skit')}} className='h-[35px] w-[130px] text-[15px] bg-green-600 hover:bg-green-700 text-white rounded-[25px]'>Upload Your Skit</button>
                       <button onClick={()=>{router.push('/theater-skit-across-nigeria/pages/landing')}} className='h-[35px] w-[130px] text-[15px] border-1 border-black bg-transparent hover:bg-gray-300 rounded-[25px]'>Learn more</button>
