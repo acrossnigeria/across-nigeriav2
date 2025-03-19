@@ -14,6 +14,7 @@ import ProfileIcon from '../../../../public/images/icon/ProfileIcon';
 import { useSession } from 'next-auth/react';
 import logo1 from "../../../../public/images/logo1.png";
 import Close from "../../../../public/images/icon/Close";
+import Image from 'next/image';
 
 
 function SkitsPage() {
