@@ -28,6 +28,7 @@ import AddAccDetails from "@/components/notifiers/AddAccountDetails";
 import { useSession } from "next-auth/react";
 import AdBanner1 from "@/components/AdBanner1";
 import AdBanner2 from "@/components/AdBanner2";
+import SkitCompetitionClickCard from "@/components/SkitCompetitionClickCard";
 
 
 const inter = Inter({ subsets: ["latin"] });
@@ -100,6 +101,7 @@ export default function Home() {
               { games.map((card)=>(<Cards key={card.title} isOpen={card.isOpen} date={card.date} title={card.title} 
               link={card.link} image={card.image}/>))}
           </div>
+          <SkitCompetitionClickCard/>
           <AdBanner1/>
           <div className="my-[40px]">
             <AmbassadorInfo/>

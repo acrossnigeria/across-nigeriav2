@@ -11,11 +11,14 @@ import ReloadIcon from '../../../../public/images/icon/ReloadIcon';
 import AddIcon from '../../../../public/images/icon/AddIcon';
 import HomeIcon from '../../../../public/images/icon/HomeIcon';
 import ProfileIcon from '../../../../public/images/icon/ProfileIcon';
+import { useSession } from 'next-auth/react';
 
 
 function SkitsPage() {
   const [display, setDisplay] = useState(false);
   console.log(display);
+  const router = useRouter();
+  const { status, data:session } = useSession();
   const [ allSkits, setAllSkits ] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [ oneUser, setOneUser ] = useState(null);
@@ -24,7 +27,7 @@ function SkitsPage() {
   const [ fourUser, setFourUser ] = useState(null);
   const [ fiveUser, setFiveUser ] = useState(null);
   const [ currentSkits, setCurrentSkits ] = useState([]);
-  const skitsPerPage = 8;
+  const skitsPerPage = 6;
 
   // loaders states
   const [ isGettingSkits, setIsGettingSkits ] = useState(true);
@@ -68,27 +71,14 @@ function SkitsPage() {
   }
 
   const getCurrentSkit = (list, pageNumber) => {
-      // Get current skits
-    if ( list.length > skitsPerPage ) {
-      let indexOfLastSkit = pageNumber * skitsPerPage;
-      let indexOfFirstSkit;
-      // check if calulated last index is greater than length else use calculated last index
-      if ( indexOfLastSkit > list.length-1 ) {
-        indexOfLastSkit = list.length;
-        indexOfFirstSkit = indexOfLastSkit - ( indexOfLastSkit % list.length );
-        setCurrentSkits(list.slice(indexOfFirstSkit-1, indexOfLastSkit));
-      } else {
-        indexOfFirstSkit = indexOfLastSkit - skitsPerPage;
-        setCurrentSkits(list.slice(indexOfFirstSkit, indexOfLastSkit));
-      }
-      console.log('first skit: ' + indexOfFirstSkit, 'last skit: '+ indexOfLastSkit);
-    } else {
-      let indexOfLastSkit = list.length;
-      const indexOfFirstSkit = 0;
-      console.log('first skit: ' + indexOfFirstSkit, 'last skit: '+ indexOfLastSkit);
-      setCurrentSkits(list.slice(indexOfFirstSkit, indexOfLastSkit));
-    }
-  }
+    if (!list.length) return setCurrentSkits([]); // Handle empty list case
+  
+    const indexOfLastSkit = Math.min(pageNumber * skitsPerPage, list.length);
+    const indexOfFirstSkit = Math.max(indexOfLastSkit - skitsPerPage, 0);
+  
+    setCurrentSkits(list.slice(indexOfFirstSkit, indexOfLastSkit));
+  };
+  
 
   const watch = () => {
     setDisplay(true);
@@ -129,7 +119,7 @@ function SkitsPage() {
   }
 
   return (
-    <Layout hideNav={true}>
+    <Layout hideNav={session?.user?.name?true:false}>
       <div className='md:ml-[5%] md:mr-[5%] bg-gray-100 mt-3'>
 
         { errorGettingSkit && 
@@ -143,6 +133,7 @@ function SkitsPage() {
         }
         { !errorGettingSkit &&
           <div>
+            <button onClick={()=>{router.push('/theater-skit-across-nigeria/pages/landing')}} className='w-[150px] border-1 border-black hover:scale-105 transition-all ease-in-out duration-250 h-[35px] bg-transparent hover:bg-gray-300 rounded-[25px] mt-[10px] mb-[10px]'>How to play?</button>
             { !isGettingSkits &&
               <div className='w-[95%] md:w-full mx-auto flex flex-col bg-gradient-to-t from-green-800 to-green-400 px-2 pb-2 rounded-[5px]'>
                 <div className='text-white font-semibold text-center text-[18px]'>Leader Board</div>
@@ -200,9 +191,22 @@ function SkitsPage() {
             <h2 className="text-[22px] mt-[25px] ml-[2.5%] mb-2 ">All Skits</h2>
             { !isGettingSkits &&
               <div className="flex-wrap flex md:flex-row flex-col gap-[25px] md:gap-[20px] border-t-1 border-t-gray-300 justify-center pt-[6px]">
-                {currentSkits.map((skit) => (
+                { currentSkits?.length > 0 ? (
+                  currentSkits.map((skit) => (
                     <VideoCard key={skit.id} watch={watch} content={skit}/>
-                ))}
+                  ))
+                ):(
+                  <div className='h-[800px] flex flex-col md:w-[50%] w-[95%] gap-2 items-center pt-[25px] text-center mx-auto'>
+                    <span className='font-bold text-center text-[15px]'>No Skits Yet? Be the First to Upload!</span>
+                    <div className='mx-w-[70%] text-[14px] text-center mt-[15px]'>⏳ The stage is set! the competition starts now.</div>
+                    <div className='mx-w-[70%] text-[14px] text-center'>🚀 Be the first to showcase your talent! Upload your skit now and compete for amazing cash prizes on Across Nigeria Reality Show! 🏆 Don't miss this chance to shine!</div>
+                    <div className='flex md:flex-row flex-col mt-[10px] gap-2 justify-between items-center'>
+                      <button onClick={()=>{router.push('/theater-skit-across-nigeria/pages/add-skit')}} className='h-[35px] w-[130px] text-[15px] bg-green-600 hover:bg-green-700 text-white rounded-[25px]'>Upload Your Skit</button>
+                      <button onClick={()=>{router.push('/theater-skit-across-nigeria/pages/landing')}} className='h-[35px] w-[130px] text-[15px] border-1 border-black bg-transparent hover:bg-gray-300 rounded-[25px]'>Learn more</button>
+                    </div>
+                  </div>
+                )
+                }
               </div>
             }
             { isGettingSkits &&
@@ -222,6 +226,7 @@ function SkitsPage() {
 
           </div>
         }
+       { session?.user?.name &&
         <div className={`flex mt-2 fixed bottom-0 rounded-t-[5px] w-[100%] z-[1000] bg-green-600 flex-row font-sans h-[50px] pb-1 items-end justify-around`}>
             {/* Second Line Menus */}
               <Link style={{alignItems:'center'}} href="/" className="text-green-200 text-[13px] hover:scale-105 items-center flex flex-col justify-center">
@@ -237,6 +242,7 @@ function SkitsPage() {
                 you
               </Link>
           </div>
+        }
       </div>
     </Layout>
   );

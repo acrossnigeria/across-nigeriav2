@@ -52,15 +52,16 @@ const ShareSkitModal = ( { link, bgOpacity, modalOpacity, closeFunction } ) => {
                     <Close bg={'white'} size={'15px'}/>
                     Close
                 </button>
-                <div className={`overflow-hidden h-[240px] md:w-[400px] transition-all duration-500 ease-in-out w-[80%] text-center ${modalOpacity} p-3 md:p-5 flex flex-col justify-center items-center bg-gray-100 rounded-[5px]`}>
-                    <div className='text-center mb-[35px] flex flex-row justify-center gap-1 items-center'>
+                <div className={`overflow-hidden h-[260px] md:w-[500px] transition-all duration-500 ease-in-out w-[80%] text-center ${modalOpacity} p-3 md:p-5 flex flex-col justify-center items-center bg-gray-100 rounded-[5px]`}>
+                    <div className='text-center mb-[25px] flex flex-row justify-center gap-1 items-center'>
                         <Image src={logo1} alt='logo' placeholder='blur' className='h-[30px] w-[35px]' />
                         <div className='flex flex-col justify-center items-start gap-0'>
                             <span className='text-[12px] font-semibold text-green-700'>ACROSS NIGERIA</span>
                             <span className='text-[10px] text-green-500'>REALITY SHOW</span>
                         </div>
                     </div>
-                    <span className="text-[14px]">Share it!, Share to friends and families for them to watch and vote for you.</span>
+                    <span className="text-[14px] text-center font-bold">📣 Spread the Word & Boost Your Votes!</span>
+                    <span className="text-[14px] text-center text-gray7600">The more votes you get, the closer you are to winning! Share your skit with friends & family.</span>
                     <div className="flex pt-[15px] mt-[15px] flex-row items-center justify-evenly gap-2 border-t-1 w-full border-t-gray-500">
                         <button onClick={copyShareLink} className="h-[60px] text-[14px] hover:scale-105 transition-all duration-400 ease-in-out hover:opacity-75 flex flex-col justify-center items-center gap-2 ">
                             <div className="w-[45px] flex flex-col justify-center items-center h-[45px] border-1 border-gray-800 rounded-full">
