@@ -14,8 +14,8 @@ import ProfileIcon from '../../../../public/images/icon/ProfileIcon';
 
 
 function SkitsPage() {
-  const router = useRouter();
   const [display, setDisplay] = useState(false);
+  console.log(display);
   const [ allSkits, setAllSkits ] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [ oneUser, setOneUser ] = useState(null);

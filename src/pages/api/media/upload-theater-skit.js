@@ -9,7 +9,7 @@ const Handler = async ( req, res ) => {
         // check is user has voted for the specified skit
         let authorized ;
         let hasVotedThisSkit;
-        const hasVotedAnySkit = await TheaterSkitVote.findOne( { user:user } )
+        const hasVotedAnySkit = await TheaterSkitVote.findOne( { user:user } );
         if ( hasVotedAnySkit ) {
             if ( hasVotedAnySkit?.theaterSkit?.toString() === skitId  ) {
                 authorized = true;

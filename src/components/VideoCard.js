@@ -1,16 +1,9 @@
 import Link from "next/link";
-import { Cloudinary } from "@cloudinary/url-gen";
 import Image from "next/image";
 import OptionsIcon from "../../public/images/icon/OptionsIcon";
 import Profile from "../../public/images/icon/Profile";
 import axios from "axios";
 import { useEffect, useState } from "react";
-
-// const cld = new Cloudinary( {
-//     cloud: {
-//         cloudName:'dcxz7qndp'
-//     }
-// });
 
 export default function VideoCard( { content }) {
     const [ thumbnailUrl, setThumbnailUrl ] = useState(null);
@@ -22,7 +15,6 @@ export default function VideoCard( { content }) {
         try {
             const { data } = await axios.get(`/api/cldThumbnail?videoId=${videoId}`);
             setThumbnailUrl(data.thumbnailUrl);
-            console.log(data.thumbnailUrl)
         } catch (error) {
             console.log('error generating png'+ error.message);
         }
