@@ -69,7 +69,7 @@ export default function VideoCard( { content }) {
                             <span style={{lineHeight:'19px'}} className="text-gray-700 text-[14px]">
                                 <span >{content?.fullname} • </span>
                                 <span>{content?.votes.length} votes • </span>
-                                <span>4 days ago</span>
+                                <span>{content?.createdAt}</span>
                             </span>
                         </div>
                     </div>

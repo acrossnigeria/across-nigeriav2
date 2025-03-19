@@ -5,6 +5,30 @@ import mongoose from "mongoose";
 
 const Handler = async ( req, res ) => {
 
+    const timeAgo = (timestamp) => {
+        const now = new Date();
+        const past = new Date(timestamp);
+        const seconds = Math.floor((now - past) / 1000);
+      
+        if (seconds < 60) return `${seconds} seconds ago`;
+        
+        const minutes = Math.floor(seconds / 60);
+        if (minutes < 60) return `${minutes} minutes ago`;
+      
+        const hours = Math.floor(minutes / 60);
+        if (hours < 24) return `${hours} hours ago`;
+      
+        const days = Math.floor(hours / 24);
+        if (days < 30) return `${days} days ago`;
+      
+        const months = Math.floor(days / 30);
+        if (months < 12) return `${months} months ago`;
+      
+        const years = Math.floor(months / 12);
+        return `${years} years ago`;
+      }
+      
+
     const getEngagementData = async (user, skitId) => {
         // check is user has voted for the specified skit
         let authorized ;
@@ -71,6 +95,7 @@ const Handler = async ( req, res ) => {
                     vidCaption:video.vidCaption,
                     vidUrl,
                     fullname:`${video.user.name} ${video.user.surname}`,
+                    createdAt:timeAgo(video.createdAt)
                 };
                 res.status(200).json( { success:true, vidData, voteData });
             } else if ( type ==='multi') {
@@ -89,7 +114,8 @@ const Handler = async ( req, res ) => {
                         vidUrl:e.vidUrl,
                         votes:e.votes,
                         fullname:`${e.user.name} ${e.user.surname}`,
-                        id:e._id
+                        id:e._id,
+                        createdAt:timeAgo(e.createdAt),
                     };
                     allvideosSort.push(data);
                 })
