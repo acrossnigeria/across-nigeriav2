@@ -416,7 +416,7 @@ export default function SkitScreen(props){
                             <button onClick={castVote} className={`${isUserVoted?.hasVotedThisSkit?'text-gray-300 bg-gray-800 hover:bg-gray-900':'text-gray-700 hover:bg-gray-400 bg-gray-300'} md:w-[130px] w-[48%] flex flex-row gap-2 items-center justify-center h-[35px] rounded-[25px] hover:scale-105`}>
                                 { showCantVote && 
                                     <div className={`absolute ${cvOpacity} transition-all ease-in-out duration-500 text-[14px] p-2 flex flex-row justify-center items-center h-[80px] w-[150px] mt-[-80px] bg-black/40 text-[white] rounded-t-[20px] rounded-bl-[20px] ml-[-230px]`}>
-                                        <span>Oops! You can't vote for more than one Skit</span>{}
+                                        <span>Oops! You can&apos;t vote for more than one Skit</span>{}
                                     </div>
                                 }
                                 { voteLoading?(
