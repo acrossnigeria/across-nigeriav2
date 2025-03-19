@@ -154,7 +154,7 @@ const notLoggedIn = (transiton) => {
       <div className='md:ml-[5%] md:mr-[5%] bg-gray-100 mt-3'>
 
         { showModal && 
-            <div className={`fixed ${nlBgOpacity} transition-all duration-300 ease-in-out backdrop-blur-sm h-screen w-screen flex flex-co items-center justify-center gap-3 bg-black/50 z-[1000] top-0`}>
+            <div className={`fixed ${nlBgOpacity} transition-all duration-300 ease-in-out backdrop-blur-sm left-0 h-screen w-screen flex flex-co items-center justify-center gap-3 bg-black/50 z-[1000] top-0`}>
                 <div className="h-fit flex flex-col justify-center w-[100%] items-center">
                     <button onClick={()=>{notLoggedIn('out')}} className="border-1 text-[14px] flex flex-row gap-2 text-white hover:bg-green-600/50 hover:scale-105 transition-all duration-300 ease-in-out justify-center items-center px-[20px] py-1 rounded-[20px] mb-[20px] border-gray-100">
                         <Close bg={'white'} size={'15px'}/>
