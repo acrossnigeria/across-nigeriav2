@@ -42,7 +42,7 @@ export default function Home() {
   const games = [
     {title:"GIVE AWAY QUIZZES", image:image1,link:"/giveaway-quiz", date:'Live', isOpen:true },
     {title:"ACROSS NIGERIA QUIZ SHOW",image:image12,link:"/across_quiz_show", date:'Live', isOpen:true },
-    {title:"ACROSS NIGERIA KING AND QUEEN", image:image3, link:"/soon", date:'2025', isOpen:false },
+    {title:"KING AND QUEEN ACROSS NIGERIA", image:image3, link:"/soon", date:'2025', isOpen:false },
     {title:"SKITS ACROSS NIGERIA",image:image2,link:"/soon", date:'2025', isOpen:false },
     {title:"NAIJA VIBES", image:image8,link:"/soon", date:'2025', isOpen:false },
     {title:"MYSTERY BOXES",image:image4,link:"/soon", date:'2026', isOpen:false },
