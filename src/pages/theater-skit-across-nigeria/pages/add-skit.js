@@ -169,7 +169,7 @@ export default function UploadScreen() {
 
     // Check file size
     const fileSize = e.target.files[0].size; // Size in bytes
-    const maxSize = 60 * 1024 * 1024; // 30 MB in bytes
+    const maxSize = 95 * 1024 * 1024; // 95 MB in bytes
     if (fileSize > maxSize) {
         toast.error('File size exceeds 30MB limit.');
         e.target.value = "";  
@@ -301,7 +301,7 @@ export default function UploadScreen() {
                     { loadingUpload ?  <CycleLoader size={'30px'}/> : (
                       <>
                       <ImgIcon />
-                      <span className="mt-3 text-[13px] text-gray-500">Video should not exceed 50MB</span>
+                      <span className="mt-3 text-[13px] text-gray-500">Video should not exceed 95MB</span>
                       </>) 
                     }
                   </div>
