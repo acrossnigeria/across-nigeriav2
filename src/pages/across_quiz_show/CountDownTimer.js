@@ -37,7 +37,7 @@ const  CountDownTimer = () => {
         return timeLeft;
       }
 
-    const { days, hours, minutes, seconds } = useCountdown('March 22, 2025 00:00:00');
+    const { days, hours, minutes, seconds } = useCountdown('April 22, 2025 00:00:00');
     
 
     return (
