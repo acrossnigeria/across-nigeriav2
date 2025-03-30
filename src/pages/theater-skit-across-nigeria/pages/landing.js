@@ -1,6 +1,6 @@
 import Layout from "@/components/Layout";
 import Image from "next/image";
-import banner from "../../../../public/images/skitCompetitionBanner.jpg";
+import banner from "../../../../public/images/skitBanner.jpg";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import Trophy1Icon from "../../../../public/images/icon/Trophy1Icon";

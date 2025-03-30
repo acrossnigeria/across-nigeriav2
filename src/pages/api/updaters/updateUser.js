@@ -6,20 +6,13 @@ const Handler = async (req, res) => {
         if (req.method==='GET') {
             await db.connect();
             const users = await User.find();
-            const docs = []
+            let phoneNumbers = '';
             users.map( async (user) => {
-                if (user.refCode.includes(' ')) {
-                    const data = user.refCode.split(' ');
-                    const refCode = data[data.length-1];
-                    const doc = await User.findById( user._id.toString(), { refCode });
-                    docs.push(doc);
-                    console.log('success', refCode, doc);
-                } else {
-                    docs.push( { name:user.name, ref:user.refCode})
-                }
+                phoneNumbers = `${phoneNumbers}, +${user.phone}`;
             })
+            console.log(phoneNumbers);
             await db.disconnect();
-            res.status(200).json( { success:true, docs });
+            res.status(200).json( { success:true, phoneNumbers });
 
         } else {
             res.status(403).json({success:false, error:'Method not allowed'})
