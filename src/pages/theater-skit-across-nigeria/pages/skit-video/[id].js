@@ -45,7 +45,7 @@ export default function SkitScreen(props){
     };
 
     const [ isMobile, setIsMobile ] = useState(false);
-    const [ descriptionLength, setDescriptionLength ] = useState(40);
+    const [ descriptionLength, setDescriptionLength ] = useState(50);
     const [ voteLoading, setVoteLoading ] = useState(false);
     const [ data, setData ] = useState(null);
     const [ loadingData, setLoadingData ] = useState(true);
@@ -378,16 +378,14 @@ export default function SkitScreen(props){
             <div className={`w-full md:w-[100%] flex flex-col px-[3%] md:px-0 md:pb-[80px] pb-[150px]`}>
                 <div className="flex flex-col mb-[10px] gap-1">
                    { loadingData ? (
-                        <div className="h-[25px] w-full bg-gray-300 animate-pulse rounded-[7px]"></div>
+                        <div className="h-[25px] w-full bg-gray-300 animate-pulse rounded-[25px]"></div>
                    ): (
                         <span style={{lineHeight:'21px'}} className="text-[21px]">{modifyTitle(title)}</span>
                    )}
                 </div>
                 { loadingData ? (
                     <>
-                        <div className="h-[20px] w-full bg-gray-200 animate-pulse rounded-[7px]"></div>
-                        <div className="h-[20px] w-full bg-gray-200 animate-pulse rounded-[7px] mt-1"></div>
-                        <div className="h-[20px] w-full bg-gray-200 animate-pulse rounded-[7px] mt-1"></div>
+                        <div className="h-[32px] w-full bg-gray-200 animate-pulse rounded-[25px]"></div>
                     </>
                    ): (
                     <span style={{lineHeight:'20px'}} onClick={descriptionView} className="hover:cursor-pointer text-gray-700">{ data?.vidCaption?.slice(0, descriptionLength) + (descriptionLength!==data?.vidCaption.length?'... See more':'') }</span>
@@ -396,7 +394,7 @@ export default function SkitScreen(props){
                     <div className="flex flex-row text-[18px] items-center gap-2">
                         <Profile size={'40px'}/>
                         { loadingData ? (
-                            <div className="h-[20px] w-[100px] bg-gray-300 animate-pulse rounded-[7px]"></div>
+                            <div className="h-[32px] w-[140px] bg-gray-300 animate-pulse rounded-[25px]"></div>
                         ): (
                             <span>{data?.fullname}</span>
                         )}
@@ -404,12 +402,12 @@ export default function SkitScreen(props){
                     
                 </div>
                 <div className="flex flex-row justify-between gap-3 w-[100%] pb-[5px] pt-[5px] items-center">
-                    { loadingData ? (
+                    {/* { loadingData ? (
                         <div className="h-[35px] md:w-[180px] w-[40%] bg-gray-300 animate-pulse rounded-[25px]"></div>
                     ): (
                         <div className="text-gray-800 bg-gray-300 md:w-[180px] w-[40%] h-[35px] flex flex-col justify-center items-center rounded-[25px] text-[14px] font-semibold" >{isUserVoted?.votes} votes</div>
-                    )}
-                    <div className="flex flex-row gap-3 md:w-fit w-[60%] items-center">
+                    )} */}
+                    <div className="flex flex-row gap-3 w-[100%] justify-between items-center">
                         { loadingData ? (
                             <div className=" bg-gray-300 h-[35px] animate-pulse rounded-[25px] md:w-[130px] w-[48%] mt-[5px]"></div>
                         ):(
