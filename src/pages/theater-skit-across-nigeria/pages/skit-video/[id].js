@@ -32,7 +32,7 @@ const ReactPlayer = dynamic(() => import('react-player'), { ssr: false });
 
 export default function SkitScreen(props){
 
-    const router= useRouter();
+    const router = useRouter();
     const params = router.query;
     const { status, data: session } = useSession();
     const message = '🔥 Check out this amazing skit on [Your Platform Name]! 😂🎭 The creator is competing to win cash prizes! 🏆💰 Support them by watching and voting for your favorite skit. Every vote counts! Cast yours now! 🚀✨';
