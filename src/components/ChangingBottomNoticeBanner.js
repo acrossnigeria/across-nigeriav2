@@ -1,9 +1,8 @@
 import Image from 'next/image';
 import adflat1 from '../../public/images/adflat1.jpg';
-import adflat2 from '../../public/images/adflat2.jpg';
 import adflat3 from '../../public/images/adflat3.jpg';
 
-const ChangingBottomNoticeBanner = ( { banner } ) => {
+const ChangingBottomNoticeBanner = () => {
     return (
         <div className='md:h-[100px] h-[60px] flex-row flex justify-between md:w-[100%] mx-auto w-[100%] mt-[20px] mb-[70px]'>
             <div className="h-[100%] relative w-[49%]">

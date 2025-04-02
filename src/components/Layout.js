@@ -8,6 +8,7 @@ import Navbar from "../components/Navbar";
 import Loader from "./Loader";
 import axios from "axios";
 import { useSession } from "next-auth/react";
+import HeadComponent from "./HeadComponent";
 
 export default function Layout({ title, children, image, desc, bg, hideNav=false }) {
   const [isOpen, setIsOpen] = useState(false);
@@ -63,23 +64,15 @@ export default function Layout({ title, children, image, desc, bg, hideNav=false
 
     return(
     <div className="h-screen p-0 m-0 bottom-0">
-      <Head>
-        <title>{title ? title + "-Across Nigeria Reality TV" : "Across Nigeria Reality Show"}</title>
-        <meta name="description" content={desc?desc:"Across nigeria reality show offers a variety of giveaways, game show and reality shows that cater to different tastes and interests."} />
-        <meta property="og:image" content={image?image:"https://acrossnig.com/images/landing/image1.jpg"}/>
-        <meta property="og:type" content="website"/>
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
-       <ToastContainer position="top-center" limit={1} />
-       <div className="md:block hidden"><StickyNavbar/></div>
-       <div className="md:hidden block"><Navbar hideNav={hideNav}/></div>
-        {/* {!isMobile&&<StickyNavbar/>}
-        {isMobile&&<Navbar/>} */}
+      <HeadComponent title={title} desc={desc}/>
+      <ToastContainer position="top-center" limit={1} />
+      <div className="md:block hidden"><StickyNavbar/></div>
+      <div className="md:hidden block"><Navbar hideNav={hideNav}/></div>
       <div className="flex left-0 ml-0 w-full overflow-hidden flex-col justify-between">
         <Loader/>
         <main className={`h-[100%] w-screen overflow-hidden ${bg?bg:'bg-gray-100'} my-0 left-0 mx-auto`}>{children}</main>
-       
       </div> 
-      <div className="flex-grow"></div><Footer/>
+      <div className="flex-grow"></div>
+      <Footer/>
     </div >)
 }
