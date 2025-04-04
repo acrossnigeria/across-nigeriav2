@@ -21,7 +21,7 @@ import Next from '../../../public/images/icon/Next';
 
 
 
-const profile = () => {
+const Profile = () => {
   const { status, data: session } = useSession();
 
   const [ isMobile, setIsMobile ] = useState(false);
@@ -173,6 +173,6 @@ const profile = () => {
   )
 }
 
-profile.auth = true;
+Profilerofile.auth = true;
 
-export default profile;
+export default Profile;
