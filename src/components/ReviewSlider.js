@@ -1,4 +1,3 @@
-
 import BearCarousel, { BearSlideImage } from "bear-react-carousel";
 import "bear-react-carousel/dist/index.css";
 import { useEffect, useState } from "react";
