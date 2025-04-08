@@ -24,7 +24,7 @@ export default function TopSkitCard( { exist, votes, strUrl, description, creato
                     />
                     ) : <div className='w-[30px] h-[30px] flex flex-row items-center justify-center bg-gray-300 text-[25px] font-extrabold text-center rounded-[50%]'>?</div>}
                 <div className='flex flex-col items-start justify-center h-[30px]'>
-                    <span className='text-left px-3 w-[100%] text-[14px]'>{exist ? (description.slice(0, 22) + '...'):'Position empty'}</span>
+                    <span className='text-left px-3 w-[100%] text-[14px]'>{exist ? (description.slice(0, 22).toLowerCase() + '...'):'Position empty'}</span>
                     <span className='text-left px-3 text-gray-600 text-[13px]'>{exist? creator:'?'}</span>
                 </div>
                 </div>

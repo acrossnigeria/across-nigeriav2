@@ -102,23 +102,26 @@ const Handler = async ( req, res ) => {
 
                 await db.connect();
                 const videos = await TheaterSkit.find().populate('user', 'name surname');
-                await db.disconnect();
 
-                const allvideosSort = [];
-                videos.map( (e)=> {
-                    let data = {
-                        vidLength:e.vidLength, 
+                const allvideosSort = await Promise.all(
+                    videos.map(async (e) => {
+                      const vidId = e._id;
+                      const votes = await TheaterSkitVote.find({ theaterSkit: vidId });
+                  
+                      return {
+                        vidLength: e.vidLength,
                         vidTitle: e.vidTitle,
-                        vidLength:e.vidLength, 
-                        vidCaption:e.vidCaption,
-                        vidUrl:e.vidUrl,
-                        votes:e.votes,
-                        fullname:`${e.user.name} ${e.user.surname}`,
-                        id:e._id,
-                        createdAt:timeAgo(e.createdAt),
-                    };
-                    allvideosSort.push(data);
-                })
+                        vidCaption: e.vidCaption,
+                        vidUrl: e.vidUrl,
+                        votes: votes,
+                        fullname: `${e.user.name} ${e.user.surname}`,
+                        id: vidId,
+                        createdAt: timeAgo(e.createdAt),
+                      };
+                    })
+                  );
+                  
+                await db.disconnect();
 
                 res.status(200).json( { success:true, vidData:allvideosSort })
             }

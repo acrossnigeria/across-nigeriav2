@@ -65,7 +65,7 @@ function SkitsPage() {
       }
     });
     console.log(zerosCount);
-    console.log(sorted.length)
+    console.log(sorted);
     if ( zerosCount === sorted.length ) {
       sorted = [];
     }
@@ -201,15 +201,19 @@ const notLoggedIn = (transiton) => {
                   <div className='w-full flex flex-row items-center gap-3 px-2 py-1 border-b-1 border-b-black'>
                     <span className=''>4</span>
                     <VideoIcon/>
-                    <span className=' text-[14px]'>{fourUser?(fourUser.votes>0 ? fourUser.fullname:''):''}</span>
-                    <span className='text-[13px]'>{fourUser?(fourUser.votes>0 ? (fourUser.vidTitle.slice(0, 40) + '...'):'Position empty'):'Position empty'}</span>
+                    <div className='flex flex-col'>
+                      <span className=' text-[14px]'>{fourUser?(fourUser.votes.length>0 ? fourUser.fullname:''):''}</span>
+                      <span className='text-[13px]'>{fourUser?(fourUser.votes.length>0 ? (fourUser.vidTitle.slice(0, 40) + '...'):'Position empty'):'Position empty'}</span>
+                    </div>
                   </div> 
                   
                   <div className='w-full flex flex-row items-center px-2 gap-3 py-1'>
                     <span className=''>5</span>
                     <VideoIcon/>
-                    <span className=' text-[14px]'>{fiveUser?(fiveUser.votes>0 ? fiveUser.fullname:''):''}</span>
-                    <span className='text-[13px]'>{fiveUser?(fiveUser.votes>0 ? (fiveUser.vidTitle.slice(0, 40) + '...'):'Position empty'):'Position empty'}</span>
+                    <div className='flex flex-col'>
+                      <span className=' text-[14px]'>{fiveUser?(fiveUser.votes.length>0 ? fiveUser.fullname:''):''}</span>
+                      <span className='text-[13px]'>{fiveUser?(fiveUser.votes.length>0 ? (fiveUser.vidTitle.slice(0, 40) + '...'):'Position empty'):'Position empty'}</span>
+                    </div>
                   </div> 
                 </div>
               
@@ -228,15 +232,19 @@ const notLoggedIn = (transiton) => {
                   <div className='w-full flex flex-row items-center gap-3 px-2 py-1 border-b-1 border-b-black'>
                     <span className=''>4</span>
                     <VideoIcon/>
-                    <div className='h-[15px] rounded-[10px] w-[10%] bg-green-600 animate-pulse'></div>
-                    <div className='h-[15px] rounded-[10px] w-[20%] bg-green-600 animate-pulse'></div>
+                    <div className='flex flex-col gap-1 w-[100%]'>
+                      <div className='h-[15px] rounded-[10px] w-[40%] bg-green-600 animate-pulse'></div>
+                      <div className='h-[15px] rounded-[10px] w-[80%] bg-green-600 animate-pulse'></div>
+                    </div>
                   </div> 
                   
                   <div className='w-full flex flex-row items-center px-2 gap-3 py-1'>
                     <span className=''>5</span>
                     <VideoIcon/>
-                    <div className='h-[15px] rounded-[10px] w-[10%] bg-green-600 animate-pulse'></div>
-                    <div className='h-[15px] rounded-[10px] w-[20%] bg-green-600 animate-pulse'></div>
+                    <div className='flex flex-col gap-1 w-[100%]'>
+                      <div className='h-[15px] rounded-[10px] w-[40%] bg-green-600 animate-pulse'></div>
+                      <div className='h-[15px] rounded-[10px] w-[80%] bg-green-600 animate-pulse'></div>
+                    </div>
                   </div> 
                 </div>
               
@@ -292,7 +300,7 @@ const notLoggedIn = (transiton) => {
                 <AddIcon bg={'#bbf7d0'} size={'30px'}/>
                 Add Skit 
               </Link>
-              <Link style={{alignItems:'center'}} href="//theater-skit-across-nigeria/pages/creator" className="text-green-200 text-[13px] hover:scale-105 items-center flex flex-col justify-center">
+              <Link style={{alignItems:'center'}} href="/theater-skit-across-nigeria/pages/creator" className="text-green-200 text-[13px] hover:scale-105 items-center flex flex-col justify-center">
                 <ProfileIcon size={'22px'}/>
                 you
               </Link>
