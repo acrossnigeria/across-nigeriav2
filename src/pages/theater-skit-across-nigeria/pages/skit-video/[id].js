@@ -402,11 +402,11 @@ export default function SkitScreen(props){
                     
                 </div>
                 <div className="flex flex-row justify-between gap-3 w-[100%] pb-[5px] pt-[5px] items-center">
-                    {/* { loadingData ? (
+                    { loadingData ? (
                         <div className="h-[35px] md:w-[180px] w-[40%] bg-gray-300 animate-pulse rounded-[25px]"></div>
                     ): (
                         <div className="text-gray-800 bg-gray-300 md:w-[180px] w-[40%] h-[35px] flex flex-col justify-center items-center rounded-[25px] text-[14px] font-semibold" >{isUserVoted?.votes} votes</div>
-                    )} */}
+                    )}
                     <div className="flex flex-row gap-3 w-[100%] justify-between items-center">
                         { loadingData ? (
                             <div className=" bg-gray-300 h-[35px] animate-pulse rounded-[25px] md:w-[130px] w-[48%] mt-[5px]"></div>
