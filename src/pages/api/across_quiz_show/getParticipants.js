@@ -17,8 +17,10 @@ const Handler = async ( req, res ) => {
             await db.disconnect();
             const participants = [];
             collection.map( (doc)=> {
+                const bankInfo = doc.user.bankName?`${doc.user.bankName} ${doc.user.bankAccNo}`:'No info';
+                const bankName = doc.user.bank?`${doc.user.bank}`:'No info';
                 const data = {
-                    fullname:`${doc.user.name} ${doc.user.surname}`,
+                    fullname:`${doc.user.name.toLowerCase()} ${doc.user.surname.toLowerCase()}`,
                     whatsappPhone:doc.user.phone,
                     email:doc.user.email,
                     regAt:formatDate(doc.createdAt),
@@ -27,8 +29,8 @@ const Handler = async ( req, res ) => {
                     knowledgeOfNigeria:doc.knowledgeOfNigeria,
                     referralSource:doc.referralSource,
                     confidenceInKnowledge:doc.confidenceInKnowledge,
-                    loveToVisit:doc.loveToVisit,
-                    introVideoUrl:doc.introVideoUrl,
+                    bankInfo:bankInfo,
+                    bank:bankName,
                 }
                 participants.push(data);
             })

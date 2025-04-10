@@ -51,32 +51,34 @@ const Page = ( { user } ) => {
 
     return (
         <Container admin={user} page={'qs'}>
-            <div className="h-[600px] w-[80%] pl-[30px] mt-[30px]">
-                <span>Registered participants</span>
-                {isGettingData && <div className="w-[200px] h-[200px] flex justify-center items-center"><CycleLoader size={'40px'}/></div>}
+            <div className="h-[600px] w-[95%] mx-auto mt-[30px]">
+                <span className="font-bold text-[14px]">Registered participants</span>
+                {isGettingData && <div className="w-[100%] h-[450px] flex justify-center items-center"><CycleLoader size={'40px'}/></div>}
                 { data  && 
-                     <div className="md:w-fit mt-[20px] overflow-scroll h-[450px]">
-                        <div className="w-full flex flex-row text-[13px] h-[30px] gap-0.5">
-                            <div className="flex w-[140px] flex-row bg-gray-500 text-white justify-start items-center pl-1">Fullname</div>
-                            <div className="flex w-[140px] overflow-x-hidden flex-row bg-gray-500 text-white justify-start items-center pl-1">Whatsapp</div>
-                            <div className="flex w-[140px] overflow-x-hidden flex-row bg-gray-500 text-white justify-start items-center pl-1">status</div>
-                            <div className="flex w-[140px] overflow-x-hidden flex-row bg-gray-500 text-white justify-start items-center pl-1"> Email</div>
-                            <div className="flex w-[140px] overflow-x-hidden flex-row bg-gray-500 text-white justify-start items-center pl-1">Referred By</div>
-                            <div className="flex w-[140px] overflow-x-hidden flex-row bg-gray-500 text-white justify-start items-center pl-1">Confidence In knowledge</div>
-                            <div className="flex w-[200px] overflow-x-hidden flex-row bg-gray-500 text-white justify-start items-center pl-1">Introduction</div>
-                            <div className="flex w-[140px] overflow-x-hidden flex-row bg-gray-500 text-white justify-start items-center pl-1">RegAt</div>
+                     <div className="w-[100%] mt-[20px] overflow-hidden h-fit">
+                        <div className="w-full flex flex-row text-[10px] h-[30px] gap-0.5">
+                            <div className="flex w-[11.111%] flex-row bg-gray-500 text-white justify-start items-center pl-1">Fullname</div>
+                            <div className="flex w-[11.111%] overflow-x-hidden flex-row bg-gray-500 text-white justify-start items-center pl-1">Whatsapp</div>
+                            <div className="flex w-[11.111%] overflow-x-hidden flex-row bg-gray-500 text-white justify-start items-center pl-1">status</div>
+                            <div className="flex w-[11.111%] overflow-x-hidden flex-row bg-gray-500 text-white justify-start items-center pl-1">Email</div>
+                            <div className="flex w-[11.111%] overflow-x-hidden flex-row bg-gray-500 text-white justify-start items-center pl-1">Referred By</div>
+                            <div className="flex w-[11.111%] overflow-x-hidden flex-row bg-gray-500 text-white justify-start items-center pl-1">Confidence</div>
+                            <div className="flex w-[11.111%] overflow-x-hidden flex-row bg-gray-500 text-white justify-start items-center pl-1">Bank</div>
+                            <div className="flex w-[11.111%] overflow-x-hidden flex-row bg-gray-500 text-white justify-start items-center pl-1">Bank Info</div>
+                            <div className="flex w-[11.111%] overflow-x-hidden flex-row bg-gray-500 text-white justify-start items-center pl-1">RegAt</div>
                         </div>
                        { data.map( (user, userIndex ) => {
                                 return (
-                                    <div key={userIndex} className={`w-full flex flex-row gap-0.5 text-[13px] h-[30px]`}>
-                                        <div className={`${(userIndex+1)%2===0?'bg-gray-300':'bg-gray-200'} flex w-[140px] overflow-x-hidden flex-row mt-1 text-black justify-start items-center pl-1`}>{user.fullname}</div>
-                                        <div className={`${(userIndex+1)%2===0?'bg-gray-300':'bg-gray-200'} flex w-[140px] overflow-x-hidden flex-row mt-1 text-black justify-start items-center pl-1`}>{user.whatsappPhone}</div>
-                                        <div className={`${(userIndex+1)%2===0?'bg-gray-300':'bg-gray-200'} flex w-[140px] overflow-x-hidden flex-row mt-1 text-black justify-start items-center pl-1`}>{user.status}</div>
-                                        <div className={`${(userIndex+1)%2===0?'bg-gray-300':'bg-gray-200'} flex w-[140px] overflow-x-hidden flex-row mt-1 text-black justify-start items-center pl-1`}> {user.email}</div>
-                                        <div className={`${(userIndex+1)%2===0?'bg-gray-300':'bg-gray-200'} flex w-[140px] overflow-x-hidden flex-row mt-1 text-black justify-start items-center pl-1`}>{user.referralSource}</div>
-                                        <div className={`${(userIndex+1)%2===0?'bg-gray-300':'bg-gray-200'} flex w-[140px] overflow-x-hidden flex-row mt-1 text-black justify-start items-center pl-1`}>{user.confidenceInKnowledge}</div>
-                                        <div className={`${(userIndex+1)%2===0?'bg-gray-300':'bg-gray-200'} flex w-[200px] overflow-x-hidden flex-row mt-1 text-black justify-start items-center pl-1`}><VidDownloadButton videoUrl={user.introVideoUrl} fileName={`${user.fullname} introduction clip`} /></div>
-                                        <div className={`${(userIndex+1)%2===0?'bg-gray-300':'bg-gray-200'} flex w-[140px] overflow-x-hidden flex-row mt-1 text-black justify-start items-center pl-1`}>{user.regAt}</div>
+                                    <div key={userIndex} className={`w-full flex flex-row gap-0.5 text-[10px] h-[30px]`}>
+                                        <div className={`${(userIndex+1)%2===0?'bg-gray-300':'bg-gray-200'} flex w-[11.111%] overflow-x-hidden flex-row mt-1 text-black justify-start items-center pl-1`}>{user.fullname}</div>
+                                        <div className={`${(userIndex+1)%2===0?'bg-gray-300':'bg-gray-200'} flex w-[11.111%] overflow-x-hidden flex-row mt-1 text-black justify-start items-center pl-1`}>{user.whatsappPhone}</div>
+                                        <div className={`${(userIndex+1)%2===0?'bg-gray-300':'bg-gray-200'} flex w-[11.111%] overflow-x-hidden flex-row mt-1 text-black justify-start items-center pl-1`}>{user.status}</div>
+                                        <div className={`${(userIndex+1)%2===0?'bg-gray-300':'bg-gray-200'} flex w-[11.111%] overflow-x-hidden flex-row mt-1 text-black justify-start items-center pl-1`}> {user.email}</div>
+                                        <div className={`${(userIndex+1)%2===0?'bg-gray-300':'bg-gray-200'} flex w-[11.111%] overflow-x-hidden flex-row mt-1 text-black justify-start items-center pl-1`}>{user.referralSource}</div>
+                                        <div className={`${(userIndex+1)%2===0?'bg-gray-300':'bg-gray-200'} flex w-[11.111%] overflow-x-hidden flex-row mt-1 text-black justify-start items-center pl-1`}>{user.confidenceInKnowledge}</div>
+                                        <div className={`${(userIndex+1)%2===0?'bg-gray-300':'bg-gray-200'} flex w-[11.111%] overflow-x-hidden flex-row mt-1 text-black justify-start items-center pl-1`}>{user.bank}</div>
+                                        <div className={`${(userIndex+1)%2===0?'bg-gray-300':'bg-gray-200'} flex w-[11.111%] overflow-x-hidden flex-row mt-1 text-black justify-start items-center pl-1`}>{user.bankInfo}</div>
+                                        <div className={`${(userIndex+1)%2===0?'bg-gray-300':'bg-gray-200'} flex w-[11.111%] overflow-x-hidden flex-row mt-1 text-black justify-start items-center pl-1`}>{user.regAt}</div>
                                     </div>
                                 )
                                 }
