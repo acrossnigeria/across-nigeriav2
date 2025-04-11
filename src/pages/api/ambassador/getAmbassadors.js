@@ -32,15 +32,15 @@ const Handler = async ( req, res ) => {
             let screeningList = [];
             ambassadors.map( ambassador => {
                 let data = { 
-                    refs:ambassador.user.references,
-                    fullname:`${ambassador.user.name} ${ambassador.user.surname}`,
-                    userId:ambassador.user._id,
-                    status:ambassador.currentStatus,
-                    city:ambassador.city,
-                    orgName:ambassador.orgName,
-                    residence:ambassador.state,
-                    email:ambassador.user.email,
-                    phone:ambassador.user.phone,
+                    refs:ambassador?.user?.references,
+                    fullname:`${ambassador?.user?.name} ${ambassador?.user?.surname}`,
+                    userId:ambassador?.user?._id,
+                    status:ambassador?.currentStatus,
+                    city:ambassador?.city,
+                    orgName:ambassador?.orgName,
+                    residence:ambassador?.state,
+                    email:ambassador?.user?.email,
+                    phone:ambassador?.user?.phone,
                 }
                 screeningList.push(data);
             })

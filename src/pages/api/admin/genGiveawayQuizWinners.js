@@ -5,9 +5,18 @@ import ProductData from "@/models/ProductData";
 
 const Handler = async (req, res) => {
     const query = req.query;
+    function convertToMonthYear(timestamp) {
+        const date = new Date(timestamp);
+        const options = { month: 'short' }; // e.g. 'Jan', 'Feb', etc.
+        const month = new Intl.DateTimeFormat('en-US', options).format(date);
+        const year = date.getFullYear();
+        return `${month}${year}`;
+      }
 
     if ( req.method==='GET' ) {
         if ( query.type === 'generateWinners' ) {
+            const session = query.quizSession;
+            console.log(session);
             console.log('generating winners');
             const arr = [0, 5, 18, 3, 9, 7]
             function bubbleSort(arr) {
@@ -28,39 +37,54 @@ const Handler = async (req, res) => {
             let playersAndPlays = [];
             try {
                 await db.connect();
-                const plays = await Quiz.find( { correctAnswer: true } ).populate( { path:'userId', select: 'name surname _id phone residence' });
+                const plays = await Quiz.find( { correctAnswer: false } ).populate( { path:'userId', select: 'name surname _id phone residence bank bankAccNo bankName' });
                 await db.disconnect();
+                let dataStr = '';
 
                 plays.map( (play) => {
-                    let objIndex ;
-                    let isCreated = playersAndPlays.some( (innerObj, index ) => {
-                        if (innerObj.userId === play.userId._id) {
-                            objIndex = index;
-                            return true
-                        } else return false;
+                    const session = convertToMonthYear(play.createdAt);
+                    console.log(session);
+                    if (session === 'April2025' || session === 'Feb2025' || session === 'March2025') {
+                        let objIndex ;
+                        let isCreated = playersAndPlays.some( (innerObj, index ) => {
+                                    if (innerObj?.userId === play?.userId?._id) {
+                                        objIndex = index;
+                                        return true
+                                    } else return false;
+                                }
+                            ); // checks if player already exists in playersAndPlays
+                        if (isCreated) {
+                            playersAndPlays[objIndex].plays = playersAndPlays[objIndex].plays+1  // adds the number of plays
+                        } else {
+                            //creates an object for the player and adds it to playersAndPlays object
+                            const detail = {
+                                fullname: `${play?.userId?.name} ${play?.userId?.surname}`,
+                                email: play?.email,
+                                phone: play?.userId?.phone,
+                                plays: 1,
+                                residence: play?.userId?.residence,
+                                userId: play?.userId?._id, 
+                                bank: play?.userId?.bank,
+                                bankAccNo: play?.userId?.bankAccNo, 
+                                bankName: play?.userId?.bankName,
+                            }
+                            playersAndPlays.push(detail);
+                        }
                     }
-                ); // checks if player already exists in playersAndPlays
-                    if (isCreated) {
-                        playersAndPlays[objIndex].plays = playersAndPlays[objIndex].plays+1  // adds the number of plays
-                    } else {
-                        //creates an object for the player and adds it to playersAndPlays object
-                        playersAndPlays.push( {
-                            fullname: `${play.userId.name} ${play.userId.surname}`,
-                            email: play.email,
-                            phone: play.userId.phone,
-                            plays: 1,
-                            residence: play.userId.residence,
-                            userId: play.userId._id, 
-                        })
-                    }
+
                 });
                 const winners = bubbleSort( playersAndPlays ).slice(0, 23); //sorts the players in descending order and selects 100 players from the top;
+                winners.map( ( detail )=> {
+                    dataStr = `${dataStr}, (${detail.fullname}, ${detail.email}, ${detail.residence}, ${detail.bankAccNo}, ${detail.bankName}, ${detail.bank})`;
+                })
+                console.log(dataStr);
                 res.status(200).json( { success: true, winners  });
             } catch (err) {
-                res.status(500).json( {error:'error occured getting data'});
+                res.status(500).json( {error:err.message});
             }
-        } 
-        else if ( query.type === 'getWinners' ) {
+
+        }  else if ( query.type === 'getWinners' ) {
+
             console.log(`getting saved users for${query?.quizSession}`);
             try {
                 await db.connect();

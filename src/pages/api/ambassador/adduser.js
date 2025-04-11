@@ -30,25 +30,26 @@ const Handler = async (req, res) => {
 
         try {
             await db.connect();
-            const ambassadors = await Ambassador.find().populate('user', 'name phone surname email references refCode');
+            const ambassadors = await Ambassador.find().populate('user', 'name phone references surname email refCode');
             await db.disconnect();
             let screeningList = [];
             ambassadors.map( ambassador => {
                 let data = { 
-                    refs:ambassador.user.references,
-                    fullname:`${ambassador.user.name} ${ambassador.user.surname}`,
-                    status:ambassador.currentStatus,
-                    city:ambassador.city,
-                    orgName:ambassador.orgName,
-                    residence:ambassador.state,
-                    email:ambassador.user.email,
-                    phone:ambassador.user.phone,
-                    joinedAt:ambassador.createdAt,
+                    fullname:`${ambassador?.user?.name} ${ambassador?.user?.surname}`,
+                    status:ambassador?.currentStatus,
+                    city:ambassador?.city,
+                    orgName:ambassador?.orgName,
+                    residence:ambassador?.state,
+                    email:ambassador?.user?.email,
+                    phone:ambassador?.user?.phone,
+                    joinedAt:ambassador?.createdAt,
+                    refs:ambassador?.user?.references,
                 }
                 screeningList.push(data);
             }) 
             res.status(200).json( {success:true, list:screeningList})
         } catch(err) {
+            console.log(err.message);
             res.status(400).json( { success:false, error:err.message } )
         }
 

@@ -53,8 +53,9 @@ export default function Gqrs( { user }) {
     const genWinners = async () => {
         setGenLoading(true);
         setGenError(false);
+        const quizSession = `${getThisMonth()}${getThisYear()}`;
        try {
-            const response = await axios.get( '/api/admin/genGiveawayQuizWinners?type=generateWinners');
+            const response = await axios.get( `/api/admin/genGiveawayQuizWinners?type=generateWinners&quizSession=${quizSession}`);
             if (response.data.success) {
                 setSelectedWinners(response.data.winners);
                 setGenLoading(false);

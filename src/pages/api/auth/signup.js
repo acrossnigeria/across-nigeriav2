@@ -85,12 +85,12 @@ async function handler(req, res) {
 
 
     res.status(201).send({
-    message: `Congratulations ${userDoc.name}!`,
-    _id: userDoc._id,
-    name: userDoc.name,
-    email: userDoc.email,
-    isAdmin: userDoc.isAdmin,
-    });
+      message: `Congratulations ${userDoc.name}!`,
+      _id: userDoc._id,
+      name: userDoc.name,
+      email: userDoc.email,
+      isAdmin: userDoc.isAdmin,
+      });
   }
   db.disconnect();
 

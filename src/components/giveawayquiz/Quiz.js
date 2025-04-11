@@ -13,7 +13,7 @@ import Money from '../../../public/images/icon/Money';
 const question = {
     question: `Which language is the official language of Nigeria?`,
     options: ['A. Yoruba', 'B. Hausa', 'C. English', 'D. Igbo'],
-    answer: 3, // Index of the correct answer option
+    answer: 2, // Index of the correct answer option
   }
 const Quiz = ( { state }) => {
   const router = useRouter();

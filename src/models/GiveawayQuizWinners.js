@@ -8,9 +8,6 @@ const giveawayQuizWinnersSchema = new mongoose.Schema( {
     }
 )
 
-if (process.env.NODE_ENV === 'development' ) {
-    delete mongoose.models.GiveawayQuizWinners;
-}
 
-const GiveawayQuizWinners = mongoose.models.GiveawayQuizWinners || mongoose.model( 'GiveawaQuizWinners', giveawayQuizWinnersSchema );
+const GiveawayQuizWinners = mongoose.models.GiveawayQuizWinners || mongoose.model( 'GiveawayQuizWinners', giveawayQuizWinnersSchema );
 export default GiveawayQuizWinners;

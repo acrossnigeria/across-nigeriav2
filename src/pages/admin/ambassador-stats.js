@@ -130,63 +130,63 @@ const Amb = ( { user }) => {
 
     return (
         <Container admin={user} page={'amb'}>
-            <div className="pl-[20px] h-fit flex flex-col overflow-y-scroll">
-                <div className="">
-                    <div className="flex flex-row  gap-2 mt-[20px] items-center">
-                        <span className="text-[20px] self-center font-light">Top 5 Ambassadors List</span>
-                        <button disabled={isLoading} onClick={refreshAmbassadorList} className={`bg-transparent flex flex-row border-1 border-gray-600 justify-center rounded-[5px] text-gray-800 hover:bg-gray-400 items-center w-[130px] h-[35px]`}>{isLoading?'Loading...':'Refresh'}</button>
+            <div className="h-fit flex flex-col overflow-visible">
+                <div className="w-[100%]">
+                    <div className="flex flex-row  gap-2 mt-[20px] ml-[3%] items-center">
+                        <span className="text-[14px] font-bold">Top 5 Ambassadors List</span>
+                        <button disabled={isLoading} onClick={refreshAmbassadorList} className={`bg-transparent cursor-pointer flex flex-row border-1 border-gray-600 justify-center rounded-[25px] text-gray-800 hover:bg-gray-400 items-center w-[130px] h-[30px]`}>{isLoading?'Loading...':'Refresh'}</button>
                     </div>
-                    <div className="mt-[20px] h-fit min-h-[150px]">
+                    <div className="mt-[20px] mx-auto w-[96%] h-fit">
                         { isLoading && (
                             <div className="w-[100%] h-[150px] flex flex-col justify-center items-center">
-                                <CycleLoader/>
+                                <CycleLoader size={'25px'}/>
                             </div>
                         )}
                         { (!isLoading && !isErrorOccurred) && ( <ListSheet2 list={data}/> )}
                     </div>
                 </div>
 
-                <span className="text-[20px] md:text-left text-center w-[100%] mt-[20px] text-gray-800 font-light">All Ambassadors</span>
-                <div className="mb-3 flex md:flex-row flex-col md:justify-start justify-center items-center gap-3">
-                    <div className="flex flex-row gap-1">
-                        <input value={searchKey} onChange={(e)=>{setSearchKey(e.target.value);searchRelated(e.target.value.toLocaleLowerCase());}}  className="h-[40px] focus:outline-none bg-transparent border-1 rounded-[5px] border-gray-600 px-3" type="text" placeholder="Search user by name"/> 
-                        <button onClick={searchRelated} className="h-[40px] hover:bg-gray-300 bg-transparent border-1 w-[50px] rounded-[5px] border-gray-600">Go</button>
+                <span className="ml-[3%] mt-[20px] text-[14px] font-bold">All Ambassadors</span>
+                <div className="mb-3 ml-[3%] flex mt-[10px] md:flex-row flex-col md:justify-start justify-center items-center gap-4">
+                    <div className="flex flex-row justify-center items-center gap-2">
+                        <input value={searchKey} onChange={(e)=>{setSearchKey(e.target.value);searchRelated(e.target.value.toLocaleLowerCase());}}  className="h-[30px] focus:outline-none bg-transparent border-1 rounded-[25px] border-gray-600 px-3" type="text" placeholder="Search user by name"/> 
+                        <button onClick={searchRelated} className="h-[30px] hover:bg-gray-300 bg-transparent border-1 w-[50px] rounded-[25px] border-gray-600">Go</button>
                     </div>
                     <div className={`${showNavs?'':'hidden'} flex gap-4 flex-row justify-center items-center`}>
                         <div className="border-1 border-gray-600 flex flex-row rounded-[5px]">
-                            <button onClick={prevPage} className="h-[38px] flex flex-row justify-center items-center rotate-180 border-l-1 hover:bg-gray-300 border-gray-600 w-[50px]"><Next size={'15px'} bg={'#6b7280'}/></button>
-                            <button onClick={nextPage} className="h-[38px] flex flex-row justify-center hover:bg-gray-300 items-center w-[50px]"><Next size={'15px'} bg={'#6b7280'}/></button>
+                            <button onClick={prevPage} className="h-[30px] flex flex-row justify-center items-center rotate-180 border-l-1 hover:bg-gray-300 border-gray-600 w-[50px]"><Next size={'15px'} bg={'#6b7280'}/></button>
+                            <button onClick={nextPage} className="h-[30px] flex flex-row justify-center hover:bg-gray-300 items-center w-[50px]"><Next size={'15px'} bg={'#6b7280'}/></button>
                         </div>
                         <span className="h-[40px] flex flex-row justify-center items-center">Showing results {pageSize-13<0?0:pageSize-13} to {pageSize}</span>      
                     </div>
             
                 </div>
                 { results ? (
-                    <div className="md:w-fit overflow-scroll h-[450px]">
-                        <div className="w-full flex flex-row text-[13px] h-[30px] gap-0.5">
-                            <div className="flex w-[140px] flex-row bg-gray-500 text-white justify-start items-center pl-1">Fullname</div>
-                            <div className="flex w-[140px] overflow-x-hidden flex-row bg-gray-500 text-white justify-start items-center pl-1">Status</div>
-                            <div className="flex w-[140px] overflow-x-hidden flex-row bg-gray-500 text-white justify-start items-center pl-1">Institute</div>
-                            <div className="flex w-[140px] overflow-x-hidden flex-row bg-gray-500 text-white justify-start items-center pl-1"> Residence</div>
-                            <div className="flex w-[140px] overflow-x-hidden flex-row bg-gray-500 text-white justify-start items-center pl-1">City</div>
-                            <div className="flex w-[140px] overflow-x-hidden flex-row bg-gray-500 text-white justify-start items-center pl-1">Email</div>
-                            <div className="flex w-[80px] overflow-x-hidden flex-row bg-gray-500 text-white justify-start items-center pl-1">Referrals</div>
-                            <div className="flex w-[140px] overflow-x-hidden flex-row bg-gray-500 text-white justify-start items-center pl-1">JoinedAt</div>
+                    <div className="w-[96%] overflow-hidden mx-auto text-[11px] h-fit mb-[100px]">
+                        <div className="w-full flex flex-row h-[30px] gap-0.5">
+                            <div className="flex w-[12.5%] flex-row bg-gray-500 text-white justify-start items-center pl-1">Fullname</div>
+                            <div className="flex w-[7.5%] overflow-x-hidden flex-row bg-gray-500 text-white justify-start items-center pl-1">Status</div>
+                            <div className="flex w-[17.5%] overflow-x-hidden flex-row bg-gray-500 text-white justify-start items-center pl-1">Institute</div>
+                            <div className="flex w-[7.5%] overflow-x-hidden flex-row bg-gray-500 text-white justify-start items-center pl-1"> Residence</div>
+                            <div className="flex w-[17.5%] overflow-x-hidden flex-row bg-gray-500 text-white justify-start items-center pl-1">City</div>
+                            <div className="flex w-[17.5%] overflow-x-hidden flex-row bg-gray-500 text-white justify-start items-center pl-1">Email</div>
+                            <div className="flex w-[7.5%] overflow-x-hidden flex-row bg-gray-500 text-white justify-start items-center pl-1">Referrals</div>
+                            <div className="flex w-[12.5%] overflow-x-hidden flex-row bg-gray-500 text-white justify-start items-center pl-1">JoinedAt</div>
                         </div>
 
                         { results.length > 0 ? (
                             results.map( (user, userIndex ) => {
                             if ( userIndex < pageSize && userIndex >= (pageSize===results.length? pageSize - reminderPageSize: pageSize-13)) {
                                 return (
-                                    <div key={user._id} className={`w-full flex flex-row gap-0.5 text-[13px] h-[30px]`}>
-                                        <div className={`${(userIndex+1)%2===0?'bg-gray-300':'bg-gray-200'} flex w-[140px] overflow-x-hidden flex-row mt-1 text-black justify-start items-center pl-1`}>{user.fullname}</div>
-                                        <div className={`${(userIndex+1)%2===0?'bg-gray-300':'bg-gray-200'} flex w-[140px] overflow-x-hidden flex-row mt-1 text-black justify-start items-center pl-1`}>{user.status}</div>
-                                        <div className={`${(userIndex+1)%2===0?'bg-gray-300':'bg-gray-200'} flex w-[140px] overflow-x-hidden flex-row mt-1 text-black justify-start items-center pl-1`}>{user.orgName}</div>
-                                        <div className={`${(userIndex+1)%2===0?'bg-gray-300':'bg-gray-200'} flex w-[140px] overflow-x-hidden flex-row mt-1 text-black justify-start items-center pl-1`}> {user.residence}</div>
-                                        <div className={`${(userIndex+1)%2===0?'bg-gray-300':'bg-gray-200'} flex w-[140px] overflow-x-hidden flex-row mt-1 text-black justify-start items-center pl-1`}>{user.city}</div>
-                                        <div className={`${(userIndex+1)%2===0?'bg-gray-300':'bg-gray-200'} flex w-[140px] overflow-x-hidden flex-row mt-1 text-black justify-start items-center pl-1`}>{user.email}</div>
-                                        <div className={`${(userIndex+1)%2===0?'bg-gray-300':'bg-gray-200'} flex w-[80px] overflow-x-hidden flex-row mt-1 text-black justify-start items-center pl-1`}>{user.refs}</div>
-                                        <div className={`${(userIndex+1)%2===0?'bg-gray-300':'bg-gray-200'} flex w-[140px] overflow-x-hidden flex-row mt-1 text-black justify-start items-center pl-1`}>{formatDate(user.joinedAt)}</div>
+                                    <div key={user._id} className={`w-full flex flex-row gap-0.5 h-[30px]`}>
+                                        <div className={`${(userIndex+1)%2===0?'bg-gray-300':'bg-gray-200'} flex w-[12.5%] overflow-x-hidden flex-row mt-1 text-black justify-start items-center pl-1`}>{user.fullname}</div>
+                                        <div className={`${(userIndex+1)%2===0?'bg-gray-300':'bg-gray-200'} flex w-[7.5%] overflow-x-hidden flex-row mt-1 text-black justify-start items-center pl-1`}>{user.status}</div>
+                                        <div className={`${(userIndex+1)%2===0?'bg-gray-300':'bg-gray-200'} flex w-[17.5%] overflow-x-hidden flex-row mt-1 text-black justify-start items-center pl-1`}>{user.orgName}</div>
+                                        <div className={`${(userIndex+1)%2===0?'bg-gray-300':'bg-gray-200'} flex w-[7.5%] overflow-x-hidden flex-row mt-1 text-black justify-start items-center pl-1`}> {user.residence}</div>
+                                        <div className={`${(userIndex+1)%2===0?'bg-gray-300':'bg-gray-200'} flex w-[17.5%] overflow-x-hidden flex-row mt-1 text-black justify-start items-center pl-1`}>{user.city}</div>
+                                        <div className={`${(userIndex+1)%2===0?'bg-gray-300':'bg-gray-200'} flex w-[17.5%] overflow-x-hidden flex-row mt-1 text-black justify-start items-center pl-1`}>{user.email}</div>
+                                        <div className={`${(userIndex+1)%2===0?'bg-gray-300':'bg-gray-200'} flex w-[7.5%] overflow-x-hidden flex-row mt-1 text-black justify-start items-center pl-1`}>{user.refs}</div>
+                                        <div className={`${(userIndex+1)%2===0?'bg-gray-300':'bg-gray-200'} flex w-[12.5%] overflow-x-hidden flex-row mt-1 text-black justify-start items-center pl-1`}>{formatDate(user.joinedAt)}</div>
                                     </div>
                             )
                             }
@@ -197,7 +197,7 @@ const Amb = ( { user }) => {
                     }
                     </div>
                 ) : (
-                    <div className="h-[450px] w-full flex flex-col justify-center items-center"><CycleLoader/></div>
+                    <div className="h-[200px] w-full flex flex-col justify-center items-center"><CycleLoader size={'25px'}/></div>
                 )}
             </div>
         </Container>
