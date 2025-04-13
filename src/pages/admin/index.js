@@ -72,23 +72,25 @@ export default function Dashboard( { user } ) {
 
     return (
         <Container admin={user} page={'dashboard'}>
+            <div className="text-[16px] font-bold ml-3 mt-[3%]">Performance</div>
             <div className="flex md:flex-row flex-col justify-evenly items-center md:gap-0 gap-1 pt-[10px]">
-                <div className="bg-blue-600 flex rounded-[5px] flex-row justify-around items-center h-[70px] p-2 md:w-[48%] w-[98%] text-white">
+                <div className="bg-blue-600 flex rounded-[5px] flex-row justify-around items-center h-[70px] p-2 md:w-[53%] w-[98%] text-white">
                     <AllUsersIcon/>
                     <div className="flex flex-col items-center">
-                        <span className={`text-[22px] ${stats?.totalUsers?'':'animate-pulse'} font-extralight`}>{stats?.totalUsers?stats?.totalUsers:'loading...'}</span>
+                        <span className={`text-[19px] ${stats?.totalUsers?'':'animate-pulse'} font-extralight`}>{stats?.totalUsers?stats?.totalUsers:'loading...'}</span>
                         <span>TOTAL USERS</span>
                     </div>
                 </div>
-                <div className="bg-yellow-400 rounded-[5px]  flex flex-row justify-around items-center h-[70px] p-2 md:w-[48%] w-[98%] text-white">
+                <div className="bg-yellow-400 rounded-[5px]  flex flex-row justify-around items-center h-[70px] p-2 md:w-[45%] w-[98%] text-white">
                     <NewIcon/>
                     <div className="flex flex-col justify-center items-center">
-                        <span className={`text-[22px] ${newUsers?'':'animate-pulse'} font-extralight`}>{newUsers?newUsers.length:'loading...'}</span>
+                        <span className={`text-[19px] ${newUsers?'':'animate-pulse'} font-extralight`}>{newUsers?newUsers.length:'loading...'}</span>
                         <span>NEW USERS</span>
                     </div>
                     <span className="text-[12px]"> In the Last 5 Days</span>
                 </div>
             </div>
+            <div className="text-[16px] font-bold ml-3 mt-4">Charts</div>
             <div className="flex md:flex-row flex-col md:gap-0 gap-2 border-1 py-[10px] justify-evenly">
                 <div className="md:w-[53%] w-[98%]">
                     <BarChart  data={stateData}/>

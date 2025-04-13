@@ -1,16 +1,23 @@
 import db from "../../../../utils/db";
 import User from "@/models/User";
+
 const nigeriaStates = [
     'Abia', 'Adamawa', 'Akwa Ibom', 'Anambra', 'Bauchi', 'Bayelsa', 'Benue', 'Borno',
     'Cross River', 'Delta', 'Ebonyi', 'Edo', 'Ekiti', 'Enugu', 'FCT', 'Gombe', 'Imo',
     'Jigawa', 'Kaduna', 'Kano', 'Katsina', 'Kebbi', 'Kogi', 'Kwara', 'Lagos', 'Nasarawa',
     'Niger', 'Ogun', 'Ondo', 'Osun', 'Oyo', 'Plateau', 'Rivers', 'Sokoto', 'Taraba', 'Yobe', 'Zamfara'
 ];
+
 const genders = [ 'male', 'female' ]
-const ageGroup = [ { group :'18-24', top: 24, low: 18 }, { group :'25-34', top: 34, low: 24 }, { group :'35-44', top: 44, low: 35 }, { group :'45-above', top: 1000, low: 45 }]
+const ageGroup = [  { group :'18-24', top: 24, low: 18 },
+                    { group :'25-34', top: 34, low: 24 }, 
+                    { group :'35-44', top: 44, low: 35 }, 
+                    { group :'45-above', top: 1000, low: 45 }
+                ]
 
 const Handler = async ( req, res) => {
 
+    // compares two date and returns the days between them
     function calcDaysBetween( date1, date2 ) {
         const oneDayInMs = 1000 * 60 * 60 * 24;
         const differenceInMs = Math.abs(date2-date1);
@@ -70,22 +77,22 @@ const Handler = async ( req, res) => {
             //Getting state with lowest users and highest users
             let lowestStates = '';
             let highestStates = '';
-            let presentLVal = 0
-            let presentHVal = 0
-            Object.entries( stateDataPrototype ).map( ( state, index ) => {
-                if ( state[1] <= presentLVal ) {
-                    presentLVal = state[1];
-                }
+            let topPercentUsers = Math.floor((data.length*30)/100);
+            console.log(topPercentUsers);
+
+            // loop to determine highest users of a single state
+            Object.entries( stateDataPrototype ).map( ( state ) => {
                 if ( state[1] >= presentHVal ) {
                     presentHVal = state[1];
                 }
-            })
-            Object.entries( stateDataPrototype ).map( ( state, index ) => {
-                if ( state[1] === presentLVal ) {
-                    lowestStates = `${lowestStates}${state[0]} ${state[1]} (${Math.floor((state[1]/totalUsers)*100)}%), `;
+            });
+
+            Object.entries( stateDataPrototype ).map( ( state ) => {
+                if ( state[1] < 5 ) {
+                    lowestStates = `${lowestStates}${state[0]}: ${state[1]} users (${Math.floor((state[1]/totalUsers)*100)}%), `;
                 }
-                if ( state[1] === presentHVal ) {
-                    highestStates = `${highestStates}${state[0]} ${state[1]} (${Math.floor((state[1]/totalUsers)*100)}%), `;
+                if ( state[1] > topPercentUsers ) {
+                    highestStates = `${highestStates}${state[0]}: ${state[1]} users (${Math.floor((state[1]/totalUsers)*100)}%), `;
                 }
             })
             const stateData = { lowestStates, highestStates, list:Object.values( stateDataPrototype ) };

@@ -91,7 +91,7 @@ const BarChart = ( { data } ) => {
             </div>
         )}
         { (data?.lowestStates && data?.highestStates) ? (
-        <div className="flex border-1 w-[100%] border-gray-400 text-[15px] flex-col self-center mt-[5px] font-extralight">
+        <div className="flex border-1 w-[100%] border-gray-400 text-[11px] flex-col self-center mt-[5px] font-extralight">
                 <div className="border-b-1 flex-row flex border-gray-500 bg-gray-300">
                     <div className="w-[35%] pl-2">Metric</div>
                     <div className="w-[65%] border-l-1 border-gray-600 pl-2">Value</div>

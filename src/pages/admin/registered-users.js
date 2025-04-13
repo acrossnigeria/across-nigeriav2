@@ -91,49 +91,50 @@ export default function Users( { user } ) {
 
     return (
         <Container admin={user} page={'users'}>
-            <div className=" p-2 h-screen">
-                <div className="text-[40px] md:text-left text-center w-[100%] text-gray-800 font-light">Users</div>
-                <div className="mb-3 flex md:flex-row flex-col md:justify-start justify-center items-center gap-3">
+            <div className="h-screen pt-[3%]">
+                <div className="text-[18px] md:text-left text-center ml-[3%] w-[100%] text-gray-800 font-bold">Users</div>
+                <div className="mb-3 flex md:flex-row ml-[3%] flex-col md:justify-start justify-center items-center gap-3">
                     <div className="flex flex-row gap-1">
-                        <input value={searchKey} onChange={(e)=>{setSearchKey(e.target.value);searchRelated(e.target.value.toLocaleLowerCase());}}  className="h-[40px] focus:outline-none bg-transparent border-1 rounded-[5px] border-gray-600 px-3" type="text" placeholder="Search user by name"/> 
-                        <button onClick={searchRelated} className="h-[40px] hover:bg-gray-300 bg-transparent border-1 w-[50px] rounded-[5px] border-gray-600">Go</button>
+                        <input value={searchKey} onChange={(e)=>{setSearchKey(e.target.value);searchRelated(e.target.value.toLocaleLowerCase());}}  className="h-[30px] focus:outline-none bg-transparent border-1 rounded-[25px] border-gray-600 px-3" type="text" placeholder="Search user by name"/> 
+                        <button onClick={searchRelated} className="h-[30px] hover:bg-gray-300 bg-transparent border-1 w-[50px] rounded-[25px] border-gray-600">Go</button>
                     </div>
                     <div className={`${showNavs?'':'hidden'} flex gap-4 flex-row justify-center items-center`}>
                         <div className="border-1 border-gray-600 flex flex-row rounded-[5px]">
-                            <button onClick={prevPage} className="h-[38px] flex flex-row justify-center items-center rotate-180 border-l-1 hover:bg-gray-300 border-gray-600 w-[50px]"><Next size={'15px'} bg={'#6b7280'}/></button>
-                            <button onClick={nextPage} className="h-[38px] flex flex-row justify-center hover:bg-gray-300 items-center w-[50px]"><Next size={'15px'} bg={'#6b7280'}/></button>
+                            <button onClick={prevPage} className="h-[30px] flex flex-row justify-center items-center rotate-180 border-l-1 hover:bg-gray-300 border-gray-600 w-[50px]"><Next size={'15px'} bg={'#6b7280'}/></button>
+                            <button onClick={nextPage} className="h-[30px] flex flex-row justify-center hover:bg-gray-300 items-center w-[50px]"><Next size={'15px'} bg={'#6b7280'}/></button>
                         </div>
                         <span className="h-[40px] flex flex-row justify-center items-center">Showing results {pageSize-13<0?0:pageSize-13} to {pageSize}</span>      
                     </div>
                 
             
                 </div>
-                { results ? (
-                    <div className="md:w-fit overflow-scroll h-[450px]">
-                        <div className="w-full flex flex-row text-[13px] h-[30px] gap-0.5">
-                            <div className="flex w-[140px] flex-row bg-gray-500 text-white justify-start items-center pl-1">Fullname</div>
-                            <div className="flex w-[140px] overflow-x-hidden flex-row bg-gray-500 text-white justify-start items-center pl-1">Date of birth</div>
-                            <div className="flex w-[140px] overflow-x-hidden flex-row bg-gray-500 text-white justify-start items-center pl-1">Residence</div>
-                            <div className="flex w-[140px] overflow-x-hidden flex-row bg-gray-500 text-white justify-start items-center pl-1"> Email</div>
-                            <div className="flex w-[140px] overflow-x-hidden flex-row bg-gray-500 text-white justify-start items-center pl-1">Phone</div>
-                            <div className="flex w-[140px] overflow-x-hidden flex-row bg-gray-500 text-white justify-start items-center pl-1">Gender</div>
-                            <div className="flex w-[80px] overflow-x-hidden flex-row bg-gray-500 text-white justify-start items-center pl-1">Referrals</div>
-                            <div className="flex w-[140px] overflow-x-hidden flex-row bg-gray-500 text-white justify-start items-center pl-1">JoinedAt</div>
+                <div className="flex w-[96%] mx-auto">
+                    { results ? (
+                    <div className="w-[100%] overflow-scroll h-[450px]">
+                        <div className="w-full flex flex-row text-[11px] h-[30px] gap-0.5">
+                            <div className="flex w-[12.5%] flex-row bg-gray-500 text-white justify-start items-center pl-1">Fullname</div>
+                            <div className="flex w-[12.5%] overflow-x-hidden flex-row bg-gray-500 text-white justify-start items-center pl-1">Date of birth</div>
+                            <div className="flex w-[12.5%] overflow-x-hidden flex-row bg-gray-500 text-white justify-start items-center pl-1">Residence</div>
+                            <div className="flex w-[12.5%] overflow-x-hidden flex-row bg-gray-500 text-white justify-start items-center pl-1"> Email</div>
+                            <div className="flex w-[12.5%] overflow-x-hidden flex-row bg-gray-500 text-white justify-start items-center pl-1">Phone</div>
+                            <div className="flex w-[12.5%] overflow-x-hidden flex-row bg-gray-500 text-white justify-start items-center pl-1">Gender</div>
+                            <div className="flex w-[12.5%] overflow-x-hidden flex-row bg-gray-500 text-white justify-start items-center pl-1">Referrals</div>
+                            <div className="flex w-[12.5%] overflow-x-hidden flex-row bg-gray-500 text-white justify-start items-center pl-1">JoinedAt</div>
                         </div>
 
                         { results.length > 0 ? (
                             results.map( (user, userIndex ) => {
                             if ( userIndex < pageSize && userIndex >= (pageSize===results.length? pageSize - reminderPageSize: pageSize-13)) {
                                 return (
-                                    <div key={user._id} className={`w-full flex flex-row gap-0.5 text-[13px] h-[30px]`}>
-                                        <div className={`${(userIndex+1)%2===0?'bg-gray-300':'bg-gray-200'} flex w-[140px] overflow-x-hidden flex-row mt-1 text-black justify-start items-center pl-1`}>{user.fullname}</div>
-                                        <div className={`${(userIndex+1)%2===0?'bg-gray-300':'bg-gray-200'} flex w-[140px] overflow-x-hidden flex-row mt-1 text-black justify-start items-center pl-1`}>{user.dob}</div>
-                                        <div className={`${(userIndex+1)%2===0?'bg-gray-300':'bg-gray-200'} flex w-[140px] overflow-x-hidden flex-row mt-1 text-black justify-start items-center pl-1`}>{user.residence}</div>
-                                        <div className={`${(userIndex+1)%2===0?'bg-gray-300':'bg-gray-200'} flex w-[140px] overflow-x-hidden flex-row mt-1 text-black justify-start items-center pl-1`}> {user.email}</div>
-                                        <div className={`${(userIndex+1)%2===0?'bg-gray-300':'bg-gray-200'} flex w-[140px] overflow-x-hidden flex-row mt-1 text-black justify-start items-center pl-1`}>{user.phone}</div>
-                                        <div className={`${(userIndex+1)%2===0?'bg-gray-300':'bg-gray-200'} flex w-[140px] overflow-x-hidden flex-row mt-1 text-black justify-start items-center pl-1`}>{user.gender}</div>
-                                        <div className={`${(userIndex+1)%2===0?'bg-gray-300':'bg-gray-200'} flex w-[80px] overflow-x-hidden flex-row mt-1 text-black justify-start items-center pl-1`}>{user.referrals}</div>
-                                        <div className={`${(userIndex+1)%2===0?'bg-gray-300':'bg-gray-200'} flex w-[140px] overflow-x-hidden flex-row mt-1 text-black justify-start items-center pl-1`}>{formatDate(user.joinedAt)}</div>
+                                    <div key={user._id} className={`w-full flex flex-row gap-0.5 text-[11px] h-[30px]`}>
+                                        <div className={`${(userIndex+1)%2===0?'bg-gray-300':'bg-gray-200'} flex w-[12.5%] overflow-x-hidden flex-row mt-1 text-black justify-start items-center pl-1`}>{user.fullname}</div>
+                                        <div className={`${(userIndex+1)%2===0?'bg-gray-300':'bg-gray-200'} flex w-[12.5%] overflow-x-hidden flex-row mt-1 text-black justify-start items-center pl-1`}>{user.dob}</div>
+                                        <div className={`${(userIndex+1)%2===0?'bg-gray-300':'bg-gray-200'} flex w-[12.5%] overflow-x-hidden flex-row mt-1 text-black justify-start items-center pl-1`}>{user.residence}</div>
+                                        <div className={`${(userIndex+1)%2===0?'bg-gray-300':'bg-gray-200'} flex w-[12.5%] overflow-x-hidden flex-row mt-1 text-black justify-start items-center pl-1`}> {user.email}</div>
+                                        <div className={`${(userIndex+1)%2===0?'bg-gray-300':'bg-gray-200'} flex w-[12.5%] overflow-x-hidden flex-row mt-1 text-black justify-start items-center pl-1`}>{user.phone}</div>
+                                        <div className={`${(userIndex+1)%2===0?'bg-gray-300':'bg-gray-200'} flex w-[12.5%] overflow-x-hidden flex-row mt-1 text-black justify-start items-center pl-1`}>{user.gender}</div>
+                                        <div className={`${(userIndex+1)%2===0?'bg-gray-300':'bg-gray-200'} flex w-[12.5%] overflow-x-hidden flex-row mt-1 text-black justify-start items-center pl-1`}>{user.referrals}</div>
+                                        <div className={`${(userIndex+1)%2===0?'bg-gray-300':'bg-gray-200'} flex w-[12.5%] overflow-x-hidden flex-row mt-1 text-black justify-start items-center pl-1`}>{formatDate(user.joinedAt)}</div>
                                     </div>
                             )
                             }
@@ -146,6 +147,7 @@ export default function Users( { user } ) {
                 ) : (
                     <div className="h-[450px] w-full flex flex-col justify-center items-center"><CycleLoader/></div>
                 )}
+            </div>
             </div>
         </Container>
     )

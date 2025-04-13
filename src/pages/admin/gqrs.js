@@ -128,19 +128,19 @@ export default function Gqrs( { user }) {
     return (
         <div>
             <Container admin={user} page={'gqrs'}>
-                <div className="h-screen md:w-[100%] gap-3 flex flex-col pl-[20px]">
-                    <span className="text-[25px] font-extralight mt-2 text-left ml-2">Giveaway Quizzes winners selector algorithm</span>
-                    <div className="flex items-center flex-row gap-3">
-                        <span className="font-extrabold">History :</span>
+                <div className="h-screen md:w-[100%] gap-3 flex flex-col">
+                    <span className="text-[15px] font-bold mt-2 text-left ml-[3%]">Giveaway Quizzes winners selector algorithm</span>
+                    <div className="flex items-center flex-row ml-[3%] gap-3">
+                        <span className="font-bold text-[14px]">History :</span>
                         {history? (
                             <div className="flex flex-row gap-2">
-                                { history.map( str => <button key={str} disabled={presentSheet===str} onClick={()=>{getWinners(str)}} className={`bg-transparent flex flex-row border-1 ${presentSheet===str?'border-blue-600':'border-gray-600'} justify-center rounded-[15px] text-gray-800 hover:bg-gray-400 items-center w-[130px] h-[35px]`}>{str}</button>)}
+                                { history.map( str => <button key={str} disabled={presentSheet===str} onClick={()=>{getWinners(str)}} className={`bg-transparent flex flex-row border-1 ${presentSheet===str?'border-blue-600':'border-gray-600'} justify-center rounded-[25px] text-gray-800 hover:bg-gray-400 items-center w-[130px] h-[30px]`}>{str}</button>)}
                             </div>
                         ) : (
                             <div className="flex flex-row gap-2">
-                                <div className="animate-pulse justify-center rounded-[15px] bg-gray-400 w-[130px] h-[35px]"></div>
-                                <div className="animate-pulse justify-center rounded-[15px] bg-gray-400 w-[130px] h-[35px]"></div>
-                                <div className="animate-pulse justify-center rounded-[15px] bg-gray-400 w-[130px] h-[35px]"></div>
+                                <div className="animate-pulse justify-center rounded-[25px] bg-gray-400 w-[130px] h-[30px]"></div>
+                                <div className="animate-pulse justify-center rounded-[25px] bg-gray-400 w-[130px] h-[30px]"></div>
+                                <div className="animate-pulse justify-center rounded-[25px] bg-gray-400 w-[130px] h-[30px]"></div>
                             </div>
                         )}
                         
@@ -150,9 +150,9 @@ export default function Gqrs( { user }) {
                             <span className="text-red-600">An error occured please check your internet connection and try again</span>
                             <button className={`bg-transparent flex flex-row border-1 mt-[20px] border-gray-600 justify-center rounded-[5px] text-gray-800 hover:bg-gray-400 items-center w-[130px] h-[35px]`} onClick={getWinners}>Retry</button>
                         </div> 
-                    ): ( gettingPresentSession ? ( <div className="flex flex-row justify-center mt-[50px]"><CycleLoader/></div> 
+                    ): ( gettingPresentSession ? ( <div className="flex flex-row justify-center h-[200px] mt-[50px]"><CycleLoader size={'25px'}/></div> 
                     ) : ( isAvailable ? (
-                        <div className="flex flex-col pt-3 gap-3">
+                        <div className="flex w-[96%] mx-auto flex-col pt-3 gap-3">
                             <span>Total selected winners: {selectedWinners.length}</span>
                             <ListSheet list={selectedWinners}/>
                         </div>
