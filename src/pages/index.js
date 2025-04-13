@@ -29,6 +29,7 @@ import { useSession } from "next-auth/react";
 import AdBanner1 from "@/components/AdBanner1";
 import AdBanner2 from "@/components/AdBanner2";
 import SkitCompetitionClickCard from "@/components/SkitCompetitionClickCard";
+import VideoTestimonialComponent from "@/components/VideoTestimonialComponent";
 
 
 const inter = Inter({ subsets: ["latin"] });
@@ -92,25 +93,30 @@ export default function Home() {
           </div>
         <div className="md:w-[900px] mt-[25px] w-[100%] mx-auto">
           <Info/>
-          <p className="grid w-full mx-auto text-center bg-clip-text text-transparent mt-[40px] bg-gradient-to-b from-green-400 to-green-600 ">
-            <span id="products" className="flex text-center text-[24px] font-sans font-bold mx-auto "> 
-                OUR AMAZING PRODUCTS
-            </span>
-          </p>
-          <div className="mt-[25px] mb-[40px] grid left-0 grid-cols-1 gap-[30px] border-b-1 pb-3 md:grid-cols-2 lg:grid-cols-2 md:gap-4 mx-auto items-center px-4">
+          <div className="mb-[20px] md:text-left text-center mt-[30px]">
+              <span style={{lineHeight:'30px'}} className="md:text-[33px] text-[28px] font-semibold">Our Amazing Products.</span>
+          </div>
+          <div className="mb-[40px] grid left-0 grid-cols-1 gap-[30px] border-b-1 pb-3 md:grid-cols-2 lg:grid-cols-2 md:gap-4 mx-auto items-center px-4">
               { games.map((card)=>(<Cards key={card.title} isOpen={card.isOpen} date={card.date} title={card.title} 
               link={card.link} image={card.image}/>))}
           </div>
+          <div className="mb-[20px] md:text-left text-center mt-[30px]">
+              <span style={{lineHeight:'30px'}} className="md:text-[33px] text-[28px] font-semibold">Ongoing Skit Challenge.</span>
+          </div>
           <SkitCompetitionClickCard/>
           <AdBanner1/>
-          <div className="my-[40px]">
+          <div className="mb-[20px] md:text-left text-center mt-[30px]">
+              <span style={{lineHeight:'30px'}} className="md:text-[33px] text-[28px] font-semibold">Our Ambassador program.</span>
+          </div>
+          <div className="mb-[40px]">
             <AmbassadorInfo/>
           </div>
-        
-          <div className="my-[40px] flex flex-col gap-2 items-center">
-                <span className="bg-clip-text text-[30px] font-extrabold text-transparent bg-gradient-to-tr from-green-700 to-green-300">SHOUT OUT</span>
+          <div className="mb-[20px] md:text-left text-center mt-[30px]">
+              <span style={{lineHeight:'30px'}} className="md:text-[33px] text-[28px] font-semibold">Shout Outs.</span>
+          </div>
+          <div className="mb-[40px] flex flex-col gap-2 items-center">
               { networkError ? (
-                    <div onClick={reloadShoutOut} className="h-[500px] cursor-pointer gap-3 md:w-[700px] w-[95%] flex flex-col justify-center items-center rounded-[20px] bg-gradient-to-b from-gray-200 to-gray-50 border-1 border-gray-400">
+                    <div onClick={reloadShoutOut} className="h-[500px] cursor-pointer gap-3 md:w-[100%] w-[100%] flex flex-col justify-center items-center rounded-[20px] bg-gradient-to-b from-gray-200 to-gray-50 border-1 border-gray-400">
                       <span>Network error. Retry?</span>
                       <ReloadIcon/>
                     </div>
@@ -134,10 +140,15 @@ export default function Home() {
               
             </div>
             <AdBanner2/>
-            <span className="w-full mx-auto text-center mt-[35px] flex justify-center items-center md:flex-row flex-col mb-6 font-serif font-light text-[35px] text-green-800">
+            {/* <span className="w-full mx-auto text-center mt-[35px] flex justify-center items-center md:flex-row flex-col mb-6 font-serif font-light text-[35px] text-green-800">
                 {"Testimonials".toUpperCase()}
-            </span>
-            <Testimonials/>
+            </span> 
+            <Testimonials/>[]
+            */}
+          <div className="mb-[20px] md:text-left text-center mt-[30px]">
+              <span style={{lineHeight:'30px'}} className="md:text-[33px] text-[28px] font-semibold">Our Testimonials.</span>
+          </div>
+            <VideoTestimonialComponent/>
             <AdBanner1/>
           </div>
           <AddAccDetails userId={session?.user?._id} />

@@ -68,7 +68,7 @@ const AmbassadorInfo = () => {
                 </div>
             ):( isAmbassador ? (
                     <div className="border-1 border-green-500 p-3 gap-[15px] rounded-[13px] flex flex-col">
-                        <span className="text-gray-700 text-center text-[20px] font-bold">Your ambassador statistics </span>
+                        <span className="text-gray-700 text-center text-[20px] font-semibold">Your ambassador statistics </span>
                         <span className="text-gray-700 text-center text-[18px] ">Welcome back, {session?.user?.name} </span>
                         <div className="w-[100%] flex md:flex-row flex-col items-center justify-around gap-2">
                             <div className="text-center md:w-fit w-[100%] h-[125px] flex flex-col justify-center items-center text-gray-500 text-[15px]">
@@ -90,7 +90,7 @@ const AmbassadorInfo = () => {
                     </div>
                 ): (
                     <div className="border-1 border-green-500 p-3 gap-[15px] rounded-[13px] flex flex-col">
-                        <div className="flex flex-row justify-center text-gray-700 items-center gap-2 text-[20px] font-bold"><span >Join Our Ambassador Program!</span><FlyStarIcon size='33px'/></div>
+                        <div className="flex flex-row justify-center text-gray-700 items-center gap-2 text-[20px] font-semibold"><span >Join Our Ambassador Program!</span><FlyStarIcon size='33px'/></div>
                         <span className="mt-[5px] text-center text-gray-500 text-[15px]">Become part of something big! Earn rewards, gain exclusive perks, and represent our brand in style.</span>
                         <span className="mt-[5px] md:px-[30px] text-center text-gray-500 text-[15px]">Top ambassadors get special rewards and recognition. Represent our brand, earn rewards, and compete for amazing prizes.</span>
                         <Link className="self-center" href={'/ambassador/apply'}><button className="h-[50px] mt-[10px] cursor-pointer hover:bg-green-700 w-[200px] bg-green-600 text-white rounded-[25px]">Join Now</button></Link>  
@@ -99,7 +99,7 @@ const AmbassadorInfo = () => {
             )
             }
             <div className="border-1 border-green-500 p-3 gap-[15px] rounded-[13px] flex flex-col">
-                <div className="flex flex-row justify-center text-gray-700 items-center gap-2 text-[25px] font-bold"><span >Top 5 Ambassadors Leaderboard</span><TrophyIcon size='28px'/></div>
+                <div style={{lineHeight:'23px'}} className="flex flex-row justify-center text-gray-700 items-center gap-2 text-[20px] font-semibold"><span >Top 5 Ambassadors Leaderboard</span><TrophyIcon size='28px'/></div>
                 { (!isLoading && !isErrorOccurred) && (
                     <div className="flex flex-row md:flex-nowrap flex-wrap justify-center items-center gap-2">
                         { data.map( (user, index) => {

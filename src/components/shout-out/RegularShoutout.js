@@ -20,7 +20,7 @@ const RegularShoutout = ( { regulars }) => {
   // console.log(isMobile, navigator.userAgent)
     },[ isMobile ])
     return (
-       <div className='md:w-[900px] w-[100%]'>
+       <div className='w-[100%]'>
         <Carousel 
         autoplay
         autoplayInterval={3000} 
