@@ -2,6 +2,7 @@ import dynamic from 'next/dynamic';
 import { useState } from 'react';
 import PlayIcon from '../../public/images/icon/PlayIcon';
 import PauseIcon from '../../public/images/icon/PauseIcon';
+import CycleLoader from './CycleLoader';
 
 const ReactPlayer = dynamic(() => import('react-player'), { ssr: false });
 
@@ -9,11 +10,15 @@ const ReactPlayer = dynamic(() => import('react-player'), { ssr: false });
 
 const VideoTestimonialComponent = () => {
     const [ isPlaying, setIsPlaying ] = useState(false);
+    const [ loading, setLoading ] = useState(false);
 
     const testimonialVid = "https://res.cloudinary.com/dbstdjvyk/video/upload/v1744549216/testimonialvideo_vcmo4j.mp4";
     const testVid = "/testimonialVideo.mp4";
 
     const togglePlayPause = () => {
+        if (isPlaying) {
+            setLoading(false);
+        }
         setIsPlaying(prev => !prev);
     };
 
@@ -40,10 +45,18 @@ const VideoTestimonialComponent = () => {
                         width="100%"
                         height="100%"
                         style={{ borderRadius: '20px' }}
+                        onReady={() => setLoading(false)}
+                        onBuffer={() => setLoading(true)}
+                        onBufferEnd={() => setLoading(false)}
                     />
                     <div className={`${isPlaying ?'opacity-0':'opacity-100'} transition-all cursor-pointer flex flex-col justify-center items-center rounded-full ease-in-out duration-300 h-[50px] absolute w-[50px] bg-green-500/90`} >  
                         <PlayIcon/>
                     </div>
+                    { loading && ( 
+                        <div className={`transition-all cursor-pointer flex flex-col justify-center items-center h-fit absolute w-fit bg-transparent`} >  
+                            <CycleLoader size={'25px'}/>
+                        </div>
+                    )}
                 </div>
             </div>
 
