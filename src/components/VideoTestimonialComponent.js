@@ -21,11 +21,11 @@ const VideoTestimonialComponent = () => {
         <div className="md:h-[500px] h-[700px] flex flex-col rounded-[10px] justify-center items-center overflow-hidden shadow-lg shadow-black/30 md:flex-row md:w-[100%] w-[95%] md:p-0 p-3 mx-auto bg-gradient-to-r from-green-500 to-red-300">
             <div className="md:w-[45%] w-[100%] text-white flex flex-col justify-center md:mt-0 mt-[-60px] items-center md:h-[100%] h-[48%]">
                 <span style={{lineHeight:'23px'}} className='text-[23px] font-semibold'>Real People. Real Stories. Real Rewards.</span>
-                <div className='mt-[15px]'> Since our launch, the Across Nigeria Reality Show has rewarded over ₦500,000 in cash prizes to everyday Nigerians through our skit competitions,
-                    quiz shows, and community challenges. From students in Abuja, Kaduna to creators in Lagos and over 30 states in nigeria, real people are winning real money — and you're next.
+                <div className='mt-[15px]'> Since our launch, the Across Nigeria Reality Show has rewarded over ₦500,000+ in cash prizes to everyday Nigerians through our skit competitions,
+                    quiz shows, and community challenges. From students in Abuja, Kaduna to creators in Lagos and over 30 states in nigeria, real people are winning real money — and you&apos;re next.
                 </div>
                 <div className='text-yellow-200 md:flex hidden font-semibold mt-[20px]'>
-                    Since we kicked off this bold movement, we've done more than just entertain — we've changed lives.
+                    Since we kicked off this bold movement, we&apos;ve done more than just entertain — we&apos;ve changed lives.
                     Over the past few months:
                 </div>
             </div>
