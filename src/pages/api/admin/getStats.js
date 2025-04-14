@@ -28,7 +28,6 @@ const Handler = async ( req, res) => {
         try {
             await db.connect();
             const data = await User.find().lean();
-            await db.disconnect();
             const totalUsers = data.length;
 
             // Getting new users in the last 5 days
@@ -77,13 +76,13 @@ const Handler = async ( req, res) => {
             //Getting state with lowest users and highest users
             let lowestStates = '';
             let highestStates = '';
+            let highestVal = 0;
             let topPercentUsers = Math.floor((data.length*30)/100);
-            console.log(topPercentUsers);
 
             // loop to determine highest users of a single state
             Object.entries( stateDataPrototype ).map( ( state ) => {
-                if ( state[1] >= presentHVal ) {
-                    presentHVal = state[1];
+                if ( state[1] >= highestVal ) {
+                    highestVal = state[1];
                 }
             });
 
@@ -120,11 +119,12 @@ const Handler = async ( req, res) => {
             const ageData = { highestAgeGroup, list:Object.values(ageGroupPrototype) }
 
             const stats = { totalUsers, newUsers, stateData, genderData, ageData };
-    
+
+            await db.disconnect();
             res.status(200).json( { success:true ,  stats });
            } catch (err) {
             console.log(err.message)
-             res.status(500).json( { error: 'An error occured while getting users data from database'}) 
+             res.status(500).json( { error: err.message}) 
            }
     }
 }

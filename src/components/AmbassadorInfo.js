@@ -62,7 +62,7 @@ const AmbassadorInfo = () => {
     }, [ session ])
 
     return (
-        <div className="w-[95%] mt-[10px] ml-[2.5%] gap-[20px] rounded-[13px] flex flex-col">
+        <div className="w-[95%] md:w-[100%] mt-[10px] ml-[2.5%] md:ml-0 gap-[20px] rounded-[13px] flex flex-col">
             { isLoading ? (
                 <div className="h-[250px] md:h-[150px] bg-gray-300 animate-pulse w-[100%] p-3 gap-[15px] rounded-[13px]"> 
                 </div>
