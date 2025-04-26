@@ -87,7 +87,7 @@ const Handler = async ( req, res) => {
             });
 
             Object.entries( stateDataPrototype ).map( ( state ) => {
-                if ( state[1] < 5 ) {
+                if ( state[1] < 11 ) {
                     lowestStates = `${lowestStates}${state[0]}: ${state[1]} users (${Math.floor((state[1]/totalUsers)*100)}%), `;
                 }
                 if ( state[1] > topPercentUsers ) {
