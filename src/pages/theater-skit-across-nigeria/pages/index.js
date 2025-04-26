@@ -80,8 +80,10 @@ function SkitsPage() {
   const getCurrentSkit = (list, pageNumber) => {
     if (!list.length) return setCurrentSkits([]); // Handle empty list case
   
-    const indexOfLastSkit = Math.min(pageNumber * skitsPerPage, list.length);
-    const indexOfFirstSkit = Math.max(indexOfLastSkit - skitsPerPage, 0);
+    const indexOfLastSkit = pageNumber * skitsPerPage;
+    const indexOfFirstSkit = indexOfLastSkit - skitsPerPage;
+    console.log(indexOfLastSkit);
+    console.log(indexOfFirstSkit);
   
     setCurrentSkits(list.slice(indexOfFirstSkit, indexOfLastSkit));
   };
