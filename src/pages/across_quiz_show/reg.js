@@ -354,7 +354,7 @@ const Across_Quiz_Show = ( { message } ) => {
                       { regSuccess ? (
                         <div className="flex flex-col justify-center text-center px-[5%] items-center">
                           <SuccessIcon size={'30px'}/>
-                          <span className="font-bold text-gray-800 text-[20px]">Congratulations! {session?.user?.name} You&apos;re officially registered for the March Across Nigeria Quiz Show</span>
+                          <span className="font-bold text-gray-800 text-[20px]">Congratulations! {session?.user?.name} You&apos;re officially registered for the May Across Nigeria Quiz Show</span>
                           <p className="flex w-full text-left mt-[20px]">Thank you for completing your registration. You&apos;ve secured your spot and now in the running!</p>
                           <p className="flex w-full text-left mt-[20px]">Our team will review all entries and the selected participants will be announced soon. Keep an eye on home page and your inbox for updates. Good luck, and stay tuned</p>
                           <button className="px-[15px] py-[15px] mt-[20px] text-white bg-green-500 hover:bg-green-700 rounded-[30px]" onClick={()=>{router.push('/across_quiz_show')}}>Okay got it</button>
