@@ -9,7 +9,7 @@ const SkitCompetitionClickCard = () => {
             <span className="bg-clip-text text-center text-transparent text-[20px] font-extrabold bg-gradient-to-b from-red-500 to-yellow-400">ACROSS NIGERIA SKIT CHALLENGE</span>
             <div className="text-center text-[17px] md:w-[60%] w-[80%] font-bold">🏆 Join the Ultimate Skit Challenge & Win Big! 🎭. 🎬 Are You Ready to Shine?</div>
             <div className="md:w-[70%] w-[90%] text-center">Think you&apos;ve got what it takes to create the funniest, most creative skit? Across Nigeria Reality Show is giving you the chance to showcase your talent and win up to &#8358;100,000</div>
-            <span className="text-[14px] text-center text-red-500">Competitions ends on April 30th</span>
+            <span className="text-[16px] text-center text-red-500">Competitions ends on May 18th</span>
             <button onClick={()=>{router.push('/theater-skit-across-nigeria/pages/landing')}} className="px-[30px] h-[40px] mt-[10px] text-white bg-green-500 hover:bg-green-600 hover:scale-105 transition-all ease-in-out duration-250 rounded-[25px]">Enter The Competition</button>
         </div>
     )

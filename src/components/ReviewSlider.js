@@ -5,8 +5,8 @@ import { useRouter } from "next/router";
 import { useSession } from "next-auth/react";
 
 const images = [
-  { id: 1, image: "/images/frontBanner.jpg" },
-  { id: 2, image: "/images/skitBanner.jpg" },
+  { id: 1, image: "/images/skitBanner.jpg" },
+  { id: 2, image: "/images/frontBanner.jpg" },
   { id: 3, image: "/images/ambassador.jpg" },
   { id: 4, image: "/images/adbanner.jpg" },
   { id: 5, image: "/images/landing/gq-banner.JPG" },

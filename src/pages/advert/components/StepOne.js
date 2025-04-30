@@ -60,7 +60,7 @@ const StepOne = ( { selectAdvert, selectedAdvert, nextScreen }) => {
                         <span className="font-bold">Gold</span>
                     </div>
                     <div className="flex flex-col text-[14px] md:mt-[20px] mt-[4px] gap-1 text-left items-start">
-                        <span className=" self-start"><span className="text-yellow-500">✔</span> Right after our product.</span>
+                        <span className=" self-start"><span className="text-yellow-500">✔</span> Right after our products section.</span>
                         <span className=""><span className="text-yellow-500">✔</span> Choose  between static or scrolling.</span>
                         <span className=""><span className="text-yellow-500">✔</span> High homepage placement.</span>
                     </div>
@@ -73,7 +73,7 @@ const StepOne = ( { selectAdvert, selectedAdvert, nextScreen }) => {
                     </div>
                     <div className="flex flex-col text-[14px] md:mt-[20px] mt-[4px] gap-1 text-left items-start">
                         <span className=" self-start"><span className="text-[#6ccee7]">✔</span> Middle of homepage.</span>
-                        <span className=""><span className="text-[#6ccee7]">✔</span> choose between static or crolling Only.</span>
+                        <span className=""><span className="text-[#6ccee7]">✔</span> Choose between static or scrolling Only.</span>
                         <span className=""><span className="text-[#6ccee7]">✔</span> Affordable mid exposure.</span>
                     </div>
                 </div>
