@@ -66,7 +66,7 @@ const Page = () => {
             displayMode,
         }
         
-        if (!(startDate==='') && !(expiryDate==='') ) {
+        if ((startDate==='') && (expiryDate==='') ) {
             setIsGettingStartAndExpiry(true);
             setGetExpiryError(false);
             try {
