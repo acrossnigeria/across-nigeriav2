@@ -22,8 +22,8 @@ const Page = () => {
     const [ temporaryImageFile, setTemporaryImageFile ] = useState(null);
     const [ isGettingStartAndExpiry, setIsGettingStartAndExpiry ] = useState(true);
     const [ getExpiryError, setGetExpiryError ] = useState(false);
-    const [ startDate, setStartDate ] = useState(null);
-    const [ expiryDate, setExpiryDate ] = useState(null);
+    const [ startDate, setStartDate ] = useState('');
+    const [ expiryDate, setExpiryDate ] = useState('');
 
     const nextScreen = () => {
         if (step<4) {
@@ -66,7 +66,7 @@ const Page = () => {
             displayMode,
         }
         
-        if (!startDate && !expiryDate ) {
+        if (!(startDate==='') && !(expiryDate==='') ) {
             setIsGettingStartAndExpiry(true);
             setGetExpiryError(false);
             try {

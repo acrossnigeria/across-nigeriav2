@@ -53,15 +53,17 @@ const StepFour = ( { duration, advertType, billingType, advertImage, displayMode
         let total;
         if ( advertType === 1 || advertType === 4 ) {
             total = ADVERT_RATES[advertType-1][billingType] * duration;
-        } else {
+        } else if ( advertType === 2 || advertType === 3 ) {
             total = ADVERT_RATES[advertType-1][displayMode][billingType]*duration;
+        } else {
+            total = 0;
         }
         return total;
     }
       
 
     const submitAdAndRedirect = async ( paymentRef ) => {
-        setTempPaymentRef(paymentRef.reference);
+        setTempPaymentRef(paymentRef?.reference);
         setAllowSubmitRetry(false);
         setIsSubmiting(true);
         let adLength = billingType === 'daily'?duration:duration*31;
@@ -79,7 +81,7 @@ const StepFour = ( { duration, advertType, billingType, advertImage, displayMode
                 displayMode,
                 contactUsButton,
                 billingType,
-                paymentRef:paymentRef.reference,
+                paymentRef:paymentRef?.reference,
             }
 
             const response = await axios.post( '/api/advert/place', data);
@@ -91,7 +93,7 @@ const StepFour = ( { duration, advertType, billingType, advertImage, displayMode
             }
 
         } catch (err) {
-            showError(err.message)
+            showError(err?.message)
             setAllowSubmitRetry(true);
         }
     }
