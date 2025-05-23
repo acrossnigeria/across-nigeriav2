@@ -167,7 +167,7 @@ const StepFour = ( { duration, advertType, billingType, advertImage, displayMode
                         <div className="flex flex-row justify-center items-start gap-3 bg-gray-300 text-left rounded-[10px] mt-[7px] p-2">
                             <InfoIcon/>
                             <span className="text-[13px]">
-                            You're about to pay &#8358;{calculateTotal()} for your advert. <br />
+                            You&apos;re about to pay &#8358;{calculateTotal()} for your advert. <br />
                             Your advert will be displayed on the site on <strong>{ startDate }</strong> and will expire on <strong>{expiryDate}</strong>
                             </span>
                         </div>
