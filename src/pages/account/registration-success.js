@@ -25,7 +25,7 @@ export default function Success() {
     const outgoing="Across Nigeria <no-reply@acrossnig.com>";
     const recepient=userDetails[0]?.email?? session?.user.email?? 'unknown';;
     const subject=`Welcome to Across Nigeria Reality Show`;
-    const heading=`Congratulations ${name} your Registration was Succesfull!`
+    const heading=`Congratulations ${name} your Registration was Succesfull!`;
     const content= `Dear ${name} kindly share the link with your friends ${mUrl} for a chance to win our mega prize as well as show them the way to financial freedom`;
 
     const mailResult= await axios.post('/api/mail/mail',{outgoing, recepient, subject, content,heading });

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import InfoIcon from "../../../../public/images/icon/InfoIcon";
 import { PhoneInput } from "react-international-phone";
 
@@ -8,23 +8,35 @@ const StepTwo = ( { advertType, nextScreen, setBillingType, billingType, duratio
     const [ modalOpacity, setModalOpacity ] = useState('opacity-0');
     const [ addContactUs, setAddContactUs ] = useState(false);
     const [ whatsappContact, setWhatsappContact ] = useState('');
+    const [ modalMessage, setModalMessage ] = useState('');
 
     const isContactValid = whatsappContact !== '';
 
-    const showModal = () => {
+    const showModal = (message) => {
+        setModalMessage(message);
         setModalBottom('top-[120px]');
         setModalOpacity('opacity-100');
         setTimeout(() => {
             setModalBottom('top-[-50px]');
             setModalOpacity('opacity-0');
+            setModalMessage('');
         }, 1500);
     }
 
-    const selectBillingType = () => {
-        if ( billingType === 'daily') {
-            setBillingType('monthly');
+    const selectBillingType = (option) => {
+        if (option) {
+            setBillingType(option);
         } else {
-            setBillingType('daily');
+            if ( advertType !== 4 ) {
+                if ( billingType === 'daily') {
+                    setBillingType('monthly');
+                } else {
+                    setBillingType('daily');
+                }
+            } else {
+                console.log('Advert type is bronze')
+                showModal('This advert type can only set for a monthly plan.')
+            }
         }
     }
 
@@ -52,6 +64,13 @@ const StepTwo = ( { advertType, nextScreen, setBillingType, billingType, duratio
     }
 
     const nextStep = () => {
+
+        if ( advertType === 1) {
+            setDisplayMode('scroll');
+        } else if ( advertType === 4) {
+            setDisplayMode('static');
+        };
+
         const contactUsButton = {
             showContactButton:addContactUs,
         }
@@ -61,7 +80,7 @@ const StepTwo = ( { advertType, nextScreen, setBillingType, billingType, duratio
                 setContactUsButton(contactUsButton);
                 nextScreen();
             } else {
-                showModal();
+                showModal('Please add a whatsapp contact');
             }
         } else {
             setContactUsButton( { showContactButton:false });
@@ -70,18 +89,24 @@ const StepTwo = ( { advertType, nextScreen, setBillingType, billingType, duratio
 
     }
 
+    useEffect( () => {
+        if (advertType === 4) {
+            setBillingType('monthly');
+        }
+    }, [])
+
 
     return (
         <div className="md:w-[70%] md:ml-[15%] mt-[20px] w-[100%] px-[3%] flex flex-col items-center text-center text-[18px]">
             <div style={{lineHeight:'16px'}} className={`fixed ${modalBottom} ${modalOpacity} transition-all text-center ease-in-out duration-500 text-red-600 bg-white z-[2000] rounded-[20px] md:w-fit w-[80%] border-b-1 border-red-500 h-fit p-3`}>
-                <span>Please add a whatsapp contact</span>
+                <span>{modalMessage}</span>
             </div> 
             <span style={{lineHeight:'20px'}} className="md:text-[25px] text-[20px] font-bold">Customize Your advert</span>
             <span style={{lineHeight:'20px'}} className="md:mt-[10px] mt-[4px] text-[15px]">Pick your preferred advert level type.</span>
             <div className="md:w-[70%] w-[100%] h-[400px] bg-white rounded-[10px] p-3 mt-[14px]">
                 <div className="flex flex-row items-center justify-center gap-2">
                     <span>Daily</span>
-                    <div onClick={selectBillingType} className={`w-[40px] hover:bg-gray-300 cursor-pointer h-[20px] flex flex-row ${billingType==='daily'?'justify-start':'justify-end'} transition-all duration-300 ease-in-out bg-tranparent border-[1px] border-black rounded-[25px]`}>
+                    <div onClick={()=>{selectBillingType(undefined)}} className={`w-[40px] hover:bg-gray-300 cursor-pointer h-[20px] flex flex-row ${billingType==='daily'?'justify-start':'justify-end'} transition-all duration-300 ease-in-out bg-tranparent border-[1px] border-black rounded-[25px]`}>
                         <div className="h-[18px] w-[18px] hover:bg-green-800 transition-all ease-in-out duration-300 border-1 border-black rounded-full bg-green-500"></div>
                     </div>
                     <span>Monthly</span>
@@ -110,7 +135,7 @@ const StepTwo = ( { advertType, nextScreen, setBillingType, billingType, duratio
                         </div>
                     )}
                     <div className={` flex flex-row mt-[14px] text-[15px] gap-2`}>
-                        <input onClick={handleAddContactUsButton} checked={addContactUs} className="h-[20px] accent-green-500 w-[20px] cursor-pointer" type="checkbox"/>
+                        <input onChange={handleAddContactUsButton} checked={addContactUs} className="h-[20px] accent-green-500 w-[20px] cursor-pointer" type="checkbox"/>
                         <span className="font-bold">Add a Whatsapp Contact us button</span>
                     </div>
                     <div className={`${addContactUs?'visible':'hidden'} flex transition-all duration-300 ease-in-out flex-col w-[100%] h-[100px] border-[0.5px] border-gray-300 mt-[14px] p-2 rounded-[5px] text-[14px]`}>

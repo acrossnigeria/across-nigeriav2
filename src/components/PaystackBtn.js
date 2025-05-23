@@ -5,7 +5,7 @@ import Pay from "../../public/images/illustration/Pay";
 
 export default function PaystackBtn(props) {
 //provide props for amount email key is proc.env.PAYSTACK
-    const {amount, email, paystackKey, purpose}=props;
+    const {amount, email, purpose}=props;
     const [price, setPrice]=useState(0);
     const [localePayment, setLocalePayment]=useState('');
     const liveKey = 'pk_live_09ba874adcdca43ec856e37e480ec1e17dc13eda';

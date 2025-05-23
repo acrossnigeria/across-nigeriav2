@@ -70,9 +70,9 @@ export default function Layout({ title, children, image, desc, bg, hideNav=false
       <div className="md:hidden block"><Navbar hideNav={hideNav}/></div>
       <div className="flex left-0 ml-0 w-full overflow-hidden flex-col justify-between">
         <Loader/>
-        <main className={`h-[100%] w-screen overflow-hidden ${bg?bg:'bg-gray-100'} my-0 left-0 mx-auto`}>{children}</main>
+        <main className={`h-[100%] w-screen overflow-hidden ${bg?bg:'bg-gray-100'} my-0 left-0 pb-[50px] mx-auto`}>{children}</main>
       </div> 
       <div className="flex-grow"></div>
-      <Footer/>
+      <Footer />
     </div >)
 }

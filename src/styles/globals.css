@@ -168,3 +168,41 @@ hover:text-gray-200 text-center shadow-slate-900 shadow-lg;
     stroke-dasharray: 0 380 320 40 320 40;
   }
 }
+
+/* css for line loader */
+/* From Uiverse.io by satyamchaudharydev */ 
+.lineLoader {
+  display: block;
+  --height-of-lineLoader: 3px;
+  --lineLoader-color: #06ad33;
+  width: 70px;
+  height: var(--height-of-lineLoader);
+  border-radius: 0px;
+  background-color: rgba(255, 255, 255, 0.79);
+  position: relative;
+}
+
+.lineLoader::before {
+  content: "";
+  position: absolute;
+  background: var(--lineLoader-color);
+  top: 0;
+  left: 0;
+  width: 0%;
+  height: 100%;
+  border-radius: 0px;
+  animation: moving 1s ease-in-out infinite;
+  ;
+}
+
+@keyframes moving {
+  50% {
+    width: 100%;
+  }
+
+  100% {
+    width: 0;
+    right: 0;
+    left: unset;
+  }
+}

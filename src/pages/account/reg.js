@@ -18,6 +18,7 @@ import { setConfig } from 'next/config';
 import logo1 from "../../../public/images/logo1.png";
 import Image from 'next/image';
 import Next from '../../../public/images/icon/Next';
+import ReloadIcon from '../../../public/images/icon/ReloadIcon';
 
 const Register = () => {
    const nigeriaStates = [
@@ -65,6 +66,7 @@ const Register = () => {
   const [ activeInput, setActiveInput ] = useState(0);
   const [ boxArray, setBoxArray ] = useState(['', '', '', '', '', '']);
   const [ isOtpSent, setIsOtpSent ] = useState(false);
+  const [ sendOtpError, setSendOtpError ] = useState(false);
   
   const [ timer, setTimer ] = useState(60);
   const [ timerDisplay, setTimerDisplay ] = useState(true);
@@ -173,37 +175,54 @@ const Register = () => {
 
   const sendOtp = async () => {
     const data = { email };
-    const response = await axios.post('/api/verification/generate-otp', data)
-    const otpEmailTemplate = (otpCode) => { 
-      return ` <div style="font-family: Arial, sans-serif; max-width: 600px; margin: auto; padding: 20px; background: #ffffff; border-radius: 8px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);">
-        <div style="text-align: center; margin-bottom: 20px;">
-        <h1 style="color:rgb(1, 212, 85);">Your OTP Code</h1>
-        </div>
-        <p>Hello,</p>
-        <p>Thank you for using our service. To complete your request, please use the following One-Time Password (OTP):</p>
-        <p style="font-size: 24px; font-weight: bold; color:rgb(1, 212, 85); text-align: center; background: #f9f9f9; padding: 10px; border: 1px dashed #ddd; display: inline-block;">${otpCode}</p>
-        <p>This code is valid for the next <strong>10 minutes</strong> and can only be used once. If you did not request this code, please ignore this email.</p>
-        <p>For your security, please do not share this code with anyone.</p>
-        <p>Best regards,<br>The Across Nigeria Reality TV Show Team</p>
-        <hr>
-        <footer style="text-align: center; font-size: 14px; color: #666;">
-        &copy; ${new Date().getFullYear()} Acrossnig. All rights reserved.<br>
-        Need help? Contact us at <a href="mailto:support@acrossnig.com">support@acrossnig.com</a>
-        </footer>
-    </div>`
-  };
-    const content = otpEmailTemplate(response.data.token);
-    const dataEmail = { 
-      recepient: email,
-      subject: 'Your OTP Code for Acrossnig',
-      content,
-      heading: 'verification',
-     };
+    try {
+      const response = await axios.post('/api/verification/generate-otp', data)
+      const otpEmailTemplate = (otpCode) => { 
+        return ` <div style="font-family: Arial, sans-serif; max-width: 600px; margin: auto; padding: 20px; background: #ffffff; border-radius: 8px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);">
+          <div style="text-align: center; margin-bottom: 20px;">
+          <h1 style="color:rgb(1, 212, 85);">Your OTP Code</h1>
+          </div>
+          <p>Hello,</p>
+          <p>Thank you for using our service. To complete your request, please use the following One-Time Password (OTP):</p>
+          <p style="font-size: 24px; font-weight: bold; color:rgb(1, 212, 85); text-align: center; background: #f9f9f9; padding: 10px; border: 1px dashed #ddd; display: inline-block;">${otpCode}</p>
+          <p>This code is valid for the next <strong>10 minutes</strong> and can only be used once. If you did not request this code, please ignore this email.</p>
+          <p>For your security, please do not share this code with anyone.</p>
+          <p>Best regards,<br>The Across Nigeria Reality TV Show Team</p>
+          <hr>
+          <footer style="text-align: center; font-size: 14px; color: #666;">
+          &copy; ${new Date().getFullYear()} Acrossnig. All rights reserved.<br>
+          Need help? Contact us at <a href="mailto:support@acrossnig.com">support@acrossnig.com</a>
+          </footer>
+      </div>`
+      };
+      const content = otpEmailTemplate(response.data.token);
+      const dataEmail = { 
+        recepient: email,
+        subject: 'Your OTP Code for Acrossnig',
+        content,
+        heading: 'verification',
+      };
 
-    const isEmailSent = await axios.post('/api/mail/mail', dataEmail );
-    console.log(isEmailSent.data.message)
-    return true;
+      const isEmailSent = await axios.post('/api/mail/mail', dataEmail );
+      console.log(isEmailSent.data.message)
+      return true;
+    } catch (err) {
+      return false;
+    }
   
+  }
+
+  const retrySendOtp = async () => {
+    setSendOtpError(false);
+    const isOtpSent = await sendOtp();
+    if ( isOtpSent ) {
+      setLoading(false);
+      setAllowSubmit(false);
+      setToAuthPage(true);
+      setToConfirmPage(false);
+    } else {
+      setSendOtpError(true)
+    }
   }
 
   const requestNewOtp = async () => {
@@ -267,7 +286,7 @@ const Register = () => {
       setToAuthPage(true);
       setToConfirmPage(false);
     } else {
-      setLoading(false);
+      setSendOtpError(true);
     }
 
   }
@@ -713,7 +732,13 @@ const Register = () => {
 
       { /* Loader */} 
       <div className={`${loading?'':'hidden'} absolute z-[10000] bg-gray-50 top-0 right-0 h-screen w-screen flex flex-row justify-center items-center`}>
-        <CycleLoader/>
+        { !sendOtpError && (<CycleLoader/>)}
+        { sendOtpError && (
+          <div onClick={retrySendOtp} className='flex flex-col justify-center items-center gap-4'>
+            <span className='text-center text-[13px] text-red-600'>Something Went wrong, please tap below in a few minutes to retry.</span>
+            <ReloadIcon size={'20px'} bg={'gray'}/>
+          </div>
+        )}
       </div>
     </div>
   );
