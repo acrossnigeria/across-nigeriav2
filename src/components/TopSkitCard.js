@@ -1,5 +1,4 @@
 import { Cloudinary } from "@cloudinary/url-gen";
-import sampleThumbnail from "../../public/images/sample.PNG";
 import Image from "next/image";
 
 const cld = new Cloudinary( {

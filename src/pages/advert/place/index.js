@@ -134,4 +134,6 @@ const Page = () => {
     )
 }
 
+Page.auth = true;
+
 export default Page;

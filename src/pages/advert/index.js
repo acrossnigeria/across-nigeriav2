@@ -83,5 +83,5 @@ const Page = () => {
         </div>
     )
 }
-
+Page.auth = true;
 export default Page;
