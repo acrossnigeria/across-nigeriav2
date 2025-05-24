@@ -54,7 +54,7 @@ const Winners = () => {
                         <InfoIcon/>
                         <div className="font-semibold text-left text-green-950 w-[90%]">🎉 Congratulations to our winners! The Skit Challenge may be over, but get ready for something even bigger — 
                             <strong>Skit Across Nigeria</strong> is coming soon with higher cash prizes and even more exposure for skit makers across the country. 
-                            If you’ve got talent, creativity, and a camera,  now’s the time to start preparing. <strong>Skit Across Nigeria is your next
+                            If you&apos;ve got talent, creativity, and a camera,  now&apos;s the time to start preparing. <strong>Skit Across Nigeria is your next
                              big stage.</strong> Stay tuned and be ready to bring your best!
                         </div>
                     </div>
