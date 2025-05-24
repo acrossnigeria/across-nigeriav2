@@ -53,7 +53,7 @@ const GoldAdvertComponent = ( { isLoading, adverts } ) => {
                                 </div>
                             )
                         }
-                        { !( staticAdvert?.contactUsButton?.showContactButton) && (
+                        { (!( staticAdvert?.contactUsButton?.showContactButton) || !staticAdvert) && (
                                 <div className="h-[100%] rounded-[5px] relative w-[49%]">
                                     <Image src={staticAdvert?staticAdvert.advertImage:adpt2} alt='advert placement' fill />
                                 </div> 
