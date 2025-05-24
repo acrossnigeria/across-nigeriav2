@@ -58,7 +58,7 @@ const Winners = () => {
                              big stage.</strong> Stay tuned and be ready to bring your best!
                         </div>
                     </div>
-                    <button className="bg-green-600 hover:bg-green-800 flex flex-row justify-center items-center text-white w-[200px] h-[40px] mt-[30px]">Back Home</button>
+                    <button onClick={()=>{router.push('/')}} className="bg-green-600 hover:bg-green-800 flex flex-row justify-center items-center text-white w-[200px] h-[40px] mt-[30px]">Back Home</button>
                 </div>
             </div>
         </Layout>
