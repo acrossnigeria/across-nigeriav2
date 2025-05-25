@@ -44,20 +44,20 @@ const ChangingBottomNoticeBanner = ( { adverts, isLoading } ) => {
                     advertBanners.map((ad, index) => {
                         if ( ad?.contactUsButton?.showContactButton) {
                             return (
-                                        <div key={index} className="h-[100%] w-[49%] flex flex-col border-1 justify-evenly items-center border-gray-400 bg-gray-200 rounded-[5px]">
-                                            <BearSlideImage style={{ height:'85%', width:'99%', borderRadius:'5px'}} imageUrl={ad?.advertImage} />
-                                            <div className="flex flex-row justify-between md:px-3 w-[98%] h-[12%] items-center">
-                                                <span className="md:text-[12px] text-[10px] text-gray-500">Sponsored</span>
-                                                <button onClick={()=>{contactOnWhatsApp(ad?.contactUsButton?.contact)}} className="h-[99%] w-[fit] px-[5px] md:text-[18px] text-[13px] flex flex-row justify-center items-center gap-2 border-1 hover:bg-gray-300 transition-all ease-in-out duration-300 text-gray-500 border-gray-400 rounded-[5px]">
-                                                    <span>Contact Us</span>
-                                                    <Next size={'10px'} bg={'gray'}/>
-                                                </button>
-                                            </div>
-                                        </div>
+                                <div key={index} className="h-[100%] w-[49%] flex flex-col border-1 justify-evenly items-center border-gray-400 bg-gray-200">
+                                    <BearSlideImage style={{ height:'85%', width:'99%', borderRadius:'0px'}} imageUrl={ad?.advertImage} />
+                                    <div className="flex flex-row justify-between md:px-3 w-[98%] h-[12%] items-center">
+                                        <span className="md:text-[12px] text-[10px] text-gray-500">Sponsored</span>
+                                        <button onClick={()=>{contactOnWhatsApp(ad?.contactUsButton?.contact)}} className="h-[99%] w-[fit] px-[5px] md:text-[18px] text-[13px] flex flex-row justify-center items-center gap-2 border-1 hover:bg-gray-300 transition-all ease-in-out duration-300 text-gray-500 border-gray-400">
+                                            <span>Contact Us</span>
+                                            <Next size={'10px'} bg={'gray'}/>
+                                        </button>
+                                    </div>
+                                </div>
                             )
                         } else {
                             return (
-                                <div key={index} className="h-[100%] rounded-[5px] relative w-[49%]">
+                                <div key={index} className="h-[100%] relative w-[49%]">
                                     <Image src={ad?.advertImage} alt='advert placement' fill />
                                 </div> 
                             )

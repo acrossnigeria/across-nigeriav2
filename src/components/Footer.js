@@ -43,7 +43,7 @@ function Footer() {
 
   return (
         <footer className="relative bg-green-800 mb-0 pb-[30px] text-[13px] bottom-0 backdrop-opacity-0 bg-opacity-100 text-white transition duration-700 
-                ease-in-out border-t-4">
+                ease-in-out">
             <div className="mx-auto w-full max-w-screen-xl p-4 py-6 lg:py-8">
                 <div className="md:flex md:justify-between">
                 <div className="mb-6 md:mb-0">

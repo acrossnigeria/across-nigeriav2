@@ -9,6 +9,7 @@ import Loader from "./Loader";
 import axios from "axios";
 import { useSession } from "next-auth/react";
 import HeadComponent from "./HeadComponent";
+import AdvertClickCard from "./AdvertIClickCard";
 
 export default function Layout({ title, children, image, desc, bg, hideNav=false }) {
   const [isOpen, setIsOpen] = useState(false);
@@ -68,11 +69,11 @@ export default function Layout({ title, children, image, desc, bg, hideNav=false
       <ToastContainer position="top-center" limit={1} />
       <div className="md:block hidden"><StickyNavbar/></div>
       <div className="md:hidden block"><Navbar hideNav={hideNav}/></div>
-      <div className="flex left-0 ml-0 w-full overflow-hidden flex-col justify-between">
+      <div className="flex left-0 ml-0 w-full bg-gray-100 overflow-hidden flex-col justify-between">
         <Loader/>
         <main className={`h-[100%] w-screen overflow-hidden ${bg?bg:'bg-gray-100'} my-0 left-0 pb-[50px] mx-auto`}>{children}</main>
+        <AdvertClickCard/>
       </div> 
-      <div className="flex-grow"></div>
       <Footer />
     </div >)
 }

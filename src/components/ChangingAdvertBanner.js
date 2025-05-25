@@ -40,12 +40,12 @@ const ChangingAdvertBanner = ( { scrollData }) => {
         if ( row.contactUsButton.showContactButton ) {
           return {
             key: row.id,
-            children: <SlideAdvertWithButton contact={row?.contactUsButton?.contact} style={{ borderRadius:'5px'}} imageUrl={row.advertImage}/>
+            children: <SlideAdvertWithButton contact={row?.contactUsButton?.contact} style={{ borderRadius:'0px'}} imageUrl={row.advertImage}/>
           };
         } else {
           return {
             key: row.id,
-            children: <SlideAdvertNoButton style={{ borderRadius:'5px'}} imageUrl={row.advertImage}/>
+            children: <SlideAdvertNoButton style={{ borderRadius:'0px'}} imageUrl={row.advertImage}/>
           };
         }
       });
@@ -57,7 +57,7 @@ const ChangingAdvertBanner = ( { scrollData }) => {
       for ( const item of images ) {
         data?.push( { 
           key:item.id,
-          children: <BearSlideImage style={{ borderRadius:'5px'}} imageUrl={item.image} />
+          children: <BearSlideImage style={{ borderRadius:'0px'}} imageUrl={item.image} />
         })
       };
     }

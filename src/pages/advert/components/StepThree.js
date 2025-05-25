@@ -209,7 +209,7 @@ const StepThree = ( { showContactUsButton, advertType, setAdvertImage, advertIma
             </div>
             <span style={{lineHeight:'20px'}} className="md:text-[25px] text-[20px] font-bold">Upload Your Advert Banner</span>
             <span style={{lineHeight:'20px'}} className="md:mt-[10px] mt-[4px] text-[15px]">Upload your banner and see how it would look like.</span>
-            <div className="md:w-[70%] w-[100%] h-[400px] bg-white rounded-[10px] p-3 mt-[14px]">
+            <div className="md:w-[70%] w-[100%] h-[400px] bg-white rounded-[5px] p-3 mt-[14px]">
                 <div className='flex flex-col my-[10px]'>
                     <input
                         accept=".jpg, png, jfif"
@@ -217,15 +217,15 @@ const StepThree = ( { showContactUsButton, advertType, setAdvertImage, advertIma
                         className="mb-4 w-[100%] hidden opacity-0 border-2 h-[30px] "
                         id="imageFile"
                         onChange={photoUploader} />
-                    <button onClick={selectPhoto} className='bg-gray-200 hover:bg-gray-300 cursor-pointer border-1 border-gray-400 rounded-[4px] h-[40px] text-[15px] gap-[10px] flex text-gray-400 flex-row justify-center items-center'>
-                    <span>Select a Photo</span>
-                    <Upload/>
+                    <button onClick={selectPhoto} className='bg-gray-200 hover:bg-gray-400 hover:text-white cursor-pointer border-1 border-gray-400 rounded-[2px] h-[40px] text-[15px] gap-[10px] flex text-gray-600 flex-row justify-center items-center'>
+                        <span>Choose an image</span>
+                        <Upload/>
                     </button>
                 </div>
                 { !selectedFile && (
-                    <div className={`${advertType===1 || advertType === 4 ?'w-[100%] md:h-[250px] h-[190px]':'md:w-[70%] w-[88%] h-[300px] mx-auto'} w-[100%] px-[5%] border-gray-300 border-1 h-[250px] flex flex-col justify-center items-center `}>
+                    <div className={`${advertType===1 || advertType === 4 ?'w-[100%] md:h-[250px] h-[190px]':'md:w-[70%] w-[88%] h-[300px] mx-auto'} w-[100%] px-[5%] border-gray-600 border-1 h-[250px] flex flex-col justify-center items-center `}>
                         <ImgIcon/>
-                        <span className="mt-[10px] text-[12px] text-gray-400">Recommended size: {advertType?'1000 x 800':'1200 x 300'} pixels (JPG or PNG, max 5MB)</span>
+                        <span className="mt-[10px] text-[12px] text-gray-600">Recommended size: {(advertType===1 || advertType===4)?'1000 x 400 ( Landscape )':'700 x 1000 ( Protrait )'} pixels (JPG or PNG, max 5MB)</span>
                     </div>
                 )}
                 { anImageWasUploaded && (
