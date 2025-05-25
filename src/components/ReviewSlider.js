@@ -1,10 +1,7 @@
 import BearCarousel, { BearSlideImage } from "bear-react-carousel";
 import "bear-react-carousel/dist/index.css";
 import { useEffect, useState } from "react";
-import { useRouter } from "next/router";
 import { useSession } from "next-auth/react";
-import DiamondAdvertWithButton from "./SLideAdvertWithButton";
-import DiamondAdvertNoButton from "./SlideAdvertNoButton";
 import SlideAdvertNoButton from "./SlideAdvertNoButton";
 import SlideAdvertWithButton from "./SLideAdvertWithButton";
 
@@ -18,7 +15,6 @@ const CustomBanner = ( { isLoading, adverts }) => {
     { id: 1, image: "/images/skit_winners.jpg" },
     { id: 2, image: "/images/frontBanner.jpg" },
     { id: 3, image: "/images/ambassador.jpg" },
-    { id: 4, image: "/images/skitBanner.jpg" },
     { id: 5, image: "/images/landing/gq-banner.JPG" },
     { id: 6, image: "/images/landing/image1.jpg" },
     { id: 7, image: "/images/admid1.jpg" },
