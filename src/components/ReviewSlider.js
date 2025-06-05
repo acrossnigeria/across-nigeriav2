@@ -12,14 +12,14 @@ const CustomBanner = ( { isLoading, adverts }) => {
   const [ bearSlideItemData, setBearSlideItemData ] = useState([]);
 
   const images = [
-    { id: 1, image: "/images/skit_winners.jpg" },
-    { id: 2, image: "/images/frontBanner.jpg" },
-    { id: 3, image: "/images/ambassador.jpg" },
+    { id: 1, image: "/images/salah_slide.jpg" },
+    { id: 2, image: "/images/skit_winners.jpg" },
+    { id: 3, image: "/images/frontBanner.jpg" },
+    { id: 4, image: "/images/ambassador.jpg" },
     { id: 5, image: "/images/landing/gq-banner.JPG" },
     { id: 6, image: "/images/landing/image1.jpg" },
     { id: 7, image: "/images/admid1.jpg" },
     { id: 8, image: "/images/landing/image5.jpg" },
-    { id: 9, image: "/images/landing/image6.jpg" },
   ];
 
   function arraysAreEqual(arr1, arr2) {
