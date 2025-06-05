@@ -12,7 +12,6 @@ import Loader from '@/components/Loader';
 import EyeOpen from '../../../public/images/icon/EyeOpen';
 import EyeClose from '../../../public/images/icon/EyeClose';
 import { signIn } from 'next-auth/react';
-import BackIcon from '../../../public/images/icon/BackIcon';
 import CycleLoader from '@/components/CycleLoader';
 import { setConfig } from 'next/config';
 import logo1 from "../../../public/images/logo1.png";
@@ -62,7 +61,8 @@ const Register = () => {
   const [loading, setLoading ] = useState(false);
 
   const [ isOtpInvalid, setIsOtpInvalid ] = useState(false);
-  const [ showEmailExistError, setShowEmailExistError ] = useState(false);
+  const [ showConflictError, setShowConflictError ] = useState(false);
+  const [ conflictError, setConflictError ] = useState("Unkwon error");
   const [ activeInput, setActiveInput ] = useState(0);
   const [ boxArray, setBoxArray ] = useState(['', '', '', '', '', '']);
   const [ isOtpSent, setIsOtpSent ] = useState(false);
@@ -118,10 +118,10 @@ const Register = () => {
     if ( e.key === 'Backspace' && boxArray[index] === '' ) {
         setActiveInput(index-1);
     }
-  }
+  };
 
     // loads the confirm page
-  const today=new Date();
+  const today = new Date();
   function toConfirm() {
       const dateOfBirth = new Date(dob);
       const age= today.getFullYear()-dateOfBirth.getFullYear();
@@ -139,12 +139,13 @@ const Register = () => {
     setRegText('Loading...');
     // check if account with email already exists
     try {
-      const response = await axios.get(`/api/findUser?email=${email}`);
+      const response = await axios.get(`/api/auth/checkUserConflict?email=${email}&phone=${phone}`);
 
       if (response.data.exists) {
-        setShowEmailExistError(true);
+        setShowConflictError(true);
+        setConflictError(response.data.message);
         setRegText('Register');
-        router.push('/account/reg#Surname');
+        router.push('/account/reg#top');
       } else {
         toConfirm();
         setRegText('Register');
@@ -428,19 +429,20 @@ const Register = () => {
         </div>
 
         {/* <Layout> */}
-        <div className="mx-auto bg-gray-100 mt-[50px] border-t-1 border-t-gray-500 rounded-t-[30px] pb-[50px]">
+        <div id='top' className="mx-auto bg-gray-100 mt-[50px] border-t-1 border-t-gray-500 rounded-t-[30px] pb-[50px]">
           {/* handleSubmit */}
           <form onSubmit={toConfirmDetails} className="md:max-w-[517px] flex px-4 flex-col mt-[20px] max-w-full mx-auto">
             <div className='flex flex-col md:w-[100%] w-[300px] mx-auto mt-[5px]'>
               <span className="text-center font-bold text-[19px]">Welcome!</span>
               <span style={{lineHeight:'22px'}} className="text-center mt-1 mb-9 text-[16px]">Giveaways, game shows, and entertainment. Your journey starts here.</span>
             </div>
+            <div id="conflictError" className={`${showConflictError?'':'hidden'} text-red-500 text-[14px]`}>{conflictError}</div>
             <div className="mb-4">
               <label htmlFor="name" className="block mb-2">Name</label>
               <input
                 type="text"
                 placeholder='First name'
-                id="name"
+                id="Name"
                 name="name"
                 value={firstname}
                 onChange={(e) => setFirstname(e.target.value)}
@@ -474,7 +476,6 @@ const Register = () => {
                 className="w-full border-gray-400 border-1 h-[45px] px-3 outline-none rounded-[15px] bg-gray-200"
                 required
               />
-              <div className={`${showEmailExistError?'':'hidden'} text-red-500 text-[14px]`}>An account with this email already exists. please try logging in or use a different email to create a new account.</div>
             </div>
     <div className='mb-4'>
       <label htmlFor="dob" className="block mb-2">Date of Birth</label>

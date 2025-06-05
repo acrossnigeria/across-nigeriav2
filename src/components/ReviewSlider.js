@@ -1,13 +1,11 @@
 import BearCarousel, { BearSlideImage } from "bear-react-carousel";
 import "bear-react-carousel/dist/index.css";
 import { useEffect, useState } from "react";
-import { useSession } from "next-auth/react";
 import SlideAdvertNoButton from "./SlideAdvertNoButton";
 import SlideAdvertWithButton from "./SLideAdvertWithButton";
 
 
 const CustomBanner = ( { isLoading, adverts }) => {
-  const { data: session } = useSession();
   const [ isMobile, setIsMobile ]=useState(false);
   const [ bearSlideItemData, setBearSlideItemData ] = useState([]);
 
