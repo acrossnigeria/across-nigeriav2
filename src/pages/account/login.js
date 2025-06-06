@@ -4,11 +4,13 @@ import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { getError } from "../../../utils/error";
-import { toast } from "react-toastify";
 import Close from "../../../public/images/icon/Close";
 import Loader from "@/components/Loader";
 import EyeOpen from "../../../public/images/icon/EyeOpen";
 import EyeClose from "../../../public/images/icon/EyeClose";
+import logo1 from "../../../public/images/logo1.png";
+import Image from "next/image";
+import Button from "@/components/ui/Button";
 
 export default function LoginScreen() {
   const [ loading,setLoading ] = useState(false);
@@ -19,19 +21,27 @@ export default function LoginScreen() {
   const sessionName = session?.user?? null;
   const [ showPassword, setShowPassword ] = useState(false);
 
+  const [ showLoginError, setShowLoginError ] = useState(false);
+  const [ loginError, setLoginError ] = useState('');
+
+  const handleLoginError = (error) => {
+    setShowLoginError(true);
+    setLoginError(error);
+  } 
+
   const togglePasswordVisibility1 = () => {
     setShowPassword(!showPassword);
   };
 
   useEffect( () => {
-    if (sessionName===null) {
+    if ( sessionName === null ) {
         console.log(sessionName);
     }
-    else{
+    else {
       console.log(sessionName)
       router.push(redirect || '/');
     }
-  }, [router, sessionName, redirect] );
+  }, [ router, sessionName, redirect ] );
 
   const {
     handleSubmit,
@@ -40,66 +50,91 @@ export default function LoginScreen() {
   } = useForm();
   
   const submitHandler = async ({ email, password }) => {
-  setLoading(true)
-  try {
+    setLoading(true)
+    try {
 
-    const result = await signIn('credentials', {
-      redirect: false,
-      email,
-      password,
-    });
+      const result = await signIn('credentials', {
+        redirect: false,
+        email,
+        password,
+      });
 
-    if (result.error) {
-      toast.error(result.error);
+      if (result.error) {
+        handleLoginError(result.error);
+      }
+    } catch (err) {
+      handleLoginError(getError(err));
     }
-  } catch (err) {
-    toast.error(getError(err));
-  }
-  setLoading(false)
-  if (session) {
-    console.log(session)
-    router.push(redirect || '/'); // Replace "/" with your desired page
-  }
+    setLoading(false)
+    if (session) {
+      console.log(session)
+      router.push(redirect || '/'); // Replace "/" with your desired page
+    }
   };
+
   return (
     <div>
       <Loader/>
-      <div className='flex flex-row justify-end bg-gray-100 px-8 py-3'>
-          <Link href={'/'}><Close/></Link> 
+      <div className='flex flex-row justify-end absolute bg-gray-100 top-[3.5%] left-[3.5%]'>
+          <Link href={'/'}><Close bg={'black'}/></Link> 
       </div>
-      <div className="h-screen w-screen pt-11 mx-auto bg-gray-100 text-black ">
-        <form className="mt-3 mx-auto w-[93%] md:max-w-[500px] flex flex-col" onSubmit={handleSubmit(submitHandler)}>
-          <span className="mb-1 text-[25px]">Login</span>
-          <span className="mb-10">Welcome back.</span>
+      <div className="h-screen w-screen mx-auto flex flex-col justify-center items-center bg-gray-100 text-black ">
+        <form className="mx-auto w-[93%] md:max-w-[350px] h-fit flex flex-col">
+          <div className='text-center flex flex-row md:mb-10 mb-[80px] justify-start gap-1 items-center'>
+            <Image src={logo1} alt='logo' placeholder='blur' className='h-[40px] w-[45px]' />
+            <div className='flex flex-col justify-center leading-[15px] items-start'>
+              <span className='text-[15px] font-bold text-green-700'>ACROSS NIGERIA</span>
+              <span className='text-[13px] text-green-500'>REALITY SHOW</span>
+            </div>
+          </div>
+
+          <div className="md:mb-4 mb-[30px]">
+            <h1 className="text-[24px] font-bold mb-2 text-start">Welcome back!</h1>
+            <div className="text-gray-500 text-start leading-[18px] text-[16px]">Don't have an account? 
+              <Link className="underline text-black font-medium hover:scale-105"  href={`/account/reg?redirect=${redirect || '/'}`}> Create a new account now </Link> 
+              Its FREE takes less than a minute.</div>
+          </div>
+          { showLoginError && (
+            <div className="bg-red-100 text-red-700 p-2 rounded-[5px] mb-3">
+              <div className="flex flex-row justify-between items-center">
+                <div className="flex flex-row items-center">
+                  <span className="text-[14px]">{loginError}</span>  
+                </div>  
+                <button type="button" onClick={() => setShowLoginError(false)} className="text-red-500 hover:text-red-700"> 
+                  <Close size={'10px'} bg={'black'}/>
+                </button>
+              </div>
+            </div>
+          )}
           <div className="mb-4">
             <label htmlFor="email" className="text-[17px] ml-2 mb-3">Email</label>
             <input
               type="email"
-              placeholder="Example@gmail.com"
+              placeholder="Email"
               {...register('email', {
-                required: 'Please enter email',
+                required: 'Please enter your email',
                 pattern: {
                   value: /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$/i,
                   message: 'Please enter valid email',
                 },
               })}
-              className="w-full border-gray-400 border-1 h-[45px] px-3 outline-none rounded-[15px] bg-gray-200"
+              className="w-full border-gray-400 border-1 text-[16px] h-[40px] px-3 outline-none rounded-[5px] bg-gray-100"
               id="email"
             ></input> 
-            {errors.email && (
-              <div className="text-red-500">{errors.email.message}</div>
-            )}
           </div>
-          <div className="mb-6 ">
+
+          <div className="mb-2 ">
             <label htmlFor="password" className=" text-[17px] mb-3 ml-2 ">  Password</label>
-            <div className="h-[45px] flex flex-row border-gray-400 px-3 border-1 rounded-[15px] bg-gray-200">
+            <div className="h-[40px] flex flex-row border-gray-400 px-3 border-1 rounded-[5px] bg-gray-100">
               <input
                 type={showPassword?'text':'password'}
+                placeholder="Password"
+                autoComplete="current-password"
                 {...register('password', {
-                  required: 'Please enter password',
+                  required: 'Please enter a valid password',
                   minLength: { value: 6, message: 'password is more than 5 chars' },
                 })}
-                className="w-full bg-gray-200 outline-none"
+                className="w-full bg-gray-100 text-[16px] outline-none"
                 id="password"
               ></input>
               <button type="button" style={{borderRadius:'5px', height:'45px'}}
@@ -107,19 +142,19 @@ export default function LoginScreen() {
                   {showPassword? <EyeOpen/>: <EyeClose/>}
               </button>
             </div>
+          </div>
             {errors.password && (
-              <div className="text-red-500 ">{errors.password.message}</div>
+              <div className="text-red-500 text-[13px] mt-2">❌{errors.password.message}</div>
             )}
+            {errors.email && (
+              <div className="text-red-500 text-[13px] mt-1">❌{errors.email.message}</div>
+            )}
+          <div className="md:mt-2 mt-[30px]">
+            <Button type="button" onClick={handleSubmit(submitHandler)} className="w-[100%]" size="md" disabled={loading}>{loading?"Please wait...":"Log In"}</Button>
           </div>
-          <div className="flex flex-row justify-end">
-            <button className="text-[17px] hover:text-green-900 hover:scale-105"><Link href="/user/password-reset" className="mt-2 mr-2">Forgot Password?</Link></button>
-          </div>
-          <div className="mt-2">
-            {loading?(<button disabled className="text-slate-100 h-[49px] animate-pulse w-[100%] text-[19px] py-1 rounded-[30px] bg-gray-500">Please Wait...</button>):(<button className="text-white w-[100%] h-[49px] rounded-[30px] bg-green-700 hover:bg-green-900 active:bg-green-950">Log In</button>)} 
-          </div> 
-          <div className="mb-4 mt-6 text-[17px] ">
-            Don&apos;t have an account? &nbsp;
-            <Link className="text-green-700 cursor-pointer underline hover:text-green-400"  href={`/account/reg?redirect=${redirect || '/'}`}>Register</Link>
+          <div className="flex flex-row justify-center text-[16px] items-center gap-2 mt-[40px] mb-2">
+            <span className="text-gray-500">Forgot password?</span>
+            <Link href="/user/password-reset" className="hover:text-green-900 underline font-medium hover:scale-105">Click here</Link>
           </div>
         </form>
       </div>

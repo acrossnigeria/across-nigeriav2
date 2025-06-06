@@ -13,18 +13,6 @@ import Profile from "../../public/images/icon/Profile";
 const StickyNavbar = ( { notification }) => {
   const { status, data: session } = useSession();
 
-  const[open,setOpen]=useState(false)
-const toggleMenu=()=>{
-  setOpen(!open);}
-  const router=useRouter();
-  const [query, setQuery] = useState("");
-
-  const logoutClickHandler = () => {
-  
-  signOut({ callbackUrl: `/account/login` });
-  
-  };
-
 
   const submitHandler = (e) => {
     e.preventDefault();
@@ -64,14 +52,6 @@ const toggleMenu=()=>{
           </div>
             {/* Menu content */}
           <div style={{alignItems:'center'}} className="text-white flex cursor-pointer w-auto gap-[2rem]">
-            <div className="bg-gray-50" style={{height:'35px', display:'flex', justifyContent:'space-between', alignItems:'center', padding:'0px 10px', borderRadius:'15px'}} >
-                <input type="text"placeholder="Search..."
-                  style={{fontSize:'16px', borderRadius:'10px', background:'transparent'}}
-                  className=" focus:outline-none text-green-800"
-                  value={query}
-                  onChange={(e) => setQuery(e.target.value)} />
-                <Search/>
-              </div>
           
             { session?.user ? (
               <div className="relative flex flex-row items-center gap-2">
