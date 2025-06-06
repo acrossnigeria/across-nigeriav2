@@ -90,7 +90,7 @@ export default function LoginScreen() {
 
           <div className="md:mb-4 mb-[30px]">
             <h1 className="text-[24px] font-bold mb-2 text-start">Welcome back!</h1>
-            <div className="text-gray-500 text-start leading-[18px] text-[16px]">Don't have an account? 
+            <div className="text-gray-500 text-start leading-[18px] text-[16px]">Don&apos;t have an account? 
               <Link className="underline text-black font-medium hover:scale-105"  href={`/account/reg?redirect=${redirect || '/'}`}> Create a new account now </Link> 
               Its FREE takes less than a minute.</div>
           </div>
