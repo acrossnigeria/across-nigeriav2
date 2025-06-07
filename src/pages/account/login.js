@@ -11,6 +11,7 @@ import EyeClose from "../../../public/images/icon/EyeClose";
 import logo1 from "../../../public/images/logo1.png";
 import Image from "next/image";
 import Button from "@/components/ui/Button";
+import ErrorCard from "@/components/ui/ErrorCard";
 
 export default function LoginScreen() {
   const [ loading,setLoading ] = useState(false);
@@ -74,13 +75,12 @@ export default function LoginScreen() {
 
   return (
     <div>
-      <Loader/>
       <div className='flex flex-row justify-end absolute bg-gray-100 top-[3.5%] left-[3.5%]'>
-          <Link href={'/'}><Close bg={'black'}/></Link> 
+          <Link href={'/'}><Close bg={'black'} size={'20px'}/></Link> 
       </div>
-      <div className="h-screen w-screen mx-auto flex flex-col justify-center items-center bg-gray-100 text-black ">
+      <div className="h-screen w-screen mx-auto flex flex-col justify-start pt-[90px] items-center bg-gray-100 text-black ">
         <form className="mx-auto w-[93%] md:max-w-[350px] h-fit flex flex-col">
-          <div className='text-center flex flex-row md:mb-10 mb-[80px] justify-start gap-1 items-center'>
+          <div className='text-center flex flex-row md:mb-10 mb-[80px] justify-center gap-1 items-center'>
             <Image src={logo1} alt='logo' placeholder='blur' className='h-[40px] w-[45px]' />
             <div className='flex flex-col justify-center leading-[15px] items-start'>
               <span className='text-[15px] font-bold text-green-700'>ACROSS NIGERIA</span>
@@ -89,23 +89,12 @@ export default function LoginScreen() {
           </div>
 
           <div className="md:mb-4 mb-[30px]">
-            <h1 className="text-[24px] font-bold mb-2 text-start">Welcome back!</h1>
-            <div className="text-gray-500 text-start leading-[18px] text-[16px]">Don&apos;t have an account? 
+            <h1 className="text-[22px] font-bold mb-2 text-center">Welcome back!</h1>
+            <div className="text-gray-500 text-center leading-[18px] text-[16px]">Don&apos;t have an account? 
               <Link className="underline text-black font-medium hover:scale-105"  href={`/account/reg?redirect=${redirect || '/'}`}> Create a new account now </Link> 
               Its FREE takes less than a minute.</div>
           </div>
-          { showLoginError && (
-            <div className="bg-red-100 text-red-700 p-2 rounded-[5px] mb-3">
-              <div className="flex flex-row justify-between items-center">
-                <div className="flex flex-row items-center">
-                  <span className="text-[14px]">{loginError}</span>  
-                </div>  
-                <button type="button" onClick={() => setShowLoginError(false)} className="text-red-500 hover:text-red-700"> 
-                  <Close size={'10px'} bg={'black'}/>
-                </button>
-              </div>
-            </div>
-          )}
+          <ErrorCard setShowError={setShowLoginError} showError={showLoginError} error={loginError} />
           <div className="mb-4">
             <label htmlFor="email" className="text-[17px] ml-2 mb-3">Email</label>
             <input
@@ -149,10 +138,10 @@ export default function LoginScreen() {
             {errors.email && (
               <div className="text-red-500 text-[13px] mt-1">❌{errors.email.message}</div>
             )}
-          <div className="md:mt-2 mt-[30px]">
+          <div className="mt-2">
             <Button type="button" onClick={handleSubmit(submitHandler)} className="w-[100%]" size="md" disabled={loading}>{loading?"Please wait...":"Log In"}</Button>
           </div>
-          <div className="flex flex-row justify-center text-[16px] items-center gap-2 mt-[40px] mb-2">
+          <div className="flex flex-row justify-center text-[16px] items-center gap-2 mt-[50px] mb-2">
             <span className="text-gray-500">Forgot password?</span>
             <Link href="/user/password-reset" className="hover:text-green-900 underline font-medium hover:scale-105">Click here</Link>
           </div>
