@@ -103,7 +103,7 @@ export default function ChangePass(props){
           <>
             <div className='text-center flex flex-row md:mb-10 mb-[80px] justify-center gap-1 items-center'>
               <Image src={logo1} alt='logo' placeholder='blur' className='h-[40px] w-[45px]' />
-              <div className='flex flex-col justify-center leading-[15px] items-start'>
+              <div className='flex flex-col justify-center leading-[23px] items-start'>
                 <span className='text-[15px] font-bold text-green-700'>ACROSS NIGERIA</span>
                 <span className='text-[13px] text-green-500'>REALITY SHOW</span>
               </div>
@@ -117,7 +117,7 @@ export default function ChangePass(props){
             <SuccessCardWithLoader className={'w-full'} message={successMessage} showSuccess={showSuccess}><Loader size={'10px'}/></SuccessCardWithLoader>
 
             {/* Form for changing password */}
-            <form className="" onSubmit={handleSubmit}>
+            <form className="md:px-0 px-[3.5%]" onSubmit={handleSubmit}>
               <div className="mb-4">
                 <label className="text-[16px]" htmlFor="newPassword">Enter new password:</label>
                 <input className="w-full border-gray-400 border-1 text-[16px] mt-1 h-[40px] px-3 outline-none rounded-[5px] bg-gray-100"
