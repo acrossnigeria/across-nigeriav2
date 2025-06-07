@@ -103,12 +103,12 @@ export default function ChangePass(props){
           <>
             <div className='text-center flex flex-row md:mb-10 mb-[80px] justify-center gap-1 items-center'>
               <Image src={logo1} alt='logo' placeholder='blur' className='h-[40px] w-[45px]' />
-              <div className='flex flex-col justify-center leading-[23px] items-start'>
+              <div className='flex flex-col justify-center leading-[15px] items-start'>
                 <span className='text-[15px] font-bold text-green-700'>ACROSS NIGERIA</span>
                 <span className='text-[13px] text-green-500'>REALITY SHOW</span>
               </div>
             </div>
-            <div className="mb-5 flex flex-col leading-4">
+            <div className="mb-5 flex flex-col leading-6">
               <h1 className="text-[22px] font-bold mb-2 text-center">Change password</h1>
               <span className='text-[16px] text-gray-500 text-center w-[100%]'>Please <span className="text-black">{userFirstName}</span> enter your new password below.</span>
             </div>
