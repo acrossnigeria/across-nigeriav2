@@ -1,12 +1,12 @@
 import Link from 'next/link';
 import React, { useState } from 'react'
 
-const Checkbox = ({handleTermsCheckboxChange}) => {
-      const [termsAccepted, setTermsAccepted] = useState(false);
+const Checkbox = ( { handleTermsCheckboxChange } ) => {
+      const [ termsAccepted, setTermsAccepted ] = useState(false);
       const handleChange=(event)=>{
-        const isChecked=event.target.checked;
-        handleTermsCheckboxChange(isChecked)
-        setTermsAccepted(isChecked)
+        const isChecked = event.target.checked;
+        handleTermsCheckboxChange(isChecked);
+        setTermsAccepted(isChecked);
       }
   return (
     
@@ -15,11 +15,11 @@ const Checkbox = ({handleTermsCheckboxChange}) => {
             type="checkbox"
             id="termsCheckbox"
             checked={termsAccepted}
-            className='accent-green-700 h-[30px] w-[30px]'
+            className='accent-green-600 h-[25px] hover:cursor-pointer w-[25px] border-gray-300'
             onChange={handleChange}
           />
-          <label htmlFor="termsCheckbox">
-            Accept our <Link className='text-green-500 underline hover:text-green-300' href="#">Terms and Conditions</Link>
+          <label htmlFor="termsCheckbox" className='text-gray-500 text-[16px]'>
+            Accept our <Link className='text-black underline hover:italic' href="#">Terms and Conditions</Link>
           </label>
         </div>
   )

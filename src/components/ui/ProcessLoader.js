@@ -1,4 +1,4 @@
-const Loader = ( { size, className }) => {
+const ProcessLoader = ( { size, className }) => {
   return (
     <div style={{ width:size?size:'20px', height:size?size:'20px' }} className={`loader ${className}`}>
         <div className="bar1"></div>
@@ -17,5 +17,5 @@ const Loader = ( { size, className }) => {
   );
 }
 
-export default Loader;
+export default ProcessLoader;
 // This Loader component renders a loading animation using a series of div elements styled as bars.

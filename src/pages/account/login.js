@@ -2,16 +2,19 @@ import { signIn, useSession } from "next-auth/react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
-import { useForm } from "react-hook-form";
 import { getError } from "../../../utils/error";
 import Close from "../../../public/images/icon/Close";
-import Loader from "@/components/Loader";
+import ProcessLoader from "@/components/ui/ProcessLoader";
 import EyeOpen from "../../../public/images/icon/EyeOpen";
 import EyeClose from "../../../public/images/icon/EyeClose";
 import logo1 from "../../../public/images/logo1.png";
 import Image from "next/image";
 import Button from "@/components/ui/Button";
 import ErrorCard from "@/components/ui/ErrorCard";
+import PadlockIcon from "../../../public/images/icon/PadlockIcon";
+import TextInputWithIcon from "@/components/ui/TextInputWithIcon";
+import EmailIcon from "../../../public/images/icon/EmailIcon";
+import Loader from "@/components/Loader";
 
 export default function LoginScreen() {
   const [ loading,setLoading ] = useState(false);
@@ -24,6 +27,9 @@ export default function LoginScreen() {
 
   const [ showLoginError, setShowLoginError ] = useState(false);
   const [ loginError, setLoginError ] = useState('');
+
+  const [ password, setPassword ] = useState('');
+  const [ email, setEmail ] = useState('');
 
   const handleLoginError = (error) => {
     setShowLoginError(true);
@@ -44,13 +50,21 @@ export default function LoginScreen() {
     }
   }, [ router, sessionName, redirect ] );
 
-  const {
-    handleSubmit,
-    register,
-    formState: { errors },
-  } = useForm();
+  const handleSubmit = () => {
+    if ( email === '' || password === '' ) {
+      handleLoginError('Both field are required')
+      return;
+    }
+
+    if (/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) === false) {
+      handleLoginError('Please enter a valid email address');
+      return;
+    }
+
+    submitHandler( email, password);
+  }
   
-  const submitHandler = async ({ email, password }) => {
+  const submitHandler = async (email, password ) => {
     setLoading(true)
     try {
 
@@ -75,10 +89,11 @@ export default function LoginScreen() {
 
   return (
     <div>
+      <Loader/>
       <div className='flex flex-row justify-end absolute bg-gray-100 top-[3.5%] left-[3.5%]'>
           <Link href={'/'}><Close bg={'black'} size={'20px'}/></Link> 
       </div>
-      <div className="h-screen w-screen mx-auto flex flex-col justify-start pt-[90px] items-center bg-gray-100 text-black ">
+      <div className="h-screen w-screen mx-auto flex flex-col justify-start pt-[70px] items-center bg-gray-100 text-black ">
         <form className="mx-auto w-[93%] md:max-w-[350px] h-fit flex flex-col">
           <div className='text-center flex flex-row md:mb-10 mb-[80px] justify-center gap-1 items-center'>
             <Image src={logo1} alt='logo' placeholder='blur' className='h-[40px] w-[45px]' />
@@ -95,53 +110,18 @@ export default function LoginScreen() {
               Its FREE takes less than a minute.</div>
           </div>
           <ErrorCard setShowError={setShowLoginError} showError={showLoginError} error={loginError} />
-          <div className="mb-4">
-            <label htmlFor="email" className="text-[17px] ml-2 mb-3">Email</label>
-            <input
-              type="email"
-              placeholder="Email"
-              {...register('email', {
-                required: 'Please enter your email',
-                pattern: {
-                  value: /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$/i,
-                  message: 'Please enter valid email',
-                },
-              })}
-              className="w-full border-gray-400 border-1 text-[16px] h-[40px] px-3 outline-none rounded-[5px] bg-gray-100"
-              id="email"
-            ></input> 
-          </div>
 
-          <div className="mb-2 ">
-            <label htmlFor="password" className=" text-[17px] mb-3 ml-2 ">  Password</label>
-            <div className="h-[40px] flex flex-row border-gray-400 px-3 border-1 rounded-[5px] bg-gray-100">
-              <input
-                type={showPassword?'text':'password'}
-                placeholder="Password"
-                autoComplete="current-password"
-                {...register('password', {
-                  required: 'Please enter a valid password',
-                  minLength: { value: 6, message: 'password is more than 5 chars' },
-                })}
-                className="w-full bg-gray-100 text-[16px] outline-none"
-                id="password"
-              ></input>
-              <button type="button" style={{borderRadius:'5px', height:'45px'}}
-                className={`right-0 px-[5px] w-fit` } onClick={togglePasswordVisibility1} >
-                  {showPassword? <EyeOpen/>: <EyeClose/>}
-              </button>
-            </div>
-          </div>
-            {errors.password && (
-              <div className="text-red-500 text-[13px] mt-2">❌{errors.password.message}</div>
-            )}
-            {errors.email && (
-              <div className="text-red-500 text-[13px] mt-1">❌{errors.email.message}</div>
-            )}
+          <TextInputWithIcon icon={<EmailIcon/>} placeholder="Email" label="Email" className="mb-4" value={email} onChange={(e) => { setShowLoginError(false); setEmail(e.target.value) }} id="email" type="email" />
+          <TextInputWithIcon icon={<PadlockIcon/>} placeholder="Password" label="Password" className="mb-4" value={password} onChange={(e) => { setShowLoginError(false); setPassword(e.target.value) }} id="password" type={showPassword?'text':'password'} togglePasswordVisibility={togglePasswordVisibility1} showPassword={showPassword}> 
+            <button type="button" style={{height:'100%'}} className={`right-0 px-[5px] w-fit` } onClick={togglePasswordVisibility1} >
+                {showPassword? <EyeOpen/>: <EyeClose/>}
+            </button>
+          </TextInputWithIcon>
+
           <div className="mt-2">
-            <Button type="button" onClick={handleSubmit(submitHandler)} className="w-[100%]" size="md" disabled={loading}>{loading?"Please wait...":"Log In"}</Button>
+            <Button type="button" onClick={handleSubmit} className="w-[100%]" size="md" disabled={loading}>{loading?<ProcessLoader/>:"Log In"}</Button>
           </div>
-          <div className="flex flex-row justify-center text-[16px] items-center gap-2 mt-[50px] mb-2">
+          <div className="flex flex-row justify-center text-[16px] items-center gap-2 md:mt-[40px] mt-[80px] mb-2">
             <span className="text-gray-500">Forgot password?</span>
             <Link href="/user/password-reset" className="hover:text-green-900 underline font-medium hover:scale-105">Click here</Link>
           </div>

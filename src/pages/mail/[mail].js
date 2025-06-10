@@ -1,32 +1,44 @@
 import User from "@/models/User";
 import db from "../../../utils/db";
-import Layout from "@/components/Layout";
 import { useState } from "react";
 import axios from "axios";
 import { useRouter } from "next/router";
-import Loader from "@/components/ui/Loader";
+import Loader from "@/components/Loader";
 import Link from "next/link";
 import Close from "../../../public/images/icon/Close";
 import logo1 from "../../../public/images/logo1.png";
 import Image from 'next/image';
 import Button from "@/components/ui/Button";
 import ErrorCard from "@/components/ui/ErrorCard";
-import SuccessCard from "@/components/ui/SuccessCard";
 import SuccessCardWithLoader from "@/components/ui/SuccessCardWithLoader";
+import TextInputWithIcon from "@/components/ui/TextInputWithIcon";
+import PadlockIcon from "../../../public/images/icon/PadlockIcon";
+import EyeOpen from "../../../public/images/icon/EyeOpen";
+import EyeClose from "../../../public/images/icon/EyeClose";
+import ProcessLoader from "@/components/ui/ProcessLoader";
 
-export default function ChangePass(props){
+export default function ChangePass(props) {
     const { user, resetCodeExists } = props;
     const id = user?._id;
     const userFirstName = user?.name;
     const [ newPassword, setNewPassword ] = useState('');
     const [ repeatPassword, setRepeatPassword ] = useState('');
     const [ showPassword, setShowPassword ] = useState(false); // State to toggle password visibility
+    const [ showRepeatPassword, setShowRepeatPassword ] = useState(false); // State to toggle repeat password visibility
     const [ errorMessage, setErrorMessage] = useState('');
     const [ showError, setShowError ] = useState(false);
     const [ successMessage, setSuccessMessage ] = useState('');
     const [ showSuccess, setShowSuccess ] = useState(false);
     const [ isloading, setIsLoading ] = useState(false);
     const router = useRouter();
+
+    const togglePasswordVisibility1 = () => {
+      setShowPassword(!showPassword);
+    };
+
+    const togglePasswordVisibility2 = () => {
+      setShowRepeatPassword(!showRepeatPassword);
+    }
 
     const handleError = (error) => {
       setShowError(true);
@@ -95,6 +107,7 @@ export default function ChangePass(props){
 
   return (
     <div className="flex flex-col justify-start w-screen items-center pt-[90px] h-screen relative">
+      <Loader/>
       <div className='flex flex-row justify-start absolute top-[3.5%] left-[3.5%]'> 
           <Link href={'/'}><Close bg={'black'} size={'20px'}/></Link> 
       </div>
@@ -118,36 +131,18 @@ export default function ChangePass(props){
 
             {/* Form for changing password */}
             <form className="md:px-0 px-[3.5%]" onSubmit={handleSubmit}>
-              <div className="mb-4">
-                <label className="text-[16px]" htmlFor="newPassword">Enter new password:</label>
-                <input className="w-full border-gray-400 border-1 text-[16px] mt-1 h-[40px] px-3 outline-none rounded-[5px] bg-gray-100"
-                  type={showPassword ? 'text' : 'password'} // Toggle input type based on showPassword state
-                  id="newPassword"
-                  value={newPassword}
-                  placeholder="New Password"
-                  onChange={(e) => { setShowError(false); setNewPassword(e.target.value) }}
-                  required />
-              </div>
+              <TextInputWithIcon icon={<PadlockIcon/>} value={newPassword} onChange={(e) => { setShowError(false); setNewPassword(e.target.value)}} className={'mb-4'} placeholder="New Password" label="New Password" type={showPassword ? 'text' : 'password'} id="newPassword">
+                <button type="button" style={{height:'100%'}} className={`right-0 px-[5px] w-fit` } onClick={togglePasswordVisibility1} >
+                    {showPassword? <EyeOpen/>: <EyeClose/>}
+                </button>
+              </TextInputWithIcon>
+              <TextInputWithIcon icon={<PadlockIcon/>} value={repeatPassword} onChange={(e) => { setShowError(false); setRepeatPassword(e.target.value)}} className={'mb-4'} placeholder="Repeat Password" label="Repeat Password" type={showRepeatPassword ? 'text' : 'password'} id="repeatPassword">
+                <button type="button" style={{height:'100%'}} className={`right-0 px-[5px] w-fit` } onClick={togglePasswordVisibility2} >
+                    {showRepeatPassword? <EyeOpen/>: <EyeClose/>}
+                </button>
+              </TextInputWithIcon>
 
-              <div>
-                <label htmlFor="repeatPassword">Confirm new password:</label>
-                <input className="w-full border-gray-400 border-1 text-[16px] mt-1 h-[40px] px-3 outline-none rounded-[5px] bg-gray-100"
-                  type={showPassword ? 'text' : 'password'} // Toggle input type based on showPassword state
-                  id="repeatPassword"
-                  value={repeatPassword}
-                  placeholder="Repeat the New Password"
-                  onChange={(e) => { setShowError(false); setRepeatPassword(e.target.value)}}
-                  required />
-              </div>
-
-              <div className="mb-4 flex flex-row items-center mt-3">
-                <input className="p-3 accent-green-700 h-[20px] w-[20px]" type="checkbox" id="showPassword"
-                  checked={showPassword}
-                  onChange={(e) => setShowPassword(e.target.checked)} />
-                <label className="ml-2" htmlFor="showPassword">Show Password</label>
-              </div>
-
-              <Button disabled={isloading} type="submit" onClick={handleSubmit} size={"md"} className='w-[100%]'>{isloading?<Loader/>:'Change password'}</Button>
+              <Button disabled={isloading} type="submit" onClick={handleSubmit} size={"md"} className='w-[100%]'>{isloading?<ProcessLoader/>:'Change password'}</Button>
             </form>
           </>
         )}

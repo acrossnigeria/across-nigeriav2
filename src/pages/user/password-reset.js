@@ -2,13 +2,16 @@
 import { useState } from 'react';
 import axios from 'axios';
 import Close from '../../../public/images/icon/Close';
-import Loader from '@/components/ui/Loader';
+import ProcessLoader from '@/components/ui/ProcessLoader';
 import Link from 'next/link';
 import logo1 from "../../../public/images/logo1.png";
 import Image from 'next/image';
 import Button from '@/components/ui/Button';
 import ErrorCard from '@/components/ui/ErrorCard';
 import SuccessCard from '@/components/ui/SuccessCard';
+import TextInputWithIcon from '@/components/ui/TextInputWithIcon';
+import EmailIcon from '../../../public/images/icon/EmailIcon';
+import Loader from '@/components/Loader';
 
 const EmailForm = () => {
   const [ email, setEmail] = useState('');
@@ -94,7 +97,7 @@ const EmailForm = () => {
       const outgoing = "noreply <password-reset@acrossnig.com>";
       const recepient = findUser.data.email;
       const subject="Password Reset";
-      const resetCode= generateRandomString(8);
+      const resetCode= generateRandomString(15);
       const resetCodeUrl=window.location.origin+`/mail/`+resetCode;
       const content=  `<p>Hi ${findUser.data?.name?? ""} </p>
         <p>We received a request to reset the password for your account. If this was you, simply click the link below to create a new password:</p>
@@ -136,6 +139,7 @@ const EmailForm = () => {
 
   return (
     <div className='h-screen w-screen flex flex-col justify-start pt-[90px] items-center bg-gray-100'>
+      <Loader/>
       <div className='flex flex-row absolute top-[3.5%] left-[3.5%]'>
           <Link href={'/'}><Close bg={'black'} size={'20px'}/></Link> 
       </div>
@@ -154,18 +158,9 @@ const EmailForm = () => {
           </div>
           <ErrorCard className={'w-full'} error={errorMessage} showError={showError} setShowError={setShowError} />
           <SuccessCard className={'w-full'} message={successMessage} showSuccess={showSuccess} />
-          <label style={{alignSelf:'left', width:'100%', fontSize:'16px'}}>Email </label>
-            <input
-            placeholder='Enter your email address'
-              name="email"
-              type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              required
-              className="w-full border-gray-400 border-1 text-[16px] h-[40px] px-3 mt-2 outline-none rounded-[5px] bg-gray-100"
-            />
+          <TextInputWithIcon icon={<EmailIcon/>} onChange={(e) => { setShowError(false); setEmail(e.target.value) }} value={email} placeholder={'Enter your email address'} label={'Email Address'} className='w-full' type='email' />
           <div className="flex flex-row justify-between w-full mt-4">
-            <Button size={"md"} className='w-[100%]' onClick={allowSubmit? handleSubmit : (e)=>{e.preventDefault()}} disabled={loading}>{loading?<Loader size={'20px'} /> :'Submit'}</Button>
+            <Button size={"md"} className='w-[100%]' onClick={allowSubmit? handleSubmit : (e)=>{e.preventDefault()}} disabled={loading}>{loading?<ProcessLoader size={'20px'} /> :'Submit'}</Button>
           </div>
           <div className='mt-[15px]' style={{display:'flex', flexDirection:'column', alignItems:'center', width:'100%', paddingLeft:'20px', paddingRight:'20px'}}>
             <p style={{textAlign:'center', color:'grey', fontSize:'16px', visibility:(timerDisplay)}}>You can submit a new request in {timer}s</p>

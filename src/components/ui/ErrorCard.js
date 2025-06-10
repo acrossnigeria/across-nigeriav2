@@ -5,7 +5,7 @@ const ErrorCard = ({ error, showError, setShowError, className }) => {
         <>
         { showError && (
             <div className={`bg-red-100 text-red-700 p-2 rounded-[5px] mb-3 ${className}`}>
-                <div className="flex flex-row justify-between items-center">
+                <div className="flex flex-row justify-between items-start">
                     <div className="flex flex-row items-center">
                         <span className="text-[14px]">{error}</span>  
                     </div>  

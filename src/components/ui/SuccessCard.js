@@ -4,7 +4,7 @@ const SuccessCard = ({ message, showSuccess, className }) => {
   return (
         <>
         { showSuccess && (
-            <div className={`bg-green-200 border-[0.5px] border-green-500 text-black p-2 rounded-[5px] mb-3 ${className}`}>
+            <div className={`bg-green-100 border-[0.5px] border-green-500 text-black p-2 rounded-[5px] mb-3 ${className}`}>
                 <div className="flex flex-row justify-between items-center">
                     <div className="flex flex-row items-center gap-2">
                         <span className="text-[14px]">{message}</span>

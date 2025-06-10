@@ -18,6 +18,15 @@ import logo1 from "../../../public/images/logo1.png";
 import Image from 'next/image';
 import Next from '../../../public/images/icon/Next';
 import ReloadIcon from '../../../public/images/icon/ReloadIcon';
+import TextInput from '@/components/ui/TextInput';
+import EmailIcon from '../../../public/images/icon/EmailIcon';
+import TextInputWithIcon from '@/components/ui/TextInputWithIcon';
+import PadlockIcon from '../../../public/images/icon/PadlockIcon';
+import { FaPage4 } from 'react-icons/fa';
+import Button from '@/components/ui/Button';
+import ProcessLoader from '@/components/ui/ProcessLoader';
+import ErrorCard from '@/components/ui/ErrorCard';
+import SuccessCard from '@/components/ui/SuccessCard';
 
 const Register = () => {
    const nigeriaStates = [
@@ -55,22 +64,35 @@ const Register = () => {
   const [ toAuthPage, setToAuthPage ] = useState(false);
   const [toFormPage, setToFormPage ] = useState(true);
 
+  const [ loadingConfirm, setLoadingConfirm ] = useState(false);
   const [ confirmText, setConfirmText ] = useState('Confirm');
   const [ requestText, setRequestText ] = useState('Request code');
   const [ regText, setRegText ] = useState('Register');
-  const [loading, setLoading ] = useState(false);
+  const [ loading, setLoading ] = useState(false);
 
   const [ isOtpInvalid, setIsOtpInvalid ] = useState(false);
   const [ showConflictError, setShowConflictError ] = useState(false);
   const [ conflictError, setConflictError ] = useState("Unkwon error");
+  const [ showError, setShowError ] = useState(false);
   const [ activeInput, setActiveInput ] = useState(0);
   const [ boxArray, setBoxArray ] = useState(['', '', '', '', '', '']);
   const [ isOtpSent, setIsOtpSent ] = useState(false);
   const [ sendOtpError, setSendOtpError ] = useState(false);
+  const [ loadingOtpConfirm, setIsLoadingOtpConfirm ] = useState(false);
+  const [ toConfirmPageError, setConfirmPageError ] = useState('');
+  const [ showConfirmPageError, setShowConfirmPageError ] = useState(false);
+  const [ confirmOtpPageError, setConfirmOtpPageError ] = useState('');
+  const [ showConfirmOtpPageError, setShowConfirmOtpPageError ] = useState(false);
+  const [ isVerifyingOtp, setIsVerifyingOtp ] = useState(false);
   
   const [ timer, setTimer ] = useState(60);
   const [ timerDisplay, setTimerDisplay ] = useState(true);
   const [ allowSubmit, setAllowSubmit ] = useState(true);
+
+  const isFormFilled = () => {
+    const val = firstname.length && phone.length && lastname.length && dob.length && email.length && password.length && phone.length>11 && gender.length && residence.length && password.length>5 && password===confirmPassword && acceptTerms;
+    return val;
+  }
 
   // Update otp focus
   useEffect( () => {
@@ -136,25 +158,35 @@ const Register = () => {
 
   const toConfirmDetails = async (e) => {
     e.preventDefault();
-    setRegText('Loading...');
+    setShowConflictError(false);
+
+    if (/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) === false) {
+      handleRegFormError('Please enter a valid email address');
+      router.push('/account/reg#top');
+      return;
+    }
+    setLoadingConfirm(true);
     // check if account with email already exists
     try {
       const response = await axios.get(`/api/auth/checkUserConflict?email=${email}&phone=${phone}`);
 
       if (response.data.exists) {
-        setShowConflictError(true);
-        setConflictError(response.data.message);
-        setRegText('Register');
+        handleRegFormError(response.data.message);
+        setLoadingConfirm(false)
         router.push('/account/reg#top');
       } else {
         toConfirm();
-        setRegText('Register');
+        setLoadingConfirm(false)
       }
     } catch (err) {
-      console.log(err.message)
-      setRegText('Register');
+      setLoadingConfirm(false)
       alert('Network error: please check your internet connection and try again');
     }
+  }
+
+  const handleRegFormError = (error) => {
+      setShowConflictError(true);
+      setConflictError(error);
   }
 
   function allow () {
@@ -162,6 +194,7 @@ const Register = () => {
     setAllowSubmit(true);
     setTimerDisplay(false)
   }
+
   const count = setTimeout(() => {
       if (!allowSubmit) {
         const time = timer - 1 
@@ -176,40 +209,36 @@ const Register = () => {
 
   const sendOtp = async () => {
     const data = { email };
-    try {
-      const response = await axios.post('/api/verification/generate-otp', data)
-      const otpEmailTemplate = (otpCode) => { 
-        return ` <div style="font-family: Arial, sans-serif; max-width: 600px; margin: auto; padding: 20px; background: #ffffff; border-radius: 8px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);">
-          <div style="text-align: center; margin-bottom: 20px;">
-          <h1 style="color:rgb(1, 212, 85);">Your OTP Code</h1>
-          </div>
-          <p>Hello,</p>
-          <p>Thank you for using our service. To complete your request, please use the following One-Time Password (OTP):</p>
-          <p style="font-size: 24px; font-weight: bold; color:rgb(1, 212, 85); text-align: center; background: #f9f9f9; padding: 10px; border: 1px dashed #ddd; display: inline-block;">${otpCode}</p>
-          <p>This code is valid for the next <strong>10 minutes</strong> and can only be used once. If you did not request this code, please ignore this email.</p>
-          <p>For your security, please do not share this code with anyone.</p>
-          <p>Best regards,<br>The Across Nigeria Reality TV Show Team</p>
-          <hr>
-          <footer style="text-align: center; font-size: 14px; color: #666;">
-          &copy; ${new Date().getFullYear()} Acrossnig. All rights reserved.<br>
-          Need help? Contact us at <a href="mailto:support@acrossnig.com">support@acrossnig.com</a>
-          </footer>
-      </div>`
-      };
-      const content = otpEmailTemplate(response.data.token);
-      const dataEmail = { 
-        recepient: email,
-        subject: 'Your OTP Code for Acrossnig',
-        content,
-        heading: 'verification',
-      };
+    const response = await axios.post('/api/verification/generate-otp', data)
+    const otpEmailTemplate = (otpCode) => { 
+      return ` <div style="font-family: Arial, sans-serif; max-width: 600px; margin: auto; padding: 20px; background: #ffffff; border-radius: 8px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);">
+        <div style="text-align: center; margin-bottom: 20px;">
+        <h1 style="color:rgb(1, 212, 85);">Your OTP Code</h1>
+        </div>
+        <p>Hello,</p>
+        <p>Thank you for using our service. To complete your request, please use the following One-Time Password (OTP):</p>
+        <p style="font-size: 24px; font-weight: bold; color:rgb(1, 212, 85); text-align: center; background: #f9f9f9; padding: 10px; border: 1px dashed #ddd; display: inline-block;">${otpCode}</p>
+        <p>This code is valid for the next <strong>10 minutes</strong> and can only be used once. If you did not request this code, please ignore this email.</p>
+        <p>For your security, please do not share this code with anyone.</p>
+        <p>Best regards,<br>The Across Nigeria Reality TV Show Team</p>
+        <hr>
+        <footer style="text-align: center; font-size: 14px; color: #666;">
+        &copy; ${new Date().getFullYear()} Acrossnig. All rights reserved.<br>
+        Need help? Contact us at <a href="mailto:support@acrossnig.com">support@acrossnig.com</a>
+        </footer>
+    </div>`
+    };
+    const content = otpEmailTemplate(response.data.token);
+    const dataEmail = { 
+      recepient: email,
+      subject: 'Your OTP Code for Acrossnig',
+      content,
+      heading: 'verification',
+    };
 
-      const isEmailSent = await axios.post('/api/mail/mail', dataEmail );
-      console.log(isEmailSent.data.message)
-      return true;
-    } catch (err) {
-      return false;
-    }
+    const isEmailSent = await axios.post('/api/mail/mail', dataEmail );
+    console.log(isEmailSent.data.message)
+    return true;
   
   }
 
@@ -227,7 +256,7 @@ const Register = () => {
   }
 
   const requestNewOtp = async () => {
-    setRequestText('Requesting...')
+    setRequestText('Requesting...');
     try {
       const newOtpSent = await sendOtp();
       if (newOtpSent) {
@@ -243,19 +272,19 @@ const Register = () => {
         }, 10000);
       }
     } catch (err) {
-      setRequestText('Request code');
-      alert('Network error: please check your internet connection')
+      handleOtpConfirmPageError(err.message);
     }
 
   }
 
   const verifyOtp = async () => {
-    setConfirmText('Verifying...');
+    setIsVerifyingOtp(true);
+
     let otpCode = ''
     boxArray.map((val)=>{
         otpCode = otpCode.concat(val)
     });
-    console.log(otpCode)
+
     const data = { token:otpCode, email };
     let response;
     let isVerified;
@@ -273,23 +302,37 @@ const Register = () => {
         setConfirmText('Confirm');
       }
     } catch (err) {
-      alert('please check your internet connection');
-      setConfig('Confirm');
+      handleOtpConfirmPageError(err.message);
     }
+    setIsVerifyingOtp(false);
   }
 
+  // handle errors in OTP confirm page
+  const handleOtpConfirmPageError = (error) => {
+    setConfirmOtpPageError(error);
+    setShowConfirmOtpPageError(true);
+  }
+
+  // valiadtes user details in the form and moves user to the verification page
   const toVerificationPage = async () => {
-    setLoading(true);
-    const isOtpSent = await sendOtp();
-    if (isOtpSent) {
-      setLoading(false);
+    setIsLoadingOtpConfirm(true);
+
+    try {
+      await sendOtp();
       setAllowSubmit(false);
       setToAuthPage(true);
       setToConfirmPage(false);
-    } else {
-      setSendOtpError(true);
+      
+    } catch (error) {
+      handleConfirmPageError(error.message);
     }
+    setIsLoadingOtpConfirm(false)
 
+  }
+
+  const handleConfirmPageError = (error) => {
+    setConfirmPageError(error);
+    setShowConfirmPageError(true);
   }
 
   // Registration function
@@ -356,6 +399,7 @@ const Register = () => {
       setDayError(false)
     }else{setDayError(true)}
   };
+
   // handles change in year
   const handleYearChange = (e) => {
     const value = e.target.value;
@@ -385,8 +429,7 @@ const Register = () => {
     formatEnteredDate();
   }, [day,month, year,formattedDate]);
 
-  const {user}= state;
-  const  handleTermsCheckboxChange = (isChecked) => {setAcceptTerms(true)};// sets and unsets tac checkbox
+  const  handleTermsCheckboxChange = (val) => { setAcceptTerms(val) };// sets and unsets tac checkbox
   
   // show and hide password inputs
   const togglePasswordVisibility1 = () => {
@@ -414,127 +457,89 @@ const Register = () => {
   // }
 
   return (
-    <div className='flex flex-col bg-white'>
+    <div className='flex flex-col bg-gray-100'>
       <Loader/>
-      <div className={`${toAuthPage || toConfirmPage ? 'hidden':''} flex flex-row justify-end px-8 py-3`}>
-          <Link href={'/'}><Close/></Link> 
+      <div className={`${toAuthPage || toConfirmPage ? 'hidden':''} flex flex-row absolute justify-start top-[3.5%] left-[3.5%]`}>
+          <Link href={'/'}><Close size="20px" bg="black"/></Link> 
       </div>
+
       <div className={`${toFormPage?'':'hidden'} pt-[40px]`}>
+
         <div className='text-center flex flex-row justify-center gap-1 items-center'>
-          <Image src={logo1} alt='logo' placeholder='blur' className='h-[45px] w-[50px]' />
+          <Image src={logo1} alt='logo' placeholder='blur' className='h-[30px] w-[35px]' />
           <div className='flex flex-col justify-center items-start'>
-            <span className='text-[16px] font-bold text-green-700'>ACROSS NIGERIA</span>
-            <span className='text-[14px] text-green-500'>REALITY SHOW</span>
+            <span className='text-[14px] font-bold text-green-700'>ACROSS NIGERIA</span>
+            <span className='text-[12px] text-green-500'>REALITY SHOW</span>
           </div>
         </div>
 
+        <div id='top' className='flex flex-col max-w-[450px] px-4 mx-auto mt-7'>
+          <span className="text-center font-bold text-[20px]">Sign Up</span>
+          <span style={{lineHeight:'22px'}} className="text-center mt-1 text-gray-500 text-[16px]">Giveaways, game shows, and entertainment. Your journey starts here.</span>
+        </div>
+
         {/* <Layout> */}
-        <div id='top' className="mx-auto bg-gray-100 mt-[50px] border-t-1 border-t-gray-500 rounded-t-[30px] pb-[50px]">
+        <div className="mx-auto bg-gray-100 mt-[20px] border-1 border-gray-300 md:max-w-[450px] max-w-[95%] pb-[50px] mb-[100px]">
           {/* handleSubmit */}
           <form onSubmit={toConfirmDetails} className="md:max-w-[517px] flex px-4 flex-col mt-[20px] max-w-full mx-auto">
-            <div className='flex flex-col md:w-[100%] w-[300px] mx-auto mt-[5px]'>
-              <span className="text-center font-bold text-[19px]">Welcome!</span>
-              <span style={{lineHeight:'22px'}} className="text-center mt-1 mb-9 text-[16px]">Giveaways, game shows, and entertainment. Your journey starts here.</span>
-            </div>
-            <div id="conflictError" className={`${showConflictError?'':'hidden'} text-red-500 text-[14px]`}>{conflictError}</div>
-            <div className="mb-4">
-              <label htmlFor="name" className="block mb-2">Name</label>
-              <input
-                type="text"
-                placeholder='First name'
-                id="Name"
-                name="name"
-                value={firstname}
-                onChange={(e) => setFirstname(e.target.value)}
-                className="w-full border-gray-400 border-1 h-[45px] px-3 outline-none rounded-[15px] bg-gray-200"
-                required
-                autoFocus
-              />
-            </div>
-            <div className="mb-4">
-              <label htmlFor="surname" className="block mb-2">Surname</label>
-              <input
-                type="text"
-                id="Surname"
-                placeholder='Surname'
-                name="surname"
-                value={lastname}
-                onChange={ (e)=>setLastname(e.target.value) }
-                className="w-full border-gray-400 border-1 h-[45px] px-3 outline-none rounded-[15px] bg-gray-200"
-                required
-              />
-            </div>
-            <div className="mb-4">
-              <label htmlFor="surname" className="block mb-2">Email</label>
-              <input
-                type="text"
-                id="Email"
-                placeholder='email'
-                name="email"
-                value={email}
-                onChange={ (e)=>setEmail(e.target.value) }
-                className="w-full border-gray-400 border-1 h-[45px] px-3 outline-none rounded-[15px] bg-gray-200"
-                required
-              />
-            </div>
-    <div className='mb-4'>
-      <label htmlFor="dob" className="block mb-2">Date of Birth</label>
-          <div className="flex space-x-2 bg-gray-200 rounded-[15px] border contain flex-shrink">
-            <input
-              type="number"
-              value={day}
-              onChange={handleDayChange}
-              placeholder="Day"
-              className="col-span-1 border h-[48px] text-[18px] md:text-lg w-[50px] sm:w-32 md:w-32  block appearance-none bg-gray-100 pl-1 py-0
-              md:px-4 md:py-2 rounded-[15px] shadow leading-tight focus:outline-none focus:shadow-outline"
-            /><span className='text-3xl font-thin'>/</span>
-            <select
-              value={month}
-              onChange={(e) => setMonth(e.target.value)}
-              className="col-span-1 border text-[18px] text-gray-700 md:text-lg md:w-40 w-[120px] block appearance-none bg-gray-100 pl-1 py-0
-              md:px-4 md:py-2 rounded-[15px] leading-tight focus:outline-none focus:shadow-outline"
 
-            >
-              <option className='focus:bg-green-500 checked:bg-green-500' value="" disabled>-Select Month-</option>
-              <option className='focus:bg-green-500 checked:bg-green-500 hover:bg-green-500 accent-green-500' value="01">January</option>
-              <option className='focus:bg-green-500 checked:bg-green-500 hover:bg-green-500 accent-green-500' value="02">February</option>
-              <option className='focus:bg-green-500 checked:bg-green-500 hover:bg-green-500 accent-green-500' value="03">March</option>
-              <option className='focus:bg-green-500 checked:bg-green-500 hover:bg-green-500 accent-green-500' value="04">April</option>
-              <option className='focus:bg-green-500 checked:bg-green-500 hover:bg-green-500 accent-green-500' value="05">May</option>
-              <option className='focus:bg-green-500 checked:bg-green-500 hover:bg-green-500 accent-green-500' value="06">June</option>
-              <option className='focus:bg-green-500 checked:bg-green-500 hover:bg-green-500 accent-green-500' value="07">July</option>
-              <option className='focus:bg-green-500 checked:bg-green-500 hover:bg-green-500 accent-green-500' value="08">August</option>
-              <option className='focus:bg-green-500 checked:bg-green-500 hover:bg-green-500 accent-green-500' value="09">September</option>
-              <option className='focus:bg-green-500 checked:bg-green-500 hover:bg-green-500 accent-green-500' value="10">October</option>
-              <option className='focus:bg-green-500 checked:bg-green-500 hover:bg-green-500 accent-green-500' value="11">November</option>
-              <option className='focus:bg-green-500 checked:bg-green-500 hover:bg-green-500 accent-green-500' value="12">December</option>
-            </select><span className='text-3xl font-thin'>/</span>
-            <input
-              type="number"
-              value={year}
-              onChange={handleYearChange}
-              placeholder="Year"
-              className="col-span-1 border h-[48px] text-[18px] md:text-lg md:w-40 flex-grow w-full md:max-w-[140px] appearance-none bg-gray-100 px-2 
-              py-0 md:px-4 md:py-2 rounded-[15px] shadow leading-tight focus:outline-none focus:shadow-outline"
-            />
-          </div></div>
+            <ErrorCard error={conflictError} className={'mb-2'} setShowError={setShowConflictError} showError={showConflictError}/>
 
-        {yearError&&<span className='text-red-600 text-sm'>Please only enter Years not Earlier than 1900 and not later than {today.getFullYear()-18}</span>}  
-        {dayError&&<span className='text-red-600 text-sm'>Please only enter days between 1-31</span>}  
+            <div className='mb-4 flex flex-row justify-between items-center w-[100%]'>
+              <TextInput placeholder={'e.g Bola'} label={'First name'} className={'w-[48%]'} value={firstname} onChange={(e)=>{setShowError(false);setFirstname(e.target.value)}} />
+              <TextInput placeholder={'e.g Musa'} label={'Last name'} className={'w-[48%]'} value={lastname} onChange={(e)=>{setShowError(false);setLastname(e.target.value)}} />
+            </div>
+
+            <TextInputWithIcon icon={<EmailIcon/>} placeholder={'e.g bolamusa@gmail.com'} label={'Email address'} className={'mb-4'} value={email} onChange={(e)=>{setShowError(false);setEmail(e.target.value)}}/>
+
+            <div className='mb-4'>
+              <label htmlFor="dob" className="block text-[16px] ml-1 mb-1">Date of Birth</label>
+              <div className="flex justify-between items-center rounded-[15px] contain flex-row">
+                <input
+                  type="number"
+                  value={day}
+                  onChange={handleDayChange}
+                  placeholder="Day"
+                  className="h-[45px] text-[16px] w-[32%] bg-gray-100 px-2 py-1 rounded-[5px] leading-tight border-gray-300 border-[0.5px] outline-[0.5px] outline-green-500"
+                />
+
+                <select value={month}  onChange={(e) => setMonth(e.target.value)}className="h-[45px] text-[16px] w-[32%] bg-gray-100 px-2 py-1 rounded-[5px] leading-tight border-gray-300 border-[0.5px] outline-[0.5px] outline-green-500" >
+                  <option className='focus:bg-green-500 checked:bg-green-500 text-gray-400' value="" disabled>Month</option>
+                  <option className='focus:bg-green-500 checked:bg-green-500 hover:bg-green-500 accent-green-500' value="01">January</option>
+                  <option className='focus:bg-green-500 checked:bg-green-500 hover:bg-green-500 accent-green-500' value="02">February</option>
+                  <option className='focus:bg-green-500 checked:bg-green-500 hover:bg-green-500 accent-green-500' value="03">March</option>
+                  <option className='focus:bg-green-500 checked:bg-green-500 hover:bg-green-500 accent-green-500' value="04">April</option>
+                  <option className='focus:bg-green-500 checked:bg-green-500 hover:bg-green-500 accent-green-500' value="05">May</option>
+                  <option className='focus:bg-green-500 checked:bg-green-500 hover:bg-green-500 accent-green-500' value="06">June</option>
+                  <option className='focus:bg-green-500 checked:bg-green-500 hover:bg-green-500 accent-green-500' value="07">July</option>
+                  <option className='focus:bg-green-500 checked:bg-green-500 hover:bg-green-500 accent-green-500' value="08">August</option>
+                  <option className='focus:bg-green-500 checked:bg-green-500 hover:bg-green-500 accent-green-500' value="09">September</option>
+                  <option className='focus:bg-green-500 checked:bg-green-500 hover:bg-green-500 accent-green-500' value="10">October</option>
+                  <option className='focus:bg-green-500 checked:bg-green-500 hover:bg-green-500 accent-green-500' value="11">November</option>
+                  <option className='focus:bg-green-500 checked:bg-green-500 hover:bg-green-500 accent-green-500' value="12">December</option>
+                </select>
+
+                <input type="number" value={year} min={1900} onChange={handleYearChange} placeholder="Year" className="h-[45px] text-[16px] w-[32%] bg-gray-100 px-2 py-1 rounded-[5px] leading-tight border-gray-300 border-[0.5px] outline-[0.5px] outline-green-500"/>
+              </div>
+            </div>
+
+            {yearError&&<span className='text-red-600 text-sm'>Please only enter Years not Earlier than 1900 and not later than {today.getFullYear()-18}</span>}  
+            {dayError&&<span className='text-red-600 text-sm'>Please only enter days between 1-31</span>}  
             
             <div className="mb-4">
               <label htmlFor="phone" className="block mb-2">Phone Number</label>
-              <div className='w-full bg-gray-200 rounded-[15px] px-1 border-gray-400 border-1'>
+              <div className='w-full h-[45px] text-[16px] bg-gray-100 flex flex-row items-center rounded-[5px] leading-tight border-gray-300 border-[0.5px] outline-[0.5px] outline-green-500'>
               <PhoneInput 
               defaultCountry='ng'
               required
-              inputStyle={{fontSize:'18px', backgroundColor:'#e5e7eb', height:'48px', borderTop:'none', borderLeft:'1px solid gray', borderRight:'none', borderBottom:'none'}}
-              countrySelectorStyleProps={{ buttonStyle:{backgroundColor:'#e5e7eb', height:'48px', width:'100%', borderTop:'none', borderLeft:'none', borderBottom:'none', borderRadius:'15px'}}}
+              inputStyle={{fontSize:'18px', backgroundColor:' #f3f4f6', height:'40px', borderTop:'none', borderLeft:'1px solid #d1d5db', borderRight:'none', borderBottom:'none'}}
+              countrySelectorStyleProps={{ buttonStyle:{backgroundColor:' #f3f4f6', height:'40px', width:'100%', borderTop:'none', borderLeft:'none', borderBottom:'none'}}}
               onChange={ (phone)=>setPhone(phone)}
               name='phone'
               value={phone}/></div>
             </div>
-          <div className="mb-4">
+
+            <div className="mb-4">
               <label htmlFor="state" className="block mb-2">State of Residence</label>
               <select
                 id="residence"
@@ -542,19 +547,19 @@ const Register = () => {
                 value={residence}
                 placeholder='Residence'
                 onChange={ (e)=>setResidence(e.target.value) }
-                className="w-full border-gray-400 border-1 h-[45px] px-3 outline-none rounded-[15px] bg-gray-200"
-                required
-              >
+                className="w-full h-[45px] text-[16px] bg-gray-100 px-3 rounded-[5px] leading-tight border-gray-300 border-[0.5px] outline-[0.5px] outline-green-500"
+                required >
                 <option value="">Select State</option>
                 {nigeriaStates.map((residence) => (
                   <option className='text-[14px]'  key={residence} value={residence}>{residence}</option>
                 ))}
               </select>
             </div>
-            <div className='mb-4'></div>
-              <div className="mb-4">
+
+            <div className="mb-4">
               <label htmlFor="gender" className="block mb-2">Gender</label>
               <div className="flex text-[18px] text-gray-800 font-semibold ">
+
                 <label htmlFor="male" className="mr-4">
                   <input
                     type="radio"
@@ -567,6 +572,7 @@ const Register = () => {
                   />
                   Male
                 </label>
+
                 <label htmlFor="female">
                   <input
                     type="radio"
@@ -579,6 +585,7 @@ const Register = () => {
                   />
                   Female
                 </label>
+
               </div>
             </div>
             {/* <div className='mb-4'>
@@ -589,144 +596,115 @@ const Register = () => {
               placeholder='Input Referal code if you have one'/>
             </div> */}
             <div className="mb-4">
-              <label htmlFor="password" className="block mb-2">Password</label>
-              <div className=' bg-gray-200 flex flex-row justify-between w-full border-gray-400 border-1 h-[45px] px-3 outline-none rounded-[15px]'>
-                <input type={showPassword?'text':'password'}
-                  id="password"
-                  name="password"
-                  placeholder='Password'
-                  value={password}
-                  onChange={ (e)=>setPassword(e.target.value) }
-                  className="border outline-none  w-[75%] text-[19px] bg-gray-200 rounded px-4 py-2"
-                  required
-                />  <button
-                    type="button"
-                  className={`right-0 w-fit ${showPassword?"":""} px-2 rounded-r-md py-2 ` }
-                    onClick={togglePasswordVisibility1}
-                  >
-                    {showPassword ? <EyeOpen/> : <EyeClose/>}
-                  </button>
-                </div>
-                {password && password.length<6 && (
-                  <p className="text-red-500 font-thin ">Passwords must have Six(6) or more characters</p>
+              <TextInputWithIcon type={showPassword?'text':'password'} icon={<PadlockIcon/>} label={'Password'} placeholder={"Password"} value={password} onChange={(e)=>{setConflictError(false);setPassword(e.target.value)}}>
+                <button type="button" style={{height:'100%'}} className={`right-0 px-[5px] w-fit` } onClick={togglePasswordVisibility1} >
+                    {showPassword? <EyeOpen/>: <EyeClose/>}
+                </button>
+              </TextInputWithIcon>
+
+              {password && password.length<6 && (
+                <p className="text-red-500 font-thin text-[13px] ">Passwords must have Six(6) or more characters</p>
               )}
             </div>
+
             <div className="mb-4">
-              <label htmlFor="confirmPassword" className="block mb-2">Confirm Password</label>
-              <div className=' bg-gray-200 flex flex-row justify-between w-full border-gray-400 border-1 h-[45px] px-3 outline-none rounded-[15px]'>
-                <input
-                  type={showPassword2?'text':'password'}
-                  id="confirmPassword"
-                  name="confirmPassword"
-                  value={confirmPassword}
-                  placeholder='Confirm Password'
-                  onChange={ (e)=>setConfirmPassword(e.target.value) }
-                  className="w-[75%] text-[19px] outline-none bg-gray-200 rounded px-4 py-2"
-                  required
-                />
-                <button
-                    type="button"
-                    className={`right-0 w-fit ${showPassword2?"":""} px-2 rounded-r-md py-2` }
-                    onClick={togglePasswordVisibility2}
-                  >
-                    {showPassword2 ? <EyeOpen/> : <EyeClose/>}
+              <TextInputWithIcon type={showPassword2?'text':'password'} icon={<PadlockIcon/>} label={'Confirm password'} placeholder={"Confirm your password"} value={confirmPassword} onChange={(e)=>{setConflictError(false);setConfirmPassword(e.target.value)}}>
+                <button type="button" style={{height:'100%'}} className={`right-0 px-[5px] w-fit` } onClick={togglePasswordVisibility2} >
+                    {showPassword2? <EyeOpen/>: <EyeClose/>}
                 </button>
-              </div>
-          
-            </div>
-            <div> {confirmPassword &&
+              </TextInputWithIcon>
+
+              {confirmPassword &&
                 password !== confirmPassword && (
-                  <p className="animate-bounce text-red-700 font-thin">Passwords don&apos;t match</p>
-              )}</div>
-              <div className="mb-4">
+                  <p className="text-red-500 font-thin text-[13px]">Passwords don&apos;t match</p>
+              )}
+            </div>
+
+            <div className="mb-4">
                 <Checkbox handleTermsCheckboxChange={handleTermsCheckboxChange}/>
             </div>
-            <div style={{alignSelf:'center'}} className="flex w-full justify-between mt-2">
-              {firstname.length && phone.length && lastname.length && dob.length && email.length &&
-                password.length && phone.length>11 && gender.length && residence.length && password.length>5 && password===confirmPassword && acceptTerms? (
-                <button
-                  type="submit"
-                  className="text-white w-[100%] h-[45px] py-2 rounded-[30px] bg-green-700 hover:bg-green-900 active:bg-green-950"
-                >
-                  {regText}
-                </button>
-              ) : (
-                <button
-                  type="submit"
-                  disabled={true}
-                  className="text-white w-[100%] h-[45px] py-2 rounded-[30px] bg-gray-300"
-                >
-                  Sign Up
-                </button>
-              )}
-            </div>
-            <div className='mt-[30px] text-center'>Already have an Account? <Link className="text-green-500 underline font-semibold" href="#" onClick={()=>router.push("/account/login")}>Login</Link></div> 
+
+            <Button size={'md'} disabled = {!isFormFilled() | loadingConfirm} type='submit'>
+              {loadingConfirm?<ProcessLoader/>:"Register"}
+            </Button>
+
+            <div className='mt-[30px] text-[16px] text-center text-gray-500'>Already have an Account? <Link className="text-black underline" href="#" onClick={()=>router.push("/account/login")}>Login</Link></div> 
           </form>
         </div>
         {/* </Layout> */}
       </div>
 
         {/* Email aunthentication */}
-      <div className='flex flex-col max-w-[700px] h-screen w-[100%] px-4 md:pt-[50px] pt-[30px] pb-[50%]' style={{ display:(toAuthPage?'flex':'none'), alignSelf:'center'}}>
-        <div>
-          <button onClick={()=>{setToAuthPage(false);setToConfirmPage(true)}} className='flex flex-row justify-center items-center gap-2'>
+      <div className='flex flex-col mx-auto h-screen px-4 md:pt-[50px] pt-[30px bg-gray-100 mt-[20px] md:max-w-[450px] max-w-[95%]' style={{ display:(toAuthPage?'flex':'none'), alignSelf:'center'}}>
+
+        <div className='absolute z-50 top-[3.5%] left-[3.5%]'>
+          <button onClick={()=>{setToAuthPage(false);setToConfirmPage(true)}} className='flex flex-row justify-center cursor-pointer mb-[35px] hover:underline items-center gap-2'>
             <div className='rotate-180'>
-              <Next bg={'black'} size={'25px'}/>
+              <Next bg={'black'} size={'20px'}/>
             </div>
             <span className='md:flex hidden'>Go Back</span>
-            </button>
+          </button>
         </div>
 
-        <div className='flex mt-[30px] md:text-center text-left flex-col'>
-          <span className='text-[23px] font-bold mb-2'>Verify your identity</span>
-          <span>We sent you a 6-digit code via your email </span>
-          <span className='font-bold'>{email}</span>
+        <div className='flex mt-[50px] text-center flex-col'>
+          <span className='text-[22px] font-bold mb-2'>Verify your identity</span>
+          <span className='text-[16px] text-gray-500'>We sent you a 6-digit code via your email </span>
+          <span className='text-[16px] underline'>{email}</span>
         </div>
 
         <div>
-          <div className={`${isOtpInvalid?'opacity-100':'opacity-0'} text-[15px] text-red-500 ml-2`}>Invalid OTP code</div>
-           <div className="flex flex-row gap-2 w-[95%] mt-[10px] mx-auto justify-center items-center">
-              { boxArray.map( (_, index) => {
-                  return <input key={index} pattern="\d*" onKeyDown={(e) => handleKeyDown(e, index)} inputMode="numeric" id={`otp-${index}`} value={boxArray[index]} onChange={(e)=>{handleInput(e, index)}} className='h-[50px] md:w-[50px] w-[15%] border-[1px] border-gray-400 rounded-[5px] text-center bg-transparent' type="tel" maxLength={1} />
-              
-              })}
-            </div>
-          <div className={`${isOtpSent?'opacity-100':'opacity-0'} mt-1 text-[14px] text-green-500 ml-2`}>a new code has been sent to {email} ✔</div>
+          <ErrorCard className={'mt-2'} error={'Invalid Otp'} setShowError={setIsOtpInvalid} showError={isOtpInvalid}/>
+          <div className="flex flex-row gap-2 w-[95%] mt-5 mb-3 mx-auto justify-center items-center">
+            { boxArray.map( (_, index) => {
+                return <input key={index} pattern="\d*" onKeyDown={(e) => handleKeyDown(e, index)} inputMode="numeric" id={`otp-${index}`} value={boxArray[index]} onChange={(e)=>{handleInput(e, index)}} className='h-[50px] md:w-[50px] w-[15%] border-[1px] border-gray-400 rounded-[5px] text-center bg-transparent' type="tel" maxLength={1} />
+            
+            })}
+          </div>
+          <SuccessCard className={'mb-1'} message={`New otp code sent to ${email}`} showSuccess={isOtpSent}/>
           <div className='flex flex-col gap-2 justify-start'>
             <span className={`${timerDisplay?'opacity-100':'opacity-0'}`}>You can request a new OTP code in {timer}s </span>
             <button disabled={allowSubmit?false:true} onClick={requestNewOtp} className={`${allowSubmit?'hover:text-green-700 hover:scale-95':'text-gray-500 cursor-not-allowed'} w-fit text-green-600 font-semibold`}>{requestText}</button>
           </div>
         </div>
-        <div className='mt-[70px]'>
-          <button onClick={verifyOtp}  className={`text-white hover:bg-green-700 bg-green-600 rounded-[30px] w-[100%] h-[50px]`}>{confirmText}</button>
+        <div className='mt-[50px]'>
+          <Button className='w-full' onClick={verifyOtp} disabled={isVerifyingOtp} size={'md'}>
+            {isVerifyingOtp ? <ProcessLoader/> : "Confirm"}
+          </Button>
         </div>
 
       </div>
 
 
     {/* confirmation page */}
-      <div className='flex flex-col w-screen h-screen md:pt-[50px] px-4 pt-[30px] bg-gray-100' style={{ display:(toConfirmPage?'block':'none'), alignSelf:'center'}}>
+      <div className='flex flex-col mx-auto h-screen px-4 md:pt-[50px] pt-[50px] bg-gray-100 mt-[20px] md:max-w-[450px] max-w-[95%]' style={{ display:(toConfirmPage?'block':'none'), alignSelf:'center'}}>
         <div className='md:w-[400px] mx-auto w-[100%] flex flex-col justify-center'>
-          <div>
-            <button onClick={()=>{setToConfirmPage(false);setToFormPage(true)}} className='flex flex-row justify-center items-center gap-2'>
+
+          <div className='absolute z-50 top-[3.5%] left-[3.5%]'>
+            <button onClick={()=>{setToConfirmPage(false);setToFormPage(true)}} className='flex flex-row justify-center cursor-pointer mb-[35px] hover:underline items-center gap-2'>
               <div className='rotate-180'>
-                <Next bg={'black'} size={'25px'}/>
+                <Next bg={'black'} size={'20px'}/>
               </div>
               <span className='md:flex hidden'>Go Back</span>
-              </button>
+            </button>
           </div>
-          <div className="text-[23px] font-bold mt-[25px]">Confirm your details</div>
-          <div className='mt-[10px]'> <span>Please, we&apos;d like you to verify your details below.</span></div>
-          <div className='mt-[25px]'>
-            <div><span className='text-gray-600 font-semibold'>Name: </span>{firstname}</div>
-            <div className='mt-[5px]'><span className='text-gray-600 font-semibold'>Surname: </span>{lastname}</div>
-            <div className='mt-[5px]'><span className='text-gray-600 font-semibold'>Date of Birth: </span>{dob}</div>
-            <div className='mt-[5px]'><span className='text-gray-600 font-semibold'>Email: </span>{email}</div>
-            <div className='mt-[5px]'><span className='text-gray-600 font-semibold'>Phone Number: </span>{phone}</div>
-            <div className='mt-[5px]'><span className='text-gray-600 font-semibold'>Residence: </span>{residence}</div> 
-            <div className='mt-[5px]'><span className='text-gray-600 font-semibold'>Gender: </span>{gender}</div>
+
+          <div className="text-[22px] font-bold text-center">Confirm your details</div>
+          <div className='mb-5 text-gray-500 text-center'>
+            <span>Please, we&apos;d like you to verify your details below.</span>
           </div>
-          <button className=' bg-green-600 text-white h-[50px] rounded-[30px] w-[100%] mt-[70px]' onClick={toVerificationPage}>Continue</button>  
+          <ErrorCard error={toConfirmPageError} setShowError={setShowConfirmPageError} showError={showConfirmPageError}/>
+          <div className='mb-6'>
+            <div>First name: <span className='text-gray-600 font-semibold'> { firstname }</span></div>
+            <div className='mt-[7px]'>Last name: <span className='text-gray-600 font-semibold'> { lastname } </span></div>
+            <div className='mt-[7px]'>Date of birth: <span className='text-gray-600 font-semibold'> { dob } </span></div>
+            <div className='mt-[7px]'>Email address: <span className='text-gray-600 font-semibold'> { email } </span></div>
+            <div className='mt-[7px]'>Phone number: <span className='text-gray-600 font-semibold'> { phone } </span></div>
+            <div className='mt-[7px]'>Residence: <span className='text-gray-600 font-semibold'> { residence } </span></div> 
+            <div className='mt-[7px]'>Gender: <span className='text-gray-600 font-semibold'> { gender } </span></div>
+          </div>
+          <Button cl disabled={loadingOtpConfirm} size={'md'} onClick={toVerificationPage}>
+            { loadingOtpConfirm ? <ProcessLoader/> : "Continue" }
+          </Button>
         </div>
     
       </div>
