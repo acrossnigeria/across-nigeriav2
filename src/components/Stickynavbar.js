@@ -29,22 +29,22 @@ const StickyNavbar = ( { notification }) => {
             </Link>
             <div className="flex flex-row gap-[2rem]">
               <Link href={'/'}>
-                  <div className="flex text-[18px] h-full hover:text-green-400 hover:scale-110">
+                  <div className="flex text-[18px] h-full hover:text-green-300 hover:underline">
                     Home
                   </div>
               </Link>
               <Link href={'/giveaway-quiz'}>
-                  <div className="flex text-[18px] hover:text-green-400 hover:scale-110">
+                  <div className="flex text-[18px] hover:text-green-300 hover:underline">
                     Giveaway-quiz
                   </div>
               </Link>
               <Link href={'/shoutout'}>
-                  <div className="flex text-[18px] hover:text-green-400 hover:scale-110">
+                  <div className="flex text-[18px] hover:text-green-300 hover:underline">
                     Shout-out
                   </div>
               </Link>
               <Link href={'/about'}>
-                  <div className="flex text-[18px] hover:text-green-400 hover:scale-110">
+                  <div className="flex text-[18px] hover:text-green-300 hover:underline">
                     About
                   </div>
               </Link>
@@ -66,16 +66,14 @@ const StickyNavbar = ( { notification }) => {
               </div>
             ) : (
               <div style={{height:'fit-content', display:'flex', justifyContent:'space-between', alignItems:'center', gap:'1rem'}} >
-                <div className="flex  w-[100px] px-4 py-2 cursor-pointer items-center justify-center uppercase text-white transition duration-100  rounded-lg text-[12px]
-                ease-in-out hover:scale-125" >
-                  <Link href="/account/reg" className="cursor-pointer" legacyBehavior>
-                    <a>Register</a>
-                  </Link>
-                </div>
-                <div className="flex  w-[100px] px-4 py-2 cursor-pointer items-center justify-center uppercase text-white  bg-yellow-400 transition duration-100  rounded-[30px] text-[12px]
-                ease-in-out hover:border-white hover:py-1 hover:bg-transparent hover:border-2" >
+                <div className="flex cursor-pointer text-white w-[80px] transition duration-100 ease-in-out hover:underline" >
                   <Link href="/account/login" className="cursor-pointer" legacyBehavior>
                     <a>Login</a>
+                  </Link>
+                </div>
+                <div className="flex w-[150px] py-2 cursor-pointer items-center justify-center text-white border-1 border-white transition duration-100 rounded-[15px] ease-in-out hover:bg-black/30" >
+                  <Link href="/account/reg" className="cursor-pointer" legacyBehavior>
+                    <a>Register</a>
                   </Link>
                 </div>
               </div>

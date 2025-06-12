@@ -1,4 +1,4 @@
-const Button = ({ children, onClick, className = '', type = 'button', size, disabled = false }) => {
+const Button = ({ children, onClick, className = '', type = 'button', size, disabled = false, bg }) => {
     const sizeClasses = {
         "sm": 'text-sm px-2 py-1',
         "md": 'text-base px-4 py-2',
@@ -8,7 +8,7 @@ const Button = ({ children, onClick, className = '', type = 'button', size, disa
     <button
       type={type}
       onClick={disabled?()=>{}:onClick}
-      className={`${disabled?'bg-gray-400':'bg-green-600 hover:bg-green-500'} text-white ${sizeClasses[size]} rounded-[5px] flex flex-row justify-center items-center transition-colors duration-300 ${className}`}
+      className={`${ disabled?'bg-gray-400' : bg ? bg :`bg-green-600 hover:bg-green-500` } text-white ${sizeClasses[size]} rounded-[5px] flex flex-row justify-center items-center transition-colors duration-300 ${className}`}
     >
       {children}
     </button>

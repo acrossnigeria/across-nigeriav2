@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-const skitsSchema=new mongoose.Schema({
+const skitsSchema = new mongoose.Schema({
   name:{type:String, required:false},
     title:{type:String, required: true},
     email:{type:String, required:true},

@@ -85,7 +85,7 @@ const Navbar = ( { hideNav } ) => {
             </div>
             <button onClick={()=>{router.push("/account/reg")}} className="cursor-pointer" >
               <div className="flex w-[100px] h-[30px] cursor-pointer items-center 
-              justify-center text-green-900 bg-white hover:bg-gray-200 transition duration-100 rounded-[25px]
+              justify-center text-green-900 bg-white hover:bg-gray-200 transition duration-100 rounded-[5px]
               ease-in-out  hover:scale-105">
                 Register
               </div>
@@ -99,13 +99,13 @@ const Navbar = ( { hideNav } ) => {
                 {/* Menus */}
         <div className={`px-2 pt-1 ${hideNav?'hidden':'flex'} flex-row w-[100%] justify-start gap-2 bg-gray-100 overflow-x-scroll`}>
           {/* First Line Menus */}
-            <Link href="#products" className="rounded-[15px] px-4 py-1 text-[14px] w-[33%] flex flex-row justify-center items-center bg-gray-200 text-gray-500">
+            <Link href="#products" className="hover:underline px-4 py-1 text-[14px] w-[33%] flex flex-row justify-center items-center text-gray-800">
               Products
             </Link>
-            <Link href="/" className="rounded-[15px] px-4 py-1 w-[33%] text-[14px] flex flex-row justify-center items-center bg-gray-200 text-gray-500">
+            <Link href="/" className="hover:underline px-4 py-1 w-[33%] text-[14px] flex flex-row justify-center items-center text-gray-800">
               Home
             </Link>
-            <Link href="/about" className="rounded-[15px] px-4 w-[33%] text-[14px] flex flex-row justify-center items-center py-1 bg-gray-200 text-gray-500">
+            <Link href="/about" className="hover:underline px-4 w-[33%] text-[14px] flex flex-row justify-center items-center py-1 text-gray-800">
               About
             </Link>
         </div>

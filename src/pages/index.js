@@ -29,6 +29,7 @@ import SkitCompetitionClickCard from "@/components/SkitCompetitionClickCard";
 import VideoTestimonialComponent from "@/components/VideoTestimonialComponent";
 import GoldAdvertComponent from "@/components/GoldAdvertComponent";
 import SilverAdvertComponent from "@/components/SilverAdvertComponent";
+import ShowCard from "@/components/ShowCard";
 
 
 const inter = Inter({ subsets: ["latin"] });
@@ -122,25 +123,37 @@ export default function Home() {
           </div>
           <div className="md:w-[900px] mt-[25px] w-[100%] mx-auto">
             <Info/>
-            <div className="mb-[20px] md:text-left text-center mt-[30px]">
+
+            <div className="mb-[20px] md:text-left text-center mt-[20px]">
                 <span style={{lineHeight:'30px'}} className="md:text-[33px] text-[28px] font-semibold">Our Amazing Products.</span>
             </div>
-            <div className="mb-[40px] grid left-0 grid-cols-1 gap-[30px] border-b-1 pb-3 md:grid-cols-2 lg:grid-cols-2 md:gap-4 mx-auto items-center px-4">
-                { games.map((card)=>(<Cards key={card.title} isOpen={card.isOpen} date={card.date} title={card.title} 
-                link={card.link} image={card.image}/>))}
+
+            <div className="flex justify-center items-center md:px-0 px-[3%]">
+              <div className="grid grid-cols-1 md:grid-cols-2 md:gap-6 gap-4">
+                  { games.map((card)=>(<Cards key={card.title} isOpen={card.isOpen} date={card.date} title={card.title} 
+                  link={card.link} image={card.image}/>))}
+              </div>
             </div>
+
+            <div className="mb-[20px] md:text-left text-center mt-[20px]">
+                <span style={{lineHeight:'30px'}} className="md:text-[33px] text-[28px] font-semibold">Upcoming game show.</span>
+            </div>
+            <ShowCard/>
+
             <GoldAdvertComponent isLoading={isGettingAdverts} adverts={goldAdverts}/>
-            <div className="mb-[20px] md:text-left text-center mt-[30px]">
+
+            <div className="mb-[20px] md:text-left text-center mt-[20px]">
                 <span style={{lineHeight:'30px'}} className="md:text-[33px] text-[28px] font-semibold">Ongoing Skit Challenge.</span>
             </div>
             <SkitCompetitionClickCard/>
-            <div className="mb-[20px] md:text-left text-center mt-[30px]">
+
+            <div className="mb-[20px] md:text-left text-center mt-[20px]">
                 <span style={{lineHeight:'30px'}} className="md:text-[33px] text-[28px] font-semibold">Our Ambassador program.</span>
             </div>
             <div className="mb-[40px]">
               <AmbassadorInfo/>
             </div>
-            <div className="mb-[20px] md:text-left text-center mt-[30px]">
+            <div className="mb-[20px] md:text-left text-center mt-[20px]">
                 <span style={{lineHeight:'30px'}} className="md:text-[33px] text-[28px] font-semibold">Shout Outs.</span>
             </div>
             <div className="mb-[40px] flex flex-col gap-2 items-center">

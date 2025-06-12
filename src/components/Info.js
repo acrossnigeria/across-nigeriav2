@@ -42,14 +42,11 @@ const Info = () => {
     <div className="relative h-full  grid grid-cols-1 top-0 border-b-1 pb-1 px-3 border-b-gray">
         
       <div className="flex lg:w-full  w-full text-[35px] md:text-[50px] right-0   text-pretty">
-        <span className="w-full bg-clip-text bg-gradient-to-tr from-green-600 text-transparent to-green-200 font-bold tracking-wider">HOWFA?</span> 
+        <span className="w-full bg-clip-text bg-gradient-to-tr from-green-600 text-transparent to-green-200 font-bold">HOWFA?</span> 
       </div>
-      <p className="text-left text-[17px] mt-[4px] mb-[30px] text-gray-800">{data.paragraph2}</p>
-      <Link  href="/account/reg" style={{ display:( session?.user? 'none': 'flex')}} className="w-[100%] md:w-[300px] text-[18px] text-white rounded-[30px] gap-2 h-[45px] flex-row justify-center items-center bg-green-500 hover:bg-green-600">
-          <span>
-            Register Now
-          </span>
-          <Next size={'15px'} bg={'white'}/>
+      <p className="text-left text-[18px] mt-[4px] mb-[30px] text-gray-800">{data.paragraph2}</p>
+      <Link  href="/account/reg" style={{ display:( session?.user? 'none': 'flex')}} className="w-[100%] md:w-[300px] text-[18px] text-white rounded-[5px] gap-2 h-[45px] flex-row justify-center items-center bg-green-600 hover:bg-green-500">
+          <span> Register Now </span>
       </Link> 
       
       <div style={{gap:'10px'}} className="text-8xl mt-[30px] mb-1 mx-auto rounded-md justify-between flex">

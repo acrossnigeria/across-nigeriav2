@@ -479,7 +479,7 @@ const Register = () => {
         </div>
 
         {/* <Layout> */}
-        <div className="mx-auto bg-gray-100 mt-[20px] border-1 border-gray-300 md:max-w-[450px] max-w-[95%] pb-[50px] mb-[100px]">
+        <div className="mx-auto bg-gray-100 mt-[20px] border-1 border-gray-400 md:max-w-[450px] max-w-[95%] pb-[50px] mb-[100px]">
           {/* handleSubmit */}
           <form onSubmit={toConfirmDetails} className="md:max-w-[517px] flex px-4 flex-col mt-[20px] max-w-full mx-auto">
 
@@ -500,10 +500,10 @@ const Register = () => {
                   value={day}
                   onChange={handleDayChange}
                   placeholder="Day"
-                  className="h-[45px] text-[16px] w-[32%] bg-gray-100 px-2 py-1 rounded-[5px] leading-tight border-gray-300 border-[0.5px] outline-[0.5px] outline-green-500"
+                  className="h-[45px] text-[16px] w-[32%] bg-gray-100 px-2 py-1 rounded-[5px] leading-tight border-gray-400 border-[0.5px] outline-[0.5px] outline-green-500"
                 />
 
-                <select value={month}  onChange={(e) => setMonth(e.target.value)}className="h-[45px] text-[16px] w-[32%] bg-gray-100 px-2 py-1 rounded-[5px] leading-tight border-gray-300 border-[0.5px] outline-[0.5px] outline-green-500" >
+                <select value={month}  onChange={(e) => setMonth(e.target.value)}className="h-[45px] text-[16px] w-[32%] bg-gray-100 px-2 py-1 rounded-[5px] leading-tight border-gray-400 border-[0.5px] outline-[0.5px] outline-green-500" >
                   <option className='focus:bg-green-500 checked:bg-green-500 text-gray-400' value="" disabled>Month</option>
                   <option className='focus:bg-green-500 checked:bg-green-500 hover:bg-green-500 accent-green-500' value="01">January</option>
                   <option className='focus:bg-green-500 checked:bg-green-500 hover:bg-green-500 accent-green-500' value="02">February</option>
@@ -519,7 +519,7 @@ const Register = () => {
                   <option className='focus:bg-green-500 checked:bg-green-500 hover:bg-green-500 accent-green-500' value="12">December</option>
                 </select>
 
-                <input type="number" value={year} min={1900} onChange={handleYearChange} placeholder="Year" className="h-[45px] text-[16px] w-[32%] bg-gray-100 px-2 py-1 rounded-[5px] leading-tight border-gray-300 border-[0.5px] outline-[0.5px] outline-green-500"/>
+                <input type="number" value={year} min={1900} onChange={handleYearChange} placeholder="Year" className="h-[45px] text-[16px] w-[32%] bg-gray-100 px-2 py-1 rounded-[5px] leading-tight border-gray-400 border-[0.5px] outline-[0.5px] outline-green-500"/>
               </div>
             </div>
 
@@ -528,7 +528,7 @@ const Register = () => {
             
             <div className="mb-4">
               <label htmlFor="phone" className="block mb-2">Phone Number</label>
-              <div className='w-full h-[45px] text-[16px] bg-gray-100 flex flex-row items-center rounded-[5px] leading-tight border-gray-300 border-[0.5px] outline-[0.5px] outline-green-500'>
+              <div className='w-full h-[45px] text-[16px] bg-gray-100 flex flex-row items-center rounded-[5px] leading-tight border-gray-400 border-[0.5px] outline-[0.5px] outline-green-500'>
               <PhoneInput 
               defaultCountry='ng'
               required
@@ -547,7 +547,7 @@ const Register = () => {
                 value={residence}
                 placeholder='Residence'
                 onChange={ (e)=>setResidence(e.target.value) }
-                className="w-full h-[45px] text-[16px] bg-gray-100 px-3 rounded-[5px] leading-tight border-gray-300 border-[0.5px] outline-[0.5px] outline-green-500"
+                className="w-full h-[45px] text-[16px] bg-gray-100 px-3 rounded-[5px] leading-tight border-gray-400 border-[0.5px] outline-[0.5px] outline-green-500"
                 required >
                 <option value="">Select State</option>
                 {nigeriaStates.map((residence) => (

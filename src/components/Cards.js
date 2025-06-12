@@ -4,19 +4,19 @@ import Image from 'next/image';
 const Card = ( { title, image, link, date, isOpen } ) => {
 
   return (
-    <div style={{ flexDirection:'column', borderTop:'none'}} className={'border-l-gray-300 border-b-gray-300 w-[100%] md:w-[402px] border-b-3 border-l-3 bg-gradient-to-br from-gray-100 to-white rounded-[20px]'}>
+    <div style={{ flexDirection:'column', borderTop:'none'}} className={'border-green-300 w-[100%] shadow-lg md:w-[360px] md:h-[230px] h-fit border-1 bg-gradient-to-br from-gray-100 to-white rounded-[5px]'}>
       <Link href={link}>
-        <div className="relative px-6 h-[160px] md:h-[190px] w-[97%] md:w-[400px] container flex-col gap-0 items-center mx-auto rounded-lg md:max-w-xl hover:opacity-85 w-full md:w-200px] cursor-pointer bg-transparent">
-        <Image className="rounded-[20px]" src={image} alt={title} fill quality={50}/>
+        <div className="relative px-6 h-[160px] w-[100%] container flex-col gap-0 items-center mx-auto rounded-[6px] md:max-w-xl hover:opacity-85 md:w-200px] cursor-pointer bg-transparent">
+          <Image className="rounded-t-[6px]" src={image} alt={title} fill quality={50}/>
         </div>
       </Link>
     
-      <div className='justify-between px-[20px]' style={{ height:'70px', paddingBottom:'5px', paddingTop:'5px', display:'flex', flexDirection:'row'}}>
+      <div className='px-[20px] flex flex-row justify-between py-2 items-start' >
         <div className='flex flex-col'>
-          <span className="w-full text-[14px] text-green-700 font-semibold">{title}</span>
-          <span style={{fontSize:'14px', color:'black'}}>Starting: {date} </span>
+          <span className="w-full text-[14px] underline text-green-700 font-bold">{title}</span>
+          <span style={{fontSize:'12px', color:'black'}}>Starting: {date} </span>
         </div>
-        <Link href={link} className={`${isOpen?'bg-gradient-to-r hover:border-l-0 hover:border-b-0 from-green-400 border-b-2 border-b-green-500 border-l-2 border-l-green-500 to-yellow-400':'bg-gray-300 hover:cursor-default'} h-[39px] font-light md:h-[33px] flex justify-center items-center text-[18px] w-[120px] rounded-[18px] text-white`}>Join</Link>
+        <Link href={link} className={`${isOpen?'bg-green-600 hover:bg-green-500':'bg-gray-300 hover:cursor-default'} h-[39px] md:h-[33px] flex justify-center items-center text-[18px] w-[120px] rounded-[5px] text-white`}>Join</Link>
       </div>
     </div>
   );
