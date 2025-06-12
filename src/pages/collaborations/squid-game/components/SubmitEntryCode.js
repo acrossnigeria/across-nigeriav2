@@ -9,6 +9,7 @@ import { useSession } from 'next-auth/react';
 import Success from '@/pages/account/registration-success';
 import SuccessCard from '@/components/ui/SuccessCard';
 import ErrorCard from '@/components/ui/ErrorCard';
+import { useRouter } from 'next/router';
 
 export default function SquidGameEntryPage( { setUserValidated }) {
   const [ showModal, setShowModal ] = useState(false);
@@ -18,6 +19,7 @@ export default function SquidGameEntryPage( { setUserValidated }) {
   const [ showErrorMessage, setShowErrorMessage ] = useState(false);
   const [ validationSuccess, setValidationSuccess ] = useState(false);
 
+  const router = useRouter();
   const { data:session } = useSession();
 
   const handleError = ( error ) => {
@@ -48,8 +50,9 @@ export default function SquidGameEntryPage( { setUserValidated }) {
             setValidationSuccess(true);
 
             setTimeout(() => {
+                router.push('/collaborations/squid-game#top');
                 setUserValidated(2)
-            }, 3000);
+            }, 2000);
         }
 
     } catch (error) {

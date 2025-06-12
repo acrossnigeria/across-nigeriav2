@@ -48,6 +48,7 @@ const SquidGameHome = () => {
     
     return (
         <Layout>
+            <div id="top"></div>
             { displayPage === 0 && <PageLoading errorOccurred={errorOccurred} errorMessage={loadError} reload={reload} /> }
             { displayPage === 1 && <SubmitEntryCode setUserValidated={setDisplayPage}/> }
             { displayPage === 2 && <CodeSubmitted/> }
