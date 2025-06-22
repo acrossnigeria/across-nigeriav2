@@ -30,6 +30,7 @@ import VideoTestimonialComponent from "@/components/VideoTestimonialComponent";
 import GoldAdvertComponent from "@/components/GoldAdvertComponent";
 import SilverAdvertComponent from "@/components/SilverAdvertComponent";
 import ShowCard from "@/components/ShowCard";
+import TestimonialVideoCarousel from "@/components/TestimonialVideoCarousel";
 
 
 const inter = Inter({ subsets: ["latin"] });
@@ -185,7 +186,10 @@ export default function Home() {
             <div className="mb-[20px] md:text-left text-center mt-[30px]">
                 <span style={{lineHeight:'30px'}} className="md:text-[33px] text-[28px] font-semibold">Our Testimonials.</span>
             </div>
-            <VideoTestimonialComponent/>
+            {/* <VideoTestimonialComponent/> */}
+            <div className="mb-[40px]">
+              <TestimonialVideoCarousel/> 
+            </div>
           </div>
           <AddAccDetails userId={session?.user?._id} />
         </Layout> 

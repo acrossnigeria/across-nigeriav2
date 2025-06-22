@@ -72,6 +72,7 @@ export default function LoginScreen() {
         redirect: false,
         email,
         password,
+        callbackUrl: redirect || '/',
       });
 
       if (result.error) {
@@ -82,7 +83,6 @@ export default function LoginScreen() {
     }
     setLoading(false)
     if (session) {
-      console.log(session)
       router.push(redirect || '/'); // Replace "/" with your desired page
     }
   };

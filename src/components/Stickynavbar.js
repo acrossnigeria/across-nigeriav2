@@ -71,7 +71,7 @@ const StickyNavbar = ( { notification }) => {
                     <a>Login</a>
                   </Link>
                 </div>
-                <div className="flex w-[150px] py-2 cursor-pointer items-center justify-center text-white border-1 border-white transition duration-100 rounded-[15px] ease-in-out hover:bg-black/30" >
+                <div className="flex w-[150px] py-2 cursor-pointer items-center justify-center text-white border-1 border-white transition duration-100 rounded-[5px] ease-in-out hover:bg-black/30" >
                   <Link href="/account/reg" className="cursor-pointer" legacyBehavior>
                     <a>Register</a>
                   </Link>
