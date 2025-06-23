@@ -1,17 +1,18 @@
 import axios from "axios";
 import { useRouter } from "next/router";
-import React, { useEffect, useReducer, useState } from "react";
+import React, { useEffect, useReducer, useRef, useState } from "react";
 import PaystackBtn from "@/components/PaystackBtn"; 
 import { useSession } from "next-auth/react";
-import FileIcon from "../../../../public/images/icon/FileIcon";
 import DeleteIcon from "../../../../public/images/icon/DeleteIcon";
 import Link from "next/link";
 import CycleLoader from "@/components/CycleLoader";
 import VidThumbnail from "@/components/VidThumbnail";
-import UploadLoader from "@/components/UploadLoader";
 import Next from "../../../../public/images/icon/Next";
-import { CheckLine, CloudUpload, FileVideo, TriangleAlert, Upload } from "lucide-react";
+import { CheckLine, CloudUpload, FileVideo, Info, Layers2, Server, TriangleAlert, Upload } from "lucide-react";
 import ProcessLoader from "@/components/ui/ProcessLoader";
+import TextInput from "@/components/ui/TextInput";
+import TextAreaInput from "@/components/ui/TextAreaInput";
+import PaystackClick from "@/components/PaystackClick";
  
 function reducer(state, action) {
   switch (action.type) {
@@ -56,6 +57,7 @@ function reducer(state, action) {
 export default function UploadScreen() {
   const router = useRouter();
   const { data: session } = useSession();
+  const uploadRef = useRef(null);
 
   const [ dataUrl, setDataUrl] = useState(null);
   const [ selectedFile, setSelectedFile ] = useState(null);
@@ -147,6 +149,7 @@ export default function UploadScreen() {
       SetUploadProgress('1%');
     } catch (err) {
       showInfo('Failed to delete file, try again', 'error');
+      setIsDeleting(false);
     }
   }
   
@@ -186,21 +189,27 @@ export default function UploadScreen() {
 
     try {
         setLoadingUpload(true);
+        const uploadController = new AbortController();
+        uploadRef.current = uploadController;
 
         // Get Cloudinary signature
-        const { data: { signature, timestamp } } = await axios('/api/admin/cloudinary-sign?type=theaterSkitCompetition');
+        const { data: { signature, timestamp } } = await axios('/api/admin/cloudinary-sign?type=SKIT_ACROSS_NIGERIA');
 
         const formData = new FormData();
         formData.append('file', renamedFile, renamedFile.name);
         formData.append('signature', signature);
         formData.append('timestamp', timestamp);
-        formData.append('folder', 'theater_skit_uploads');
+        formData.append('folder', 'skit_across_nigeria_uploads');
         formData.append('api_key', process.env.NEXT_PUBLIC_CLOUDINARY_API_KEY);
 
         const { data } = await axios.post(url, formData, {
             onUploadProgress: (progressEvent) => {
                 const percentage = Math.round((progressEvent.loaded / progressEvent.total) * 100);
                 SetUploadProgress(`${percentage}%`);
+            },
+            signal:uploadController.signal,
+            headers: {
+                'Content-Type': 'multipart/form-data',
             },
         });
 
@@ -217,9 +226,22 @@ export default function UploadScreen() {
     }
   };
 
+  const cancelUpload = () => {
+    if (uploadRef.current) {
+      uploadRef.current.abort();
+      setLoadingUpload(false);
+      setDataUrl(null);
+      setSelectedFile(null);
+      SetUploadProgress('1%');
+      showInfo('Upload cancelled', 'neutral');
+    }
+  }
 
 
-  const videoUpload = async () => {
+
+  const videoUpload = async ( ref ) => {
+    modal('out');
+    setIsSaving(true);
     const data = { 
       userId:session?.user._id?? null, 
       email:session?.user.email?? null,
@@ -227,12 +249,12 @@ export default function UploadScreen() {
       vidCaption,
       vidTitle,
       vidLength,
+      paymentRef:ref?.reference
     }
     try {
-      setIsSaving(true);
-      const response = await axios.post(`/api/media/upload-theater-skit`,data);
+      const response = await axios.post(`/api/media/skit_across_nigeria/skit`,data);
       const vidId = response.data.id;
-      const url = `/theater-skit-across-nigeria/pages/skit-video/${vidId}`;
+      const url = `/skit-across-nigeria/pages/skit-video/${vidId}`;
       setSaveSuccess(true);
       router.push( {
         pathname:url,
@@ -261,18 +283,33 @@ export default function UploadScreen() {
   return (
       <div className="flex flex-col justify-center h-screen bg-gray-100 items-center">  
 
-          <div className="absolute top-[3%] w-fit flex flex-row gap-4 left-[3%] z-50">
-            <button onClick={()=>{router.push('/theater-skit-across-nigeria/pages')}} className="w-fit p-2 transition-all duration-500 ease-in-out hover:scale-105"><div className="rotate-180"><Next bg={'black'} size={'20px'}/></div></button>
-            <div className="flex font-bold flex-row items-center gap-3 text-[20px] text-green-600">{ loadingUpload ? "Uploading" : "Video upload" }</div>
+        <div className="absolute top-[3%] w-fit flex flex-row gap-4 left-[3%] z-50">
+          <button onClick={()=>{router.push('/skit-across-nigeria/pages')}} className="w-fit p-2 transition-all duration-500 ease-in-out hover:scale-105"><div className="rotate-180"><Next bg={'black'} size={'20px'}/></div></button>
+          <div className="flex font-bold flex-row items-center gap-3 text-[20px] text-green-600">{ loadingUpload ? "Uploading" : "Video upload" }</div>
+        </div>
+
+        { isSaving && (
+          <div className="z-[1000] flex flex-col gap-2 justify-center items-center h-screen w-screen bg-gray-100">
+            <Layers2 strokeWidth={1} size={'100px'} className="text-green-500"/>
+            <div className="flex flex-row items-center gap-2">
+              <ProcessLoader size={'25px'}/>
+              <span>Submiting your skit..</span>
+            </div>
+            <div className="absolute bottom-[15%] text-gray-500 flex flex-row items-center justify-between gap-2">
+              <Info size={'15px'}/>
+              <span className="text-[14px]">Please don&nbsp;t navigate from this page</span>
+            </div>
           </div>
-  
-        <div className="mx-auto align-middle flex flex-col h-fit max-w-[400px] w-[100%] md:px-0" >
-            <div className={`fixed z-[1000] text-[14px] ${displayMessage?'top-[70px] opacity-100':'top-[-10px] opacity-0'} ${messageType==='neutral'?'border-b-yellow-200':(messageType==='error'?'border-b-red-500':'border-b-green-600')} flex flex-row gap-2 items-center transition-all duration-300 ease-in-out border-[1px] border-gray-300 md:w-[50%] md:left-[25%] left-[10%] w-[80%] bg-white border-b-[2px] h-fit p-3 rounded-[5px]`}>
+        )}
+        
+        { !isSaving && (
+          <div className="mx-auto align-middle flex flex-col h-fit max-w-[400px] w-[100%] md:px-0" >
+            <div className={`fixed z-[2000] text-[14px] ${displayMessage?'top-[70px] opacity-100':'top-[-10px] opacity-0'} ${messageType==='neutral'?'border-b-yellow-200':(messageType==='error'?'border-b-red-500':'border-b-green-600')} flex flex-row gap-2 items-center transition-all duration-300 ease-in-out border-[1px] border-gray-300 md:w-[50%] md:left-[25%] left-[10%] w-[80%] bg-white border-b-[2px] h-fit p-3 rounded-[5px]`}>
               <span>{message}</span>
               { messageType==='error' ?(
-                <TriangleAlert strokeWidth={1} className="text-red-600"/>
+                <TriangleAlert strokeWidth={1} size={'20px'} className="text-red-600"/>
               ):(
-                <CheckLine strokeWidth={1} className="text-green-600"/>
+                <CheckLine strokeWidth={1} size={'20px'} className="text-green-600"/>
               )}
             </div>
 
@@ -314,7 +351,7 @@ export default function UploadScreen() {
                         <div className='w-[85%] mx-auto rounded-[5px] border-gray-500 border-2 h-[350px] flex flex-col justify-center items-center'>
                           <FileVideo strokeWidth={1} size={'180px'} className=" text-yellow-500"/>
                           <div className="flex flex-row items-center justify-center mt-5 mb-2 text-[15px] gap-1">
-                            <button className="flex flex-row gap-2 hover:text-blue-800 text-blue-600">
+                            <button onClick={selectVideo} className="flex flex-row gap-2 hover:text-blue-800 text-blue-600">
                               <Upload strokeWidth={2} size={'18px'} className="text-blue-600 mt-[1.5px]"/>
                               <span>Upload</span>
                             </button>
@@ -344,46 +381,41 @@ export default function UploadScreen() {
               )}
 
               { loadingUpload && (
-                <button onClick={enterVidDetails} className={`rounded-[5px] bg-red-600 hover:bg-red-700 border-1 h-[50px] md:h-[45px] flex flex-row gap-2 text-white items-center justify-center transition-all duration-300 ease-in-out w-[80%]`}>
+                <button onClick={cancelUpload} className={`rounded-[5px] bg-red-600 hover:bg-red-700 border-1 h-[50px] md:h-[45px] flex flex-row gap-2 text-white items-center justify-center transition-all duration-300 ease-in-out w-[80%]`}>
                   Cancel upload
                 </button>
               )}
 
             </div>
 
-        </div>
+          </div>
+        )}
+
          { showUpdateModal && 
           <div className={`h-screen w-screen transition-all duration-300 ease-in-out bg-black/10 flex flex-col justify-end ${modalBlur} fixed z-[1000] top-0`}>
-              <div className={`${modalHeight} ${modalOpacity} transition-all overflow-hidden duration-500 ease-in-out w-[100%] rounded-t-[30px] pt-[30px] md:px-[25%] px-[3%] bg-gray-100`}>
-                  <div className="mb-[20px]">
-                      <button onClick={()=>{modal('out')}} className="w-fit flex flex-row items-center transition-all duration-500 ease-in-out hover:scale-105 gap-2"><div className="rotate-180"><Next bg={'black'} size={'20px'}/></div>Go back</button>
+              <div className={`${modalHeight} ${modalOpacity} transition-all overflow-hidden duration-500 ease-in-out w-[100%] rounded-t-[5px] pt-7 bg-gray-100`}>
+                  <div className="mb-4 flex flex-row px-3 items-center gap-2">
+                      <button onClick={()=>{modal('out')}} className="w-fit transition-all duration-500 ease-in-out hover:scale-105 p-1"><div className="rotate-180"><Next bg={'black'} size={'20px'}/></div></button>
+                      <span className="font-semibold text-[18px]">Add title and caption to your skit</span>
                   </div>
-                  <span className="text-[23px] font-bold">Add a title and caption to your skit.</span>
-                  <div className="mt-[20px] text-[18px]">
-                      <div>
-                          <label htmlFor="bank">Title</label>
-                          <input 
-                              type="text"
-                              className="h-[48px] mt-[7px] px-3 outline-none w-[100%] bg-gray-200 rounded-[15px] border-1 border-gray-400"
-                              placeholder="A beautiful story..."
-                              onChange={(e) => {setVidTitle(e.target.value)}}
-                              value={vidTitle}
-                          />
+                  <div className="md:max-w-[400px] md:px-0 px-3 h-fit w-[100%] flex flex-col mx-auto">
+                    <div className="mt-[20px] flex flex-col text-[18px]">
+            
+                      <TextInput className={'mb-4'} label={'Title'} type={'text'} placeholder={"A beautiful story.."} onChange={(e) => {setVidTitle(e.target.value)}} value={vidTitle}/>
+                      <TextAreaInput onChange={(e) => {setVidCaption(e.target.value)}} value={vidCaption} label={'Caption'} className={'mb-6'} placeholder={'Write here...'}/>
+
+                      { isFormFilled ? (
+                        <PaystackClick buttonText={'Pay and submit'} callBack={videoUpload} email={session?.user?.email} amount={5000}/>
+                      ): (
+                        <button className={`h-[45px] w-[100%] gap-2 mb-2 flex flex-row justify-center items-center text-white bg-gray-400 cursor-not-allowed duration-500 ease-in-out rounded-[5px]`}>
+                          <span>Pay and submit</span>
+                        </button>
+                      )}
+                      <div className="text-gray-800 flex flex-row justify-center items-center gap-1 w-full mt-4 text-[14px]">
+                        <Info strokeWidth={1} size={'15px'}/>
+                        <span>Participation costs &#8358;5000</span>
                       </div>
-                      <div className="mt-[10px]">
-                          <label htmlFor="bank">Add caption</label>
-                          <textarea
-                              type="text"
-                              className="h-[100px] mt-[7px] p-3 outline-none w-[100%] bg-gray-200 rounded-[15px] border-1 border-gray-400"
-                              placeholder="Add caption here...."
-                              onChange={(e) => {setVidCaption(e.target.value)}}
-                              value={vidCaption}
-                          />
-                      </div>
-                      <button onClick={videoUpload} className={`h-[45px] w-[100%] gap-2 mt-[30px] flex flex-row justify-center items-center text-white ${isSaving ?'bg-gray-400':(isFormFilled?'bg-green-500 hover:scale-105 hover:bg-green-700 transition-all':'bg-gray-400')} duration-500 ease-in-out rounded-[30px]`}>
-                        { isSaving? <CycleLoader size={'20px'}/> : ''}
-                        <span>Submit</span>
-                      </button>
+                    </div>
                   </div>
               </div>
           </div>

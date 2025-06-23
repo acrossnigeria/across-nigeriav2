@@ -28,7 +28,7 @@ const Landing = () => {
 
     const toUploadPage = () => {
         if (session?.user?.name) {
-            router.push('/theater-skit-across-nigeria/pages/add-skit');
+            router.push('/skit-across-nigeria/pages/add-skit');
         } else {
             notLoggedIn('in');
         }
@@ -103,7 +103,7 @@ const Landing = () => {
             <div className="flex flex-col justify-center items-center gap-2 mb-7 md:w-[50%] w-[94%] mx-auto text-center">
                 <span className="font-bold">Got a Favorite? Vote & Support a Skit!</span>
                 <span className="text-gray-600">The more you vote, the closer they get to winning — ₦100 per vote, unlimited voting!</span>
-                <button onClick={()=>{router.push('/theater-skit-across-nigeria/pages')}} className="h-[45px] mt-[20px] w-[190px] bg-transparent hover:bg-gray-300 rounded-[5px] mx-auto border-1 border-black hover:scale-105 transition-all duration-250 ease-in-out">Watch Skits</button>
+                <button onClick={()=>{router.push('/skit-across-nigeria/pages')}} className="h-[45px] mt-[20px] w-[190px] bg-transparent hover:bg-gray-300 rounded-[5px] mx-auto border-1 border-black hover:scale-105 transition-all duration-250 ease-in-out">Watch Skits</button>
             </div>
             <span className="font-extrabold text-[30px] text-center text-pretty bg-gradient-to-bl from-green-400 to-green-700 bg-clip-text text-transparent ">PRIZES</span>
             <div className="flex md:flex-row flex-col justify-around gap-3 mt-[10px] mb-5 items-end px-[3%]">
@@ -147,7 +147,7 @@ const Landing = () => {
             <div className="flex flex-col justify-center items-center gap-2 mt-[25px] md:w-[50%] w-[90%] mx-auto text-center">
                 <span className="text-[19px] font-bold">🌟 Just want to watch skits!</span>
                 <span className="text-[15px] text-gray-500">Get entertained while you support your best skit</span>
-                <button onClick={()=>{router.push('/theater-skit-across-nigeria/pages')}} className="h-[45px] mt-5 w-[200px] bg-transparent hover:bg-gray-300 rounded-[5px] mx-auto border-1 border-black hover:scale-105 transition-all duration-250 ease-in-out">Watch Skits</button>
+                <button onClick={()=>{router.push('/skit-across-nigeria/pages')}} className="h-[45px] mt-5 w-[200px] bg-transparent hover:bg-gray-300 rounded-[5px] mx-auto border-1 border-black hover:scale-105 transition-all duration-250 ease-in-out">Watch Skits</button>
             </div>
             </div>
         </Layout>

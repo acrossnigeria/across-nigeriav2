@@ -1,4 +1,4 @@
-const TextInput = ({ icon, placeholder, value, onChange, label, className, children, type }) => {
+const TextInput = ({ placeholder, value, onChange, label, className, children, type }) => {
   return (
     <div className={`${className}`}>
         <label htmlFor="email" className="text-[16px] ml-1">{label}</label>

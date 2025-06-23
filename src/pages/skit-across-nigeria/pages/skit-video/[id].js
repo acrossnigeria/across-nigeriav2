@@ -103,7 +103,7 @@ export default function SkitScreen(props){
             try {
                 if ( params.id ) {
                     setLoadingData(true)
-                    const response = await axios.get(`/api/media/upload-theater-skit?id=${ params?.id }&type=single${user?`&user=${user}`:''}`);
+                    const response = await axios.get(`/api/media/skit_across_nigeria/skit?id=${ params?.id }&type=single${user?`&user=${user}`:''}`);
                     const videoData = response.data.vidData;
                     const voteData = response.data.voteData;
                     setIsUserVoted(voteData);

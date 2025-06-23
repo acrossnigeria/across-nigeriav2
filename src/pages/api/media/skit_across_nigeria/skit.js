@@ -51,7 +51,7 @@ const Handler = async ( req, res ) => {
 
     try {
         if ( req.method === "POST" ) {
-            const { userId, vidUrl, email, vidTitle, vidCaption, vidLength } = req.body;
+            const { userId, vidUrl, email, vidTitle, vidCaption, vidLength, paymentRef } = req.body;
             await db.connect();
             const skitObj = await SkitAcrossNigeriaSkit.create({ 
                 user:userId, 
@@ -59,14 +59,17 @@ const Handler = async ( req, res ) => {
                 email, 
                 vidTitle, 
                 vidCaption, 
-                vidLength
+                vidLength,
+                paymentRef
             });
             await db.disconnect();
 
             res.status(200).json( { success:true, id:skitObj._id } );
             
         } else if( req.method === 'GET' ) {
+
             const type = req.query.type;
+
             if ( type === "single" ) {
                 const id = req.query.id;
                 const user = req.query?.user;
@@ -78,23 +81,19 @@ const Handler = async ( req, res ) => {
                     res.status(404).json( { success:false, error:'No video found' } );
                 }
                 const votes = await SkitAcrossNigeriaVote.find( { theaterSkit:id });
-                if ( user ) {
-                    const { authorized, hasVotedThisSkit, hasVotedDifSkit } = await getEngagementData( user, id );
-                    voteData = { authorized, hasVotedThisSkit, hasVotedDifSkit, votes:votes.length };
-                } else {
-                    voteData = { authorized:false, hasVotedThisSkit:false, votes:votes.length };
-                };
+
                 await db.disconnect();
-                const vidUrl = video.vidUrl.replace("mp4", "m3u8");
+                const vidUrl = video?.vidUrl?.replace("mp4", "m3u8");
 
                 const vidData = {
-                    vidLength:video.vidLength, 
-                    vidTitle: video.vidTitle,
-                    vidLength:video.vidLength, 
-                    vidCaption:video.vidCaption,
+                    vidLength:video?.vidLength, 
+                    vidTitle: video?.vidTitle,
+                    vidLength:video?.vidLength, 
+                    vidCaption:video?.vidCaption,
                     vidUrl,
-                    fullname:`${video.user.name} ${video.user.surname}`,
-                    createdAt:timeAgo(video.createdAt)
+                    fullname:`${video?.user?.name} ${video?.user?.surname}`,
+                    createdAt:timeAgo(video?.createdAt),
+                    votes: votes.length,
                 };
                 res.status(200).json( { success:true, vidData, voteData });
             } else if ( type ==='multi') {
