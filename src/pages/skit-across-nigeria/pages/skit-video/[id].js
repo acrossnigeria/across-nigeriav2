@@ -25,7 +25,7 @@ import FbIcon from "../../../../../public/images/icon/FbIcon";
 import IgIcon from "../../../../../public/images/icon/IgIcon";
 import WhatappIcon from "../../../../../public/images/icon/WhatappIcon";
 import SkitSuccessModal from "@/components/SkitSuccessModal";
-import { ChevronRight, CirclePlus, Home, House, Share, Share2, UserCircle, Vote } from "lucide-react";
+import { ChevronRight, CirclePlus, Home, House, PlayCircle, Share, Share2, UserCircle, Vote } from "lucide-react";
 import ProcessLoader from "@/components/ui/ProcessLoader";
 
 // Dynamically import ReactPlayer with SSR disabled
@@ -77,6 +77,10 @@ export default function SkitScreen(props){
     const [ uploadModal, setUploadModal ] = useState(false);
     const [ uModalOpacity, setUModalOpacity ] = useState('opacity-100');
     const [ uBgOpacity, setUBgOpacity ] = useState('opacity-100');
+
+    // State to track player
+    const [ isPlaying, setIsPlaying ] = useState(true);
+    const [ hasProgressed, setHasProgressed ] = useState(0);
 
 
     const [isClient, setIsClient] = useState(false); // State to track client-side rendering
@@ -248,7 +252,11 @@ export default function SkitScreen(props){
         }
     }
 
-  return(
+    const handlePlayer = () => {
+        setIsPlaying(!isPlaying);
+    };
+
+    return(
         <div className='w-screen flex flex-col items-center bg-gray-100 min-h-screen'>
           <div className={`flex md:w-[50%] bg-gray-100 pb-[100px] mx-auto rounded-[20px] justify-center items-center gap-4 flex-col`}>
             { uploadModal && 
@@ -348,22 +356,36 @@ export default function SkitScreen(props){
                         </div>
                     ) : (
                         ( dataSuccess ? (
-                            <ReactPlayer
-                                url={data?.vidUrl} 
-                                pip={true} 
-                                width={'100%'} 
-                                height={'100%'} 
-                                controls={true}
-                                playsinline={true}
-                                config={{
-                                    file: {
-                                        attributes: {
-                                          disablekb: 1,  // Disable keyboard shortcuts
-                                          fullscreen: false,  // Disable fullscreen
+                            <div className="h-full w-full flex flex-col justify-center items-center">
+                                <div className="h-[5px] md:w-[700px] w-screen absolute top-0 self-start">
+                                    <div style={{width:`${hasProgressed * 100}%`}} className={`transition-width ease-in-out duration-350 h-full bg-green-500`}></div>
+                                </div>
+                                <div onClick={handlePlayer} className={`h-[530px] transition-all ease-in-out duration-350 ${isPlaying?"opacity-0":"opacity-100"} md:h-[350px] md:w-[700px] z-[1000] w-screen items-center justify-center flex flex-col bg-black/30 absolute`}>
+                                    <button>
+                                        <PlayCircle strokeWidth={1} size={'50px'} className="text-white"/>
+                                    </button>
+                                </div>
+                                <ReactPlayer
+                                    url={data?.vidUrl} 
+                                    pip={true} 
+                                    width={'100%'} 
+                                    height={'100%'} 
+                                    controls={false}
+                                    playsinline={true}
+                                    autoPlay={true}
+                                    playing={isPlaying}
+                                    loop={true}
+                                    onProgress={( { played })=>{setHasProgressed(played)}}
+                                    config={{
+                                        file: {
+                                            attributes: {
+                                            disablekb: 1,  // Disable keyboard shortcuts
+                                            fullscreen: false,  // Disable fullscreen
+                                            }
                                         }
-                                      }
-                                }}
-                                 />
+                                    }}
+                                    />
+                                </div>
                             ): (
                             <div className="flex flex-col h-full w-full justify-center items-center">
                                     <span>An error occurred</span>
