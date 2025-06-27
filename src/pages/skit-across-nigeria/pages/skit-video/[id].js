@@ -25,6 +25,8 @@ import FbIcon from "../../../../../public/images/icon/FbIcon";
 import IgIcon from "../../../../../public/images/icon/IgIcon";
 import WhatappIcon from "../../../../../public/images/icon/WhatappIcon";
 import SkitSuccessModal from "@/components/SkitSuccessModal";
+import { ChevronRight, CirclePlus, Home, House, Share, Share2, UserCircle, Vote } from "lucide-react";
+import ProcessLoader from "@/components/ui/ProcessLoader";
 
 // Dynamically import ReactPlayer with SSR disabled
 const ReactPlayer = dynamic(() => import('react-player'), { ssr: false });
@@ -247,7 +249,7 @@ export default function SkitScreen(props){
     }
 
   return(
-        <Layout hideNav={true} title={title}>
+        <div className='w-screen flex flex-col items-center bg-gray-100 min-h-screen'>
           <div className={`flex md:w-[50%] bg-gray-100 pb-[100px] mx-auto rounded-[20px] justify-center items-center gap-4 flex-col`}>
             { uploadModal && 
                 <SkitSuccessModal closeFunction={uploadSuccess} bgOpacity={uBgOpacity} modalOpacity={uModalOpacity}/>
@@ -339,10 +341,10 @@ export default function SkitScreen(props){
                     </button>
                 </div>
             }
-            <div className={`${isMobile ? 'h-[245px]' : 'h-[300px]'} w-[100%] bg-gray-900 md:mt-[15px]`}>
+            <div className={`h-[530px] md:h-[350px] md:w-[700px] w-screen flex flex-col justify-center item-center md:rounded-[5px] overflow-hidden bg-gray-900 md:mt-[5px]`}>
                 { typeof window !== "undefined" && ( loadingData ? ( 
-                        <div className="h-full w-full flex flex-col justify-center items-center">
-                            <CycleLoader size={'35px'}/>
+                        <div className="h-[500px] md:h-[350px] flex flex-col justify-center items-center">
+                            <ProcessLoader color={'white'} size={'35px'}/>
                         </div>
                     ) : (
                         ( dataSuccess ? (
@@ -375,88 +377,84 @@ export default function SkitScreen(props){
             <div className={`fixed ${shareNotifyBottom} ${shareNotifyOpacity} transition-all text-center ease-in-out duration-500 bg-gray-100 z-[2000] text-gray-600 rounded-[20px] md:w-fit w-[80%] border-1 border-green-500 h-fit p-3`}>
                 <span>Link copied, you can now share it</span>
             </div> 
-            <div className={`w-full md:w-[100%] flex flex-col px-[3%] md:px-0 md:pb-[80px] pb-[150px]`}>
-                <div className="flex flex-col mb-[10px] gap-1">
+            <div className={`w-full md:w-[700px] flex flex-col px-[3%] md:px-0 md:pb-[80px] pb-[150px]`}>
+                <div className="flex flex-col mb-2 px-2 gap-1">
                    { loadingData ? (
-                        <div className="h-[25px] w-full bg-gray-300 animate-pulse rounded-[25px]"></div>
+                        <div className="h-[25px] w-full bg-gray-200 animate-pulse rounded-[5px]"/>
                    ): (
-                        <span style={{lineHeight:'21px'}} className="text-[21px]">{modifyTitle(title)}</span>
+                        <span style={{lineHeight:'21px'}} className="text-[21px] font-bold">{modifyTitle(title)}</span>
                    )}
                 </div>
-                { loadingData ? (
-                    <>
-                        <div className="h-[32px] w-full bg-gray-200 animate-pulse rounded-[25px]"></div>
-                    </>
-                   ): (
-                    <span style={{lineHeight:'20px'}} onClick={descriptionView} className="hover:cursor-pointer text-gray-700">{ data?.vidCaption?.slice(0, descriptionLength) + (descriptionLength!==data?.vidCaption.length?'... See more':'') }</span>
-                )}
-                <div className="flex flex-row justify-start mt-[10px] items-center">
-                    <div className="flex flex-row text-[18px] items-center gap-2">
+                <div className="flex flex-row justify-between border-y-[0.5px] border-gray-300 py-2 items-center">
+                    <div className="flex flex-row md:text-[18px] text-[16px] items-center gap-2">
                         <Profile size={'40px'}/>
                         { loadingData ? (
-                            <div className="h-[32px] w-[140px] bg-gray-300 animate-pulse rounded-[25px]"></div>
+                            <div className="h-[32px] md:w-[120px] w-[50px] bg-gray-200 animate-pulse rounded-[5px]"></div>
                         ): (
-                            <span>{data?.fullname}</span>
+                            <div className="flex md:flex-row flex-col leading-tight text-gray-700">
+                                <span className="md:text-[18px] text-[13px] font-bold">{data?.fullname}</span> 
+                                <span className="font-bold text-black" >
+                                    • {isUserVoted?.votes} votes •
+                                </span>
+                            </div>
+                        )}
+
+                    </div>
+
+                    <div className="flex flex-row gap-2 w-fit items-center">
+                        { loadingData ? (
+                            <div className=" bg-gray-200 h-[35px] animate-pulse rounded-[5px] w-[100px] md:w-[100px] w-[15%]"></div>
+                        ):(
+                            <button onClick={castVote} className={`text-green-800 text-[14px] hover:bg-green-500 bg-green-300 md:w-[120px] w-fit px-2 flex flex-row gap-1 items-center justify-center h-[35px] rounded-[5px] hover:scale-105`}>
+                                <Vote className="text-black" size={'18px'} strokeWidth={1} />
+                                <span>Vote</span>
+                            </button>
+                        )}
+                        { loadingData ? (
+                            <div className=" bg-gray-200 h-[35px] animate-pulse rounded-[5px] md:w-[100px] w-[15%]"></div>
+                        ): (
+                            <button onClick={()=>{shareModal('in')}} className="md:w-[130px] text-[14px] w-fit px-2 flex flex-row gap-1 items-center justify-center h-[35px] bg-blue-300 rounded-[5px] text-gray-700 hover:scale-105 hover:bg-blue-400">
+                                <Share2 strokeWidth={1} size={'18px'}/> Share
+                            </button>
                         )}
                     </div>
                     
                 </div>
-                <div className="flex flex-row justify-between gap-3 w-[100%] pb-[5px] pt-[5px] items-center">
-                    { loadingData ? (
-                        <div className="h-[35px] md:w-[180px] w-[40%] bg-gray-300 animate-pulse rounded-[25px]"></div>
-                    ): (
-                        <div className="text-gray-800 bg-gray-300 md:w-[180px] w-[40%] h-[35px] flex flex-col justify-center items-center rounded-[25px] text-[14px] font-semibold" >{isUserVoted?.votes} votes</div>
-                    )}
-                    <div className="flex flex-row gap-3 w-[100%] justify-between items-center">
-                        { loadingData ? (
-                            <div className=" bg-gray-300 h-[35px] animate-pulse rounded-[25px] md:w-[130px] w-[48%] mt-[5px]"></div>
-                        ):(
-                            <button onClick={castVote} className={`${isUserVoted?.hasVotedThisSkit?'text-gray-300 bg-gray-800 hover:bg-gray-900':'text-gray-700 hover:bg-gray-400 bg-gray-300'} md:w-[130px] w-[48%] flex flex-row gap-2 items-center justify-center h-[35px] rounded-[25px] hover:scale-105`}>
-                                { showCantVote && 
-                                    <div className={`absolute ${cvOpacity} transition-all ease-in-out duration-500 text-[14px] p-2 flex flex-row justify-center items-center h-[80px] w-[150px] mt-[-80px] bg-black/40 text-[white] rounded-t-[20px] rounded-bl-[20px] ml-[-230px]`}>
-                                        <span>Oops! You can&apos;t vote for more than one Skit</span>{}
-                                    </div>
-                                }
-                                { voteLoading?(
-                                    <CycleLoader size={'20px'}/>
-                                ): (
-                                    isUserVoted?.hasVotedThisSkit?<VotedIcon/>:<VoteIcon/>
-                                )}
-                                <span>{ isUserVoted?.hasVotedThisSkit? 'Voted':'Vote' }</span>
-                            </button>
-                        )}
-                        { loadingData ? (
-                            <div className=" bg-gray-300 h-[35px] animate-pulse rounded-[25px] md:w-[130px] w-[48%] mt-[5px]"></div>
-                        ): (
-                            <button onClick={()=>{shareModal('in')}} className='md:w-[130px] w-[48%] flex flex-row gap-1 items-center justify-center h-[35px] bg-gray-300 rounded-[25px] text-gray-700 font-bold hover:scale-105 hover:bg-gray-400'><ShareIcon size={'20px'}/> Share</button>
-                        )}
-                    </div>
-                </div>
+
                 { loadingData ? (
-                    <div className=" bg-gray-300 rounded-[25px] w-[100%] animate-pulse mt-[5px] h-[20px]"></div>
-                ):(
-                    <div className="inline-flex border-b-1 border-b-green-500 rounded-[25px] w-[100%] text-[13px] text-gray-800 p-2 mt-[5px] gap-2 items-center"><ContestIcon />Contesting for Best Skit</div>
+                    <div className="h-[32px] w-full bg-gray-200 animate-pulse rounded-[5px]"/>
+                   ): (
+                    <div className="flex flex-col p-3 bg-gray-200 rounded-[5px] mt-4">
+                        <span className="text-black font-semibold text-[14px]">1 day ago</span>
+                        <span onClick={descriptionView} className="hover:cursor-pointer leading-relaxed text-gray-700">
+                            { data?.vidCaption.length > 200 ? (
+                                 data?.vidCaption?.slice(0, descriptionLength) + (descriptionLength!==data?.vidCaption.length?'...more':'')
+                            ) : (
+                                data?.vidCaption
+                            )}
+                        </span>
+                    </div>
                 )}
-                <Link href={'/theater-skit-across-nigeria/pages'} className="bg-green-600 rounded-[25px] flex flex-col justify-center items-center py-1 hover:bg-green-800 w-[150px] mt-[20px] text-white">Watch others</Link>
+                <Link href={'/skit-across-nigeria/pages'} className="bg-green-500 flex flex-row gap-2 items-center justify-center items-center h-[35px] hover:bg-green-800 w-[150px] mt-2 text-white">
+                    <span>Watch others</span>
+                    <ChevronRight size={'17px'} className="text-white"/>
+                </Link>
             </div> 
-            <div className={`flex mt-2 fixed bottom-0 rounded-t-[5px] w-[100%] z-[1000] bg-green-600 flex-row font-sans h-[50px] pb-1 items-end justify-around`}>
+            <div className={`flex md:hidden mt-2 fixed bottom-0 w-[100%] z-[1000] text-green-200 text-[13px] items-center bg-green-600 flex-row font-sans h-[50px] pb-1 items-end justify-around`}>
             {/* Second Line Menus */}
-                <Link style={{alignItems:'center'}} href="/" className="text-green-200 text-[13px] hover:scale-105 items-center flex flex-col justify-center">
-                <HomeIcon bg={'#bbf7d0'} size={'22px'}/>
-                Home
+                <Link style={{alignItems:'center'}} href="/" className="hover:scale-105 h-full items-center flex flex-col justify-center">
+                    <House size={'25px'} strokeWidth={1} className="text-white"/>
                 </Link>
-                <Link style={{alignItems:'center'}} href="/theater-skit-across-nigeria/pages/add-skit" className="text-green-200 text-[13px] pt-2 px-2 rounded-full bg-green-600 hover:scale-105 items-center flex flex-col justify-center">
-                <AddIcon bg={'#bbf7d0'} size={'30px'}/>
-                Add Skit 
+                <Link style={{alignItems:'center'}} href="/theater-skit-across-nigeria/pages/add-skit" className="h-full bg-green-600 hover:scale-105 items-center flex flex-col justify-center">
+                    <CirclePlus size={'25px'} strokeWidth={1} className="text-white"/>
                 </Link>
-                <Link style={{alignItems:'center'}} href="//theater-skit-across-nigeria/pages/creator" className="text-green-200 text-[13px] hover:scale-105 items-center flex flex-col justify-center">
-                <ProfileIcon size={'22px'}/>
-                you
+                <Link style={{alignItems:'center'}} href="//theater-skit-across-nigeria/pages/creator" className="hover:scale-105 h-full items-center flex flex-col justify-center">
+                    <UserCircle size={'25px'} strokeWidth={1} className="text-white"/>
                 </Link>
             </div>     
           </div>
      
-        </Layout>
+        </div>
   )
 }
 

@@ -253,9 +253,10 @@ const notLoggedIn = (transiton) => {
               </div>
             }
         
-            <h2 className="text-[22px] mt-6 ml-4 font-bold mb-1 ">All skits</h2>
+            <h2 className="text-[22px] mt-6 ml-4 font-bold mb-2 ">All skits</h2>
             { !isGettingSkits &&
-              <div className="flex-wrap flex md:flex-row flex-col gap-[25px] md:gap-[20px] border-t-1 border-t-gray-300 justify-center pt-4">
+            <div className='flex flex-row justify-center pt-4 border-t-1 border-t-green-800 items-center w-full'>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-6xl">
                 { currentSkits?.length > 0 ? (
                   currentSkits.map((skit) => (
                     <VideoCard key={skit.id} watch={watch} content={skit}/>
@@ -273,6 +274,7 @@ const notLoggedIn = (transiton) => {
                 )
                 }
               </div>
+            </div>
             }
             { isGettingSkits &&
               <div className="flex-wrap flex md:flex-row flex-col gap-[25px] md:gap-[20px] border-t-1 border-t-gray-300 justify-center pt-[6px]">

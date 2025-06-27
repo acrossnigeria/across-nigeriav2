@@ -1,13 +1,13 @@
 import Link from "next/link";
 import Image from "next/image";
-import OptionsIcon from "../../public/images/icon/OptionsIcon";
+import { EllipsisVertical } from "lucide-react";
 import Profile from "../../public/images/icon/Profile";
 import axios from "axios";
 import { useEffect, useState } from "react";
 
 export default function VideoCard( { content }) {
     const [ thumbnailUrl, setThumbnailUrl ] = useState(null);
-    const link = `/theater-skit-across-nigeria/pages/skit-video/${content?.id}?isNew=false`;
+    const link = `/skit-across-nigeria/pages/skit-video/${content?.id}?isNew=false`;
 
     const getThumbnail = async () => {
         const parts = content.vidUrl.split("/");
@@ -38,9 +38,9 @@ export default function VideoCard( { content }) {
     return(
             <div className="flex flex-col items-center h-[300px] md:w-[350px] w-full">
                 { thumbnailUrl ? (
-                    <Link className="w-[100%] hover:opacity-85 flex flex-col" href={link}>
+                    <Link className="w-fit rounded-[5px] overflow-hidden hover:rounded-none transition-all duration-300 ease-in-out hover:opacity-85 flex flex-row justify-end" href={link}>
                         <Image 
-                        className="h-[225px] w-full p-0" 
+                        className="h-[225px] brightness-125 transition-all ease-in-out duration-250 w-full p-0" 
                         width={225}
                         height={100}
                         src={thumbnailUrl} 
@@ -59,7 +59,7 @@ export default function VideoCard( { content }) {
                         </div>
                     </Link>
                 )}
-                <div className="w-full flex flex-row items-start justify-between gap-2 pt-[10px] px-2">
+                <div className="w-full flex flex-row items-start justify-between gap-2 pt-[10px]">
                     <div className="flex flex-row gap-2 items-start">
                         <Profile size={'45px'}/>
                         <div className="flex flex-col">
@@ -67,12 +67,17 @@ export default function VideoCard( { content }) {
                                 <Link href={link} style={{lineHeight:'19px'}} className="text-[15px] font-semibold hover:opacity-70 duration-300 transition-all ease-in-out">{title.length>35?title.slice(0, 35).concat('..'):title}</Link>
                             </div>
                             <span style={{lineHeight:'19px'}} className="text-gray-700 text-[14px]">
-                                <span >{content?.fullname} • </span>
+                                <span >{content?.fullname} </span>
+                            </span>
+                            <span style={{lineHeight:'19px'}} className="text-gray-700 text-[14px]">
+                                <span >200 votes • </span>
                                 <span>{content?.createdAt}</span>
                             </span>
                         </div>
                     </div>
-                    <button className="hover:scale-110 hover:opacity-50"><OptionsIcon/></button>
+                    <button className="hover:scale-110 w-fit text-black hover:opacity-50">
+                        <EllipsisVertical strokeWidth={2} size={'20px'}/>
+                    </button>
                    
                 </div>
             </div>
