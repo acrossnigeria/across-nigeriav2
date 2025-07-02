@@ -8,7 +8,7 @@ const TextAreaInput = ({ placeholder, value, onChange, label, className, childre
               placeholder={placeholder}
               value={value}
               onChange={onChange}
-              className="w-full h-[100px] border-0 text-[16px] px-2 rounded-[5px] outline-none bg-transparent"
+              className="w-full h-[100px] border-0 text-[16px] px-2 rounded-[3px] outline-none bg-transparent"
           />
           {children}
       </div>

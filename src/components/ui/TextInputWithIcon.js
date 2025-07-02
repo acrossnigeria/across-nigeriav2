@@ -11,7 +11,7 @@ const TextInputWithIcon = ({ icon, placeholder, value, onChange, label, classNam
               placeholder={placeholder}
               value={value}
               onChange={onChange}
-              className="flex-grow flex-1 border-0 text-[16px] h-[100%] px-3 rounded-[5px] outline-none bg-transparent pl-2"
+              className="flex-grow flex-1 border-0 text-[16px] h-[100%] px-3 rounded-[3px] outline-none bg-transparent pl-2"
           />
           {children}
       </div>

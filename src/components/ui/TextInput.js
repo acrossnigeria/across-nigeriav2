@@ -8,7 +8,7 @@ const TextInput = ({ placeholder, value, onChange, label, className, children, t
               placeholder={placeholder}
               value={value}
               onChange={onChange}
-              className="flex-grow flex-1 w-full border-0 text-[16px] h-[100%] px-2 rounded-[5px] outline-none bg-transparent"
+              className="flex-grow flex-1 w-full border-0 text-[16px] h-[100%] px-2 rounded-[3px] outline-none bg-transparent"
           />
           {children}
       </div>

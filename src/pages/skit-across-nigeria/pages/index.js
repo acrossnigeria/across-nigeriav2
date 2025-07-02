@@ -2,19 +2,16 @@ import Layout from '@/components/Layout';
 import React, { useEffect, useState } from 'react';
 import VideoCard from '@/components/VideoCard';
 import { useRouter } from 'next/router';
-import Link from 'next/link'; 
 import TopSkitCard from '@/components/TopSkitCard';
 import VideoIcon from '../../../../public/images/icon/VideoIcon';
 import axios from 'axios';
 import VideoCardLoader from '@/components/VideoCardLoader';
 import ReloadIcon from '../../../../public/images/icon/ReloadIcon';
-import AddIcon from '../../../../public/images/icon/AddIcon';
-import HomeIcon from '../../../../public/images/icon/HomeIcon';
-import ProfileIcon from '../../../../public/images/icon/ProfileIcon';
 import { useSession } from 'next-auth/react';
 import logo1 from "../../../../public/images/logo1.png";
 import Close from "../../../../public/images/icon/Close";
 import Image from 'next/image';
+import BottomNav from '../components/BottomNav';
 
 
 function SkitsPage() {
@@ -293,23 +290,7 @@ const notLoggedIn = (transiton) => {
 
           </div>
         }
-       { session?.user?.name &&
-        <div className={`flex mt-2 fixed bottom-0 rounded-t-[5px] w-[100%] z-[1000] bg-green-600 flex-row font-sans h-[50px] pb-1 items-end justify-around`}>
-            {/* Second Line Menus */}
-              <Link style={{alignItems:'center'}} href="/" className="text-green-200 text-[13px] hover:scale-105 items-center flex flex-col justify-center">
-                <HomeIcon bg={'#bbf7d0'} size={'22px'}/>
-                Home
-              </Link>
-              <Link style={{alignItems:'center'}} href="/skit-across-nigeria/pages/add-skit" className="text-green-200 text-[13px] pt-2 px-2 rounded-full bg-green-600 hover:scale-105 items-center flex flex-col justify-center">
-                <AddIcon bg={'#bbf7d0'} size={'30px'}/>
-                Add Skit 
-              </Link>
-              <Link style={{alignItems:'center'}} href="/skit-across-nigeria/pages/creator" className="text-green-200 text-[13px] hover:scale-105 items-center flex flex-col justify-center">
-                <ProfileIcon size={'22px'}/>
-                you
-              </Link>
-          </div>
-        }
+       { session?.user?.name && <BottomNav/> }
       </div>
     </Layout>
   );

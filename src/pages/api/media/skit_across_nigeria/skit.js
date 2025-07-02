@@ -73,14 +73,19 @@ const Handler = async ( req, res ) => {
             if ( type === "single" ) {
                 const id = req.query.id;
                 const user = req.query?.user;
-                let voteData;
 
                 await db.connect();
                 const video = await SkitAcrossNigeriaSkit.findById(id).populate('user', 'name surname');
                 if (!video) {
                     res.status(404).json( { success:false, error:'No video found' } );
                 }
-                const votes = await SkitAcrossNigeriaVote.find( { theaterSkit:id });
+                let votes = 0;
+                const voteDocs = await SkitAcrossNigeriaVote.find( { skitId:id });
+                voteDocs?.map( (voteDoc) => {
+                    votes+=voteDoc?.votes;
+                });
+                console.log(votes);
+
 
                 await db.disconnect();
                 const vidUrl = video?.vidUrl?.replace("mp4", "m3u8");
@@ -93,9 +98,9 @@ const Handler = async ( req, res ) => {
                     vidUrl,
                     fullname:`${video?.user?.name} ${video?.user?.surname}`,
                     createdAt:timeAgo(video?.createdAt),
-                    votes: votes.length,
+                    votes,
                 };
-                res.status(200).json( { success:true, vidData, voteData });
+                res.status(200).json( { success:true, vidData });
             } else if ( type ==='multi') {
 
                 await db.connect();
