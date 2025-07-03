@@ -19,7 +19,7 @@ const NumberInputWithIcon = ({ value, setChange, label, className, children }) =
     return (
         <div className={`${className}`}>
             <label htmlFor="email" className="text-[16px] ml-1">{label}</label>
-            <div className="flex flex-row items-center mt-1 justify-center gap-2 focus-within:border-green-500 transition-all border-gray-400 border-[0.5px] h-[45px] outline-green-500 rounded-[5px] p-2 w-full">
+            <div className="flex flex-row items-center mt-1 justify-center gap-2 focus-within:border-green-500 transition-all border-gray-400 border-[0.5px] h-[45px] outline-green-500 rounded-[5px] p-2 px-3 w-full">
                 <input
                     type={"number"}
                     value={value}
