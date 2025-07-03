@@ -8,10 +8,10 @@ const BottomNav = () => {
             <Link style={{alignItems:'center'}} href="/" className="hover:scale-105 h-full items-center flex flex-col justify-center">
                 <House size={'25px'} strokeWidth={1} className="text-white"/>
             </Link>
-            <Link style={{alignItems:'center'}} href="/theater-skit-across-nigeria/pages/add-skit" className="h-full bg-green-600 hover:scale-105 items-center flex flex-col justify-center">
+            <Link style={{alignItems:'center'}} href="/skit-across-nigeria/pages/add-skit" className="h-full bg-green-600 hover:scale-105 items-center flex flex-col justify-center">
                 <CirclePlus size={'25px'} strokeWidth={1} className="text-white"/>
             </Link>
-            <Link style={{alignItems:'center'}} href="/theater-skit-across-nigeria/pages/creator" className="hover:scale-105 h-full items-center flex flex-col justify-center">
+            <Link style={{alignItems:'center'}} href="/skit-across-nigeria/pages/creator" className="hover:scale-105 h-full items-center flex flex-col justify-center">
                 <UserCircle size={'25px'} strokeWidth={1} className="text-white"/>
             </Link>
         </div> 

@@ -109,7 +109,11 @@ const Handler = async ( req, res ) => {
                 const allvideosSort = await Promise.all(
                     videos.map(async (e) => {
                       const vidId = e._id;
-                      const votes = await SkitAcrossNigeriaVote.find({ theaterSkit: vidId });
+                      const voteDocs = await SkitAcrossNigeriaVote.find({ skitId: vidId });
+                      let votes = 0;
+                      voteDocs?.map( ( voteDoc ) => {
+                        votes += voteDoc?.votes;
+                      })
                   
                       return {
                         vidLength: e.vidLength,
