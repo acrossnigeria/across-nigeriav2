@@ -250,9 +250,9 @@ const notLoggedIn = (transiton) => {
               </div>
             }
         
-            <h2 className="text-[22px] mt-6 ml-4 font-bold mb-2 ">All skits</h2>
+            <h2 className="text-[22px] mt-6 ml-4 font-bold mb-3 ">All skits</h2>
             { !isGettingSkits &&
-            <div className='flex flex-row justify-center pt-4 border-t-1 border-t-green-800 items-center w-full'>
+            <div className='flex flex-row justify-center pt-5 border-t-1 border-t-green-800 items-center w-full'>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-6xl">
                 { currentSkits?.length > 0 ? (
                   currentSkits.map((skit) => (

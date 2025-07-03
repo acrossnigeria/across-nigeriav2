@@ -36,9 +36,9 @@ export default function VideoCard( { content }) {
     const title = modifyTitle(content.vidTitle);
 
     return(
-            <div className="flex flex-col items-center h-[300px] md:w-[350px] w-full">
+            <div className="flex flex-col items-center h-[300px] py-2 md:w-[350px] w-full">
                 { thumbnailUrl ? (
-                    <Link className="w-fit rounded-[5px] overflow-hidden hover:rounded-none transition-all duration-300 ease-in-out hover:opacity-85 flex flex-row justify-end" href={link}>
+                    <Link className="w-fit md:rounded-[5px] overflow-hidden hover:rounded-none transition-all duration-300 ease-in-out hover:opacity-85 flex flex-row justify-end" href={link}>
                         <Image 
                         className="h-[225px] brightness-125 transition-all ease-in-out duration-250 w-full p-0" 
                         width={225}
@@ -47,7 +47,7 @@ export default function VideoCard( { content }) {
                         alt={content?.vidTitle}
                         unoptimized
                         />
-                        <div className="w-fit h-fit p-2 bg-black/50 text-white text-[13px] absolute mt-[180px] ml-[10px] rounded-[4px]">
+                        <div className="w-fit h-fit p-2 px-4 bg-black/50 text-white text-[13px] absolute mt-[170px] ml-[10px] rounded-[4px]">
                             <span>{content?.vidLength}</span>
                         </div>
                     </Link>
@@ -70,7 +70,7 @@ export default function VideoCard( { content }) {
                                 <span >{content?.fullname} </span>
                             </span>
                             <span style={{lineHeight:'19px'}} className="text-gray-700 text-[14px]">
-                                <span >200 votes • </span>
+                                <span >{content?.votes} vote{content?.votes>1 ? "s" : ""} • </span>
                                 <span>{content?.createdAt}</span>
                             </span>
                         </div>
