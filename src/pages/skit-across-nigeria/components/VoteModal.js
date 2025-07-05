@@ -27,6 +27,9 @@ const VoteModal = ({ showVoteModal, setShowVoteModal, userEmail, userId, skitId,
 
 
     const handleVote = async ( paymentRef ) => {
+        if ( paymentRef ) {
+            setRecentPaymentRef(paymentRef?.reference);
+        }
         console.log("Processing vote with payment reference:", paymentRef);
         const email = voterEmail.trim();
         setCardStep(1);
@@ -56,7 +59,7 @@ const VoteModal = ({ showVoteModal, setShowVoteModal, userEmail, userId, skitId,
         } 
     };
 
-    const closeModal = () => { setShowVoteModal(false); };
+    const closeModal = () => { setShowVoteModal(false); setCardStep(0); };
     const reset = () => { setCardStep(0); };
 
     return (

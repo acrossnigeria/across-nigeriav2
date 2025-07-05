@@ -22,7 +22,7 @@ const Handler = async (req, res) => {
                 paymentRef: paymentRef
             });
 
-            const newVotes = 0;
+            let newVotes = 0;
             const voteDocs = await SkitAcrossNigeriaVote.find( { skitId: skitId } );
             voteDocs?.map( (voteDoc) => {
                 newVotes += voteDoc?.votes;
