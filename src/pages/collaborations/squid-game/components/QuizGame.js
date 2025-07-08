@@ -171,7 +171,7 @@ const SG_QuizGame = ( { toSuccess } ) => {
                                 <div className="border-b-1 border-b-gray-300 pb-2 mt-2 text-[16px] text-gray-500">
                                     <span>Politics</span>
                                 </div>
-                                <h2 className="text-lg text-center mt-3 font-semibold mb-4">"{quizData[currentIndex].question}"</h2>
+                                <h2 className="text-lg text-center mt-3 font-semibold mb-4">&quot;{quizData[currentIndex].question}&quot;</h2>
                             </div>
                             <ul className="space-y-2 w-full">
                             {quizData[currentIndex].options.map((opt, idx) => (

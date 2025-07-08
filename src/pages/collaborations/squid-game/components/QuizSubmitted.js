@@ -23,7 +23,7 @@ export default function QuizSubmitted() {
       </h1>
 
       <p className="text-gray-600 max-w-md mb-4">
-        You've successfully completed your quiz for the Across Nigeria: Squid Game 2.0!
+        You&apos;ve successfully completed your quiz for the Across Nigeria: Squid Game 2.0!
       </p>
 
       <div className="flex items-center gap-2 bg-yellow-100 text-yellow-800 px-4 py-2 rounded-lg text-sm mb-6">
