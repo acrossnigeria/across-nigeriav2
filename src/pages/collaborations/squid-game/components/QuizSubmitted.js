@@ -48,7 +48,7 @@ export default function QuizSubmitted() {
           className="w-full rounded-full px-6 py-2 flex items-center justify-center gap-2"
           onClick={() => {
             const message = encodeURIComponent(
-              "I just completed my quiz in the Across Nigeria Squid Game challenge! 🦑🇳🇬🔥 Join the challenge now! https://acrossnigeria.com"
+              "I just completed my quiz in the Across Nigeria Squid Game challenge! 🦑🇳🇬🔥 Join the challenge now! https://acrossnig.com"
             );
             window.open(`https://wa.me/?text=${message}`, "_blank");
           }}
