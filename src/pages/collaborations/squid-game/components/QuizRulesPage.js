@@ -37,7 +37,7 @@ export default function QuizRulesPage( { startQuiz }) {
           </li>
           <li className="flex items-center gap-2">
             <Brain size={"16px"} className="text-blue-400 mt-1" />
-            You can't go back to previous questions.
+            You can&apos;t go back to previous questions.
           </li>
         </ul>
 
