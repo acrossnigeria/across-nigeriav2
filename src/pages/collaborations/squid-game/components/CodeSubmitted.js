@@ -1,4 +1,6 @@
-export default function CodeSubmitted() {
+
+
+const CodeSubmitted = () => {
   return (
     <div className="h-fit bg-transparent pt-[15px] w-[100%]">
       <div className="md:w-[600px] w-[94%] mx-auto bg-white shadow-lg rounded-[7px] px-6 py-8 text-center">
@@ -18,7 +20,7 @@ export default function CodeSubmitted() {
           disabled
           className="w-full bg-gray-300 text-gray-600 font-semibold py-3 px-6 rounded-[5px] mb-6 cursor-not-allowed"
         >
-          🕒 Game Room - Coming Soon
+          🕒 Game Room - Opening soons
         </button>
 
         {/* What's Next Section */}
@@ -47,3 +49,5 @@ export default function CodeSubmitted() {
     </div>
   );
 }
+
+export default CodeSubmitted;
