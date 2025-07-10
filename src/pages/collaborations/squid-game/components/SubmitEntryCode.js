@@ -89,8 +89,7 @@ export default function SquidGameEntryPage( { setUserValidated }) {
           </p>
 
           <button
-            onClick={() => setShowModal(true)}
-            className="bg-pink-600 hover:bg-pink-700 text-white py-3 px-6 rounded-[5px] font-semibold transition duration-300"
+            className="bg-gray-400 text-white py-3 px-6 rounded-[5px] font-semibold transition duration-300"
           >
             Submit Entry Code
           </button>

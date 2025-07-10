@@ -31,12 +31,46 @@ const Handler = async ( req, res ) => {
             res.status(200).json( { userData } );
         } else if ( req.method === "PATCH" ) {
 
-            const { entryCodes } = req.query;
+            const entryCodes = [
+                 "SQZoZXYO0070",
+                "SQAVLzVt0045",
+                "SQUkiIUE0060",
+                "SQcQMczA0037",
+                "SQSgrRlR0031",
+                "SQjJrNiG0086",
+                "SQmKZUCl0030",
+                "SQVLGqCk0075",
+                "SQaQsNDS0076",
+                "SQvKQXZa0024",
+                "SQSPftFq0077",
+                "SQYpcDne0002",
+                "SQAVLzVt0045",
+                "SQHQwLfq0036",
+                "SQUGGPlM0071",
+                "SQVLGqCk0075",
+                "SQBOIlUE0073",
+                "SQCDaSTZ0066",
+                "SQvgyniD0081",
+                "SQWvqOyS0069",
+                "SQzqbbJF0510",
+                "SQtRClqj0514",
+                "SQmBldEA0515",
+                "SQvzrJZX0522",
+                "SQeLnZHF0080",
+                "SQSPftFq0077",
+                "SQjLWbBW0046",
+                "SQKAEEUt0068",
+                "SQXXKroi0032",
+                "SQVLGqCk0075",
+                "SQEjqQNf0082"
+                ]
 
             await db.connect();
+            console.log(`${entryCodes.length} docs to patch`)
             const updatedEntries = Promise.all(
                     entryCodes?.map( async ( entryCode ) => {
                         const updatedDoc = await SquidGameParticipant.findOneAndUpdate( { entryCode:entryCode }, { isQualified:true } );
+                        console.log(`Successfully patched ${entryCode}`);
                         return updatedDoc;
                     })
             )
