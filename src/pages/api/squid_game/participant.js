@@ -1,10 +1,34 @@
 import mongoose from "mongoose";
 import db from "../../../../utils/db";
 import SquidGameQuizData from "@/models/SGQuizData";
+import { Phone } from "lucide-react";
+import User from "@/models/User";
 
 const { default: SquidGameParticipant } = require("@/models/SquidGameParticipant");
 
 const Handler = async ( req, res ) => {
+
+    // function that returns number of occurrence of a value in an array
+    const countOccurrence = (arr, value) => {
+        const occurrence = arr.reduce( (count, item) => item === value ? count + 1 : count, 0 );
+        return occurrence;
+    }
+
+    function bubbleSort(arr) {
+        for (let i = 0; i < arr.length - 1; i++) {
+            for (let j = 0; j < arr.length - 1 - i; j++) {
+                //if the current element is less than the next element swap them
+                if ( arr[j].timeCount > arr[j + 1].timeCount ) {
+                    //swap using a temparary variable
+                    let temp = arr[j];
+                    arr[j] = arr[j + 1];
+                    arr[j + 1] = temp;
+                }
+            }
+        }
+        return arr;
+    }
+
     try {
         if ( req.method === "GET" ) {
             const { userId, isVerification } = req.query;
@@ -30,53 +54,29 @@ const Handler = async ( req, res ) => {
 
             res.status(200).json( { userData } );
         } else if ( req.method === "PATCH" ) {
-
-            const entryCodes = [
-                 "SQZoZXYO0070",
-                "SQAVLzVt0045",
-                "SQUkiIUE0060",
-                "SQcQMczA0037",
-                "SQSgrRlR0031",
-                "SQjJrNiG0086",
-                "SQmKZUCl0030",
-                "SQVLGqCk0075",
-                "SQaQsNDS0076",
-                "SQvKQXZa0024",
-                "SQSPftFq0077",
-                "SQYpcDne0002",
-                "SQAVLzVt0045",
-                "SQHQwLfq0036",
-                "SQUGGPlM0071",
-                "SQVLGqCk0075",
-                "SQBOIlUE0073",
-                "SQCDaSTZ0066",
-                "SQvgyniD0081",
-                "SQWvqOyS0069",
-                "SQzqbbJF0510",
-                "SQtRClqj0514",
-                "SQmBldEA0515",
-                "SQvzrJZX0522",
-                "SQeLnZHF0080",
-                "SQSPftFq0077",
-                "SQjLWbBW0046",
-                "SQKAEEUt0068",
-                "SQXXKroi0032",
-                "SQVLGqCk0075",
-                "SQEjqQNf0082"
-                ]
-
             await db.connect();
-            console.log(`${entryCodes.length} docs to patch`)
-            const updatedEntries = Promise.all(
-                    entryCodes?.map( async ( entryCode ) => {
-                        const updatedDoc = await SquidGameParticipant.findOneAndUpdate( { entryCode:entryCode }, { isQualified:true } );
-                        console.log(`Successfully patched ${entryCode}`);
-                        return updatedDoc;
-                    })
-            )
+            const quizData = await SquidGameQuizData.find();
+            const data = await Promise.all(
+            quizData.map(async ({ entryCode, mark, user, timeCount }) => {
+                if (countOccurrence(mark, true) > 3) {
+                const userData = await User.findOne({ _id: user });
+                const docData = { entryCode, phone: userData?.phone, timeCount:Number(timeCount) };
+                return docData;
+                }
+                return null; // mark non-matching entries as null
+            })
+            );
+
+            // Filter out null values
+            const filteredData = data.filter(Boolean);
+
+            // Sort the filtered data (you must define bubbleSort to work with it)
+            const sortedData = bubbleSort(filteredData)?.splice(0, 20)
+            console.log(sortedData)
+            console.log(`${sortedData.length} docs got more than 2 questions correct`);
             await db.disconnect();
 
-            res.status(200).json( { action:"Entrie updated to qualified successfully", updatedEntries });
+            res.status(200).json( { sortedData, length:sortedData.length });
 
         } else if ( req.method === "POST" ) {
 

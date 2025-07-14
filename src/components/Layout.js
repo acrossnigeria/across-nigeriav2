@@ -69,9 +69,9 @@ export default function Layout({ title, children, image, desc, bg, hideNav=false
       <ToastContainer position="top-center" limit={1} />
       <div className="md:block hidden"><StickyNavbar/></div>
       <div className="md:hidden block"><Navbar hideNav={hideNav}/></div>
-      <div className="flex left-0 ml-0 w-full bg-gray-100 overflow-hidden flex-col justify-between">
+      <div className="flex left-0 ml-0 w-full bg-transparent overflow-hidden flex-col justify-between">
         <Loader/>
-        <main className={`h-[100%] w-screen overflow-hidden ${bg?bg:'bg-gray-100'} my-0 left-0 pb-[50px] mx-auto`}>{children}</main>
+        <main className={`h-[100%] w-screen overflow-hidden bg-white my-0 left-0 mx-auto`}>{children}</main>
         <AdvertClickCard/>
       </div> 
       <Footer />

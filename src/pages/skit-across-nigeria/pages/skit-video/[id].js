@@ -17,7 +17,7 @@ import FbIcon from "../../../../../public/images/icon/FbIcon";
 import IgIcon from "../../../../../public/images/icon/IgIcon";
 import WhatappIcon from "../../../../../public/images/icon/WhatappIcon";
 import SkitSuccessModal from "@/components/SkitSuccessModal";
-import { ChevronRight, CirclePlus, House, PlayCircle, Share2, UserCircle, Vote } from "lucide-react";
+import { ChevronLeft, ChevronRight, CirclePlus, EllipsisVertical, Heart, House, MessageSquareText, PlayCircle, Send, Share2, UserCircle, Vote } from "lucide-react";
 import ProcessLoader from "@/components/ui/ProcessLoader";
 import VoteModal from "../../components/VoteModal";
 import BottomNav from "../../components/BottomNav";
@@ -225,9 +225,9 @@ export default function SkitScreen(props){
                 <p>Loading...</p>
             </div>
         ):(
-            <div className='w-screen flex flex-col items-center bg-gray-100 min-h-screen'>
+            <div className='w-screen flex flex-col items-center bg-gray-950 min-h-screen'>
                 <VoteModal setNewVotes={setSkitVotes} userId={session?.user?._id} skitId={params?.id} userEmail={session?.user?.email} setShowVoteModal={setShowVoteModal} showVoteModal={showVoteModal} />
-                <div className={`flex md:w-[50%] bg-gray-100 pb-[100px] mx-auto rounded-[20px] justify-center items-center gap-4 flex-col`}>
+                <div className={`flex md:w-[50%] mx-auto rounded-[20px] justify-center items-center gap-4 flex-col`}>
                 { uploadModal && 
                     <SkitSuccessModal closeFunction={uploadSuccess} bgOpacity={uBgOpacity} modalOpacity={uModalOpacity}/>
                 }
@@ -311,16 +311,16 @@ export default function SkitScreen(props){
 
                 { errorGettingSkit && 
                     <div className='h-screen w-full pt-[30px] flex flex-col gap-10'>
-                    <div className='text-red-500 font-light text-center md:w-[30%] w-[90%] mx-auto text-[13px]'>{errorMessage}. please check your internet connection</div>
+                        <div className='text-red-500 font-light text-center md:w-[30%] w-[90%] mx-auto text-[13px]'>{errorMessage}. please check your internet connection</div>
                         <button onClick={reload} className='flex flex-col justify-center hover:scale-105 transition-all ease-in-out duration-300 hover:opacity-50 items-center gap-3'>
                             <span className=']'>Tap to retry</span>
                             <ReloadIcon/>
                         </button>
                     </div>
                 }
-                <div className={`h-[460px] md:h-[350px] md:w-[700px] w-screen flex flex-col justify-center item-center md:rounded-[5px] overflow-hidden bg-gray-900 md:mt-[5px]`}>
+                <div className={`h-screen md:max-w-[600px] w-screen flex flex-col justify-center item-center md:rounded-[5px] overflow-hidden bg-black`}>
                     { typeof window !== "undefined" && ( loadingData ? ( 
-                            <div className="h-[460px] md:h-[350px] flex flex-col justify-center items-center">
+                            <div className="h-screen w-full flex flex-col bg-transparent justify-center items-center">
                                 <ProcessLoader color={'white'} size={'35px'}/>
                             </div>
                         ) : (
@@ -329,8 +329,8 @@ export default function SkitScreen(props){
                                     <div className="h-[5px] md:w-[700px] w-screen absolute top-0 self-start">
                                         <div style={{width:`${hasProgressed * 100}%`}} className={`transition-width ease-in-out duration-350 h-full bg-green-500`}></div>
                                     </div>
-                                    <div onClick={handlePlayer} className={`h-[460px] md:h-[350px] transition-all ease-in-out duration-350 ${isPlaying?"opacity-0":"opacity-100"} md:h-[350px] md:w-[700px] z-50 w-screen items-center justify-center flex flex-col bg-black/30 absolute`}>
-                                        <button>
+                                    <div onClick={handlePlayer} className={`h-screen transition-all ease-in-out duration-350 ${isPlaying?"opacity-0":"opacity-100"} md:h-[350px] md:w-[700px] z-50 w-screen items-center justify-center flex flex-col bg-transparent absolute`}>
+                                        <button >
                                             <PlayCircle strokeWidth={1} size={'50px'} className="text-white"/>
                                         </button>
                                     </div>
@@ -368,70 +368,70 @@ export default function SkitScreen(props){
                 <div className={`fixed ${shareNotifyBottom} ${shareNotifyOpacity} transition-all text-center ease-in-out duration-500 bg-gray-100 z-[2000] text-gray-600 rounded-[20px] md:w-fit w-[80%] border-1 border-green-500 h-fit p-3`}>
                     <span>Link copied, you can now share it</span>
                 </div> 
-                <div className={`w-full md:w-[700px] flex flex-col px-[3%] md:px-0 md:pb-[80px] pb-[150px]`}>
-                    <div className="flex flex-col mb-2 px-2 gap-1">
-                    { loadingData ? (
-                            <div className="h-[25px] w-full bg-gray-200 animate-pulse rounded-[5px]"/>
-                    ): (
-                            <span style={{lineHeight:'21px'}} className="text-[21px] font-bold">{modifyTitle(title)}</span>
-                    )}
-                    </div>
-                    <div className="flex flex-row justify-between border-y-[0.5px] border-gray-300 py-2 items-center">
-                        <div className="flex flex-row md:text-[18px] text-[16px] items-center gap-2">
-                            <Profile size={'40px'}/>
+                <div className={`w-full md:max-w-[600px] absolute z-[1000] bottom-0 text-white flex flex-col px-[3%] md:px-0`}>
+                    <div className="flex w-[80%] bg-transparent flex-col py-2 pl-[2.5%] pb-[40px] items-center">
+                        <div className="flex w-full flex-row md:text-[18px] text-[16px] items-center gap-2">
                             { loadingData ? (
                                 <div className="h-[32px] md:w-[120px] w-[50px] bg-gray-200 animate-pulse rounded-[5px]"></div>
                             ): (
-                                <div className="flex md:flex-row flex-col leading-tight text-gray-700">
-                                    <span className="md:text-[18px] text-[13px] font-bold">{data?.fullname}</span> 
-                                    <span className="font-bold text-black" >
-                                        • {skitVotes} vote{skitVotes>1? "s":""} 
-                                    </span>
+                                <div className="flex flex-row w-full justify-between items-center gap-4 leading-tight">
+                                    <div className="flex flex-row gap-2 items-center">
+                                        <Profile size={'40px'}/>
+                                        <span className="md:text-[18px] text-[14px] font-semibold">{data?.fullname}</span> 
+                                    </div>
+                                    <button onClick={voteModal} className={`text-white font-medium text-[14px] hover:bg-gray-300 bg-transparent border-1 border-white px-3 flex flex-row gap-1 items-center justify-center h-[35px] rounded-[5px] hover:scale-105`}>
+                                        <span>Vote Skit</span>
+                                    </button>
                                 </div>
                             )}
 
                         </div>
 
-                        <div className="flex flex-row gap-2 w-fit items-center">
+                        <div className="flex flex-col w-full mt-2 mb-1 gap-1">
                             { loadingData ? (
-                                <div className=" bg-gray-200 h-[35px] animate-pulse rounded-[5px] md:w-[100px] w-[15%]"></div>
-                            ):(
-                                <button onClick={voteModal} className={`text-green-800 text-[14px] hover:bg-green-500 bg-green-300 md:w-[120px] w-fit px-2 flex flex-row gap-1 items-center justify-center h-[35px] rounded-[5px] hover:scale-105`}>
-                                    <Vote className="text-black" size={'18px'} strokeWidth={1} />
-                                    <span>Vote</span>
-                                </button>
-                            )}
-                            { loadingData ? (
-                                <div className=" bg-gray-200 h-[35px] animate-pulse rounded-[5px] md:w-[100px] w-[15%]"></div>
+                                
+                                    <div className="h-[25px] w-full bg-gray-800 animate-pulse rounded-[5px]"/>
                             ): (
-                                <button onClick={()=>{shareModal('in')}} className="md:w-[130px] text-[14px] w-fit px-2 flex flex-row gap-1 items-center justify-center h-[35px] bg-blue-300 rounded-[5px] text-gray-700 hover:scale-105 hover:bg-blue-400">
-                                    <Share2 strokeWidth={1} size={'18px'}/> Share
-                                </button>
+                                    <span style={{lineHeight:'21px'}} className="text-[18px] font-bold">{modifyTitle(title)}</span>
                             )}
                         </div>
+
+                        { loadingData ? (
+                            <div className="h-[25px] w-full bg-gray-800 animate-pulse rounded-[5px]"/>
+                        ): (
+                            <div className="flex w-full flex-col rounded-[5px]">
+                                <span onClick={descriptionView} className="hover:cursor-pointer leading-relaxed text-gray-200">
+                                    { data?.vidCaption.length > 200 ? (
+                                        data?.vidCaption?.slice(0, descriptionLength) + (descriptionLength!==data?.vidCaption.length?'...more':'')
+                                    ) : (
+                                        data?.vidCaption
+                                    )}
+                                </span>
+                            </div>
+                        )}
                         
                     </div>
-
-                    { loadingData ? (
-                        <div className="h-[32px] w-full bg-gray-200 animate-pulse rounded-[5px]"/>
-                    ): (
-                        <div className="flex flex-col md:p-3 p-2 bg-gray-200 rounded-[5px] mt-4">
-                            <span className="text-black font-semibold text-[14px]">{data?.createdAt}</span>
-                            <span onClick={descriptionView} className="hover:cursor-pointer leading-relaxed text-gray-700">
-                                { data?.vidCaption.length > 200 ? (
-                                    data?.vidCaption?.slice(0, descriptionLength) + (descriptionLength!==data?.vidCaption.length?'...more':'')
-                                ) : (
-                                    data?.vidCaption
-                                )}
-                            </span>
-                        </div>
-                    )}
-                    <Link href={'/skit-across-nigeria/pages'} className="bg-green-500 flex flex-row gap-2 justify-center items-center h-[35px] hover:bg-green-800 w-[150px] mt-2 text-white">
-                        <span>Watch others</span>
-                        <ChevronRight size={'17px'} className="text-white"/>
-                    </Link>
                 </div> 
-                { session?.user?.name && <BottomNav/>  }
+            </div>
+            <div className={`w-full md:max-w-[600px] absolute bottom-0 z-[900] text-white h-[40%] flex flex-row justify-end px-[2.5%]`}>
+                <div className="flex flex-col gap-5">
+                    <div className="flex flex-col hover:opacity-50 transition-opacity cursor-pointer items-center w-fit gap-1">
+                        <Vote size={'35px'} color="white"/>
+                        <span className="text-[16px] font-semibold">{skitVotes?skitVotes:0}</span>
+                    </div>
+                    <button onClick={()=>{shareModal('in')}} className="flex flex-col hover:opacity-50 transition-opacity cursor-pointer items-center w-fit gap-1">
+                        <Send size={'30px'} color="white"/>
+                    </button>
+                    <button className="flex flex-col hover:opacity-50 mt-5 transition-opacity cursor-pointer items-center w-fit gap-1">
+                        <EllipsisVertical size={'30px'} color="white"/>
+                    </button>
+                </div>
+            </div>
+            <div className={'absolute top-0 left-0 w-full z-[100] flex flex-row justify-between items-center px-[2.5%] pt-5 py-3 bg-transparent'}>
+                <Link href={'/skit-across-nigeria/pages'} className="flex flex-row gap-2 justify-center hover:text-gray-400 items-center w-fit text-white">
+                    <ChevronLeft size={'25px'} className="text-white"/>
+                    <span>Watch others</span>
+                </Link>
             </div>
         
             </div>

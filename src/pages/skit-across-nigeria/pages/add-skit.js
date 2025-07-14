@@ -8,7 +8,7 @@ import Link from "next/link";
 import CycleLoader from "@/components/CycleLoader";
 import VidThumbnail from "@/components/VidThumbnail";
 import Next from "../../../../public/images/icon/Next";
-import { CheckLine, CloudUpload, FileVideo, Info, Layers2, Server, TriangleAlert, Upload } from "lucide-react";
+import { CheckLine, CloudUpload, EllipsisVertical, FileVideo, Info, Layers2, Server, TriangleAlert, Upload } from "lucide-react";
 import ProcessLoader from "@/components/ui/ProcessLoader";
 import TextInput from "@/components/ui/TextInput";
 import TextAreaInput from "@/components/ui/TextAreaInput";
@@ -283,9 +283,10 @@ export default function UploadScreen() {
   return (
       <div className="flex flex-col justify-center h-screen bg-gray-100 items-center">  
 
-        <div className="absolute top-[3%] w-fit flex flex-row gap-4 left-[3%] z-50">
-          <button onClick={()=>{router.push('/skit-across-nigeria/pages')}} className="w-fit p-2 transition-all duration-500 ease-in-out hover:scale-105"><div className="rotate-180"><Next bg={'black'} size={'20px'}/></div></button>
-          <div className="flex font-bold flex-row items-center gap-3 text-[20px] text-green-600">{ loadingUpload ? "Uploading" : "Video upload" }</div>
+        <div className="absolute top-0 bg-green-600 w-[100%] py-5 flex flex-row justify-between px-3 gap-4 left-0 z-50">
+          <button onClick={()=>{router.push('/skit-across-nigeria/pages')}} className="w-fit p-2 transition-all duration-500 ease-in-out hover:scale-105"><div className="rotate-180"><Next bg={'white'} size={'20px'}/></div></button>
+          <div className="flex font-bold flex-row items-center gap-3 text-[20px] text-white">{ loadingUpload ? "Uploading" : "Video upload" }</div>
+          <button onClick={()=>{router.push('/skit-across-nigeria/pages')}} className="w-fit p-2 transition-all duration-500 ease-in-out hover:scale-105"><div className="rotate-180"><EllipsisVertical color={'white'} size={'20px'}/></div></button>
         </div>
 
         { isSaving && (
@@ -348,9 +349,9 @@ export default function UploadScreen() {
                           </div>
                         </div>
                     ) : (
-                        <div className='w-[85%] mx-auto rounded-[5px] border-gray-500 border-2 h-[350px] flex flex-col justify-center items-center'>
+                        <div className='w-[85%] mx-auto rounded-[5px] border-gray-300 border-2 h-[350px] flex flex-col justify-center items-center'>
                           <FileVideo strokeWidth={1} size={'180px'} className=" text-yellow-500"/>
-                          <div className="flex flex-row items-center justify-center mt-5 mb-2 text-[15px] gap-1">
+                          <div className="flex flex-row items-center justify-center mt-5 mb-2 gap-1">
                             <button onClick={selectVideo} className="flex flex-row gap-2 hover:text-blue-800 text-blue-600">
                               <Upload strokeWidth={2} size={'18px'} className="text-blue-600 mt-[1.5px]"/>
                               <span>Upload</span>
@@ -369,13 +370,13 @@ export default function UploadScreen() {
             <div className="flex flex-row justify-center mt-[50px] items-center">
 
               { ( !isVideoUploaded && !loadingUpload ) && (
-                <button onClick={selectVideo} className='bg-green-500 hover:bg-green-600 w-[80%] rounded-[5px] text-white transition-all ease-in-out duration-300 Md:h-[45px] h-[50px] flex flex-row justify-center items-center'>
+                <button onClick={selectVideo} className='bg-green-500 hover:bg-green-600 w-[90%] rounded-[20px] text-white transition-all ease-in-out duration-300 Md:h-[45px] h-[50px] flex flex-row justify-center items-center'>
                   <span>Upload</span>
                 </button>
               )}
 
               { ( isVideoUploaded && !loadingUpload ) && (
-                <button onClick={ !isDeleting ? enterVidDetails : ()=>null } className={`${isVideoUploaded?`cursor-pointer ${isDeleting?'bg-gray-400 cursor-not-allowed':'bg-green-500 hover:bg-green-600'} border-gray-400 text-white`:'text-gray-400 border-gray-400 border-1 cursor-not-allowed'} rounded-[5px] h-[50px] md:h-[45px] flex flex-row gap-2 items-center justify-center transition-all duration-300 ease-in-out w-[80%]`}>
+                <button onClick={ !isDeleting ? enterVidDetails : ()=>null } className={`${isVideoUploaded?`cursor-pointer ${isDeleting?'bg-gray-400 cursor-not-allowed':'bg-green-500 hover:bg-green-600'} border-gray-400 text-white`:'text-gray-400 border-gray-400 border-1 cursor-not-allowed'} rounded-[20px] h-[50px] md:h-[45px] flex flex-row gap-2 items-center justify-center transition-all duration-300 ease-in-out w-[90%]`}>
                   Continue
                 </button>
               )}

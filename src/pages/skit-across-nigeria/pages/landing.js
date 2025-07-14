@@ -1,30 +1,49 @@
-import Layout from "@/components/Layout";
+import Link from "next/link";
 import Image from "next/image";
-import banner from "../../../../public/images/skitBanner.jpg";
 import { useEffect, useState } from "react";
+import Layout from "@/components/Layout";
+import banner from "../../../../public/images/skitBanner.jpg";
+import creatorIllus from "../../../../public/svg/creator.svg";
+import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import Trophy1Icon from "../../../../public/images/icon/Trophy1Icon";
 import Trophy2Icon from "../../../../public/images/icon/Trophy2Icon";
 import Trophy3Icon from "../../../../public/images/icon/Trophy3Icon";
-import { useSession } from "next-auth/react";
 import logo1 from "../../../../public/images/logo1.png";
 import Close from "../../../../public/images/icon/Close";
+import { CircleUserRound, Crown, Megaphone, PlayCircle } from "lucide-react";
 
-const Landing = () => {
-    const [ isMobile, setIsMobile ] = useState(false);
-    const router = useRouter();
-    const { status, data:session } = useSession();
-
+export default function SkitCompetitionLanding() {
+    // Countdown setup
+    const [timeLeft, setTimeLeft] = useState({});
+    const { data:session } = useSession();
+  
     const [ nlModalOpacity, setNlModalOpacity ] = useState('opacity-0');
     const [ nlBgOpacity, setNlBgOpacity ] = useState('opacity-0');
     const [ showModal, setShowModal ] = useState(false);
+
     
-    useEffect(()=>{
-        if(/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)&&window.matchMedia("(max-width: 600px)").matches){ 
-            setIsMobile(true)
-        } else{setIsMobile(false)}
-    // console.log(isMobile, navigator.userAgent)
-      }, [ isMobile ])
+    const deadline = new Date("2025-07-20T23:59:59"); // Set your actual deadline here
+    useEffect(() => {
+        const interval = setInterval(() => {
+        const now = new Date().getTime();
+        const distance = deadline - now;
+
+        if (distance < 0) {
+            clearInterval(interval);
+            setTimeLeft(null);
+        } else {
+            setTimeLeft({
+            days: Math.floor(distance / (1000 * 60 * 60 * 24)),
+            hours: Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)),
+            minutes: Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60)),
+            seconds: Math.floor((distance % (1000 * 60)) / 1000),
+            });
+        }
+        }, 1000);
+
+        return () => clearInterval(interval);
+    }, []);
 
     const toUploadPage = () => {
         if (session?.user?.name) {
@@ -50,108 +69,185 @@ const Landing = () => {
         }
     }
 
-    return (
-        <Layout title={'Across Skit Competition: win money making skits, for all skit makers and theater art students'} hideNav={true}>
-            <div className="flex flex-col md:max-w-[750px] w-[95%]  border-1 bg-white shadow-lg shadow-green-900 mt-2 mx-auto pb-[80px]">
-                { showModal && 
-                    <div className={`fixed left-0 ${nlBgOpacity} transition-all duration-300 ease-in-out backdrop-blur-sm h-screen w-screen flex flex-co items-center justify-center gap-3 bg-black/50 z-[1000] top-0`}>
-                        <div className="h-fit flex flex-col justify-center w-[100%] items-center">
-                            <button onClick={()=>{notLoggedIn('out')}} className="border-1 text-[14px] flex flex-row gap-2 text-white hover:bg-green-600/50 hover:scale-105 transition-all duration-300 ease-in-out justify-center items-center px-[20px] py-1 rounded-[20px] mb-[20px] border-gray-100">
-                                <Close bg={'white'} size={'15px'}/>
-                                Close
-                            </button>
-                            <div className={`overflow-hidden h-[400px] md:w-[400px] transition-all duration-500 ease-in-out w-[80%] text-center ${nlModalOpacity} p-3 flex flex-col justify-center items-center bg-gray-100 rounded-[5px]`}>
-                                <div className='text-center mb-[35px] flex flex-row justify-center gap-1 items-center'>
-                                    <Image src={logo1} alt='logo' placeholder='blur' className='h-[30px] w-[35px]' />
-                                    <div className='flex flex-col justify-center items-start gap-0'>
-                                        <span className='text-[12px] font-semibold text-green-700'>ACROSS NIGERIA</span>
-                                        <span className='text-[10px] text-green-500'>REALITY SHOW</span>
-                                    </div>
-                                </div>
-                                <span >Oops! You have to Log In or Register</span>
-                                <div className="flex mt-[20px] flex-col items-center gap-3">
-                                    <button onClick={()=>router.push('/account/reg?redirect=/skit-across-nigeria/pages/add-skit')} className="h-[40px] w-[200px] text-white bg-green-500 hover:bg-green-700 rounded-[5px]">Register Now</button>
-                                    <button onClick={()=>router.push('/account/login?redirect=/skit-across-nigeria/pages/add-skit')} className="border-1 h-[40px] hover:bg-black/20 rounded-[5px] w-[200px] border-gray-500">Log In</button>
-                                </div>
+  return (
+    <Layout>
+        { showModal && 
+            <div className={`fixed left-0 ${nlBgOpacity} transition-all duration-300 ease-in-out backdrop-blur-sm h-screen w-screen flex flex-co items-center justify-center gap-3 bg-black/50 z-[1000] top-0`}>
+                <div className="h-fit flex flex-col justify-center w-[100%] items-center">
+                    <button onClick={()=>{notLoggedIn('out')}} className="border-1 text-[14px] flex flex-row gap-2 text-white hover:bg-green-600/50 hover:scale-105 transition-all duration-300 ease-in-out justify-center items-center px-[20px] py-1 rounded-[20px] mb-[20px] border-gray-100">
+                        <Close bg={'white'} size={'15px'}/>
+                        Close
+                    </button>
+                    <div className={`overflow-hidden h-[400px] md:w-[400px] transition-all duration-500 ease-in-out w-[80%] text-center ${nlModalOpacity} p-3 flex flex-col justify-center items-center bg-gray-100 rounded-[5px]`}>
+                        <div className='text-center mb-[35px] flex flex-row justify-center gap-1 items-center'>
+                            <Image src={logo1} alt='logo' placeholder='blur' className='h-[30px] w-[35px]' />
+                            <div className='flex flex-col justify-center items-start gap-0'>
+                                <span className='text-[12px] font-semibold text-green-700'>ACROSS NIGERIA</span>
+                                <span className='text-[10px] text-green-500'>REALITY SHOW</span>
                             </div>
                         </div>
-                    </div>
-                }
-
-                <div className={`flex flex-col bg-green-100/50 pb-5 h-[fit-content] justify-center`}>
-                    <div className={`w-[100%] md:h-[250px] h-[180px] relative`}>
-                        <Image className="bg-gray-300" alt='banner' layout="fill" objectFit="fill" src={banner}/>
-                    </div> 
-                    <div className={` border-black mx-3 mt-4 leading-tight self-center flex flex-col h-[fit-content]`}>
-                        <span  className={`font-extrabold text-[28px] leading-tight text-center text-pretty bg-gradient-to-bl from-green-400 to-green-700 bg-clip-text text-transparent`}> Skit Across Nigeria 1.0 </span> 
-                        <span className={`text-[20px] text-gray-600 text-center mt-1`} >Showcase your creativity & win up to &#8358;100,000!</span>
+                        <span >Oops! You have to Log In or Register</span>
+                        <div className="flex mt-[20px] flex-col items-center gap-3">
+                            <button onClick={()=>router.push('/account/reg?redirect=/skit-across-nigeria/pages/add-skit')} className="h-[40px] w-[200px] text-white bg-green-500 hover:bg-green-700 rounded-[5px]">Register Now</button>
+                            <button onClick={()=>router.push('/account/login?redirect=/skit-across-nigeria/pages/add-skit')} className="border-1 h-[40px] hover:bg-black/20 rounded-[5px] w-[200px] border-gray-500">Log In</button>
+                        </div>
                     </div>
                 </div>
+            </div>
+        }
 
-            <div className="flex flex-col md:w-[50%] w-[94%] mb-7 mx-auto">
-                <span className="font-bold text-[20px] leading-tight mt-[30px] mb-[10px] text-center">🎬 Theme: &quot;What Not to Do When Dating in Nigeria&quot;</span>
-                <span className="text-center text-gray-600 leading-tight text-[18px]">Think you&apos;ve got the best take on this? Create, upload, and let the world decide!</span>
-                <div className="flex flex-col gap-2 bg-gray-200 rounded-[5px] px-3 py-3 mt-5 mb-5 items-start">
-                    <span className="font-semibold">✅ Open to everyone</span>
-                    <span className="font-semibold">💰 Participation fee: ₦5,000 </span>
-                    <span className="font-semibold">🗳️ Voting costs ₦100 per vote</span>
-                    <span className="font-semibold">🌍 Anyone can vote — users & non-users alike</span>
-                    <span className="font-semibold">🔁 Voters can cast as many votes as they want</span>
-                    <button onClick={toUploadPage} className="h-[40px] mt-4 text-white px-[30px] bg-green-500 rounded-[5px] mx-auto hover:bg-green-600 hover:scale-105 transition-all duration-250 ease-in-out">Upload Your skit Now!</button>
-                </div>
-            </div>
-            <div className="flex flex-col justify-center items-center gap-2 mb-7 md:w-[50%] w-[94%] mx-auto text-center">
-                <span className="font-bold">Got a Favorite? Vote & Support a Skit!</span>
-                <span className="text-gray-600">The more you vote, the closer they get to winning — ₦100 per vote, unlimited voting!</span>
-                <button onClick={()=>{router.push('/skit-across-nigeria/pages')}} className="h-[45px] mt-[20px] w-[190px] bg-transparent hover:bg-gray-300 rounded-[5px] mx-auto border-1 border-black hover:scale-105 transition-all duration-250 ease-in-out">Watch Skits</button>
-            </div>
-            <span className="font-extrabold text-[30px] text-center text-pretty bg-gradient-to-bl from-green-400 to-green-700 bg-clip-text text-transparent ">PRIZES</span>
-            <div className="flex md:flex-row flex-col justify-around gap-3 mt-[10px] mb-5 items-end px-[3%]">
-                <div className="md:w-[30%] w-[100%] h-[200px] border-1 flex flex-col gap-3 justify-center items-center border-yellow-400 rounded-[5px]">
-                    <span className="font-bold text-[19px] text-pretty bg-gradient-to-bl from-black to-gray-200 bg-clip-text text-transparent">1st Place</span>
-                    <Trophy1Icon/>
-                    <span className="font-extrabold text-[23px] text-pretty bg-gradient-to-bl from-yellow-400 to-yellow-700 bg-clip-text text-transparent">&#8358;100,000</span>
-                </div>
-                <div className="md:w-[30%] w-[100%] h-[200px] border-1 flex flex-col gap-3 justify-center items-center border-orange-400 rounded-[5px]">
-                    <span className="font-bold text-[19px] text-pretty bg-gradient-to-bl from-black to-gray-200 bg-clip-text text-transparent">2nd Place</span>
-                    <Trophy2Icon/>
-                    <span className="font-extrabold text-[23px] text-pretty bg-gradient-to-bl from-orange-400 to-orange-700 bg-clip-text text-transparent">&#8358;30,000</span>
-                </div>
-                <div className="md:w-[30%] w-[100%] h-[200px] border-1 flex flex-col gap-3 justify-center items-center border-green-400 rounded-[5px]">
-                    <span className="font-bold text-[19px] text-pretty bg-gradient-to-bl from-black to-gray-200 bg-clip-text text-transparent">3rd Place</span>
-                    <Trophy3Icon/>
-                    <span className="font-extrabold text-[23px] text-pretty bg-gradient-to-bl from-green-400 to-green-700 bg-clip-text text-transparent">&#8358;20,000</span>
-                </div>
-            </div>
+    <section className="w-screen min-h-screen bg-white">
+      <div className="flex flex-col bg-[url('/svg/Hexagon.svg')] h-[90vh] bg-cover bg-center px-[3%] md:flex-row md:justify-center justify-start md:pt-0 pt-7 gap-3 items-center">
+        <div className="md:text-left text-center flex flex-col gap-3 md:max-w-[48%] md:h-96 md:pt-8 md:pr-5">
+            {/* Title */}
+          <span className="text-2xl md:text-5xl font-extrabold text-white">
+            WIN UP TO <span className="bg-clip-text text-transparent bg-gradient-to-b from-green-500 to-green-800">₦30 MILLION</span> & A MOVIE DEAL!
+          </span>
+          <p className="text-lg text-gray-200 max-w-3xl mx-auto mb-4">
+            Submit your original skit, get the most votes, and claim the spotlight!
+          </p>
+          <div className="md:flex hidden flex-col md:flex-row gap-3 ">
+            <Link className="bg-green-600 text-white px-8 font-medium h-[45px] flex flex-row justify-center items-center rounded-[40px] shadow hover:bg-green-700 transition" href="/skit-across-nigeria/pages/add-skit">
+                { session?.user?.name ? "Upload My Skit":"Register/ Log In to Participate"}
+            </Link>
 
-            <div className="flex flex-col bg-gradient-to-b from-green-900 py-3 rounded-r-[20px] md:rounded-r-[150px] pb-[40px] to-orange-400 mt-[20px] justify-around gap-3 items-start px-[3%]">
-                <div className="text-[20px] w-[100%] text-center font-bold text-white">How it works?</div>
-                <div className="md:w-[30%] w-[100%] md:h-[50px] h-[80px] mt-[10px] flex flex-col items-start">
-                    <span className="font-bold text-[19px] text-pretty text-white">1. Sign Up</span>
-                    <span className="text-[15px] ml-3 text-pretty  text-white">Participants must have an account</span>
-                </div>
-                <div className="md:w-[30%] w-[100%] md:h-[50px] h-[80px] flex flex-col items-start">
-                    <span className="font-bold text-[19px] text-pretty text-white">2. Create & upload</span>
-                    <span className="text-[15px] ml-3 text-pretty  text-white">Submit your best skit.</span>
-                </div>
-                <div className="md:w-[30%] w-[100%] md:h-[50px] h-[80px] flex flex-col items-start">
-                    <span className="font-bold text-[19px] text-pretty text-white">3. Share your skit</span>
-                    <span className="text-[15px] ml-3 text-pretty  text-white">The more votes, the higher your chances</span>
-                </div>
-                <div className="md:w-[30%] w-[100%] md:h-[50px] h-[80px] flex flex-col items-start">
-                    <span className="font-bold text-[19px] text-pretty text-white">4. Win big!</span>
-                    <span className="text-[15px] ml-3 text-pretty  text-white">The skit with the most votes wins the grand prize!</span>
-                </div>
-                <button onClick={toUploadPage} className="h-[40px] text-white mt-5 w-[200px] bg-green-500 rounded-[5px] mx-auto hover:bg-green-600 hover:scale-105 transition-all duration-250 ease-in-out">Upload Your skit Now!</button>
+            <Link className="bg-white text-black font-medium h-[45px] px-8 flex flex-row justify-center items-center rounded-[45px] hover:bg-gray-400 transition" href="/skit-across-nigeria/pages">
+                <PlayCircle className="mr-2 " size={'25px'} />
+                View & Vote Skits
+            </Link>
+          </div>
+        </div>
+
+        {/* Banner */}
+        <div className="md:w-[48%] w-full h-64 md:h-96 relative rounded-2xl overflow-hidden shadow-lg">
+          <Image
+            src={banner}
+            alt="Skit Competition Banner"
+            layout="fill"
+            objectFit="cover"
+          />
+        </div>
+        <div className="flex md:hidden mt-3 flex-col w-[90%] md:flex-row gap-3 ">
+          <Link className="bg-green-600 text-white w-full font-medium h-[45px] flex flex-row justify-center items-center rounded-[40px] shadow hover:bg-green-700 transition" href="/skit-across-nigeria/pages/add-skit">
+              { session?.user?.name ? "Upload My Skit":"Register/ Log In to Participate"}
+          </Link>
+
+          <Link className="bg-white text-black font-medium w-full h-[45px] flex flex-row justify-center items-center rounded-[45px] hover:bg-gray-400 transition" href="/skit-across-nigeria/pages">
+              <PlayCircle className="mr-2 " size={'25px'} />
+              View & Vote Skits
+          </Link>
+        </div>
+      </div>   
+
+      <div className="mb-16 bg-green-50 text-center py-5 px-[5%]">
+          <h2 className="text-4xl font-bold text-gray-800 mb-6">How It Works?</h2>
+          <div className="grid md:grid-cols-3 gap-6 text-left">
+            <div className="text-center">
+              <CircleUserRound className="mx-auto mb-3 rounded-[30px] w-[50px] py-1 bg-green-600" color="white" size={'30px'} />
+              <h3 className="font-semibold text-green-950 text-2xl"> Register</h3>
+              <p className="px-6 pt-1 pb-5">Sign up for free and submit your skit (max 3 minutes, original content only).</p>
             </div>
-            <div className="flex flex-col justify-center items-center gap-2 mt-[25px] md:w-[50%] w-[90%] mx-auto text-center">
-                <span className="text-[19px] font-bold">🌟 Just want to watch skits!</span>
-                <span className="text-[15px] text-gray-500">Get entertained while you support your best skit</span>
-                <button onClick={()=>{router.push('/skit-across-nigeria/pages')}} className="h-[45px] mt-5 w-[200px] bg-transparent hover:bg-gray-300 rounded-[5px] mx-auto border-1 border-black hover:scale-105 transition-all duration-250 ease-in-out">Watch Skits</button>
+            <div className="text-center border-y-2 pt-2 md:pt-0 md:border-x-2 md:border-y-0 border-gray-300">
+              <Megaphone className="mx-auto mb-3 rounded-[30px] w-[50px] py-1 bg-green-600" color="white" size={'30px'} />
+              <h3 className="font-semibold text-green-950 text-2xl"> Promote</h3>
+              <p className="px-6 pt-1 pb-5">Share your skit link on WhatsApp, Instagram, and Facebook to get more votes.</p>
             </div>
+            <div className="text-center">
+              <Crown className="mx-auto mb-3 rounded-[30px] w-[50px] py-1 bg-green-600" color="white" size={'30px'} />
+              <h3 className="font-semibold text-green-950 text-2xl"> Win!</h3>
+              <p className="px-6 pt-1 pb-5">The top skits with the highest votes win cash prizes and the grand prize winner gets a movie deal!</p>
             </div>
-        </Layout>
-    )
+          </div>
+      </div>   
+      <div className="max-w-6xl mx-auto text-center">
+
+        {/* Countdown */}
+        {/* {timeLeft ? (
+          <div className="mb-10 text-xl text-gray-800">
+            ⏳ Voting Closes In:{" "}
+            <span className="font-bold">
+              {timeLeft.days}d {timeLeft.hours}h {timeLeft.minutes}m {timeLeft.seconds}s
+            </span>
+          </div>
+        ) : (
+          <div className="mb-10 text-xl text-red-600 font-semibold">
+            🚨 Voting has closed!
+          </div>
+        )} */}
+
+
+        {/* Details */}
+        <div className="grid md:grid-cols-2 gap-8 text-left mb-16 md:px-9 px-6">
+          <div className="max-w-md">
+            <h2 className="text-2xl font-bold leading-tight text-gray-800 mb-2">Open to all Content and skit <span className="text-green-600">creators</span> across Nigeria.</h2>
+            <p className="text-gray-600">
+              Viewers can vote for their favorite skits and share them on WhatsApp, Facebook, and Instagram.
+              Registration is required to vote.
+            </p>
+
+            <h2 className="text-lg font-semibold text-gray-800 mt-6 mb-2">Skit Guidelines</h2>
+            <ul className="list-disc list-inside text-gray-600 space-y-1">
+              <li>Grand Prize: <span className="font-semibold text-green-700">₦30,000,000 + Movie Deal</span></li>
+              <li>Maximum length: 3 minutes</li>
+              <li>Only one skit per participant</li>
+              <li>Skits must be original (no copied content)</li>
+            </ul>
+            <Link className="bg-green-600 mt-5 text-white w-full font-medium h-[45px] flex flex-row justify-center items-center rounded-[40px] shadow hover:bg-green-700 transition" href="/skit-across-nigeria/pages/add-skit">
+              { session?.user?.name ? "Upload My Skit":"Register/ Log In to Participate"}
+            </Link>
+          </div>
+
+          <div>
+            <div className="w-full h-64 md:h-96 relative rounded-2xl">
+              <Image
+                src={creatorIllus}
+                alt="Skit Competition Banner"
+                layout="fill"
+                objectFit="cover"
+              />
+            </div>
+          </div>
+        </div>
+
+        {/* Featured Skits */}
+        <div className="mb-16 pt-4 px-5">
+          <h2 className="text-4xl font-medium text-gray-800 mb-7">Featured Skits</h2>
+          <div className="grid md:grid-cols-3 gap-6">
+            {[1, 2, 3].map((skit) => (
+              <div key={skit} className="rounded-xl border shadow-sm overflow-hidden">
+                <div className="h-48 relative">
+                  <Image
+                    src={banner} // Replace with real thumbnails
+                    alt={`Skit ${skit}`}
+                    layout="fill"
+                    objectFit="cover"
+                  />
+                </div>
+                <div className="p-4 text-left">
+                    <h3 className="font-semibold text-gray-800">Skit Title {skit}</h3>
+                    <p className="text-sm text-gray-600 mb-2">by Participant {skit}</p>
+                    <Link className="text-primary hover:underline text-sm" href={`/skits/${skit}`}>
+                            Watch & Vote 
+                    </Link>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Action Buttons */}
+        <div className="flex flex-col md:flex-row gap-4 px-5 mb-[50px] justify-center">
+          <Link className="bg-green-600 text-white w-full font-medium h-[45px] flex flex-row justify-center items-center rounded-[40px] shadow hover:bg-green-700 transition" href="/skit-across-nigeria/pages/add-skit">
+              { session?.user?.name ? "Upload My Skit":"Register/ Log In to Participate"}
+          </Link>
+
+          <Link className="border-black border-1 text-black font-medium w-full h-[45px] flex flex-row justify-center items-center rounded-[45px] hover:bg-gray-400 transition" href="/skit-across-nigeria/pages">
+              <PlayCircle className="mr-2 " size={'25px'} />
+              View & Vote Skits
+          </Link>
+        </div>
+      </div>
+    </section>
+    </Layout>
+  );
 }
-
-export default Landing;
