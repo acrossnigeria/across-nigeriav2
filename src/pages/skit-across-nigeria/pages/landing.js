@@ -182,7 +182,7 @@ export default function SkitCompetitionLanding() {
             <h2 className="text-2xl font-bold leading-tight text-gray-800 mb-2">Open to all Content and skit <span className="text-green-600">creators</span> across Nigeria.</h2>
             <p className="text-gray-600">
               Viewers can vote for their favorite skits and share them on WhatsApp, Facebook, and Instagram.
-              Registration is required to vote.
+              Registration is not required to vote.
             </p>
 
             <h2 className="text-lg font-semibold text-gray-800 mt-6 mb-2">Skit Guidelines</h2>
@@ -191,6 +191,7 @@ export default function SkitCompetitionLanding() {
               <li>Maximum length: 3 minutes</li>
               <li>Only one skit per participant</li>
               <li>Skits must be original (no copied content)</li>
+              <li>Vote costs ₦100 only. Unlimited votes allowed.</li>
             </ul>
             <Link className="bg-green-600 mt-5 text-white w-full font-medium h-[45px] flex flex-row justify-center items-center rounded-[40px] shadow hover:bg-green-700 transition" href="/skit-across-nigeria/pages/add-skit">
               { session?.user?.name ? "Upload My Skit":"Register/ Log In to Participate"}

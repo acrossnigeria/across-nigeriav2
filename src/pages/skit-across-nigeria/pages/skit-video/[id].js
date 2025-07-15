@@ -41,7 +41,7 @@ export default function SkitScreen(props){
     };
 
     const [ isMobile, setIsMobile ] = useState(false);
-    const [ descriptionLength, setDescriptionLength ] = useState(50);
+    const [ descriptionLength, setDescriptionLength ] = useState(70);
     const [ data, setData ] = useState(null);
     const [ loadingData, setLoadingData ] = useState(true);
     const [ dataSuccess, setDataSuccess ] = useState(true);
@@ -401,7 +401,7 @@ export default function SkitScreen(props){
                         ): (
                             <div className="flex w-full flex-col rounded-[5px]">
                                 <span onClick={descriptionView} className="hover:cursor-pointer leading-relaxed text-gray-200">
-                                    { data?.vidCaption.length > 200 ? (
+                                    { data?.vidCaption.length > 100 ? (
                                         data?.vidCaption?.slice(0, descriptionLength) + (descriptionLength!==data?.vidCaption.length?'...more':'')
                                     ) : (
                                         data?.vidCaption
