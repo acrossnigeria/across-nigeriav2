@@ -1,17 +1,12 @@
-import Image from 'next/image';
 import React, { useState, useEffect } from 'react';
-import logo from "../../public/images/logo1.png";
 import Link from 'next/link';
 import { signOut, useSession } from 'next-auth/react';
 import { useRouter } from 'next/router';
 import Search from '../../public/images/icon/Search';
-import Money from '../../public/images/icon/Money';
-import Video from '../../public/images/icon/Video';
-import ShoutMic from '../../public/images/icon/ShoutMic';
 import Logo from '../../public/images/icon/Logo';
 import Profile from '../../public/images/icon/Profile';
-import Login from '../../public/images/icon/Login';
 import NotifyIcon from '../../public/images/icon/NotifyIcon';
+import BottomMenu from './BottomMenu';
 
 const Navbar = ( { hideNav } ) => {
   const { status, data: session } = useSession();
@@ -110,21 +105,7 @@ const Navbar = ( { hideNav } ) => {
             </Link>
         </div>
 
-        <div className={`${hideNav?'hidden':'flex'} mt-2 fixed bottom-0 rounded-t-[5px] w-[100%] z-[1000] bg-green-600 flex-row font-sans h-[50px] items-center justify-around`}>
-          {/* Second Line Menus */}
-            <Link style={{alignItems:'center'}} href="/giveaway-quiz" className="text-green-200 text-[12px] hover:scale-105 items-center flex flex-col justify-center">
-              <Money/>
-              Giveaway Quiz
-            </Link>
-            <Link style={{alignItems:'center'}} href="/soon" className="text-green-200 text-[12px] hover:scale-105 items-center flex flex-col justify-center">
-              <Video/>
-              Skits Across Naija
-            </Link>
-            <Link style={{alignItems:'center'}} href="/shoutout" className="text-green-200 text-[12px] hover:scale-105 items-center flex flex-col justify-center">
-              <ShoutMic/>
-            Shout Out
-            </Link>
-        </div>
+        <BottomMenu hideNav={hideNav} />
       </div>
 
     </nav>

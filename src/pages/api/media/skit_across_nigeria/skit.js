@@ -63,6 +63,7 @@ const Handler = async ( req, res ) => {
                 paymentRef
             });
             await db.disconnect();
+            console.log( `${userId} uploaded a skit` );
 
             res.status(200).json( { success:true, id:skitObj._id } );
             
@@ -84,11 +85,11 @@ const Handler = async ( req, res ) => {
                 voteDocs?.map( (voteDoc) => {
                     votes+=voteDoc?.votes;
                 });
-                console.log(votes);
 
 
                 await db.disconnect();
-                const vidUrl = video?.vidUrl?.replace("mp4", "m3u8");
+                const vidUrl = video?.vidUrl?.replace("mp4", "m3u8").replace("mov", "m3u8");
+                console.log(vidUrl);
 
                 const vidData = {
                     vidLength:video?.vidLength, 

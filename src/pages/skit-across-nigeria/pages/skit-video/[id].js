@@ -21,6 +21,7 @@ import { ChevronLeft, ChevronRight, CirclePlus, EllipsisVertical, Heart, House, 
 import ProcessLoader from "@/components/ui/ProcessLoader";
 import VoteModal from "../../components/VoteModal";
 import BottomNav from "../../components/BottomNav";
+import BottomMenu from "@/components/BottomMenu";
 
 // Dynamically import ReactPlayer with SSR disabled
 const ReactPlayer = dynamic(() => import('react-player'), { ssr: false });
@@ -318,7 +319,7 @@ export default function SkitScreen(props){
                         </button>
                     </div>
                 }
-                <div className={`h-screen md:max-w-[600px] w-screen flex flex-col justify-center item-center md:rounded-[5px] overflow-hidden bg-black`}>
+                <div className={`h-screen md:max-w-[400px] w-screen flex flex-col justify-center item-center md:rounded-[5px] overflow-hidden bg-black`}>
                     { typeof window !== "undefined" && ( loadingData ? ( 
                             <div className="h-screen w-full flex flex-col bg-transparent justify-center items-center">
                                 <ProcessLoader color={'white'} size={'35px'}/>
@@ -326,7 +327,7 @@ export default function SkitScreen(props){
                         ) : (
                             ( dataSuccess ? (
                                 <div className="h-full w-full flex flex-col justify-center items-center">
-                                    <div className="h-[5px] md:w-[700px] w-screen absolute top-0 self-start">
+                                    <div className="h-[5px] md:max-w-[400px] w-screen absolute top-0 self-start">
                                         <div style={{width:`${hasProgressed * 100}%`}} className={`transition-width ease-in-out duration-350 h-full bg-green-500`}></div>
                                     </div>
                                     <div onClick={handlePlayer} className={`h-screen transition-all ease-in-out duration-350 ${isPlaying?"opacity-0":"opacity-100"} md:h-[350px] md:w-[700px] z-50 w-screen items-center justify-center flex flex-col bg-transparent absolute`}>
@@ -334,27 +335,30 @@ export default function SkitScreen(props){
                                             <PlayCircle strokeWidth={1} size={'50px'} className="text-white"/>
                                         </button>
                                     </div>
-                                    <ReactPlayer
-                                        url={data?.vidUrl} 
-                                        pip={true} 
-                                        width={'100%'} 
-                                        height={'100%'} 
-                                        controls={false}
-                                        playsinline={true}
-                                        autoPlay={true}
-                                        playing={isPlaying}
-                                        loop={true}
-                                        onProgress={( { played })=>{setHasProgressed(played)}}
-                                        config={{
-                                            file: {
-                                                attributes: {
-                                                disablekb: 1,  // Disable keyboard shortcuts
-                                                fullscreen: false,  // Disable fullscreen
+                                    <div className="relative h-full w-full">
+                                        <ReactPlayer
+                                            url={data?.vidUrl} 
+                                            pip={true} 
+                                            width={'100%'} 
+                                            height={'100%'} 
+                                            controls={false}
+                                            playsinline={true}
+                                            autoPlay={true}
+                                            playing={isPlaying}
+                                            loop={true}
+                                            onProgress={( { played })=>{setHasProgressed(played)}}
+                                            config={{
+                                                file: {
+                                                    attributes: {
+                                                    disablekb: 1,  // Disable keyboard shortcuts
+                                                    fullscreen: false,  // Disable fullscreen
+                                                    }
                                                 }
-                                            }
-                                        }}
-                                        />
+                                            }}
+                                            />
+                                        <div className="absolute top-0 left-0 w-full h-full bg-black opacity-30 z-10 pointer-events-none" />
                                     </div>
+                                </div>
                                 ): (
                                 <div className="flex flex-col h-full w-full justify-center items-center">
                                         <span>An error occurred</span>
@@ -368,39 +372,40 @@ export default function SkitScreen(props){
                 <div className={`fixed ${shareNotifyBottom} ${shareNotifyOpacity} transition-all text-center ease-in-out duration-500 bg-gray-100 z-[2000] text-gray-600 rounded-[20px] md:w-fit w-[80%] border-1 border-green-500 h-fit p-3`}>
                     <span>Link copied, you can now share it</span>
                 </div> 
-                <div className={`w-full md:max-w-[600px] absolute z-[1000] bottom-0 text-white flex flex-col px-[3%] md:px-0`}>
-                    <div className="flex w-[80%] bg-transparent flex-col py-2 pl-[2.5%] pb-[40px] items-center">
+                <div className={`w-full md:max-w-[400px] absolute z-[1000] bottom-0 text-white flex flex-col pl-[2%] `}>
+                    <div className="flex w-[84%] flex-col py-2 pb-[60px] items-center">
                         <div className="flex w-full flex-row md:text-[18px] text-[16px] items-center gap-2">
                             { loadingData ? (
-                                <div className="h-[32px] md:w-[120px] w-[50px] bg-gray-200 animate-pulse rounded-[5px]"></div>
+                                <div className="h-[25px] w-full bg-gray-800 animate-pulse rounded-[5px]"></div>
                             ): (
-                                <div className="flex flex-row w-full justify-between items-center gap-4 leading-tight">
-                                    <div className="flex flex-row gap-2 items-center">
-                                        <Profile size={'40px'}/>
-                                        <span className="md:text-[18px] text-[14px] font-semibold">{data?.fullname}</span> 
+                                <div className="flex flex-row gap-3 items-center">
+                                    <Profile size={'35px'}/>
+                                    <div className="flex flex-col justify-center">
+                                        <span className="md:text-[13px] text-[13px] font-semibold">{data?.fullname}</span> 
+                                        <span className="md:text-[11px] text-[9px]">Creator</span>
                                     </div>
-                                    <button onClick={voteModal} className={`text-white font-medium text-[14px] hover:bg-gray-300 bg-transparent border-1 border-white px-3 flex flex-row gap-1 items-center justify-center h-[35px] rounded-[5px] hover:scale-105`}>
-                                        <span>Vote Skit</span>
+                                    <button onClick={voteModal} className={`text-white text-[15px] hover:bg-gray-300 bg-transparent border-1 border-white px-5 flex flex-row gap-1 items-center justify-center py-1 hover:text-black rounded-[8px] hover:scale-105`}>
+                                        <span>Vote</span>
                                     </button>
                                 </div>
                             )}
 
                         </div>
 
-                        <div className="flex flex-col w-full mt-2 mb-1 gap-1">
+                        <div className="flex flex-col w-full mt-3 mb-1 gap-1">
                             { loadingData ? (
                                 
-                                    <div className="h-[25px] w-full bg-gray-800 animate-pulse rounded-[5px]"/>
+                                    <div className="h-[20px] w-full bg-gray-800 animate-pulse rounded-[5px]"/>
                             ): (
-                                    <span style={{lineHeight:'21px'}} className="text-[18px] font-bold">{modifyTitle(title)}</span>
+                                    <span className="text-[14px] leading-tight font-bold">{modifyTitle(title)}</span>
                             )}
                         </div>
 
                         { loadingData ? (
-                            <div className="h-[25px] w-full bg-gray-800 animate-pulse rounded-[5px]"/>
+                            <div className="h-[20px] w-full bg-gray-800 animate-pulse rounded-[5px]"/>
                         ): (
-                            <div className="flex w-full flex-col rounded-[5px]">
-                                <span onClick={descriptionView} className="hover:cursor-pointer leading-relaxed text-gray-200">
+                            <div className="flex w-full flex-col">
+                                <span onClick={descriptionView} className="hover:cursor-pointer text-[13px] leading-relaxed text-gray-200">
                                     { data?.vidCaption.length > 100 ? (
                                         data?.vidCaption?.slice(0, descriptionLength) + (descriptionLength!==data?.vidCaption.length?'...more':'')
                                     ) : (
@@ -413,17 +418,17 @@ export default function SkitScreen(props){
                     </div>
                 </div> 
             </div>
-            <div className={`w-full md:max-w-[600px] absolute bottom-0 z-[900] text-white h-[40%] flex flex-row justify-end px-[2.5%]`}>
-                <div className="flex flex-col gap-5">
-                    <div className="flex flex-col hover:opacity-50 transition-opacity cursor-pointer items-center w-fit gap-1">
-                        <Vote size={'35px'} color="white"/>
+            <div className={`w-full md:max-w-[400px] absolute bottom-0 z-[900] text-white h-[40%] items-end pb-[60px] flex flex-row justify-end pr-[2%]`}>
+                <div className="flex flex-col gap-[25px]">
+                    <div className="flex flex-col hover:opacity-50 transition-opacity cursor-pointer items-center w-fit">
+                        <Vote size={'30px'} color="white"/>
                         <span className="text-[16px] font-semibold">{skitVotes?skitVotes:0}</span>
                     </div>
                     <button onClick={()=>{shareModal('in')}} className="flex flex-col hover:opacity-50 transition-opacity cursor-pointer items-center w-fit gap-1">
-                        <Send size={'30px'} color="white"/>
+                        <Send size={'25px'} color="white"/>
                     </button>
                     <button className="flex flex-col hover:opacity-50 mt-5 transition-opacity cursor-pointer items-center w-fit gap-1">
-                        <EllipsisVertical size={'30px'} color="white"/>
+                        <EllipsisVertical size={'25px'} color="white"/>
                     </button>
                 </div>
             </div>
@@ -436,6 +441,8 @@ export default function SkitScreen(props){
         
             </div>
         )}
+        { session?.user ? <BottomNav/> :<></>   }
+        <BottomMenu hideNav={session?.user ? false:true} />
         </>
   )
 }
