@@ -5,7 +5,6 @@ const skitAcrossNigeriaSkitSchema = new mongoose.Schema({
         user: { type:mongoose.Schema.Types.ObjectId, required:true, ref:"User" },
         vidUrl:{ type:String, required:true },
         vidLength:{ type:String, required:true },
-        comments:{ type:Array, required:false, default:[] },
         vidCaption:{ type:String, required:false, default:""},
         paymentRef:{ type:String, required:true },
     },

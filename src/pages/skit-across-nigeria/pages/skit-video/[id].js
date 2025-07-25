@@ -31,7 +31,7 @@ export default function SkitScreen(props){
 
     const router = useRouter();
     const params = router.query;
-    const { status, data: session } = useSession();
+    const { status, data:session } = useSession();
     const message = '🔥 Check out this amazing skit on [Your Platform Name]! 😂🎭 The creator is competing to win cash prizes! 🏆💰 Support them by watching and voting for your favorite skit. Every vote counts! Cast yours now! 🚀✨';
     const skitLink = `https://acrossnig.com/theater-skit-across-nigeria/pages/skit-video/${params.id}`;
     const encodedMessage = encodeURIComponent(message + ' ' + skitLink);
@@ -66,6 +66,7 @@ export default function SkitScreen(props){
     const [ uploadModal, setUploadModal ] = useState(false);
     const [ uModalOpacity, setUModalOpacity ] = useState('opacity-100');
     const [ uBgOpacity, setUBgOpacity ] = useState('opacity-100');
+
 
     // State to track player
     const [ isPlaying, setIsPlaying ] = useState(true);
@@ -433,7 +434,7 @@ export default function SkitScreen(props){
                 </div>
             </div>
             <div className={'absolute top-0 left-0 w-full z-[100] flex flex-row justify-between items-center px-[2.5%] pt-5 py-3 bg-transparent'}>
-                <Link href={'/skit-across-nigeria/pages'} className="flex flex-row gap-2 justify-center hover:text-gray-400 items-center w-fit text-white">
+                <Link href={'/skit-across-nigeria/pages'} className="flex flex-row text-[19px] font-light gap-2 justify-center hover:text-gray-400 items-center w-fit text-white">
                     <ChevronLeft size={'25px'} className="text-white"/>
                     <span>Watch others</span>
                 </Link>
@@ -442,7 +443,7 @@ export default function SkitScreen(props){
             </div>
         )}
         { session?.user ? <BottomNav/> :<></>   }
-        <BottomMenu hideNav={session?.user ? false:true} />
+        <BottomMenu hideNav={session?.user ? true:false} />
         </>
   )
 }

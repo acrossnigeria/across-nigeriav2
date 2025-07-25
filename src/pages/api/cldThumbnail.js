@@ -19,7 +19,7 @@ const Handler = async (req, res) => {
           return res.status(400).json({ error: 'Video ID is required' });
         }
       
-        const thumbnailUrl = cloudinary.v2.url(videoId, {
+        let initialUrl = cloudinary.v2.url(videoId, {
             resource_type: 'video',
             format: 'jpg',
             transformation: [
@@ -29,6 +29,7 @@ const Handler = async (req, res) => {
               { fetch_format: "auto" } // Optimize format
             ]
           });
+        const thumbnailUrl = initialUrl.replace('.mov', ''); // Ensure the URL ends with .jpeg
           
       
         res.status(200).json({ thumbnailUrl });
