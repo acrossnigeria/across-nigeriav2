@@ -312,11 +312,11 @@ export default function SkitScreen(props){
                 }
 
                 { errorGettingSkit && 
-                    <div className='h-screen w-full pt-[30px] flex flex-col gap-10'>
-                        <div className='text-red-500 font-light text-center md:w-[30%] w-[90%] mx-auto text-[13px]'>{errorMessage}. please check your internet connection</div>
-                        <button onClick={reload} className='flex flex-col justify-center hover:scale-105 transition-all ease-in-out duration-300 hover:opacity-50 items-center gap-3'>
-                            <span className=']'>Tap to retry</span>
-                            <ReloadIcon/>
+                    <div className='h-screen w-full pt-[30px] flex flex-col justify-center items-center gap-10'>
+                        <div className='text-gray-300 font-light text-center md:w-[30%] w-[90%] mx-auto text-[13px]'>Please check your internet connection</div>
+                        <button onClick={reload} className='flex text-white flex-col justify-center hover:scale-105 transition-all ease-in-out duration-300 hover:opacity-50 items-center gap-3'>
+                            <span className=''>Tap to retry</span>
+                            <ReloadIcon size={'50px'} bg={'white'}/>
                         </button>
                     </div>
                 }
@@ -374,15 +374,22 @@ export default function SkitScreen(props){
                     <span>Link copied, you can now share it</span>
                 </div> 
                 <div className={`w-full md:max-w-[400px] absolute z-[1000] bottom-0 text-white flex flex-col pl-[2%] `}>
-                    <div className="flex w-[84%] flex-col py-2 pb-[60px] items-center">
+                    <div className="flex w-[84%] flex-col py-2 pb-[25px] items-center">
                         <div className="flex w-full flex-row md:text-[18px] text-[16px] items-center gap-2">
                             { loadingData ? (
-                                <div className="h-[25px] w-full bg-gray-800 animate-pulse rounded-[5px]"></div>
+                                <div className="flex flex-row gap-3 items-center">
+                                    <div className="bg-gray-800 relative overflow-hidden h-[30px] w-[30px] rounded-full">
+                                        <div className="absolute inset-0 -translate-x-full animate-[shimmer_2s_infinite] bg-gradient-to-r from-transparent via-white/40 to-transparent" />
+                                    </div>
+                                    <div className="h-[30px] w-[200px] relative overflow-hidden bg-gray-800 rounded-[15px]">
+                                        <div className="absolute inset-0 -translate-x-full animate-[shimmer_2s_infinite] bg-gradient-to-r from-transparent via-white/40 to-transparent" />
+                                    </div>
+                                </div>
                             ): (
                                 <div className="flex flex-row gap-3 items-center">
-                                    <Profile size={'35px'}/>
+                                    <Profile size={'40px'}/>
                                     <div className="flex flex-col justify-center">
-                                        <span className="md:text-[13px] text-[13px] font-semibold">{data?.fullname}</span> 
+                                        <span className="md:text-[15px] text-[14px] font-semibold">{data?.fullname?.length > 15 ? `${data?.fullname?.slice(0, 15)}...` : data?.fullname}</span> 
                                         <span className="md:text-[11px] text-[9px]">Creator</span>
                                     </div>
                                     <button onClick={voteModal} className={`text-white text-[15px] hover:bg-gray-300 bg-transparent border-1 border-white px-5 flex flex-row gap-1 items-center justify-center py-1 hover:text-black rounded-[8px] hover:scale-105`}>
@@ -394,41 +401,28 @@ export default function SkitScreen(props){
                         </div>
 
                         <div className="flex flex-col w-full mt-3 mb-1 gap-1">
-                            { loadingData ? (
-                                
-                                    <div className="h-[20px] w-full bg-gray-800 animate-pulse rounded-[5px]"/>
+                            { loadingData ? ( 
+                                    <div className="h-[25px] w-full relative overflow-hidden bg-gray-800 rounded-[5px]">
+                                        <div className="absolute inset-0 -translate-x-full animate-[shimmer_2s_infinite] bg-gradient-to-r from-transparent via-white/40 to-transparent" />
+                                    </div>
                             ): (
                                     <span className="text-[14px] leading-tight font-bold">{modifyTitle(title)}</span>
                             )}
                         </div>
-
-                        { loadingData ? (
-                            <div className="h-[20px] w-full bg-gray-800 animate-pulse rounded-[5px]"/>
-                        ): (
-                            <div className="flex w-full flex-col">
-                                <span onClick={descriptionView} className="hover:cursor-pointer text-[13px] leading-relaxed text-gray-200">
-                                    { data?.vidCaption.length > 100 ? (
-                                        data?.vidCaption?.slice(0, descriptionLength) + (descriptionLength!==data?.vidCaption.length?'...more':'')
-                                    ) : (
-                                        data?.vidCaption
-                                    )}
-                                </span>
-                            </div>
-                        )}
                         
                     </div>
                 </div> 
             </div>
-            <div className={`w-full md:max-w-[400px] absolute bottom-0 z-[900] text-white h-[40%] items-end pb-[60px] flex flex-row justify-end pr-[2%]`}>
-                <div className="flex flex-col gap-[25px]">
-                    <div className="flex flex-col hover:opacity-50 transition-opacity cursor-pointer items-center w-fit">
+            <div className={`w-full md:max-w-[400px] absolute bottom-0 z-[900] text-white h-[40%] items-end pb-[25px] flex flex-row justify-end pr-[2%]`}>
+                <div className="flex flex-col gap-[20px]">
+                    {/* <div className="flex flex-col hover:opacity-50 transition-opacity cursor-pointer items-center w-fit">
                         <Vote size={'30px'} color="white"/>
                         <span className="text-[16px] font-semibold">{skitVotes?skitVotes:0}</span>
-                    </div>
-                    <button onClick={()=>{shareModal('in')}} className="flex flex-col hover:opacity-50 transition-opacity cursor-pointer items-center w-fit gap-1">
+                    </div> */}
+                    <button onClick={()=>{shareModal('in')}} className="flex flex-col hover:opacity-50 transition-opacity cursor-pointer items-center rounded-full justify-center bg-gray-500/50 w-[40px] h-[40px] gap-1">
                         <Send size={'25px'} color="white"/>
                     </button>
-                    <button className="flex flex-col hover:opacity-50 mt-5 transition-opacity cursor-pointer items-center w-fit gap-1">
+                    <button className="flex flex-col rounded-full justify-center bg-gray-500/50 w-[40px] h-[40px] hover:opacity-50 mt-5 transition-opacity cursor-pointer items-center gap-1">
                         <EllipsisVertical size={'25px'} color="white"/>
                     </button>
                 </div>
@@ -442,8 +436,6 @@ export default function SkitScreen(props){
         
             </div>
         )}
-        { session?.user ? <BottomNav/> :<></>   }
-        <BottomMenu hideNav={session?.user ? true:false} />
         </>
   )
 }

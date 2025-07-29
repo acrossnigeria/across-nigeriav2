@@ -38,7 +38,7 @@ export default function VideoCard( { content }) {
     return(
             <div className="flex flex-col items-center h-[300px] py-2 md:w-[350px] w-full">
                 { thumbnailUrl ? (
-                    <Link className="w-fit overflow-hidden transition-all duration-300 ease-in-out hover:opacity-85 flex flex-row justify-end" href={link}>
+                    <Link className="w-full overflow-hidden transition-all duration-300 ease-in-out hover:opacity-85 flex flex-row justify-end" href={link}>
                         <Image 
                         className="h-[225px] brightness-125 transition-all ease-in-out duration-250 w-full p-0" 
                         width={225}
@@ -69,8 +69,8 @@ export default function VideoCard( { content }) {
                             <span style={{lineHeight:'19px'}} className="text-gray-700 text-[14px]">
                                 <span >{content?.fullname} </span>
                             </span>
-                            <span style={{lineHeight:'19px'}} className="text-gray-700 text-[14px]">
-                                <span >{content?.votes} vote{content?.votes>1 ? "s" : ""} • </span>
+                            <span style={{lineHeight:'19px'}} className="text-gray-600 text-[12px]">
+                                {/* <span >{content?.votes} vote{content?.votes>1 ? "s" : ""} • </span> */}
                                 <span>{content?.createdAt}</span>
                             </span>
                         </div>

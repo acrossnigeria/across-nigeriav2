@@ -16,6 +16,7 @@ import BottomMenu from '@/components/BottomMenu';
 import Profile from '../../../../public/images/icon/Profile';
 import LeaderBoard from '../components/LeaderBoard';
 import Link from 'next/link';
+import { Info } from 'lucide-react';
 
 
 function SkitsPage() {
@@ -161,8 +162,8 @@ const notLoggedIn = (transiton) => {
 }
 
   return (
-    <Layout hideNav={session?.user?.name?true:false}>
-      <div className='md:ml-[5%] md:mr-[5%] mt-3'>
+    <Layout hideAdvertCard={true} hideNav={session?.user?.name?true:false}>
+      <div className='md:ml-[5%] md:mr-[5%] bg-gray-100'>
 
         { showModal && 
             <div className={`fixed ${nlBgOpacity} transition-all duration-300 ease-in-out backdrop-blur-sm left-0 h-screen w-screen flex flex-co items-center justify-center gap-3 bg-black/50 z-[1000] top-0`}>
@@ -199,75 +200,27 @@ const notLoggedIn = (transiton) => {
         }
         { !errorGettingSkit &&
           <div>
+            <div className='font-medium w-full flex flex-row justify-between text-center text-[20px] px-4 pt-3'>
+                <span className='font-bold'>Leader Board (Top 5)</span>
+                <button>
+                    <Info size={'17px'} color='green'/>
+                </button>
+            </div>
             { !isGettingSkits &&
-              <div className='w-[95%] md:w-full mx-auto pb-2 gap-2 flex flex-col md:px-2'>
-                <div className='font-semibold flex flex-row items-center gap-2 justify-between text-center mb-3 text-[22px]'>
-                  <span>Leader Board</span>
-                  <button onClick={()=>toShowLeaderBoard(true)} className='ml-2 md:text-[14px] text-[13px] px-2 py-1 bg-blue-700 font-semibold text-white rounded hover:underline'>Show full Leader Board</button>
-                </div>
-                <div className='flex flex-row md:gap-5 gap-2 justify-center items-baseline'>
-                  {/* { [oneUser, twoUser, thirdUser].map( (position, index)=> {
-                    return  <TopSkitCard key={index} strUrl={position?.vidUrl} exist={position?true:false} votes={position?.votes} position={index+1} creator={position?.fullname} description={position?.vidTitle}/>
-                  })} */}
-                  { [oneUser, twoUser, thirdUser].map( (position, index)=> {
-                    return  (
-                      <div id={index} style={{ height:index === 1?"210px":(index === 0 ? "170px":"130px") }} className='flex flex-col items-center self-end bg-white border-1 border-gray-200 shadow-2xl rounded-[5px] md:w-[150px] w-[33%]'>
-                        <div className='w-full h-fit flex flex-row justify-end'>
-                          <div className='h-[30px] w-[30px] flex flex-col justify-center items-center font-bold text-white text-[18px] bg-green-500 absolute rounded-full mr-[-10px] mt-[-10px]'>
-                            <span>{index === 1?1:(index === 0 ? 2:3)}</span>
-                          </div>
-                        </div>
-
-                        <div className='w-full mt-3 flex flex-col justify-center items-center'>
-                            <Profile size={'55px'} bg={'gray'}/>
-                            <span className='text-[12px] font-semibold'>{position?.vidTitle.length > 50 ? position?.vidTitle.slice(0, 50) + '...' : position?.vidTitle}</span>
-                            <span className='text-[10px] font-semibold'>by {position?.fullname}</span>
-                            <Link href={`/skit-across-nigeria/watch/${position?.id}`} className='text-[12px] hover:underline font-medium text-primary-500'>Watch skit</Link>
-                        </div>
-                      </div>
-                    )
-                  })}
-                </div>
-                { showLeaderboard && <LeaderBoard toShowLeaderBoard={toShowLeaderBoard} skits={ { oneUser, twoUser, thirdUser, fourUser, fiveUser, sixUser } }/> }
-                {/* <div className='mt-3 bg-black/20 text-white p-1 rounded-[3px]'>
-                  <div className='w-full flex flex-row items-center gap-3 px-2 py-1 mb-2'>
-                    <span className=''>4</span>
-                    <VideoIcon/>
-                    <div className='flex flex-col'>
-                      <span className=' text-[14px]'>{fourUser?(fourUser.votes.length>0 ? fourUser.fullname:''):''}</span>
-                      <span className='text-[13px]'>{fourUser?(fourUser.votes.length>0 ? (fourUser.vidTitle.slice(0, 40) + '...'):'Position empty'):'Position empty'}</span>
-                    </div>
-                  </div> 
-                  
-                  <div className='w-full flex flex-row items-center px-2 gap-3 py-1'>
-                    <span className=''>5</span>
-                    <VideoIcon/>
-                    <div className='flex flex-col'>
-                      <span className=' text-[14px]'>{fiveUser?(fiveUser.votes.length>0 ? fiveUser.fullname:''):''}</span>
-                      <span className='text-[13px]'>{fiveUser?(fiveUser.votes.length>0 ? (fiveUser.vidTitle.slice(0, 40) + '...'):'Position empty'):'Position empty'}</span>
-                    </div>
-                  </div> 
-                </div> */}
-              
-              </div>
+                <LeaderBoard toShowLeaderBoard={toShowLeaderBoard} skits={ { oneUser, twoUser, thirdUser, fourUser, fiveUser, sixUser } }/> 
             }
 
             {  isGettingSkits &&
-              <div className='w-[95%] md:w-full mx-auto pb-2 gap-2 flex flex-col md:px-2'>
-                <div className='font-semibold flex flex-row items-center gap-2 mb-3 justify-between text-center text-[22px]'>
-                  <span>Leader Board</span>
-                  <div className='ml-2 md:text-[14px] w-[150px] h-[35px] text-[13px] px-2 py-1 bg-blue-300 font-semibold overflow-hidden relative rounded'>
-                     <div className="absolute inset-0 -translate-x-full animate-[shimmer_2s_infinite] bg-gradient-to-r from-transparent via-white/60 to-transparent" />
+              <div className='w-[98%] rounded-[10px] px-1 h-fit pb-5 mx-auto flex flex-col'>
+                  <div className='flex flex-col gap-2 mt-3'>
+                      { [ 0, 0, 0, 0, 0 ].map( (position, index)=> {
+                          return (
+                            <div key={index} className='w-full flex flex-row px-4 items-center gap-4 overflow-hidden relative shadow-md bg-gray-200 z-[1000] rounded-[5px] h-[50px]'>
+                              <div className="absolute inset-0 -translate-x-full animate-[shimmer_2s_infinite] bg-gradient-to-r from-transparent via-white/60 to-transparent" />
+                            </div>
+                          )
+                      })}
                   </div>
-                </div>
-                <div className='flex flex-row md:gap-5 gap-2 justify-center items-baseline'>
-                  { [ 0, 0, 0].map( (_, index)=> {
-                    return  (
-                      <div id={index} style={{ height:index === 1?"210px":(index === 0 ? "170px":"130px") }} className='flex flex-col items-center self-end animate-pulse bg-white border-1 border-gray-200 shadow-2xl rounded-[5px] md:w-[150px] w-[33%]'>
-                      </div>
-                    )
-                  })}
-                </div>
               </div>
             }
         
@@ -316,8 +269,6 @@ const notLoggedIn = (transiton) => {
 
           </div>
         }
-        { session?.user?.name && <BottomNav/> }
-        <BottomMenu hideNav={session?.user ? true:false} />
       </div>
     </Layout>
   );

@@ -63,7 +63,8 @@ const Handler = async ( req, res ) => {
                 paymentRef
             });
             await db.disconnect();
-            console.log( `${userId} uploaded a skit` );
+            const date = new Date();
+            console.log( `${userId} uploaded a skit ${date.getTime()}` );
 
             res.status(200).json( { success:true, id:skitObj._id } );
             

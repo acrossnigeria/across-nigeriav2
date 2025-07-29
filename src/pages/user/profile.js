@@ -4,7 +4,6 @@ import axios from 'axios';
 import { useSession, signOut } from 'next-auth/react';
 import ProfileIcon from '../../../public/images/icon/ProfileIcon';
 import Link from 'next/link';
-import BackIcon from '../../../public/images/icon/BackIcon';
 import AmbassadorIcon from '../../../public/images/icon/AmbassadorIcon';
 import ExplorerIcon from '../../../public/images/icon/ExplorerIcon';
 import RefIcon from '../../../public/images/icon/RefIcon';
@@ -15,7 +14,6 @@ import LogoutIcon from '../../../public/images/icon/LogoutIcon';
 import SettingsIcon from '../../../public/images/icon/SettingsIcon';
 import ChevronIcon from '../../../public/images/icon/ChevronIcon';
 import ArrowIcon from '../../../public/images/icon/ArrowIcon';
-import CycleLoader from '@/components/CycleLoader';
 import Next from '../../../public/images/icon/Next';
 
 
