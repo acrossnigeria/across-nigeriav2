@@ -61,7 +61,7 @@ export default function VideoCard( { content }) {
                 )}
                 <div className="w-full flex flex-row items-start justify-between gap-2 pt-[10px]">
                     <div className="flex flex-row gap-2 items-start">
-                        <Profile bg={'gray'} size={'45px'}/>
+                        <Profile bg={'#d1d5db'} size={'45px'}/>
                         <div className="flex flex-col">
                             <div>
                                 <Link href={link} style={{lineHeight:'19px'}} className="text-[15px] font-semibold hover:opacity-70 duration-300 transition-all ease-in-out">{title.length>35?title.slice(0, 35).concat('..'):title}</Link>

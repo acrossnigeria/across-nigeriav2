@@ -17,11 +17,12 @@ import FbIcon from "../../../../../public/images/icon/FbIcon";
 import IgIcon from "../../../../../public/images/icon/IgIcon";
 import WhatappIcon from "../../../../../public/images/icon/WhatappIcon";
 import SkitSuccessModal from "@/components/SkitSuccessModal";
-import { ChevronLeft, ChevronRight, CirclePlus, EllipsisVertical, Heart, House, MessageSquareText, PlayCircle, Send, Share2, UserCircle, Vote } from "lucide-react";
+import { ChevronLeft, ChevronRight, CirclePlus, EllipsisVertical, Heart, House, MessageSquareText, PlayCircle, Send, SendHorizonal, SendHorizontalIcon, SendToBack, Share, Share2, UserCircle, Vote } from "lucide-react";
 import ProcessLoader from "@/components/ui/ProcessLoader";
 import VoteModal from "../../components/VoteModal";
 import BottomNav from "../../components/BottomNav";
 import BottomMenu from "@/components/BottomMenu";
+import SendIcon from "../../../../../public/images/icon/SendIcon";
 
 // Dynamically import ReactPlayer with SSR disabled
 const ReactPlayer = dynamic(() => import('react-player'), { ssr: false });
@@ -373,12 +374,12 @@ export default function SkitScreen(props){
                 <div className={`fixed ${shareNotifyBottom} ${shareNotifyOpacity} transition-all text-center ease-in-out duration-500 bg-gray-100 z-[2000] text-gray-600 rounded-[20px] md:w-fit w-[80%] border-1 border-green-500 h-fit p-3`}>
                     <span>Link copied, you can now share it</span>
                 </div> 
-                <div className={`w-full md:max-w-[400px] absolute z-[1000] bottom-0 text-white flex flex-col pl-[2%] `}>
-                    <div className="flex w-[84%] flex-col py-2 pb-[25px] items-center">
+                <div className={`w-full md:max-w-[400px] absolute z-[1000] bottom-0 text-white flex flex-col md:pl-[2%] pl-[3%] `}>
+                    <div className="flex w-[84%] flex-col py-2 pb-[40px] items-center">
                         <div className="flex w-full flex-row md:text-[18px] text-[16px] items-center gap-2">
                             { loadingData ? (
                                 <div className="flex flex-row gap-3 items-center">
-                                    <div className="bg-gray-800 relative overflow-hidden h-[30px] w-[30px] rounded-full">
+                                    <div className="bg-gray-800 relative overflow-hidden h-[45px] w-[45px] rounded-full">
                                         <div className="absolute inset-0 -translate-x-full animate-[shimmer_2s_infinite] bg-gradient-to-r from-transparent via-white/40 to-transparent" />
                                     </div>
                                     <div className="h-[30px] w-[200px] relative overflow-hidden bg-gray-800 rounded-[15px]">
@@ -387,12 +388,12 @@ export default function SkitScreen(props){
                                 </div>
                             ): (
                                 <div className="flex flex-row gap-3 items-center">
-                                    <Profile size={'40px'}/>
+                                    <Profile bg={'#d1d5db'} size={'45px'}/>
                                     <div className="flex flex-col justify-center">
-                                        <span className="md:text-[15px] text-[14px] font-semibold">{data?.fullname?.length > 15 ? `${data?.fullname?.slice(0, 15)}...` : data?.fullname}</span> 
+                                        <span className="text-[15px] font-semibold">{data?.fullname?.length > 15 ? `${data?.fullname?.slice(0, 15)}...` : data?.fullname}</span> 
                                         <span className="md:text-[11px] text-[9px]">Creator</span>
                                     </div>
-                                    <button onClick={voteModal} className={`text-white text-[15px] hover:bg-gray-300 bg-transparent border-1 border-white px-5 flex flex-row gap-1 items-center justify-center py-1 hover:text-black rounded-[8px] hover:scale-105`}>
+                                    <button onClick={voteModal} className={`text-white text-[15px] hover:bg-gray-300 bg-transparent border-1 border-white px-6 flex flex-row gap-1 items-center justify-center py-1 hover:text-black rounded-[8px] hover:scale-105`}>
                                         <span>Vote</span>
                                     </button>
                                 </div>
@@ -406,24 +407,24 @@ export default function SkitScreen(props){
                                         <div className="absolute inset-0 -translate-x-full animate-[shimmer_2s_infinite] bg-gradient-to-r from-transparent via-white/40 to-transparent" />
                                     </div>
                             ): (
-                                    <span className="text-[14px] leading-tight font-bold">{modifyTitle(title)}</span>
+                                    <span className="text-[15px] leading-tight font-bold">{modifyTitle(title)}</span>
                             )}
                         </div>
                         
                     </div>
                 </div> 
             </div>
-            <div className={`w-full md:max-w-[400px] absolute bottom-0 z-[900] text-white h-[40%] items-end pb-[25px] flex flex-row justify-end pr-[2%]`}>
-                <div className="flex flex-col gap-[20px]">
+            <div className={`w-full md:max-w-[400px] absolute bottom-0 z-[1000] text-white h-[40%] items-end pb-[80px] flex flex-row justify-end md:pr-[2%] pr-[3%]`}>
+                <div className="flex flex-col gap-5">
                     {/* <div className="flex flex-col hover:opacity-50 transition-opacity cursor-pointer items-center w-fit">
                         <Vote size={'30px'} color="white"/>
                         <span className="text-[16px] font-semibold">{skitVotes?skitVotes:0}</span>
                     </div> */}
-                    <button onClick={()=>{shareModal('in')}} className="flex flex-col hover:opacity-50 transition-opacity cursor-pointer items-center rounded-full justify-center bg-gray-500/50 w-[40px] h-[40px] gap-1">
-                        <Send size={'25px'} color="white"/>
+                    <button onClick={()=>{shareModal('in')}} className="hover:opacity-50 transition-opacity p-2 mb-5 bg-gray-300/50 rounded-full cursor-pointer w-fit gap-1">
+                        <SendHorizontalIcon strokeWidth={1.5} size={'27px'} color="white"/>
                     </button>
-                    <button className="flex flex-col rounded-full justify-center bg-gray-500/50 w-[40px] h-[40px] hover:opacity-50 mt-5 transition-opacity cursor-pointer items-center gap-1">
-                        <EllipsisVertical size={'25px'} color="white"/>
+                    <button className=" w-fit hover:opacity-50 transition-opacity cursor-pointer p-2 bg-gray-300/50 rounded-full items-center gap-1">
+                        <EllipsisVertical strokeWidth={1.5} size={'27px'} color="white"/>
                     </button>
                 </div>
             </div>

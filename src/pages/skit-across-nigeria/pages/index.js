@@ -11,12 +11,8 @@ import { useSession } from 'next-auth/react';
 import logo1 from "../../../../public/images/logo1.png";
 import Close from "../../../../public/images/icon/Close";
 import Image from 'next/image';
-import BottomNav from '../components/BottomNav';
-import BottomMenu from '@/components/BottomMenu';
-import Profile from '../../../../public/images/icon/Profile';
 import LeaderBoard from '../components/LeaderBoard';
-import Link from 'next/link';
-import { Info } from 'lucide-react';
+import { Info, ArrowBigDown } from 'lucide-react';
 
 
 function SkitsPage() {
@@ -24,15 +20,13 @@ function SkitsPage() {
   console.log(display);
   const router = useRouter();
   const { status, data:session } = useSession();
-  const [ allSkits, setAllSkits ] = useState([]);
-  const [currentPage, setCurrentPage] = useState(1);
   const [ oneUser, setOneUser ] = useState(null);
   const [ twoUser, setTwoUser ] = useState(null);
   const [ thirdUser, setThirdUser ] = useState(null);
   const [ fourUser, setFourUser ] = useState(null);
-  const [ fiveUser, setFiveUser ] = useState(null);
-  const [ sixUser, setSixUser ] = useState(null);
+  const [ fiveUser, setFiveUser ] = useState(null)
   const [ currentSkits, setCurrentSkits ] = useState([]);
+  const [ sortedSkit, setSortedSkit ] = useState([]);
   const skitsPerPage = 6;
 
   // loaders states
@@ -44,11 +38,6 @@ function SkitsPage() {
   const [ nlBgOpacity, setNlBgOpacity ] = useState('opacity-0');
   const [ showModal, setShowModal ] = useState(false);
 
-  const [ showLeaderboard, setShowLeaderboard ] = useState(false);
-
-  const toShowLeaderBoard = (show) => {
-    setShowLeaderboard(show);
-  }
   
   function bubbleSort(arr) {
     for (let i = 0; i < arr.length - 1; i++) {
@@ -67,6 +56,7 @@ function SkitsPage() {
   
   const sortSkitByVotes = ( list ) => {
     let sorted = bubbleSort(list);
+    setSortedSkit(sorted);
     let zerosCount = 0;
     sorted.map((obj) => {
       if ( obj.votes.length === 0 ) {
@@ -83,20 +73,9 @@ function SkitsPage() {
     setThirdUser(sorted[2]?sorted[2]:null);
     setFourUser(sorted[3]?sorted[3]:null);
     setFiveUser(sorted[4]?sorted[4]:null);
-    setSixUser(sorted[5]?sorted[5]:null);
-    getCurrentSkit(list, currentPage);
-  }
 
-  const getCurrentSkit = (list, pageNumber) => {
-    if (!list.length) return setCurrentSkits([]); // Handle empty list case
-  
-    const indexOfLastSkit = pageNumber * skitsPerPage;
-    const indexOfFirstSkit = indexOfLastSkit - skitsPerPage;
-    console.log(indexOfLastSkit);
-    console.log(indexOfFirstSkit);
-  
-    setCurrentSkits(list.slice(indexOfFirstSkit, indexOfLastSkit));
-  };
+    setCurrentSkits(sorted.slice(0, skitsPerPage));
+  }
   
 
   const watch = () => {
@@ -107,7 +86,6 @@ function SkitsPage() {
     setIsGettingSkits(true);
     try {
       const response = await axios.get('/api/media/skit_across_nigeria/skit?type=multi');
-      setAllSkits(response.data.vidData);
       sortSkitByVotes(response.data.vidData);
       setIsGettingSkits(false)
     } catch (error) {
@@ -122,14 +100,11 @@ function SkitsPage() {
     getAllSkits();
   }, [])
 
-  // Change page
-  const paginate = (pageNumber) => {
-    setCurrentPage(pageNumber);
-    getCurrentSkit(allSkits, pageNumber);
-    window.scrollTo( {
-      top:0,
-      behavior:'smooth'
-    })
+
+  const loadMoreSkits = () => {
+    if (currentSkits.length === sortedSkit.length) return;
+    const newContent = sortedSkit.slice(0, currentSkits.length + skitsPerPage);
+    setCurrentSkits(newContent)
   }
 
   const reload = () => {
@@ -207,16 +182,16 @@ const notLoggedIn = (transiton) => {
                 </button>
             </div>
             { !isGettingSkits &&
-                <LeaderBoard toShowLeaderBoard={toShowLeaderBoard} skits={ { oneUser, twoUser, thirdUser, fourUser, fiveUser, sixUser } }/> 
+                <LeaderBoard  skits={ { oneUser, twoUser, thirdUser, fourUser, fiveUser } }/> 
             }
 
             {  isGettingSkits &&
               <div className='w-[98%] rounded-[10px] px-1 h-fit pb-5 mx-auto flex flex-col'>
-                  <div className='flex flex-col gap-2 mt-3'>
+                  <div className='flex flex-col gap-[3px] mt-3'>
                       { [ 0, 0, 0, 0, 0 ].map( (position, index)=> {
                           return (
-                            <div key={index} className='w-full flex flex-row px-4 items-center gap-4 overflow-hidden relative shadow-md bg-gray-200 z-[1000] rounded-[5px] h-[50px]'>
-                              <div className="absolute inset-0 -translate-x-full animate-[shimmer_2s_infinite] bg-gradient-to-r from-transparent via-white/60 to-transparent" />
+                            <div key={index} className='w-full flex flex-row px-4 items-center gap-4 overflow-hidden relative bg-blue-200 z-[1000] rounded-[20px] h-[50px]'>
+                              <div className="absolute inset-0 -translate-x-full animate-[shimmer_2s_infinite] bg-gradient-to-r from-transparent via-white/80 to-transparent" />
                             </div>
                           )
                       })}
@@ -224,9 +199,9 @@ const notLoggedIn = (transiton) => {
               </div>
             }
         
-            <h2 className="text-[22px] mt-5 border-t-1 border-gray-300 px-5 pt-2 font-semibold mb-3 ">All skits</h2>
+            <h2 className="text-[22px] mt-5 border-t-1 border-gray-300 px-5 md:px-8 pt-2 font-semibold">All skits</h2>
             { !isGettingSkits &&
-            <div className='flex flex-row justify-center pt-5 items-center w-full'>
+            <div className='flex flex-row justify-center pt-4 items-center w-full'>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-6xl">
                 { currentSkits?.length > 0 ? (
                   currentSkits.map((skit) => (
@@ -256,19 +231,22 @@ const notLoggedIn = (transiton) => {
             }
 
             {/* Pagination */}
-            <div className="flex justify-center flex-row gap-2 mt-[10px] mb-[20px]">
-              {Array.from({ length: Math.ceil(allSkits.length / skitsPerPage) }, (_, i) => (
-                <button key={i} onClick={() => paginate(i + 1)} className={`w-[50px] rounded-[3px] text-[19px] py-1 ${currentPage === i + 1 ? 'bg-transparent border-1 border-green-600 text-green-800' : 'bg-green-600 hover:bg-green-900 text-white'}`}>{i + 1}</button>
-              ))}
-            </div>
-            <div className='flex flex-col items-center mb-5 justify-center'>
-              <span className='text-[18px] font-semibold'>Want to join the competition?</span>
-              <span className='text-[17px] text-gray-600'>Upload your skit now!</span>  
-              <button onClick={()=>{router.push('/skit-across-nigeria/pages/landing')}} className='w-[70%] md:w-[250px] border-1 ml-2 md:ml-0 border-black hover:scale-105 transition-all ease-in-out duration-250 h-[40px] bg-transparent hover:bg-gray-300 rounded-[5px] mt-2 mb-1'>Join</button>
+            <div className="flex justify-center flex-row gap-2 mt-4">
+                <button onClick={loadMoreSkits} className={`w-[80%] md:w-[400px] ${currentSkits.length === sortedSkit.length ? 'hidden' : ''} bg-green-600 py-3 text-white transition-all duration-300 ease-in-out hover:bg-green-700 rounded-[25px]`}>
+                  Load more
+                  <ArrowBigDown color='white' size={'20px'} className='inline ml-2' />
+                </button>
             </div>
 
           </div>
         }
+      </div>
+      <div className={`flex flex-col bg-[url('/svg/Hexagon.svg')] items-center mt-7 text-white justify-center p-4`}>
+        <span className='text-[18px] font-bold'>Want to join the competition?</span>
+        <span className='text-[17px] '>Upload your skit now!</span>  
+        <button onClick={()=>{router.push('/skit-across-nigeria/pages/landing')}} className='w-[70%] md:w-[400px] border-1 text-white border-black bg-green-600 transition-all ease-in-out duration-250 h-[40px] hover:bg-green-700 rounded-[30px] mt-2 mb-1'>
+          Join
+        </button>
       </div>
     </Layout>
   );
