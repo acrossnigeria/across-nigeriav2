@@ -21,7 +21,7 @@ const LeaderBoard = ({ skits, toShowLeaderBoard }) => {
                             <div className='flex flex-row flex-grow items-center'>
                                 <PlayCircle strokeWidth={1} size={'28px'} bg={'black'}/>
                                 <div className='flex flex-col justify-center ml-2 items-start'>
-                                    <span className='text-[14px] md:hidden text-black'>{position?.vidTitle?.length > 30? `${position?.vidTitle?.slice(0, 30)}...`:position?.vidTitle}</span>
+                                    <span className='text-[14px] md:hidden text-black'>{position?.vidTitle?.length > 20? `${position?.vidTitle?.slice(0, 20)}...`:position?.vidTitle}</span>
                                     <span className='text-[14px] hidden md:block text-black'>{position?.vidTitle?.length > 150? `${position?.vidTitle?.slice(0, 150)}...`:position?.vidTitle}</span>
                                     <div className='flex flex-row gap-1 items-center'>
                                         <Profile size={'17px'} bg={'white'}/>

@@ -393,7 +393,7 @@ export default function SkitScreen(props){
                                         <span className="text-[15px] font-semibold">{data?.fullname?.length > 15 ? `${data?.fullname?.slice(0, 15)}...` : data?.fullname}</span> 
                                         <span className="md:text-[11px] text-[9px]">Creator</span>
                                     </div>
-                                    <button onClick={voteModal} className={`text-white text-[15px] hover:bg-gray-300 bg-transparent border-1 border-white px-6 flex flex-row gap-1 items-center justify-center py-1 hover:text-black rounded-[8px] hover:scale-105`}>
+                                    <button onClick={voteModal} className={`text-white text-[15px] z-[2000] hover:bg-gray-300 bg-transparent border-1 border-white px-6 flex flex-row gap-1 items-center justify-center py-1 hover:text-black rounded-[8px] hover:scale-105`}>
                                         <span>Vote</span>
                                     </button>
                                 </div>
@@ -414,8 +414,8 @@ export default function SkitScreen(props){
                     </div>
                 </div> 
             </div>
-            <div className={`w-full md:max-w-[400px] absolute bottom-0 z-[1000] text-white h-[40%] items-end pb-[80px] flex flex-row justify-end md:pr-[2%] pr-[3%]`}>
-                <div className="flex flex-col gap-5">
+            <div className={`w-full md:max-w-[400px] absolute bottom-0 text-white h-[40%] items-end pb-[80px] flex flex-row justify-end md:pr-[2%] pr-[3%]`}>
+                <div className="flex flex-col gap-5 z-[1000]">
                     {/* <div className="flex flex-col hover:opacity-50 transition-opacity cursor-pointer items-center w-fit">
                         <Vote size={'30px'} color="white"/>
                         <span className="text-[16px] font-semibold">{skitVotes?skitVotes:0}</span>
