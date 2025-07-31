@@ -191,7 +191,7 @@ export default function Home() {
               <TestimonialVideoCarousel/> 
             </div>
           </div>
-          <AddAccDetails userId={session?.user?._id} />
+          {/* <AddAccDetails userId={session?.user?._id} /> */}
         </Layout> 
   );
 }

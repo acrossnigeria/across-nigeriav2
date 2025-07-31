@@ -23,12 +23,14 @@ import VoteModal from "../../components/VoteModal";
 import BottomNav from "../../components/BottomNav";
 import BottomMenu from "@/components/BottomMenu";
 import SendIcon from "../../../../../public/images/icon/SendIcon";
+import setRealVH from "../../../../../utils/setRealVH";
+import { set } from "lodash";
 
 // Dynamically import ReactPlayer with SSR disabled
 const ReactPlayer = dynamic(() => import('react-player'), { ssr: false });
 
 
-export default function SkitScreen(props){
+export default function SkitScreen(props) {
 
     const router = useRouter();
     const params = router.query;
@@ -219,23 +221,26 @@ export default function SkitScreen(props){
         setIsPlaying(!isPlaying);
     };
 
+    
+    setRealVH();
+
 
     return(
         <>
         { !isClient ? (
-            <div className="flex bg-gray-100 items-center gap-2 justify-center h-screen">
+            <div style={{height:`calc(var(--vh, 1vh)*100)`}} className="flex bg-gray-100 items-center gap-2 justify-center">
                 <ProcessLoader color={'black'} size={'35px'} />
                 <p>Loading...</p>
             </div>
         ):(
-            <div className='w-screen flex flex-col items-center bg-gray-950 min-h-screen'>
+            <div style={{height:`calc(var(--vh, 1vh)*100)`}}  className='w-screen flex flex-col items-center bg-gray-950'>
                 <VoteModal setNewVotes={setSkitVotes} userId={session?.user?._id} skitId={params?.id} userEmail={session?.user?.email} setShowVoteModal={setShowVoteModal} showVoteModal={showVoteModal} />
                 <div className={`flex md:w-[50%] mx-auto rounded-[20px] justify-center items-center gap-4 flex-col`}>
                 { uploadModal && 
                     <SkitSuccessModal closeFunction={uploadSuccess} bgOpacity={uBgOpacity} modalOpacity={uModalOpacity}/>
                 }
                 { showModal && 
-                    <div className={`fixed ${nlBgOpacity} transition-all duration-300 ease-in-out backdrop-blur-sm h-screen w-screen flex flex-co items-center justify-center gap-3 bg-black/50 z-[1000] top-0`}>
+                    <div style={{height:`calc(var(--vh, 1vh)*100)`}}  className={`fixed ${nlBgOpacity} transition-all duration-300 ease-in-out backdrop-blur-sm w-screen flex flex-co items-center justify-center gap-3 bg-black/50 z-[1000] top-0`}>
                         <div className="h-fit flex flex-col justify-center w-[100%] items-center">
                             <button onClick={()=>{notLoggedIn('out')}} className="border-1 text-[14px] flex flex-row gap-2 text-white hover:bg-green-600/50 hover:scale-105 transition-all duration-300 ease-in-out justify-center items-center px-[20px] py-1 rounded-[20px] mb-[20px] border-gray-100">
                                 <Close bg={'white'} size={'15px'}/>
@@ -260,7 +265,7 @@ export default function SkitScreen(props){
                     }
 
                 { showShareModal && 
-                    <div className={`fixed ${ssBgOpacity} transition-all duration-300 ease-in-out backdrop-blur-sm h-screen w-screen flex flex-co items-center justify-center gap-3 bg-black/50 z-[1000] top-0`}>
+                    <div style={{height:`calc(var(--vh, 1vh)*100)`}}  className={`fixed ${ssBgOpacity} transition-all duration-300 ease-in-out backdrop-blur-sm w-screen flex flex-co items-center justify-center gap-3 bg-black/50 z-[1000] top-0`}>
                         <div className="h-fit flex flex-col justify-center w-[100%] items-center">
                             <button onClick={()=>{shareModal('out')}} className="border-1 text-[14px] flex flex-row gap-2 text-white hover:bg-green-600/50 hover:scale-105 transition-all duration-300 ease-in-out justify-center items-center px-[20px] py-1 rounded-[20px] mb-[20px] border-gray-100">
                                 <Close bg={'white'} size={'15px'}/>
@@ -313,7 +318,7 @@ export default function SkitScreen(props){
                 }
 
                 { errorGettingSkit && 
-                    <div className='h-screen w-full pt-[30px] flex flex-col justify-center items-center gap-10'>
+                    <div style={{height:`calc(var(--vh, 1vh)*100)`}} className='w-full pt-[30px] flex flex-col justify-center items-center gap-10'>
                         <div className='text-gray-300 font-light text-center md:w-[30%] w-[90%] mx-auto text-[13px]'>Please check your internet connection</div>
                         <button onClick={reload} className='flex text-white flex-col justify-center hover:scale-105 transition-all ease-in-out duration-300 hover:opacity-50 items-center gap-3'>
                             <span className=''>Tap to retry</span>
@@ -321,9 +326,9 @@ export default function SkitScreen(props){
                         </button>
                     </div>
                 }
-                <div className={`h-screen md:max-w-[400px] w-screen flex flex-col justify-center item-center md:rounded-[5px] overflow-hidden bg-black`}>
+                <div style={{height:`calc(var(--vh, 1vh)*100)`}} className={` md:max-w-[400px] w-screen flex flex-col justify-center item-center md:rounded-[5px] overflow-hidden bg-black`}>
                     { typeof window !== "undefined" && ( loadingData ? ( 
-                            <div className="h-screen w-full flex flex-col bg-transparent justify-center items-center">
+                            <div className="h-full w-full flex flex-col bg-transparent justify-center items-center">
                                 <ProcessLoader color={'white'} size={'35px'}/>
                             </div>
                         ) : (
