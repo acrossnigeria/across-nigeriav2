@@ -8,7 +8,8 @@ export default function PaystackBtn(props) {
     const {amount, email, purpose}=props;
     const [price, setPrice]=useState(0);
     const [localePayment, setLocalePayment]=useState('');
-    const liveKey = 'pk_live_09ba874adcdca43ec856e37e480ec1e17dc13eda';
+    const liveKey = process.env.NEXT_PUBLIC_PAYSTACK_LIVE;
+    const testKey = process.env.NEXT_PUBLIC_PAYSTACK_TEST;
 
     useEffect(()=>{
       setPrice(parseFloat(amount))
