@@ -17,7 +17,7 @@ import FbIcon from "../../../../../public/images/icon/FbIcon";
 import IgIcon from "../../../../../public/images/icon/IgIcon";
 import WhatappIcon from "../../../../../public/images/icon/WhatappIcon";
 import SkitSuccessModal from "@/components/SkitSuccessModal";
-import { ChevronLeft, ChevronRight, CirclePlus, EllipsisVertical, Heart, House, MessageSquareText, PlayCircle, Send, SendHorizonal, SendHorizontalIcon, SendToBack, Share, Share2, UserCircle, Vote } from "lucide-react";
+import { ChevronLeft, ChevronRight, CirclePlus, EllipsisVertical, Heart, House, MessageSquareText, Pause, Play, PlayCircle, Send, SendHorizonal, SendHorizontalIcon, SendToBack, Share, Share2, UserCircle, Vote } from "lucide-react";
 import ProcessLoader from "@/components/ui/ProcessLoader";
 import VoteModal from "../../components/VoteModal";
 import BottomNav from "../../components/BottomNav";
@@ -25,6 +25,7 @@ import BottomMenu from "@/components/BottomMenu";
 import SendIcon from "../../../../../public/images/icon/SendIcon";
 import setRealVH from "../../../../../utils/setRealVH";
 import { set } from "lodash";
+import { arrangeText, shortenText } from "../../../../../utils/textFormat";
 
 // Dynamically import ReactPlayer with SSR disabled
 const ReactPlayer = dynamic(() => import('react-player'), { ssr: false });
@@ -101,11 +102,6 @@ export default function SkitScreen(props) {
     }, []);
 
 
-    const modifyTitle = ( str ) => {
-        const firstWord = str.slice(0, 1).toUpperCase();
-        return `${firstWord}${str.slice(1)}`;
-    }
-
     const getVideoData = async () => {
         async function getData(user) {
             try {
@@ -137,14 +133,7 @@ export default function SkitScreen(props) {
                 getData(null);
             }
     }
-        
-    const descriptionView = () => {
-        if (descriptionLength===data?.vidCaption.length) {
-            setDescriptionLength(120);
-        } else {
-            setDescriptionLength(data?.vidCaption.length)
-        }
-    }
+    
 
     const displayShareNotifier = () => {
         setShareNotifyBottom('top-[120px]');
@@ -333,13 +322,13 @@ export default function SkitScreen(props) {
                             </div>
                         ) : (
                             ( dataSuccess ? (
-                                <div className="h-full w-full flex flex-col justify-center items-center">
-                                    <div className="h-[5px] md:max-w-[400px] w-screen absolute top-0 self-start">
-                                        <div style={{width:`${hasProgressed * 100}%`}} className={`transition-width ease-in-out duration-350 h-full bg-green-500`}></div>
+                                <div className="h-full w-full relative flex flex-col justify-center items-center">
+                                    <div className="h-[7px] md:max-w-[400px] w-screen absolute top-0 self-start">
+                                        <div style={{width:`${hasProgressed * 100}%`}} className={`transition-width ease-in-out duration-350 rounded-r-full h-full bg-green-500`}></div>
                                     </div>
-                                    <div onClick={handlePlayer} className={`h-screen transition-all ease-in-out duration-350 ${isPlaying?"opacity-0":"opacity-100"} md:h-[350px] md:w-[700px] z-50 w-screen items-center justify-center flex flex-col bg-transparent absolute`}>
-                                        <button >
-                                            <PlayCircle strokeWidth={1} size={'50px'} className="text-white"/>
+                                    <div style={{height:`calc(var(--vh, 1vh)*100)`}} className={`transition-all ease-in-out duration-350 w-full z-50 pt-[25px] items-end justify-start flex flex-col bg-transparent absolute`}>
+                                        <button className=" w-fit hover:opacity-50 z-[5000] transition-opacity cursor-pointer p-3 bg-black/50 backdrop-blur-sm rounded-full md:mr-[6%] mr-[5%] items-center gap-1" onClick={handlePlayer}>
+                                            { isPlaying ? <Pause fill="white" strokeWidth={1} size={'25px'} className="text-white"/> : <Play fill="white" strokeWidth={1} size={'25px'} className="text-white"/> }
                                         </button>
                                     </div>
                                     <div className="relative h-full w-full">
@@ -394,11 +383,11 @@ export default function SkitScreen(props) {
                             ): (
                                 <div className="flex flex-row gap-3 items-center">
                                     <Profile bg={'#d1d5db'} size={'45px'}/>
-                                    <div className="flex flex-col justify-center">
-                                        <span className="text-[15px] font-semibold">{data?.fullname?.length > 15 ? `${data?.fullname?.slice(0, 15)}...` : data?.fullname}</span> 
-                                        <span className="md:text-[11px] text-[9px]">Creator</span>
+                                    <div className="flex flex-col leading-tight justify-center">
+                                        <span className="text-[16px] font-normal">{shortenText(data?.fullname, 15)}</span> 
+                                        <span className="text-[11px]">Creator</span>
                                     </div>
-                                    <button onClick={voteModal} className={`text-white text-[15px] z-[2000] hover:bg-gray-300 bg-transparent border-1 border-white px-6 flex flex-row gap-1 items-center justify-center py-1 hover:text-black rounded-[8px] hover:scale-105`}>
+                                    <button onClick={voteModal} className={`text-black text-[15px] z-[2000] bg-white bg-transparent border-1 border-white px-6 flex flex-row gap-1 items-center justify-center py-1 hover:text-black rounded-[30px] hover:bg-white/50 transition-all duration-300 ease-in-out`}>
                                         <span>Vote</span>
                                     </button>
                                 </div>
@@ -412,28 +401,32 @@ export default function SkitScreen(props) {
                                         <div className="absolute inset-0 -translate-x-full animate-[shimmer_2s_infinite] bg-gradient-to-r from-transparent via-white/40 to-transparent" />
                                     </div>
                             ): (
-                                    <span className="text-[15px] leading-tight font-bold">{modifyTitle(title)}</span>
+                                    <span className="text-[17px] leading-tight font-semibold">{shortenText(arrangeText(title), 30)}</span>
                             )}
                         </div>
                         
                     </div>
                 </div> 
             </div>
-            <div className={`w-full md:max-w-[400px] absolute bottom-0 text-white h-[40%] items-end pb-[80px] flex flex-row justify-end md:pr-[2%] pr-[3%]`}>
-                <div className="flex flex-col gap-5 z-[1000]">
-                    {/* <div className="flex flex-col hover:opacity-50 transition-opacity cursor-pointer items-center w-fit">
-                        <Vote size={'30px'} color="white"/>
-                        <span className="text-[16px] font-semibold">{skitVotes?skitVotes:0}</span>
-                    </div> */}
-                    <button onClick={()=>{shareModal('in')}} className="hover:opacity-50 transition-opacity p-2 mb-5 bg-gray-300/50 rounded-full cursor-pointer w-fit gap-1">
-                        <SendHorizontalIcon strokeWidth={1.5} size={'27px'} color="white"/>
-                    </button>
-                    <button className=" w-fit hover:opacity-50 transition-opacity cursor-pointer p-2 bg-gray-300/50 rounded-full items-center gap-1">
-                        <EllipsisVertical strokeWidth={1.5} size={'27px'} color="white"/>
-                    </button>
+
+            { !loadingData && (
+                <div className={`w-full md:max-w-[400px] absolute bottom-0 text-white h-[40%] items-end pb-[80px] flex flex-row justify-end md:pr-[2%] pr-[3%]`}>
+                    <div className="flex flex-col gap-5 z-[1000]">
+                        {/* <div className="flex flex-col hover:opacity-50 transition-opacity cursor-pointer items-center w-fit">
+                            <Vote size={'30px'} color="white"/>
+                            <span className="text-[16px] font-semibold">{skitVotes?skitVotes:0}</span>
+                        </div> */}
+                        <button onClick={()=>{shareModal('in')}} className="hover:opacity-50 transition-opacity p-3 mb-5 bg-black/50 backdrop-blur-sm rounded-full cursor-pointer w-fit gap-1">
+                            <SendHorizontalIcon strokeWidth={1.5} size={'25px'} color="white"/>
+                        </button>
+                        <button className=" w-fit hover:opacity-50 transition-opacity cursor-pointer p-3 bg-black/50 backdrop-blur-sm rounded-full items-center gap-1">
+                            <EllipsisVertical strokeWidth={1.5} size={'25px'} color="white"/>
+                        </button>
+                    </div>
                 </div>
-            </div>
-            <div className={'absolute top-0 left-0 w-full z-[100] flex flex-row justify-between items-center px-[2.5%] pt-5 py-3 bg-transparent'}>
+            )}
+
+            <div className={'absolute top-0 left-0 w-full flex flex-row justify-between items-center px-[2.5%] pt-5 py-3 bg-transparent'}>
                 <Link href={'/skit-across-nigeria/pages'} className="flex flex-row text-[19px] font-light gap-2 justify-center hover:text-gray-400 items-center w-fit text-white">
                     <ChevronLeft size={'25px'} className="text-white"/>
                     <span>Watch others</span>
