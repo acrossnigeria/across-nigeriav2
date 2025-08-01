@@ -60,6 +60,8 @@ export default function SkitScreen(props) {
     const [ nlBgOpacity, setNlBgOpacity ] = useState('opacity-0');
     const [ showModal, setShowModal ] = useState(false);
 
+    const [ playerOpacity, setPlayerOpacity ] = useState('opacity-0');
+
     const [ shareNotifyBottom, setShareNotifyBottom ] = useState('top-[-50px]');
     const [ shareNotifyOpacity, setShareNotifyOpacity ] = useState('opacity-0')
 
@@ -75,6 +77,7 @@ export default function SkitScreen(props) {
     // State to track player
     const [ isPlaying, setIsPlaying ] = useState(true);
     const [ hasProgressed, setHasProgressed ] = useState(0);
+    const [ isBuffering, setIsBuffering ] = useState(false);
 
     // state to track modal display
     const [ showVoteModal, setShowVoteModal ] = useState(false);
@@ -207,6 +210,13 @@ export default function SkitScreen(props) {
     }
 
     const handlePlayer = () => {
+        if ( !isPlaying ) {
+            setTimeout(() => {
+                setPlayerOpacity('opacity-0');
+            }, 1000);
+        } else {
+            setPlayerOpacity('opacity-100');
+        }
         setIsPlaying(!isPlaying);
     };
 
@@ -323,12 +333,12 @@ export default function SkitScreen(props) {
                         ) : (
                             ( dataSuccess ? (
                                 <div className="h-full w-full relative flex flex-col justify-center items-center">
-                                    <div className="h-[7px] md:max-w-[400px] w-screen absolute top-0 self-start">
+                                    <div className="h-[7px] md:max-w-[400px] z-[1000] w-screen absolute top-0 self-start">
                                         <div style={{width:`${hasProgressed * 100}%`}} className={`transition-width ease-in-out duration-350 rounded-r-full h-full bg-green-500`}></div>
                                     </div>
-                                    <div style={{height:`calc(var(--vh, 1vh)*100)`}} className={`transition-all ease-in-out duration-350 w-full z-50 pt-[25px] items-end justify-start flex flex-col bg-transparent absolute`}>
-                                        <button className=" w-fit hover:opacity-50 z-[5000] transition-opacity cursor-pointer p-3 bg-black/50 backdrop-blur-sm rounded-full md:mr-[6%] mr-[5%] items-center gap-1" onClick={handlePlayer}>
-                                            { isPlaying ? <Pause fill="white" strokeWidth={1} size={'25px'} className="text-white"/> : <Play fill="white" strokeWidth={1} size={'25px'} className="text-white"/> }
+                                    <div style={{height:`calc(var(--vh, 1vh)*100)`}} onClick={handlePlayer} className={`${playerOpacity} cursor-pointer transition-all ease-in-out duration-350 w-full z-50 items-center justify-center flex flex-col bg-transparent absolute`}>
+                                        <button className=" w-fit hover:opacity-50 z-[5000] transition-opacity cursor-pointer p-3 bg-black/30 backdrop-blur-sm rounded-full items-center gap-1">
+                                            { isPlaying ? <Play fill="white" strokeWidth={1} size={'40px'} className="text-white"/> : <Pause fill="white" strokeWidth={1} size={'40px'} className="text-white"/> }
                                         </button>
                                     </div>
                                     <div className="relative h-full w-full">
@@ -343,6 +353,9 @@ export default function SkitScreen(props) {
                                             playing={isPlaying}
                                             loop={true}
                                             onProgress={( { played })=>{setHasProgressed(played)}}
+                                            onBuffer={() => setIsBuffering(true)}
+                                            onBufferEnd={() => setIsBuffering(false)}
+                                            onReady={() => setIsPlaying(true)}
                                             config={{
                                                 file: {
                                                     attributes: {
@@ -353,6 +366,11 @@ export default function SkitScreen(props) {
                                             }}
                                             />
                                         <div className="absolute top-0 left-0 w-full h-full bg-black opacity-30 z-10 pointer-events-none" />
+                                        { isBuffering && (
+                                            <div className="absolute top-0 left-0 w-full h-full bg-transparent flex flex-col justify-center items-center z-10 pointer-events-none">
+                                                <ProcessLoader color={'gray'} size={'40px'}/>
+                                            </div>
+                                        )}
                                     </div>
                                 </div>
                                 ): (
@@ -381,13 +399,13 @@ export default function SkitScreen(props) {
                                     </div>
                                 </div>
                             ): (
-                                <div className="flex flex-row gap-3 items-center">
-                                    <Profile bg={'#d1d5db'} size={'45px'}/>
+                                <div className="flex flex-row gap-2 items-center">
+                                    <Profile bg={'#d1d5db'} size={'38px'}/>
                                     <div className="flex flex-col leading-tight justify-center">
-                                        <span className="text-[16px] font-normal">{shortenText(data?.fullname, 15)}</span> 
+                                        <span className="text-[15px] font-normal">{shortenText(data?.fullname, 17)}</span> 
                                         <span className="text-[11px]">Creator</span>
                                     </div>
-                                    <button onClick={voteModal} className={`text-black text-[15px] z-[2000] bg-white bg-transparent border-1 border-white px-6 flex flex-row gap-1 items-center justify-center py-1 hover:text-black rounded-[30px] hover:bg-white/50 transition-all duration-300 ease-in-out`}>
+                                    <button onClick={voteModal} className={`text-black text-[15px] z-[2000] bg-white bg-transparent border-1 border-white px-9 flex flex-row gap-1 items-center justify-center py-1 hover:text-black rounded-[30px] hover:bg-white/50 transition-all duration-300 ease-in-out`}>
                                         <span>Vote</span>
                                     </button>
                                 </div>
@@ -401,7 +419,7 @@ export default function SkitScreen(props) {
                                         <div className="absolute inset-0 -translate-x-full animate-[shimmer_2s_infinite] bg-gradient-to-r from-transparent via-white/40 to-transparent" />
                                     </div>
                             ): (
-                                    <span className="text-[17px] leading-tight font-semibold">{shortenText(arrangeText(title), 30)}</span>
+                                    <span className="text-[17px] leading-tight font-semibold">{shortenText(arrangeText(title), 40)}</span>
                             )}
                         </div>
                         
@@ -417,18 +435,18 @@ export default function SkitScreen(props) {
                             <span className="text-[16px] font-semibold">{skitVotes?skitVotes:0}</span>
                         </div> */}
                         <button onClick={()=>{shareModal('in')}} className="hover:opacity-50 transition-opacity p-3 mb-5 bg-black/50 backdrop-blur-sm rounded-full cursor-pointer w-fit gap-1">
-                            <SendHorizontalIcon strokeWidth={1.5} size={'25px'} color="white"/>
+                            <SendHorizontalIcon strokeWidth={1.5} size={'30px'} color="white"/>
                         </button>
                         <button className=" w-fit hover:opacity-50 transition-opacity cursor-pointer p-3 bg-black/50 backdrop-blur-sm rounded-full items-center gap-1">
-                            <EllipsisVertical strokeWidth={1.5} size={'25px'} color="white"/>
+                            <EllipsisVertical strokeWidth={1.5} size={'30px'} color="white"/>
                         </button>
                     </div>
                 </div>
             )}
 
-            <div className={'absolute top-0 left-0 w-full flex flex-row justify-between items-center px-[2.5%] pt-5 py-3 bg-transparent'}>
+            <div className={'absolute top-0 left-0 w-full flex z-[1000] flex-row justify-between items-center px-[2.5%] pt-5 py-3 bg-transparent'}>
                 <Link href={'/skit-across-nigeria/pages'} className="flex flex-row text-[19px] font-light gap-2 justify-center hover:text-gray-400 items-center w-fit text-white">
-                    <ChevronLeft size={'25px'} className="text-white"/>
+                    <ChevronLeft size={'30px'} className="text-white"/>
                     <span>Watch others</span>
                 </Link>
             </div>

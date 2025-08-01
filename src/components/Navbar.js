@@ -42,7 +42,7 @@ const Navbar = ( { hideNav } ) => {
 
   return (
     <>
-    <nav id="top" style={{paddingBottom:'0px'}} className={`bg-green-600 overflow-hidden  py-2`} onClick={()=>{open&&setOpen(false)}}>
+    <nav id="top" style={{paddingBottom:'0px'}} className={`bg-green-600 overflow-hidden  py-3`} onClick={()=>{open&&setOpen(false)}}>
 
       <div style={{alignItems:'center', flexDirection:'row', justifyContent:'space-between'}} className={`flex px-[10px] transition-background ease-in-out ${isFixed?'fixed top-0 z-40 bg-green-600/80 h-[45px] w-[100%]':'pb-[10px]'}`}>
         <div className='flex flex-row justify-between gap-[12px]'>
@@ -50,10 +50,6 @@ const Navbar = ( { hideNav } ) => {
           <Link href="/" style={{}} onClick={()=>(router.push("/"))} className="flex items-center justify-center">
             <Logo/>
           </Link>
-              {/* Search Bar */}
-          <div onClick={toggleMenu} style={{alignItems:'center'}} className='h-[30px] px-1 flex flex-row justify-center'>
-            <Search/>
-          </div>
         </div>
         {status === 'loading' ? (
           <div className=" w-[120px] h-[30px] items-center rounded-full justify-center uppercase text-white  bg-green-500 text-[14px] animate-pulse  ">
@@ -79,8 +75,7 @@ const Navbar = ( { hideNav } ) => {
               </Link>
             </div>
             <button onClick={()=>{router.push("/account/reg")}} className="cursor-pointer" >
-              <div className="flex w-[100px] h-[30px] cursor-pointer items-center 
-              justify-center text-green-900 bg-white hover:bg-gray-200 transition duration-100 rounded-[5px]
+              <div className="flex w-[100px] h-[30px] cursor-pointer items-center justify-center text-green-900 bg-white hover:bg-gray-200 transition duration-100 rounded-[9px]
               ease-in-out  hover:scale-105">
                 Register
               </div>
@@ -92,7 +87,7 @@ const Navbar = ( { hideNav } ) => {
     </div>
       <div >
                 {/* Menus */}
-        <div className={`px-2 pt-1 ${hideNav?'hidden':'flex'} flex-row w-[100%] justify-start gap-2 bg-gray-100 overflow-x-scroll`}>
+        <div className={`px-2 pt-1 ${hideNav?'hidden':'flex'} flex-row w-[100%] justify-start gap-2 bg-white overflow-x-scroll`}>
           {/* First Line Menus */}
             <Link href="#products" className="hover:underline px-4 py-1 text-[14px] w-[33%] flex flex-row justify-center items-center text-gray-800">
               Products
@@ -109,12 +104,6 @@ const Navbar = ( { hideNav } ) => {
       </div>
 
     </nav>
-    { open && (
-    <div className={`mt-2 flex flex-row justify-center gap-3`}>
-      <input className='w-[250px] border-[2px] border-green-800 h-[40px] focus:outline-none px-[10px] rounded-[10px]' type='text'></input>
-      <button className='text-green-800 text-[18px] h-[40px] px-[10px] border-2 rounded-[10px] border-green-800 hover:text-white hover:bg-green-800 hover:border-none'>Search</button>
-    </div>
-    )}
     </>
   );
 };

@@ -5,7 +5,7 @@ import SlideAdvertNoButton from "./SlideAdvertNoButton";
 import SlideAdvertWithButton from "./SLideAdvertWithButton";
 
 
-const CustomBanner = ( { isLoading, adverts }) => {
+const SlideBanner = ( { isLoading, adverts, className }) => {
   const [ isMobile, setIsMobile ]=useState(false);
   const [ bearSlideItemData, setBearSlideItemData ] = useState([]);
 
@@ -57,7 +57,7 @@ const CustomBanner = ( { isLoading, adverts }) => {
         for ( const item of images ) {
           data?.push( { 
             key:item.id,
-            children: <BearSlideImage style={{ borderRadius:'5px'}} imageUrl={item.image} />
+            children: <BearSlideImage className="md:rounded-[10px]" imageUrl={item.image} />
           })
         };
         //mixes the advert and banner
@@ -77,23 +77,23 @@ const CustomBanner = ( { isLoading, adverts }) => {
   }, [isMobile]);
 
   return (
-    <div className="rounded-[0px] md:w-[900px] w-[100%] mx-auto" style={{padding:'0px 0px', marginTop:'5px', display:'flex', flexDirection:'column'}}>
+    <div className={`md:rounded-[10px] overflow-hidden mx-auto ${className}`} style={{padding:'0px 0px', marginTop:'5px', display:'flex', flexDirection:'column'}}>
       { isLoading && (
-        <div className="w-[100%] md:h-[350px] h-[250px] rounded-[5px] bg-gray-300 animate-pulse"></div>
+        <div className="w-full md:h-[350px] h-[250px] md:rounded-[5px] bg-gray-300 animate-pulse"></div>
       )}
       { !isLoading && (
         <BearCarousel
-          className="rounded-[0px]"
+          className="md:rounded-[10px]"
           data={bearSlideItemData}
           isEnableLoop
           autoPlayTime={5000}
           isEnableAutoPlay
           isEnablePagination
-          height={ isMobile?{ widthRatio: 12, heightRatio:7.5 }:{widthRatio:11, heightRatio:4}}
+          height={ isMobile?{ widthRatio: 12, heightRatio:7.5 }:{widthRatio:11, heightRatio:6.5}}
         />
       )}
     </div>
   );
 };
 
-export default CustomBanner;
+export default SlideBanner;

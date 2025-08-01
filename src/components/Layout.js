@@ -11,7 +11,7 @@ import { useSession } from "next-auth/react";
 import HeadComponent from "./HeadComponent";
 import AdvertClickCard from "./AdvertIClickCard";
 
-export default function Layout({ title, children, image, desc, bg, hideNav=false, hideAdvertCard }) {
+export default function Layout({ title, children, image, desc, bg, hideNav=false, hideAdvertCard, page }) {
   const [isOpen, setIsOpen] = useState(false);
   const [ noti, setNoti ] = useState(null);
   const [ networkError, setNetworkError ] = useState(false);
@@ -67,11 +67,13 @@ export default function Layout({ title, children, image, desc, bg, hideNav=false
     <div className="h-screen p-0 m-0 bottom-0">
       <HeadComponent title={title} desc={desc}/>
       <ToastContainer position="top-center" limit={1} />
-      <div className="md:block hidden"><StickyNavbar/></div>
+      <div className="md:block hidden"><StickyNavbar page={page}/></div>
       <div className="md:hidden block"><Navbar hideNav={hideNav}/></div>
       <div className="flex left-0 ml-0 w-full bg-transparent overflow-hidden flex-col justify-between">
         <Loader/>
-        <main className={`h-[100%] w-screen overflow-hidden bg-gray-100 my-0 left-0 mx-auto`}>{children}</main>
+        <main className={`h-[100%] w-screen overflow-hidden bg-white my-0 left-0 mx-auto`}>
+          {children}
+        </main>
         { !hideAdvertCard && <AdvertClickCard/> }
       </div> 
       <Footer />
