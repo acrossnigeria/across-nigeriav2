@@ -448,8 +448,6 @@ const Register = () => {
     setShowPassword2(!showPassword2);
   };
 
-  setMeta();
-  
 
 
   // --------PAYMENT ENABLED REGISTRATION HANDLER----------
