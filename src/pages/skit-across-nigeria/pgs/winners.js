@@ -2,6 +2,7 @@ import Layout from "@/components/Layout";
 import { useRouter } from "next/navigation";
 import Trophy1Icon from "../../../../public/images/icon/Trophy1Icon";
 import Profile from "../../../../public/images/icon/Profile";
+import { InfoIcon } from "lucide-react";
 
 const Winners = () => {
     const router = useRouter();
@@ -41,7 +42,7 @@ const Winners = () => {
                         </div>
                     </div>
                     <div className="md:w-[100%] w-[94%] flex flex-row justify-start items-start gap-2 bg-green-200 mt-[20px] h-[fit] py-[10px] p-2">
-                        <InfoIcon/>
+                        <InfoIcon size={25}/>
                         <div className="font-semibold text-left text-green-950 w-[90%]">🎉 Congratulations to our winners! The Skit Challenge may be over, but get ready for something even bigger — 
                             <strong>Skit Across Nigeria</strong> is coming soon with higher cash prizes and even more exposure for skit makers across the country. 
                             If you&apos;ve got talent, creativity, and a camera,  now&apos;s the time to start preparing. <strong>Skit Across Nigeria is your next
