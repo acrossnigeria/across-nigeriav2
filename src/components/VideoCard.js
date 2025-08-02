@@ -7,7 +7,7 @@ import { useEffect, useState } from "react";
 
 export default function VideoCard( { content }) {
     const [ thumbnailUrl, setThumbnailUrl ] = useState(null);
-    const link = `/skit-across-nigeria/pages/skit-video/${content?.id}?isNew=false`;
+    const link = `/skit-across-nigeria/pgs/skit-video/${content?.id}?isNew=false`;
 
     const getThumbnail = async () => {
         const parts = content.vidUrl.split("/");

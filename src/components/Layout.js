@@ -65,7 +65,6 @@ export default function Layout({ title, children, image, desc, bg, hideNav=false
 
     return(
     <div className="h-screen p-0 m-0 bottom-0">
-      <HeadComponent title={title} desc={desc}/>
       <ToastContainer position="top-center" limit={1} />
       <div className="md:block hidden"><StickyNavbar page={page}/></div>
       <div className="md:hidden block"><Navbar hideNav={hideNav}/></div>
