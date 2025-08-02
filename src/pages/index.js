@@ -1,3 +1,14 @@
+/**
+ * Safely sets meta, link, and title tags for SEO and social.
+ *
+ * @param {Object} config
+ * @param {string} config.title - The page title
+ * @param {string} config.description - Description meta
+ * @param {string} config.keywords - Keywords meta
+ * @param {string} config.image - Social share image
+ * @param {string} config.url - Canonical page URL
+*/
+
 import { Inter } from "next/font/google";
 import Layout from "@/components/Layout";
 import image1 from "../../public/images/giveaway_quizzes.jpg";
@@ -22,7 +33,6 @@ import NoShoutOut from "@/components/shout-out/NoShoutOut";
 import AmbassadorInfo from "@/components/AmbassadorInfo";
 import AddAccDetails from "@/components/notifiers/AddAccountDetails";
 import { useSession } from "next-auth/react";
-import SkitCompetitionClickCard from "@/components/SkitCompetitionClickCard";
 import GoldAdvertComponent from "@/components/GoldAdvertComponent";
 import SilverAdvertComponent from "@/components/SilverAdvertComponent";
 import ShowCard from "@/components/ShowCard";
@@ -137,6 +147,9 @@ export default function Home() {
   }
 
   useEffect( ()=> {
+    document.addEventListener("DOMContentLoaded", () => {
+      configureMeta();
+    })
     getShoutOuts();
   }, [])
 
@@ -147,6 +160,7 @@ export default function Home() {
     } else{setIsMobile(false)}
 
   },[ isMobile ])
+
 
   return (
         <Layout page={1} title={"Home Page"}>
@@ -241,3 +255,5 @@ export default function Home() {
         </Layout> 
   );
 }
+
+

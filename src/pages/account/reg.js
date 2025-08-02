@@ -1,3 +1,14 @@
+/**
+ * Safely sets meta, link, and title tags for SEO and social.
+ *
+ * @param {Object} config
+ * @param {string} config.title - The page title
+ * @param {string} config.description - Description meta
+ * @param {string} config.keywords - Keywords meta
+ * @param {string} config.image - Social share image
+ * @param {string} config.url - Canonical page URL
+*/
+
 import { useContext, useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import axios from 'axios';
@@ -13,7 +24,6 @@ import EyeOpen from '../../../public/images/icon/EyeOpen';
 import EyeClose from '../../../public/images/icon/EyeClose';
 import { signIn } from 'next-auth/react';
 import CycleLoader from '@/components/CycleLoader';
-import { setConfig } from 'next/config';
 import logo1 from "../../../public/images/logo1.png";
 import Image from 'next/image';
 import Next from '../../../public/images/icon/Next';
@@ -22,7 +32,6 @@ import TextInput from '@/components/ui/TextInput';
 import EmailIcon from '../../../public/images/icon/EmailIcon';
 import TextInputWithIcon from '@/components/ui/TextInputWithIcon';
 import PadlockIcon from '../../../public/images/icon/PadlockIcon';
-import { FaPage4 } from 'react-icons/fa';
 import Button from '@/components/ui/Button';
 import ProcessLoader from '@/components/ui/ProcessLoader';
 import ErrorCard from '@/components/ui/ErrorCard';
@@ -438,6 +447,8 @@ const Register = () => {
   const togglePasswordVisibility2 = () => {
     setShowPassword2(!showPassword2);
   };
+
+  setMeta();
   
 
 
@@ -455,6 +466,17 @@ const Register = () => {
   //   }
 
   // }
+
+  useEffect( () => {
+    document.addEventListener("DOMContentLoaded", () => {
+      configureMeta("Register - Across Nigeria Reality Show Login Page",
+        "Registration page for Across Nigeria Reality Show users",
+        "Across Nigeria, Reality TV Show, Sign Up, Register, Entertainment, Prizes, Game Shows, Giveaways",
+        "/images/frontBanner.JPG",
+        "https://acrossnig.com/account/register"
+      );
+    })
+  })
 
   return (
     <div className='flex flex-col bg-gray-100'>
@@ -724,3 +746,4 @@ const Register = () => {
 };
 
 export default Register;
+

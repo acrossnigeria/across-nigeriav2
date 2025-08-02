@@ -1,3 +1,14 @@
+/**
+ * Safely sets meta, link, and title tags for SEO and social.
+ *
+ * @param {Object} config
+ * @param {string} config.title - The page title
+ * @param {string} config.description - Description meta
+ * @param {string} config.keywords - Keywords meta
+ * @param {string} config.image - Social share image
+ * @param {string} config.url - Canonical page URL
+*/
+
 import { signIn, useSession } from "next-auth/react";
 import Link from "next/link";
 import { useRouter } from "next/router";
@@ -15,6 +26,7 @@ import PadlockIcon from "../../../public/images/icon/PadlockIcon";
 import TextInputWithIcon from "@/components/ui/TextInputWithIcon";
 import EmailIcon from "../../../public/images/icon/EmailIcon";
 import Loader from "@/components/Loader";
+import setRealVH from "../../../utils/setRealVH";
 
 export default function LoginScreen() {
   const [ loading,setLoading ] = useState(false);
@@ -87,13 +99,25 @@ export default function LoginScreen() {
     }
   };
 
+  useEffect( () => {
+    document.addEventListener("DOMContentLoaded", () => {
+      configureMeta("Log In- Across Nigeria Reality Show Login Page",
+        "Login page for Across Nigeria Reality Show users",
+        "Across Nigeria, Reality TV Show, Sign In, Login, Entertainment, Prizes, Game Shows, Giveaways",
+        "/images/frontBanner.JPG",
+        "https://acrossnig.com/account/login"
+      );
+    })
+  })
+  setRealVH();
+
   return (
     <div>
       <Loader/>
       <div className='flex flex-row justify-end absolute bg-gray-100 top-[3.5%] left-[3.5%]'>
           <Link href={'/'}><Close bg={'black'} size={'20px'}/></Link> 
       </div>
-      <div className="h-screen w-screen mx-auto flex flex-col justify-start pt-[70px] items-center bg-gray-100 text-black ">
+      <div style={{height:`calc(var(--vh, 1vh)*100)`}} className="h-screen w-screen mx-auto flex flex-col justify-start pt-[70px] items-center bg-gray-100 text-black ">
         <form className="mx-auto w-[93%] md:max-w-[350px] h-fit flex flex-col">
           <div className='text-center flex flex-row md:mb-10 mb-[80px] justify-center gap-1 items-center'>
             <Image src={logo1} alt='logo' placeholder='blur' className='h-[40px] w-[45px]' />
