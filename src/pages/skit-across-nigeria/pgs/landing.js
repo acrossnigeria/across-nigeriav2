@@ -55,7 +55,7 @@ export default function SkitCompetitionLanding() {
 
     const toUploadPage = () => {
         if (session?.user?.name) {
-            router.push('/skit-across-nigeria/pages/add-skit');
+            router.push('/skit-across-nigeria/pgs/video/upload');
         } else {
             notLoggedIn('in');
         }
@@ -125,8 +125,8 @@ export default function SkitCompetitionLanding() {
                         </div>
                         <span >Oops! You have to Log In or Register</span>
                         <div className="flex mt-[20px] flex-col items-center gap-3">
-                            <button onClick={()=>router.push('/account/reg?redirect=/skit-across-nigeria/pages/add-skit')} className="h-[40px] w-[200px] text-white bg-green-500 hover:bg-green-700 rounded-[5px]">Register Now</button>
-                            <button onClick={()=>router.push('/account/login?redirect=/skit-across-nigeria/pages/add-skit')} className="border-1 h-[40px] hover:bg-black/20 rounded-[5px] w-[200px] border-gray-500">Log In</button>
+                            <button onClick={()=>router.push('/account/reg?redirect=/skit-across-nigeria/pgs/video/upload')} className="h-[40px] w-[200px] text-white bg-green-500 hover:bg-green-700 rounded-[5px]">Register Now</button>
+                            <button onClick={()=>router.push('/account/login?redirect=/skit-across-nigeria/pgs/video/upload')} className="border-1 h-[40px] hover:bg-black/20 rounded-[5px] w-[200px] border-gray-500">Log In</button>
                         </div>
                     </div>
                 </div>
@@ -144,11 +144,11 @@ export default function SkitCompetitionLanding() {
             Submit your original skit, get the most votes, and claim the spotlight!
           </p>
           <div className="md:flex hidden flex-col md:flex-row gap-3 ">
-            <Link className="bg-green-600 text-white px-8 font-medium h-[45px] flex flex-row justify-center items-center rounded-[40px] shadow hover:bg-green-700 transition" href="/skit-across-nigeria/pages/add-skit">
+            <Link className="bg-green-600 text-white px-8 font-medium h-[45px] flex flex-row justify-center items-center rounded-[40px] shadow hover:bg-green-700 transition" href="/skit-across-nigeria/pgs/video/upload">
                 { session?.user?.name ? "Upload My Skit":"Register/ Log In to Participate"}
             </Link>
 
-            <Link className="bg-white text-black font-medium h-[45px] px-8 flex flex-row justify-center items-center rounded-[45px] hover:bg-gray-400 transition" href="/skit-across-nigeria/pages">
+            <Link className="bg-white text-black font-medium h-[45px] px-8 flex flex-row justify-center items-center rounded-[45px] hover:bg-gray-400 transition" href="/skit-across-nigeria/pgs">
                 <PlayCircle className="mr-2 " size={'25px'} />
                 View & Vote Skits
             </Link>
@@ -165,11 +165,11 @@ export default function SkitCompetitionLanding() {
           />
         </div>
         <div className="flex md:hidden mt-3 flex-col w-[90%] md:flex-row gap-3 ">
-          <Link className="bg-green-600 text-white w-full font-medium h-[45px] flex flex-row justify-center items-center rounded-[40px] shadow hover:bg-green-700 transition" href="/skit-across-nigeria/pages/add-skit">
+          <Link className="bg-green-600 text-white w-full font-medium h-[45px] flex flex-row justify-center items-center rounded-[40px] shadow hover:bg-green-700 transition" href="/skit-across-nigeria/pgs/video/upload">
               { session?.user?.name ? "Upload My Skit":"Register/ Log In to Participate"}
           </Link>
 
-          <Link className="bg-white text-black font-medium w-full h-[45px] flex flex-row justify-center items-center rounded-[45px] hover:bg-gray-400 transition" href="/skit-across-nigeria/pages">
+          <Link className="bg-white text-black font-medium w-full h-[45px] flex flex-row justify-center items-center rounded-[45px] hover:bg-gray-400 transition" href="/skit-across-nigeria/pgs">
               <PlayCircle className="mr-2 " size={'25px'} />
               View & Vote Skits
           </Link>
@@ -235,7 +235,7 @@ export default function SkitCompetitionLanding() {
                   <span className="font-semibold text-green-700"> ₦30,000,000 + Movie Deal</span>
                 </li>
               </ul>
-              <Link className="bg-green-600 mt-5 text-white w-full font-medium h-[45px] flex flex-row justify-center items-center rounded-[40px] shadow hover:bg-green-700 transition" href="/skit-across-nigeria/pages/add-skit">
+              <Link className="bg-green-600 mt-5 text-white w-full font-medium h-[45px] flex flex-row justify-center items-center rounded-[40px] shadow hover:bg-green-700 transition" href="/skit-across-nigeria/pgs/video/upload">
                 { session?.user?.name ? "Upload My Skit":"Register/ Log In to Participate"}
               </Link>
             </div>
@@ -308,11 +308,11 @@ export default function SkitCompetitionLanding() {
 
         {/* Action Buttons */}
         <div className="flex flex-col md:flex-row gap-4 px-5 mb-[50px] justify-center">
-          <Link className="bg-green-600 text-white w-full font-medium h-[45px] flex flex-row justify-center items-center rounded-[40px] shadow hover:bg-green-700 transition" href="/skit-across-nigeria/pages/add-skit">
+          <Link className="bg-green-600 text-white w-full font-medium h-[45px] flex flex-row justify-center items-center rounded-[40px] shadow hover:bg-green-700 transition" href="/skit-across-nigeria/pgs/video/upload">
               { session?.user?.name ? "Upload My Skit":"Register/ Log In to Participate"}
           </Link>
 
-          <Link className="border-black border-1 text-black font-medium w-full h-[45px] flex flex-row justify-center items-center rounded-[45px] hover:bg-gray-400 transition" href="/skit-across-nigeria/pages">
+          <Link className="border-black border-1 text-black font-medium w-full h-[45px] flex flex-row justify-center items-center rounded-[45px] hover:bg-gray-400 transition" href="/skit-across-nigeria/pgs">
               <PlayCircle className="mr-2 " size={'25px'} />
               View & Vote Skits
           </Link>

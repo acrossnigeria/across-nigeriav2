@@ -117,11 +117,11 @@ const CreatorPage = () => {
                     <HomeIcon bg={'#bbf7d0'} size={'22px'}/>
                     Home
                 </Link>
-                <Link style={{alignItems:'center'}} href="/theater-skit-across-nigeria/pages/add-skit" className="text-green-200 text-[13px] pt-2 px-2 rounded-full bg-green-600 hover:scale-105 items-center flex flex-col justify-center">
+                <Link style={{alignItems:'center'}} href="/theater-skit-across-nigeria/pgs/video/upload" className="text-green-200 text-[13px] pt-2 px-2 rounded-full bg-green-600 hover:scale-105 items-center flex flex-col justify-center">
                     <AddIcon bg={'#bbf7d0'} size={'30px'}/>
                     Add Skit 
                 </Link>
-                <Link style={{alignItems:'center'}} href="//theater-skit-across-nigeria/pages/creator" className="text-green-200 text-[13px] hover:scale-105 items-center flex flex-col justify-center">
+                <Link style={{alignItems:'center'}} href="//theater-skit-across-nigeria/pgs/creator" className="text-green-200 text-[13px] hover:scale-105 items-center flex flex-col justify-center">
                     <ProfileIcon size={'22px'}/>
                     you
                 </Link>
