@@ -2,10 +2,8 @@ import Layout from "@/components/Layout";
 import { useRouter } from "next/navigation";
 import Trophy1Icon from "../../../../public/images/icon/Trophy1Icon";
 import Profile from "../../../../public/images/icon/Profile";
-import InfoIcon from "../../../../public/images/icon/InfoIcon";
 
 const Winners = () => {
-    const [ isMobile, setIsMobile ] = useState(false);
     const router = useRouter();
 
     return (
