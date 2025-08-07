@@ -59,7 +59,7 @@ export default function LoginScreen() {
     }
 
     if (/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) === false) {
-      handleLoginError('Please enter a valid email address');
+      handleLoginError('Please input a valid email address');
       return;
     }
 
