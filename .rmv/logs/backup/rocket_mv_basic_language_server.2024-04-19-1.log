@@ -1,0 +1,2 @@
+2024-04-19 19:56:41.929 [pool-3-thread-1] INFO  com.rs.mv.mvvs.client.catalog.from.scan.CurrentPathScanner - [client:400205]scan file in current open file directory(C:/Users/Chuka/Desktop/projects/nextjs/acrossnig4/src/pages)
+2024-04-19 19:57:20.488 [pool-3-thread-1] INFO  com.rs.mv.mvvs.client.catalog.from.scan.CurrentPathScanner - [client:400205]scan file in current open file directory(C:/Users/Chuka/Desktop/projects/nextjs/acrossnig4/src/components)

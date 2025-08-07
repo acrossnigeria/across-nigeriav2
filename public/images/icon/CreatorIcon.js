@@ -1,0 +1,5 @@
+export default function  CreatorIcon( {color} ) {
+    return (
+        <svg height={'25px'} width={'25px'} viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" strokeWidth="0"></g><g id="SVGRepo_tracerCarrier" strokeLinecap="round" strokeLinejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M3 6C3 4.34315 4.34315 3 6 3H14C15.6569 3 17 4.34315 17 6V14C17 15.6569 15.6569 17 14 17H6C4.34315 17 3 15.6569 3 14V6Z" stroke={color?color:"#ffffff"} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"></path> <path d="M21 7V18C21 19.6569 19.6569 21 18 21H7" stroke={color?color:"#ffffff"} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"></path> <path d="M9 12V8L12.1429 10L9 12Z" fill={color?color:"#ffffff"} stroke={color?color:"#ffffff"} stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path> </g></svg>
+    )
+}
