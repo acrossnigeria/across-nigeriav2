@@ -6,7 +6,7 @@ import FbIcon from "../../../../public/images/icon/FbIcon";
 import IgIcon from "../../../../public/images/icon/IgIcon";
 import WhatappIcon from "../../../../public/images/icon/WhatappIcon";
 import { useState } from "react";
-import setRealVH from "../../../../../utils/setRealVH";
+import setRealVH from "../../../../utils/setRealVH";
 
 const SkitSuccessModal = ( { closeFunction, bgOpacity, modalOpacity, skitLink } ) => {
     const message = '🔥 Check out this amazing skit on Across nigeria Reality Show! 😂🎭 The creator is competing to win cash prizes! 🏆💰 Support them by watching and voting for your favorite skit. Every vote counts! Cast yours now! 🚀✨';
