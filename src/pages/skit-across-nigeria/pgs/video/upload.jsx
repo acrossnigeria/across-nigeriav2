@@ -314,7 +314,14 @@ const UploadScreen = ( { isRegistered } ) => {
 
   return (
     <>
-    <HeadComponent/>
+      <HeadComponent
+      title='Upload Skit Video'
+      desc="Upload your best video, caption it and go win the competition"
+      image="https://acrossnig.com/images/skit_across_nigeria_skit.jpg"
+      canonical="https://acrossnig.com/skit-across-nigeria/pgs/video/upload"
+      url="https://acrossnig.com/skit-across-nigeria/pgs/video/upload"
+      keywords="Nigeria skit competition, win cash for skits, vote skit Nigeria, entertainment Nigeria, Across Nigeria show, talent show Nigeria, best Nigerian skits, online skit challenge"
+      />
       { checkingUser ? (
         <div style={{height:`calc(var(--vh, 1vh)*100)`}} className="w-full flex flex-col justify-center items-center">
           <ProcessLoader color={'black'} size={'40px'}/>
