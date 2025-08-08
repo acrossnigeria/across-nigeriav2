@@ -202,11 +202,11 @@ export default function SkitScreen(props) {
     return(
         <>
         <HeadComponent
-        title={`${data?.vidCaption} by ${data?.fullname}`}
-        desc={`Watch and vote for "${data?.vidCaption ? data?.vidCaption:"this skit"}" in the Across Nigeria Skit Competition. Support amazing talents and win exciting prizes!`}
-        image="https://acrossnig.com/images/saImage1.jpg"
-        canonical={`https://acrossnig.com/skit-across-nigeria/pgs/video/${params?.id}`}
-        url={`https://acrossnig.com/skit-across-nigeria/pgs/video/${params?.id}`}
+        title={`Watch & Vote this Skit video`}
+        desc={`Watch and vote for this skit in the Across Nigeria Skit Competition. Support amazing talents and win exciting prizes!`}
+        image="https://acrossnig.com/images/skitBanner.jpg"
+        canonical={`https://acrossnig.com/skit-across-nigeria/pgs/`}
+        url={`https://acrossnig.com/skit-across-nigeria/pgs`}
         keywords="Nigeria skit competition, win cash for skits, vote skit Nigeria, entertainment Nigeria, Across Nigeria show, talent show Nigeria, best Nigerian skits, online skit challenge"
         />
         { !isClient ? (
