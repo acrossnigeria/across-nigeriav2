@@ -122,7 +122,7 @@ export default function Creator( { skitId } ) {
                         Skit Uploaded Successfully!
                     </span>
                     <span className="px-4 text-gray-700 mb-2 text-[15] leading-tight text-center">
-                        You&apos;ve uploaded your skit for this month's Across Nigeria Skit Competition, great job!
+                        You&apos;ve uploaded your skit for this month&apos;s Across Nigeria Skit Competition, great job!
                     </span>
 
                     <div className="mb-4 space-y-2 text-[14px] border-y border-y-gray-200 py-3 px-4">
