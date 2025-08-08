@@ -1,14 +1,3 @@
-/**
- * Safely sets meta, link, and title tags for SEO and social.
- *
- * @param {Object} config
- * @param {string} config.title - The page title
- * @param {string} config.description - Description meta
- * @param {string} config.keywords - Keywords meta
- * @param {string} config.image - Social share image
- * @param {string} config.url - Canonical page URL
-*/
-
 import { useContext, useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import axios from 'axios';
@@ -26,7 +15,6 @@ import { signIn } from 'next-auth/react';
 import CycleLoader from '@/components/CycleLoader';
 import logo1 from "../../../public/images/logo1.png";
 import Image from 'next/image';
-import Next from '../../../public/images/icon/Next';
 import ReloadIcon from '../../../public/images/icon/ReloadIcon';
 import TextInput from '@/components/ui/TextInput';
 import EmailIcon from '../../../public/images/icon/EmailIcon';
@@ -36,6 +24,8 @@ import Button from '@/components/ui/Button';
 import ProcessLoader from '@/components/ui/ProcessLoader';
 import ErrorCard from '@/components/ui/ErrorCard';
 import SuccessCard from '@/components/ui/SuccessCard';
+import HeadComponent from '@/components/HeadComponent';
+import { ChevronLeft } from 'lucide-react';
 
 const Register = () => {
    const nigeriaStates = [
@@ -465,19 +455,9 @@ const Register = () => {
 
   // }
 
-  useEffect( () => {
-    document.addEventListener("DOMContentLoaded", () => {
-      configureMeta("Register - Across Nigeria Reality Show Login Page",
-        "Registration page for Across Nigeria Reality Show users",
-        "Across Nigeria, Reality TV Show, Sign Up, Register, Entertainment, Prizes, Game Shows, Giveaways",
-        "/images/frontBanner.JPG",
-        "https://acrossnig.com/account/register"
-      );
-    })
-  })
-
   return (
-    <div className='flex flex-col bg-gray-100'>
+    <div className='flex flex-col bg-gray-50'>
+      <HeadComponent desc='Register an account, Giveaways, game shows, and entertainment. Your journey starts here.' canonical='https://acrossnig.com/account/reg'  url='https://acrossnig.com/account/reg' title='Register | Sign Up'/>
       <Loader/>
       <div className={`${toAuthPage || toConfirmPage ? 'hidden':''} flex flex-row absolute justify-start top-[3.5%] left-[3.5%]`}>
           <Link href={'/'}><Close size="20px" bg="black"/></Link> 
@@ -648,7 +628,7 @@ const Register = () => {
               {loadingConfirm?<ProcessLoader/>:"Register"}
             </Button>
 
-            <div className='mt-[30px] text-[16px] text-center text-gray-500'>Already have an Account? <Link className="text-black underline" href="#" onClick={()=>router.push("/account/login")}>Login</Link></div> 
+            <div className='mt-[30px] text-[16px] text-center text-gray-500'>Already have an Account? <Link className="text-black underline" href="/account/login" >Login</Link></div> 
           </form>
         </div>
         {/* </Layout> */}
@@ -659,9 +639,7 @@ const Register = () => {
 
         <div className='absolute z-50 top-[3.5%] left-[3.5%]'>
           <button onClick={()=>{setToAuthPage(false);setToConfirmPage(true)}} className='flex flex-row justify-center cursor-pointer mb-[35px] hover:underline items-center gap-2'>
-            <div className='rotate-180'>
-              <Next bg={'black'} size={'20px'}/>
-            </div>
+            <ChevronLeft color={'black'} size={'25px'}/>
             <span className='md:flex hidden'>Go Back</span>
           </button>
         </div>
@@ -701,9 +679,7 @@ const Register = () => {
 
           <div className='absolute z-50 top-[3.5%] left-[3.5%]'>
             <button onClick={()=>{setToConfirmPage(false);setToFormPage(true)}} className='flex flex-row justify-center cursor-pointer mb-[35px] hover:underline items-center gap-2'>
-              <div className='rotate-180'>
-                <Next bg={'black'} size={'20px'}/>
-              </div>
+              <ChevronLeft color={'black'} size={'25px'}/>
               <span className='md:flex hidden'>Go Back</span>
             </button>
           </div>

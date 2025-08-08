@@ -17,6 +17,7 @@ import TextInputWithIcon from "@/components/ui/TextInputWithIcon";
 import EmailIcon from "../../../public/images/icon/EmailIcon";
 import Loader from "@/components/Loader";
 import setRealVH from "../../../utils/setRealVH";
+import HeadComponent from "@/components/HeadComponent";
 
 export default function LoginScreen() {
   const [ loading, setLoading ] = useState(false);
@@ -94,8 +95,9 @@ export default function LoginScreen() {
 
   return (
     <div>
+      <HeadComponent desc="Sign In to your account" title="Login | Sign In" canonical="https://acrossnig.com/account/login"/>
       <Loader/>
-      <div className='flex flex-row justify-end absolute bg-gray-100 top-[3.5%] left-[3.5%]'>
+      <div className='flex flex-row justify-end absolute bg-gray-50 top-[3.5%] left-[3.5%]'>
           <Link href={'/'}><Close bg={'black'} size={'20px'}/></Link> 
       </div>
       <div style={{height:`calc(var(--vh, 1vh)*100)`}} className="h-screen w-screen mx-auto flex flex-col justify-start pt-[70px] items-center bg-gray-100 text-black ">
@@ -124,7 +126,7 @@ export default function LoginScreen() {
           </TextInputWithIcon>
 
           <div className="mt-2">
-            <Button type="button" onClick={handleSubmit} className="w-[100%]" size="md" disabled={loading}>{loading?<ProcessLoader/>:"Log In"}</Button>
+            <Button type="button" onClick={handleSubmit} className="w-[100%]" size="md" disabled={loading}>{loading?<ProcessLoader color={'black'} size={'25px'}/>:"Log In"}</Button>
           </div>
           <div className="flex flex-row justify-center text-[16px] items-center gap-2 md:mt-[40px] mt-[80px] mb-2">
             <span className="text-gray-500">Forgot password?</span>

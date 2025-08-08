@@ -9,6 +9,7 @@ import ProcessLoader from "@/components/ui/ProcessLoader";
 import TextAreaInput from "@/components/ui/TextAreaInput";
 import setRealVH from "../../../../../utils/setRealVH";
 import InfoButton from "@/components/InfoButton";
+import HeadComponent from "@/components/HeadComponent";
  
 function reducer(state, action) {
   switch (action.type) {
@@ -313,6 +314,7 @@ const UploadScreen = ( { isRegistered } ) => {
 
   return (
     <>
+    <HeadComponent/>
       { checkingUser ? (
         <div style={{height:`calc(var(--vh, 1vh)*100)`}} className="w-full flex flex-col justify-center items-center">
           <ProcessLoader color={'black'} size={'40px'}/>

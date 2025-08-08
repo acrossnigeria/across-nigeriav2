@@ -21,6 +21,7 @@ import ProcessLoader from "@/components/ui/ProcessLoader";
 import VoteModal from "../../components/VoteModal";
 import setRealVH from "../../../../../utils/setRealVH";
 import { arrangeText, shortenText } from "../../../../../utils/textFormat";
+import HeadComponent from "@/components/HeadComponent";
 
 // Dynamically import ReactPlayer with SSR disabled
 const ReactPlayer = dynamic(() => import('react-player'), { ssr: false });
@@ -196,22 +197,18 @@ export default function SkitScreen(props) {
 
     
     setRealVH();
-    
-    useEffect( () => {
-        document.addEventListener("DOMContentLoaded", () => {
-            configureMeta( 
-                `"${data?.vidTitle}" by ${data?.fullname}`,
-                `"Watch and vote ${data?.fullname} skit so they can win the skits across nigeria show`,
-                "Acrossnig, Across nigeria, Across Nigeria Reality Show, Reality Show, Skit Show, Vote, Skit Challenge, Skit Competition",
-                "/images/skitBanner.JPG",
-                `https://acrossnig.com/skit-across-nigeria/pgs/video/${params?.id}`
-            );
-        })
-    }, [ data ]);
 
 
     return(
         <>
+        <HeadComponent
+        title={`${data?.vidCaption} by ${data?.fullname}`}
+        desc={`Watch and vote for "${data?.vidCaption ? data?.vidCaption:"this skit"}" in the Across Nigeria Skit Competition. Support amazing talents and win exciting prizes!`}
+        image="https://acrossnig.com/images/saImage1.jpg"
+        canonical={`https://acrossnig.com/skit-across-nigeria/pgs/video/${params?.id}`}
+        url={`https://acrossnig.com/skit-across-nigeria/pgs/video/${params?.id}`}
+        keywords="Nigeria skit competition, win cash for skits, vote skit Nigeria, entertainment Nigeria, Across Nigeria show, talent show Nigeria, best Nigerian skits, online skit challenge"
+        />
         { !isClient ? (
             <div style={{height:`calc(var(--vh, 1vh)*100)`}} className="flex bg-gray-100 items-center gap-2 justify-center">
                 <ProcessLoader color={'black'} size={'35px'} />
