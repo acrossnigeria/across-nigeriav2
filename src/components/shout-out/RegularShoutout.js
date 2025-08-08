@@ -1,13 +1,7 @@
 import { useState, useEffect, Children } from 'react';
 import ShoutOutCard from '../ShoutOutCard';
-import testImage from '../../../public/images/model/model2.jpg';
 import Carousel from 'nuka-carousel';
 
-const prototype = [
-    { _id:'yg6et6', mediaUrl: testImage, Likes: [1, 2, 4], comments: [ {_id:'4h5y6', text: 'this is a test', user: {name:'ali'}}], name:'birthday', shoutOut:'happy birthday' },
-    { _id:'ngtr6', mediaUrl: testImage, Likes: [1, 2, 4], comments: [ {_id:'4h5y6', text: 'this is a test', user: {name:'ali'}}], name:'birthday', shoutOut:'happy birthday' },
-    { _id:'546g5gv', mediaUrl: testImage, Likes: [1, 2, 4], comments: [ {_id:'4h5y6', text: 'this is a test', user: {name:'ali'}}], name:'birthday', shoutOut:'happy birthday' },
-]
 
 const RegularShoutout = ( { regulars }) => {
     const [ isMobile, setIsMobile ] = useState(true);
