@@ -1,5 +1,6 @@
 import RegisteredSACreator from "@/models/RegisteredSACreator";
 import db from "../../../../utils/db";
+import SkitAcrossNigeriaSkit from "@/models/SkitAcrossNigeriaSkit";
 
 const Handler = async ( req, res ) => {
     try {
@@ -8,8 +9,16 @@ const Handler = async ( req, res ) => {
 
             await db.connect();
             const user = await RegisteredSACreator.findOne( { user:userId } );
+            const skit = await SkitAcrossNigeriaSkit.findOne( { user:userId } ).populate("user");
             await db.disconnect();
-            const resObj = { isUserRegistered:user?true:false } ;
+
+            const resObj = { 
+                isUserRegistered:user?true:false, 
+                hasUploaded:skit? {
+                    userFirsName:skit?.user?.name,
+                    skitId:skit?._id,
+                }:false,
+            } ;
 
             res.status(200).json( resObj );
         } else if ( req.method === "POST" ) {

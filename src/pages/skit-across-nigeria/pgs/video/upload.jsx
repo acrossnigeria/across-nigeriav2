@@ -10,6 +10,7 @@ import TextAreaInput from "@/components/ui/TextAreaInput";
 import setRealVH from "../../../../../utils/setRealVH";
 import InfoButton from "@/components/InfoButton";
 import HeadComponent from "@/components/HeadComponent";
+import Loader from "@/components/Loader";
  
 function reducer(state, action) {
   switch (action.type) {
@@ -253,8 +254,7 @@ const UploadScreen = ( { isRegistered } ) => {
     }
     try {
       const response = await axios.post(`/api/media/skit_across_nigeria/skit`,data);
-      const vidId = response.data.id;
-      const url = `/skit-across-nigeria/pgs/video/${vidId}`;
+      const url = `/skit-across-nigeria/pgs/creator`;
       setSaveSuccess(true);
 
       setTimeout(() => {
@@ -264,7 +264,7 @@ const UploadScreen = ( { isRegistered } ) => {
             isNew:true
           }
         });
-      }, 2000);
+      }, 1500);
     } catch (error) {
       setIsSaving(false);
       setSaveSuccess(false);
@@ -299,13 +299,16 @@ const UploadScreen = ( { isRegistered } ) => {
       try {
         const response = await axios.get(`/api/skit-across-nigeria/auth?userId=${session?.user?._id}`);
         const isRegistered = response.data.isUserRegistered;
-        if (isRegistered ) {
+        const hasUploaded = response.data?.hasUploaded; 
+        if (isRegistered && (!hasUploaded)) {
           setCheckingUser(false);
+        } else if (isRegistered && hasUploaded ) {
+            router.push("/skit-across-nigeria/pgs/creator");
         } else {
             router.push("/skit-across-nigeria/pgs/register");
         } 
       } catch (err) {
-        console.log("Something went wrong: "+err.message)
+        console.log("Something went wrong: "+err.message);
       }
     }
 
@@ -322,6 +325,7 @@ const UploadScreen = ( { isRegistered } ) => {
       url="https://acrossnig.com/skit-across-nigeria/pgs/video/upload"
       keywords="Nigeria skit competition, win cash for skits, vote skit Nigeria, entertainment Nigeria, Across Nigeria show, talent show Nigeria, best Nigerian skits, online skit challenge"
       />
+      <Loader/>
       { checkingUser ? (
         <div style={{height:`calc(var(--vh, 1vh)*100)`}} className="w-full flex flex-col justify-center items-center">
           <ProcessLoader color={'black'} size={'40px'}/>

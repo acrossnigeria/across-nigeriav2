@@ -135,7 +135,7 @@ export default function SkitCompetitionLanding() {
             Submit your original skit, get the most votes, and claim the spotlight!
           </p>
           <div className="md:flex hidden flex-col md:flex-row gap-3 ">
-            <Link className="bg-green-600 text-white px-8 font-medium h-[45px] flex flex-row justify-center items-center rounded-[40px] shadow hover:bg-green-700 transition" href="/skit-across-nigeria/pgs/video/upload">
+            <Link className="bg-green-600 text-white px-8 font-medium h-[45px] flex flex-row justify-center items-center rounded-[40px] shadow hover:bg-green-700 transition"  href={session?.user?.name ? "/skit-across-nigeria/pgs/video/upload":"/account/login?redirect=/skit-across-nigeria/pgs/landing"}>
                 { session?.user?.name ? "Upload My Skit":"Register/ Log In to Participate"}
             </Link>
 
@@ -156,7 +156,7 @@ export default function SkitCompetitionLanding() {
           />
         </div>
         <div className="flex md:hidden mt-3 flex-col w-[90%] md:flex-row gap-3 ">
-          <Link className="bg-green-600 text-white w-full font-medium h-[45px] flex flex-row justify-center items-center rounded-[40px] shadow hover:bg-green-700 transition" href={session?.user?.name ? "/skit-across-nigeria/pgs/video/upload":"/account/login"}>
+          <Link className="bg-green-600 text-white w-full font-medium h-[45px] flex flex-row justify-center items-center rounded-[40px] shadow hover:bg-green-700 transition" href={session?.user?.name ? "/skit-across-nigeria/pgs/video/upload":"/account/login?redirect=/skit-across-nigeria/pgs/landing"}>
               { session?.user?.name ? "Upload My Skit":"Register/ Log In to Participate"}
           </Link>
 
@@ -226,7 +226,7 @@ export default function SkitCompetitionLanding() {
                   <span className="font-semibold text-green-700"> ₦30,000,000 + Movie Deal</span>
                 </li>
               </ul>
-              <Link className="bg-green-600 mt-5 text-white w-full font-medium h-[45px] flex flex-row justify-center items-center rounded-[40px] shadow hover:bg-green-700 transition" href={session?.user?.name ? "/skit-across-nigeria/pgs/video/upload":"/account/login"}>
+              <Link className="bg-green-600 mt-5 text-white w-full font-medium h-[45px] flex flex-row justify-center items-center rounded-[40px] shadow hover:bg-green-700 transition"  href={session?.user?.name ? "/skit-across-nigeria/pgs/video/upload":"/account/login?redirect=/skit-across-nigeria/pgs/landing"}>
                 { session?.user?.name ? "Upload My Skit":"Register/ Log In to Participate"}
               </Link>
             </div>
@@ -299,7 +299,7 @@ export default function SkitCompetitionLanding() {
 
         {/* Action Buttons */}
         <div className="flex flex-col md:flex-row max-w-[900px] md:px-0 px-3 mx-auto gap-4 mb-[50px] justify-center">
-          <Link className="bg-green-600 text-white w-full font-medium h-[45px] flex flex-row justify-center items-center rounded-[40px] shadow hover:bg-green-700 transition" href="/skit-across-nigeria/pgs/video/upload">
+          <Link className="bg-green-600 text-white w-full font-medium h-[45px] flex flex-row justify-center items-center rounded-[40px] shadow hover:bg-green-700 transition"  href={session?.user?.name ? "/skit-across-nigeria/pgs/video/upload":"/account/login?redirect=/skit-across-nigeria/pgs/landing"}>
               { session?.user?.name ? "Upload My Skit":"Register/ Log In to Participate"}
           </Link>
 
