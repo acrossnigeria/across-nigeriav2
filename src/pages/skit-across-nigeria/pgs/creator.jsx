@@ -121,8 +121,8 @@ export default function Creator( { skitId } ) {
                         {data?.userFirstName}
                         Skit Uploaded Successfully!
                     </span>
-                    <span className="px-4 text-gray-700 mb-2 text-[5] leading-tight text-center">
-                        You've uploaded your skit for this month's Across Nigeria Skit Competition – great job!
+                    <span className="px-4 text-gray-700 mb-2 text-[15] leading-tight text-center">
+                        You&apos;ve uploaded your skit for this month's Across Nigeria Skit Competition, great job!
                     </span>
 
                     <div className="mb-4 space-y-2 text-[14px] border-y border-y-gray-200 py-3 px-4">
@@ -130,13 +130,13 @@ export default function Creator( { skitId } ) {
                             🔥 Next Step? Get Votes!
                         </p>
                         <p className="text-gray-600 flex items-center gap-2">
-                            Share your skit link far and wide – on WhatsApp, Instagram, TikTok, Twitter, and everywhere else. The more votes you get, the closer you are to winning up to ₦30 Million and a movie deal!
+                            Share your skit link far and wide, on WhatsApp, Instagram, TikTok, Twitter, and everywhere else. The more votes you get, the closer you are to winning up to ₦30 Million and a movie deal!
                         </p>
                         <p className="text-gray-600 flex items-center gap-2">
                         📆 Remember: New competitions are held every month. You can upload a new skit next month, so stay creative and ready!
                         </p>
                         <p className="text-gray-600 flex items-center gap-2">
-                        🚀 Good luck – we’re rooting for you!
+                        🚀 Good luck, we&aposre rooting for you!
                         </p>
                     </div>
 
