@@ -361,10 +361,10 @@ export default function SkitScreen(props) {
                                 <div className="flex flex-row gap-2 items-center">
                                     <Profile bg={'#d1d5db'} size={'38px'}/>
                                     <div className="flex flex-col leading-tight justify-center">
-                                        <span className="text-[15px] font-normal">{shortenText(data?.fullname, 17)}</span> 
-                                        <span className="text-[11px]">Creator</span>
+                                        <span className="text-[13px] font-normal">{shortenText(data?.fullname, 15)}</span> 
+                                        <span className="text-[10px]">Creator</span>
                                     </div>
-                                    <button onClick={voteModal} className={`text-black text-[15px] z-[2000] bg-white bg-transparent border-1 border-white px-9 flex flex-row gap-1 items-center justify-center py-1 hover:text-black rounded-[30px] hover:bg-white/50 transition-all duration-300 ease-in-out`}>
+                                    <button onClick={voteModal} className={`text-black text-[15px] z-[2000] bg-white bg-transparent border-1 border-white px-7 flex flex-row gap-1 items-center justify-center py-1 hover:text-black rounded-[30px] hover:bg-white/50 transition-all duration-300 ease-in-out`}>
                                         <span>Vote</span>
                                     </button>
                                 </div>
