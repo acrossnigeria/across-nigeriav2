@@ -319,7 +319,7 @@ const UploadScreen = ( { isRegistered } ) => {
     <>
       <HeadComponent
       title='Upload Skit Video'
-      desc="Upload your best video, caption it and go win the competition"
+      desc="Upload your best video, caption it and win"
       image="https://acrossnig.com/images/skit_across_nigeria_skit.jpg"
       canonical="https://acrossnig.com/skit-across-nigeria/pgs/video/upload"
       url="https://acrossnig.com/skit-across-nigeria/pgs/video/upload"

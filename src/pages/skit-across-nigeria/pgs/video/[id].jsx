@@ -203,7 +203,7 @@ export default function SkitScreen(props) {
         <>
         <HeadComponent
         title={`Watch & Vote this Skit video`}
-        desc={`Watch and vote for this skit in the Across Nigeria Skit Competition. Support amazing talents and win exciting prizes!`}
+        desc={`Watch and vote for this skit in the Skit Across Nigeria Reality Show. Support amazing talents and win exciting prizes!`}
         image="https://acrossnig.com/images/skit_across_nigeria_skit.jpg"
         canonical={`https://acrossnig.com/skit-across-nigeria/pgs/`}
         url={`https://acrossnig.com/skit-across-nigeria/pgs`}

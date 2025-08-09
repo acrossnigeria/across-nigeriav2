@@ -92,8 +92,8 @@ export default function SkitCompetitionLanding() {
   return (
     <Layout>
         <HeadComponent
-        title='Skit Across Nigeria'
-        desc="Watch and vote for your favorite skits in the Across Nigeria Skit Competition. Support amazing talents and win exciting prizes!"
+        title='Skit Across Nigeria Reality Show'
+        desc="Watch and vote for your favorite skits in the Skit Across Nigeria Reality Show. Support amazing talents and win exciting prizes!"
         image="https://acrossnig.com/images/skit_across_nigeria_skit.jpg"
         canonical="https://acrossnig.com/skit-across-nigeria/pgs/landing"
         url="https://acrossnig.com/skit-across-nigeria/pgs/landing"

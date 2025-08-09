@@ -84,8 +84,8 @@ export default function Register() {
   return (
         <>
         <HeadComponent
-            title="Register for Skit Across Nigeria"
-            desc="Sign up now to join the Skit Across Nigeria Competition. Submit your original skit, gain nationwide exposure, and stand a chance to win ₦100,000. Registration is free and open to all Theatre Arts students and skit creators."
+            title="Register for Skit Across Nigeria Reality Show"
+            desc="Sign up now to join the Skit Across Nigeria Reality Show. Submit your original skit, gain nationwide exposure, and stand a chance to win ₦100,000. Registration is free and open to all Theatre Arts students and skit creators."
             image="https://acrossnig.com/images/skit_across_nigeria.jpg"
             canonical="https://acrossnig.com/images/skit_across_nigeria_skit.jpg"
             url="https://acrossnig.com/skit-across-nigeria/pgs/register"
