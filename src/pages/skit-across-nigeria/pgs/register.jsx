@@ -114,15 +114,15 @@ export default function Register() {
                     </h1>
 
                     <div className="mb-4 space-y-2 px-4">
-                        <p className="text-gray-700 flex items-center gap-2">
+                        <p className="text-gray-700 text-[15px] flex flex-row items-start gap-2">
                             <CheckCircle2 size={20} className="text-green-600" />
-                            One-time Registration Fee: <strong>₦5,000</strong>
+                            One-time Registration Fee: ₦5,000
                         </p>
-                        <p className="text-gray-700 flex items-center gap-2">
+                        <p className="text-gray-700 text-[15px] flex items-start gap-2">
                             <CheckCircle2 size={20} className="text-green-600" />
                             Upload skits anytime during the 6-month season
                         </p>
-                        <p className="text-gray-700 flex items-center gap-2">
+                        <p className="text-gray-700 text-[15px] flex items-start gap-2">
                             <CheckCircle2 size={20} className="text-green-600" />
                             Eligible to win up to ₦30 Million & Movie Deal
                         </p>

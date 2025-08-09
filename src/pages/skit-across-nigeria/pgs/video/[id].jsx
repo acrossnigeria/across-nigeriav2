@@ -287,7 +287,7 @@ export default function SkitScreen(props) {
                 <div style={{height:`calc(var(--vh, 1vh)*100)`}} className={` md:max-w-[400px] w-screen flex flex-col justify-center item-center md:rounded-[5px] overflow-hidden bg-black`}>
                     { typeof window !== "undefined" && ( loadingData ? ( 
                             <div className="h-full w-full flex flex-col bg-transparent justify-center items-center">
-                                <ProcessLoader color={'white'} size={'35px'}/>
+                                <ProcessLoader color={'white'} size={'40px'}/>
                             </div>
                         ) : (
                             ( dataSuccess ? (
@@ -350,10 +350,10 @@ export default function SkitScreen(props) {
                         <div className="flex w-full flex-row md:text-[18px] text-[16px] items-center gap-2">
                             { loadingData ? (
                                 <div className="flex flex-row gap-3 items-center">
-                                    <div className="bg-gray-800 relative overflow-hidden h-[45px] w-[45px] rounded-full">
+                                    <div className="bg-gray-800 relative overflow-hidden h-[38px] w-[38px] rounded-full">
                                         <div className="absolute inset-0 -translate-x-full animate-[shimmer_2s_infinite] bg-gradient-to-r from-transparent via-white/40 to-transparent" />
                                     </div>
-                                    <div className="h-[30px] w-[200px] relative overflow-hidden bg-gray-800 rounded-[15px]">
+                                    <div className="h-[38px] w-[200px] relative overflow-hidden bg-gray-800 rounded-[30px]">
                                         <div className="absolute inset-0 -translate-x-full animate-[shimmer_2s_infinite] bg-gradient-to-r from-transparent via-white/40 to-transparent" />
                                     </div>
                                 </div>
@@ -361,8 +361,8 @@ export default function SkitScreen(props) {
                                 <div className="flex flex-row gap-2 items-center">
                                     <Profile bg={'#d1d5db'} size={'38px'}/>
                                     <div className="flex flex-col leading-tight justify-center">
-                                        <span className="text-[13px] font-normal">{shortenText(data?.fullname, 15)}</span> 
-                                        <span className="text-[10px]">Creator</span>
+                                        <span className="text-[14px] font-light">{shortenText(data?.fullname, 15)}</span> 
+                                        <span className="text-[10px] font-light">Creator</span>
                                     </div>
                                     <button onClick={voteModal} className={`text-black text-[15px] z-[2000] bg-white bg-transparent border-1 border-white px-7 flex flex-row gap-1 items-center justify-center py-1 hover:text-black rounded-[30px] hover:bg-white/50 transition-all duration-300 ease-in-out`}>
                                         <span>Vote</span>
@@ -374,11 +374,11 @@ export default function SkitScreen(props) {
 
                         <div className="flex flex-col w-full mt-3 mb-1 gap-1">
                             { loadingData ? ( 
-                                    <div className="h-[25px] w-full relative overflow-hidden bg-gray-800 rounded-[5px]">
+                                    <div className="h-[25px] w-[90%] relative overflow-hidden bg-gray-800 rounded-[30px]">
                                         <div className="absolute inset-0 -translate-x-full animate-[shimmer_2s_infinite] bg-gradient-to-r from-transparent via-white/40 to-transparent" />
                                     </div>
                             ): (
-                                    <span className="text-[17px] leading-tight font-semibold">{shortenText(arrangeText(caption), 40)}</span>
+                                    <span className="text-[17px] leading-tight font-semibold">{shortenText(arrangeText(caption), 35)}</span>
                             )}
                         </div>
                         
@@ -389,11 +389,11 @@ export default function SkitScreen(props) {
             { !loadingData && (
                 <div className={`w-full md:max-w-[400px] absolute bottom-0 text-white h-[40%] items-end pb-[28px] flex flex-row justify-end md:pr-[2%] pr-[3%]`}>
                     <div className="flex flex-col gap-5 z-[1000]">
-                        <button onClick={()=>{shareModal('in')}} className="hover:opacity-50 transition-opacity p-3 mb-5 bg-white/50 backdrop-blur-sm rounded-full cursor-pointer w-fit gap-1">
-                            <SendHorizontalIcon strokeWidth={1.5} size={'27px'} color="black"/>
+                        <button onClick={()=>{shareModal('in')}} className="hover:opacity-50 transition-opacity p-2 mb-5 backdrop-blur-sm rounded-full cursor-pointer w-fit gap-1">
+                            <SendHorizontalIcon strokeWidth={1.8} size={'27px'} color="white"/>
                         </button>
-                        <button className=" w-fit hover:opacity-50 transition-opacity cursor-pointer p-3 bg-white/50 backdrop-blur-sm rounded-full items-center gap-1">
-                            <EllipsisVertical strokeWidth={1.5} size={'27px'} color="black"/>
+                        <button className=" w-fit hover:opacity-50 transition-opacity cursor-pointer p-2 backdrop-blur-sm rounded-full items-center gap-1">
+                            <EllipsisVertical strokeWidth={1.8} size={'27px'} color="white"/>
                         </button>
                     </div>
                 </div>

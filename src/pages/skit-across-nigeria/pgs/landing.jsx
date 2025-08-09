@@ -173,7 +173,7 @@ export default function SkitCompetitionLanding() {
             <div className="text-center">
               <CircleUserRound className="mx-auto mb-3 rounded-[30px] w-[50px] py-1 bg-green-600" color="white" size={'30px'} />
               <h3 className="font-semibold text-green-950 text-2xl"> Register</h3>
-              <p className="px-6 pt-1 pb-5">Sign up for free and submit your skit (max 3 minutes, original content only).</p>
+              <p className="px-6 pt-1 pb-5">Sign up, Register with ₦5,000 and submit your skit (max 3 minutes, original content only).</p>
             </div>
             <div className="text-center border-y-2 pt-2 md:pt-0 md:border-x-2 md:border-y-0 border-gray-300">
               <Megaphone className="mx-auto mb-3 rounded-[30px] w-[50px] py-1 bg-green-600" color="white" size={'30px'} />
