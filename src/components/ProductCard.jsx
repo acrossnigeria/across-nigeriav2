@@ -11,9 +11,9 @@ const ProductCard = ( { title, image, link, date, isOpen } ) => {
         </div>
       </Link>
       <div className='h-[140px] absolute mt-[140px] rounded-[10px] shadow-xl bg-white w-full flex flex-col items-center text-center justify-between pt-3' >
-        <span style={{fontSize:'14px', color:'black'}}>{date} </span>
+        <span className='text-[15px] text-gray-700'>{date} </span>
         <div className='flex flex-col max-w-[70%] leading-tight'>
-          <span className="w-full md:text-[17px] text-[20px] text-green-600 font-bold">{title}</span>
+          <span className="w-full text-[17px] md:text-[18px] text-green-600 font-bold">{title}</span>
         </div>
         <Link href={link} className={`${isOpen?'bg-green-600 hover:bg-green-500':'bg-gray-300 hover:cursor-default'} h-[45px] flex justify-center items-center text-[18px] w-[100%] rounded-[10px] text-white`}>Join</Link>
       </div>

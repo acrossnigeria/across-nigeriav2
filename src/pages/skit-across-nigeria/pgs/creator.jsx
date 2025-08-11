@@ -103,12 +103,12 @@ export default function Creator( { skitId } ) {
                 <span>Please wait..</span>
             </div> 
         ):(
-            <div style={{height:`calc(var(--vh, 1vh)*100)`}} className="bg-white flex items-center justify-center px-4">
+            <div style={{height:`calc(var(--vh, 1vh)*100)`}} className="bg-white flex items-center justify-center px-2">
                 <div className={`fixed ${shareNotifyBottom} ${shareNotifyOpacity} transition-all text-center ease-in-out duration-500 bg-gray-100 z-[2000] text-gray-600 rounded-[20px] md:w-fit w-[80%] border-1 border-green-500 h-fit p-3`}>
                     <span>Link copied, you can now share it</span>
                 </div> 
 
-                <div className="max-w-xl w-full bg-gray-50 flex flex-col rounded-xl shadow-xl border-1 border-gray-300 pb-5 pt-1 px-1">
+                <div className="max-w-xl w-full bg-gray-50 flex flex-col rounded-xl shadow-xl border-1 border-gray-300 pb-2 pt-1 px-1">
                     <div className="w-full h-[110px] overflow-hidden relative rounded-xl shadow-lg">
                         <Image
                         src={banner}
@@ -117,15 +117,15 @@ export default function Creator( { skitId } ) {
                         objectFit="cover"
                         />
                     </div>
-                    <span className="text-xl px-7 font-bold text-gray-900 mt-5 text-center">
+                    <span className="text-xl px-3 font-bold text-black mt-4 text-center">
                         {data?.userFirstName}
                         Skit Uploaded Successfully!
                     </span>
-                    <span className="px-4 text-gray-700 mb-2 text-[15] leading-tight text-center">
+                    <span className="md:px-4 px-3 text-gray-700 mb-2 text-[15px] leading-tight text-center">
                         You&apos;ve uploaded your skit for this month&apos;s Across Nigeria Skit Competition, great job!
                     </span>
 
-                    <div className="mb-4 space-y-2 text-[14px] border-y border-y-gray-200 py-3 px-4">
+                    <div className="mb-4 space-y-2 text-[14px] border-y border-y-gray-200 py-3 md:px-4 px-3">
                         <p className="text-gray-900 font-semibold flex items-center gap-2">
                             🔥 Next Step? Get Votes!
                         </p>
@@ -141,13 +141,13 @@ export default function Creator( { skitId } ) {
                     </div>
 
                     <div className="mt-2 w-[90%] mx-auto flex flex-col items-center justify-center">
-                        <button onClick={()=>{router.push(`/skit-across-nigeria/pgs/video/${data?.skitId}`)}} className="h-[45px] w-full text-white bg-green-600 hover:bg-green-700 transition-all duration-200 rounded-[20px]">View My skit</button>
+                        <button onClick={()=>{router.push(`/skit-across-nigeria/pgs/video/${data?.skitId}`)}} className="h-[40px] w-full text-white bg-green-600 hover:bg-green-700 transition-all duration-200 rounded-[20px]">View my skit</button>
                     </div>
 
                     <div className="flex mt-2 flex-row items-center justify-around w-full px-4">
                         <button onClick={copyShareLink} className="text-[14px] hover:scale-105 transition-all duration-400 ease-in-out hover:opacity-75 flex flex-col justify-center items-center gap-1">
-                            <div className="w-[40px] flex flex-col text-[10px] justify-center items-center h-[40px] border-1 border-gray-800 rounded-full">
-                                <CopyLink size={'30px'}/>
+                            <div className="w-[35px] flex flex-col text-[10px] justify-center items-center h-[35px] border-1 border-gray-800 rounded-full">
+                                <CopyLink size={'25px'}/>
                             </div>
                             <span className="text-[12px]">Copy link</span>
                         </button>
@@ -155,7 +155,7 @@ export default function Creator( { skitId } ) {
                             target="_blank"
                             rel="noopener noreferrer"
                             className="text-[14px] hover:scale-105 transition-all duration-400 ease-in-out hover:opacity-75 flex flex-col justify-center items-center gap-1">
-                        <div className="w-[45px] flex flex-col text-[10px] justify-center items-center h-[45px] rounded-full">
+                        <div className="w-[35px] flex flex-col text-[10px] justify-center items-center h-[35px] rounded-full">
                             <WhatappIcon size={'40px'}/>
                             </div>
                             <span className="text-[12px]">Whatsapp</span>
@@ -164,13 +164,13 @@ export default function Creator( { skitId } ) {
                             target="_blank"
                             rel="noopener noreferrer"
                             className="text-[14px] hover:scale-105 transition-all duration-400 ease-in-out hover:opacity-75 flex flex-col justify-center items-center gap-1">
-                        <div className="w-[45px] flex flex-col text-[10px] justify-center items-center h-[45px] rounded-full">
+                        <div className="w-[35px] flex flex-col text-[10px] justify-center items-center h-[35px] rounded-full">
                             <FbIcon size={'40px'}/>
                             </div>
                             <span className="text-[12px]">Facebook</span>
                         </a>
                         <button onClick={copyShareLink} className="text-[14px] hover:scale-105 transition-all duration-400 ease-in-out hover:opacity-75 flex flex-col justify-center items-center gap-1">
-                        <div className="w-[45px] flex flex-col text-[10px] justify-center items-center h-[45px] rounded-full">
+                        <div className="w-[35px] flex flex-col text-[10px] justify-center items-center h-[35px] rounded-full">
                             <IgIcon size={'40px'}/>
                             </div>
                             <span className="text-[12px]">Instagram</span>

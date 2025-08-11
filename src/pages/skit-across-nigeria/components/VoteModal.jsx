@@ -4,7 +4,7 @@ import VoteCard from "./VoteCard";
 import ProcessingCard from "./ProcessingCard";
 import VoteSuccess from "./VoteSuccess";
 
-const VoteModal = ({ showVoteModal, setShowVoteModal, userEmail, userId, skitId, setNewVotes }) => {
+const VoteModal = ({ showVoteModal, setShowVoteModal, userEmail, userId, skitId }) => {
     const [ voterEmail, setVoterEmail ] = useState('');
     const [ numberOfVotes, setNumberOfVotes ] = useState(1);
     const [ voteError, setVoteError ] = useState('');
@@ -46,7 +46,6 @@ const VoteModal = ({ showVoteModal, setShowVoteModal, userEmail, userId, skitId,
             const response = await axios.post('/api/skit-across-nigeria/vote', data);
             if (response.status === 200) {
                 setCardStep(2);
-                setNewVotes(response.data?.newVotes);
             } else {
                 if ( !recentPaymentRef ) {
                     setRecentPaymentRef(paymentRef);

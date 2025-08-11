@@ -47,7 +47,7 @@ export default function VideoCard( { content, isLandscape }) {
                         alt={content?.vidCaption}
                         unoptimized
                         />
-                        <div className="w-fit h-fit p-2 px-4 bg-black/50 text-white text-[13px] absolute mt-[170px] ml-[10px] rounded-[4px]">
+                        <div className="w-fit h-fit p-2 px-3 bg-black/30 backdrop-blur-sm text-white text-[13px] absolute mt-[170px] mr-[10px] rounded-[10px]">
                             <span>{content?.vidLength}</span>
                         </div>
                     </Link>

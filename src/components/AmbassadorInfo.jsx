@@ -8,6 +8,7 @@ import { useSession } from "next-auth/react";
 import PointIcon from "../../public/images/icon/PointIcon";
 import LevelIcon from "../../public/images/icon/LevelIcon";
 import ReferCountIcon from "../../public/images/icon/ReferCountIcon";
+import ShimmerLoader from "./ui/ShimmerLoader";
 
 
 const AmbassadorInfo = () => {
@@ -64,7 +65,11 @@ const AmbassadorInfo = () => {
     return (
         <div className="w-[95%] md:w-[100%] mt-[10px] ml-[2.5%] md:ml-0 gap-[20px] rounded-[13px] flex flex-col">
             { isLoading ? (
-                <div className="h-[250px] md:h-[150px] bg-gray-300 animate-pulse w-[100%] p-3 gap-[15px] rounded-[13px]"> 
+                <div className="bg-white p-3 px-4 pb-4 gap-[9px] rounded-[13px] items-center flex flex-col">
+                    <ShimmerLoader roundedness={'30px'} height={'30px'} width={'70%'} />
+                    <ShimmerLoader className={"mt-3"} roundedness={'20px'} height={'15px'} width={'90%'} />
+                    <ShimmerLoader roundedness={'20px'} height={'15px'} width={'90%'} />
+                    <ShimmerLoader className={"mt-4"} roundedness={'30px'} height={'40px'} width={'50%'} />
                 </div>
             ):( isAmbassador ? (
                     <div className="bg-white p-3 gap-[15px] rounded-[13px] flex flex-col">
@@ -89,17 +94,23 @@ const AmbassadorInfo = () => {
                         <span></span>
                     </div>
                 ): (
-                    <div className="bg-white p-3 gap-[15px] rounded-[13px] flex flex-col">
+                    <div className="bg-white p-3 gap-1 leading-tight rounded-[13px] flex flex-col">
                         <div className="flex flex-row justify-center text-gray-700 items-center gap-2 text-[20px] font-semibold"><span >Join Our Ambassador Program!</span><FlyStarIcon size='33px'/></div>
                         <span className="mt-[5px] text-center text-gray-500 text-[15px]">Become part of something big! Earn rewards, gain exclusive perks, and represent our brand in style.</span>
-                        <span className="mt-[5px] md:px-[30px] text-center text-gray-500 text-[15px]">Top ambassadors get special rewards and recognition. Represent our brand, earn rewards, and compete for amazing prizes.</span>
-                        <Link className="self-center" href={'/ambassador/apply'}><button className="h-[50px] mt-[10px] cursor-pointer hover:bg-green-700 w-[200px] bg-green-600 text-white rounded-[25px]">Join Now</button></Link>  
+                        <span className="md:px-[30px] text-center text-gray-500 text-[15px]">Top ambassadors get special rewards and recognition. Represent our brand, earn rewards, and compete for amazing prizes.</span>
+                        <Link className="self-center" href={'/ambassador/apply'}><button className="h-[40px] mt-4 cursor-pointer hover:bg-green-700 w-[200px] bg-green-600 text-white rounded-[25px]">Join Now</button></Link>  
                     </div>
                 )
             )
             }
             <div className="bg-white p-3 gap-[15px] rounded-[13px] flex flex-col">
-                <div style={{lineHeight:'23px'}} className="flex flex-row justify-center text-gray-700 items-center gap-2 text-[20px] font-semibold"><span >Top 5 Ambassadors Leaderboard</span><TrophyIcon size='28px'/></div>
+                { (isLoading && !isErrorOccurred) ? (
+                    <ShimmerLoader className={'mx-auto'} roundedness={'20px'} height={'25px'} width={'70%'}/>
+                ):(
+                    <div style={{lineHeight:'23px'}} className="flex flex-row justify-center text-gray-700 items-center gap-2 text-[20px] font-semibold">
+                        <span >Top 5 Ambassadors Leaderboard</span><TrophyIcon size='28px'/>
+                    </div>
+                )}
                 { (!isLoading && !isErrorOccurred) && (
                     <div className="flex flex-row md:flex-nowrap flex-wrap justify-center items-center gap-2">
                         { data.map( (user, index) => {
@@ -110,7 +121,8 @@ const AmbassadorInfo = () => {
                                     <Profile bg={'gray'} size={'60%'}/>
                                     <span className="text-[11px] font-bold">{user.fullname}</span>
                                     <span>From {user.city.length>(index===0?15:9)?`${user.city.slice(0, index===0?15:9)}...`:user.city}</span>
-                                </div>)
+                                </div>
+                                )
                             } else {
                                 return (
                                     <div className={`flex h-[150px] bg-gray-300 text-white rounded-[20px] text-[15px] flex-col text-center md:w-[20%] ${index===0?'w-[90%]':'w-[45%]'} justify-center items-center p-[5px]`} key={index}>
@@ -123,11 +135,15 @@ const AmbassadorInfo = () => {
                 )}
                 { isLoading && (
                     <div className="flex flex-row md:flex-nowrap flex-wrap justify-center gap-2 items-center w-[100%]">
-                    <div className="bg-gray-200 animate-pulse md:w-[20%] w-[92%] rounded-[20px] h-[150px]"></div>
-                    <div className="bg-gray-200 animate-pulse md:w-[20%] w-[45%] rounded-[20px] h-[150px]"></div>
-                    <div className="bg-gray-200 animate-pulse md:w-[20%] w-[45%] rounded-[20px] h-[150px]"></div>
-                    <div className="bg-gray-200 animate-pulse md:w-[20%] w-[45%] rounded-[20px] h-[150px]"></div>
-                    <div className="bg-gray-200 animate-pulse md:w-[20%] w-[45%] rounded-[20px] h-[150px]"></div>
+                        {[0, 0, 0, 0, 0].map( (_, index) => {
+                            return (
+                                <div className={`flex h-[150px] rounded-[20px] text-[13px] flex-col text-center md:w-[20%] ${index===0?'w-[90%]':'w-[45%]'} justify-center items-center p-[5px] border-1 border-gray-300`} key={index}>
+                                    <ShimmerLoader roundedness={'50%'} height={'60%'} width={'60%'}/>
+                                    <ShimmerLoader className={'mt-2'} roundedness={'13px'} height={'13px'} width={"65%"}/>
+                                    <ShimmerLoader className={'mt-2'} roundedness={'13px'} height={'13px'} width={"85%"}/>
+                                </div>
+                            )
+                        })}
                     </div>                                                   
                 )}
                 { isErrorOccurred && (

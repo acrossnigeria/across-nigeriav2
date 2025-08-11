@@ -8,20 +8,13 @@ import Link from "next/link";
 import dynamic from 'next/dynamic'; // Import dynamic
 import { useSession } from "next-auth/react";
 import ReloadIcon from "../../../../../public/images/icon/ReloadIcon";
-import Image from "next/image";
-import logo1 from "../../../../../public/images/logo1.png";
-import Close from "../../../../../public/images/icon/Close";
-import CopyLink from "../../../../../public/images/icon/CopyLink";
-import FbIcon from "../../../../../public/images/icon/FbIcon";
-import IgIcon from "../../../../../public/images/icon/IgIcon";
-import WhatappIcon from "../../../../../public/images/icon/WhatappIcon";
-import SkitSuccessModal from "../../components/SkitSuccessModal";
 import { ChevronLeft, EllipsisVertical, Pause, Play, SendHorizontalIcon } from "lucide-react";
 import ProcessLoader from "@/components/ui/ProcessLoader";
 import VoteModal from "../../components/VoteModal";
 import setRealVH from "../../../../../utils/setRealVH";
 import { arrangeText, shortenText } from "../../../../../utils/textFormat";
 import HeadComponent from "@/components/HeadComponent";
+import ShareModal from "../../components/ShareModal";
 
 // Dynamically import ReactPlayer with SSR disabled
 const ReactPlayer = dynamic(() => import('react-player'), { ssr: false });
@@ -31,9 +24,9 @@ export default function SkitScreen(props) {
 
     const router = useRouter();
     const params = router.query;
-    const { status, data:session } = useSession();
+    const { data:session } = useSession();
     const message = '🔥 Check out this amazing skit on Across Nigeria Reality Show! 😂🎭 The creator is competing to win cash prizes! 🏆💰 Support them by watching and voting for your favorite skit. Every vote counts! Cast yours now! 🚀✨';
-    const skitLink = `https://acrossnig.com/theater-skit-across-nigeria/pages/skit-video/${params.id}`;
+    const skitLink = `https://acrossnig.com/skit-across-nigeria/pgs/video/video/${params.id}`;
     const encodedMessage = encodeURIComponent(message + ' ' + skitLink);
 
     const shareLinks = {
@@ -41,12 +34,10 @@ export default function SkitScreen(props) {
         facebook: `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(skitLink)}`,
     };
 
-    const [ isMobile, setIsMobile ] = useState(false);
     const [ data, setData ] = useState(null);
     const [ loadingData, setLoadingData ] = useState(true);
     const [ dataSuccess, setDataSuccess ] = useState(true);
     const [ caption, setCaption ] = useState('');
-    const [ skitVotes, setSkitVotes ] = useState(0);
 
     const [ errorGettingSkit, setErrorGettingSkit ] = useState(false);
     const [ errorMessage, setErrorMessage ] = useState('');
@@ -57,13 +48,7 @@ export default function SkitScreen(props) {
     const [ shareNotifyOpacity, setShareNotifyOpacity ] = useState('opacity-0');
 
     const [ showShareModal, setShowShareModal ] = useState(false);
-    const [ ssModalOpacity, setSsModalOpacity ] = useState('opacity-100');
-    const [ ssBgOpacity, setSsBgOpacity ] = useState('opacity-100');
-
     const [ uploadModal, setUploadModal ] = useState(false);
-    const [ uModalOpacity, setUModalOpacity ] = useState('opacity-100');
-    const [ uBgOpacity, setUBgOpacity ] = useState('opacity-100');
-
 
     // State to track player
     const [ isPlaying, setIsPlaying ] = useState(true);
@@ -84,8 +69,6 @@ export default function SkitScreen(props) {
 
     useEffect(() => {
         if (isClient) { // Only run this code after the component is mounted on the client
-            const isMobileDevice = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent) && window.matchMedia('(max-width: 600px)').matches;
-            setIsMobile(isMobileDevice);
             getVideoData(); // get datas for video
         }
     }, [isClient]);
@@ -129,21 +112,12 @@ export default function SkitScreen(props) {
     
 
     const displayShareNotifier = () => {
-        setShareNotifyBottom('top-[120px]');
+        setShareNotifyBottom('top-[70px]');
         setShareNotifyOpacity('opacity-100');
         setTimeout(() => {
             setShareNotifyBottom('top-[-50px]');
             setShareNotifyOpacity('opacity-0');
         }, 3000);
-    }
-
-    async function copyShareLink() {
-        try {
-        await navigator.clipboard.writeText(`https://acrossnig.com/skit-across-nigeria/pgs/video/${params?.id}`);
-        displayShareNotifier();
-        } catch (err) {
-        alert('An error occurred when copying ref link');
-        }
     }
 
     const reload = () => {
@@ -155,34 +129,11 @@ export default function SkitScreen(props) {
     const shareModal = (transiton) => {
         if (transiton==='in') {
             setShowShareModal(true);
-            setTimeout(() => {
-                setSsBgOpacity('opacity-100');
-                setSsModalOpacity('opacity-100');
-            }, 300);
         } else {
-            setSsBgOpacity('opacity-0');
-            setSsModalOpacity('opacity-0');
-            setTimeout(() => {
-                setShowShareModal(false);
-            }, 1000);
+            setShowShareModal(false);
         }
     }
 
-    const uploadSuccess = (transiton) => {
-        if (transiton==='in') {
-            setUploadModal(true);
-            setTimeout(() => {
-                setUBgOpacity('opacity-100');
-                setUModalOpacity('opacity-100');
-            }, 300);
-        } else {
-            setUBgOpacity('opacity-0');
-            setUModalOpacity('opacity-0');
-            setTimeout(() => {
-                setUploadModal(false);
-            }, 1000);
-        }
-    }
 
     const handlePlayer = () => {
         if ( !isPlaying ) {
@@ -216,64 +167,9 @@ export default function SkitScreen(props) {
             </div>
         ):(
             <div style={{height:`calc(var(--vh, 1vh)*100)`}}  className='w-screen flex flex-col items-center bg-gray-950'>
-                <VoteModal setNewVotes={setSkitVotes} userId={session?.user?._id} skitId={params?.id} userEmail={session?.user?.email} setShowVoteModal={setShowVoteModal} showVoteModal={showVoteModal} />
+                <VoteModal userId={session?.user?._id} skitId={params?.id} userEmail={session?.user?.email} setShowVoteModal={setShowVoteModal} showVoteModal={showVoteModal} />
                 <div className={`flex md:w-[50%] mx-auto rounded-[20px] justify-center items-center gap-4 flex-col`}>
-                { uploadModal && 
-                    <SkitSuccessModal skitLink={skitLink} closeFunction={uploadSuccess} bgOpacity={uBgOpacity} modalOpacity={uModalOpacity}/>
-                }
-
-                { showShareModal && 
-                    <div style={{height:`calc(var(--vh, 1vh)*100)`}}  className={`fixed ${ssBgOpacity} z-[2000] transition-all duration-300 ease-in-out backdrop-blur-sm w-screen flex flex-co items-center justify-center gap-3 bg-black/50 top-0`}>
-                        <div className="h-fit flex flex-col justify-center w-[100%] items-center">
-                            <button onClick={()=>{shareModal('out')}} className="border-1 text-[14px] flex flex-row gap-2 text-white hover:bg-green-600/50 hover:scale-105 transition-all duration-300 ease-in-out justify-center items-center px-[20px] py-1 rounded-[20px] mb-[20px] border-gray-100">
-                                <Close bg={'white'} size={'15px'}/>
-                                Close
-                            </button>
-                            <div className={`overflow-hidden h-[240px] md:w-[400px] transition-all duration-500 ease-in-out w-[80%] text-center ${ssModalOpacity} p-3 md:p-5 flex flex-col justify-center items-center bg-gray-100 rounded-[5px]`}>
-                                <div className='text-center mb-[35px] flex flex-row justify-center gap-1 items-center'>
-                                    <Image src={logo1} alt='logo' placeholder='blur' className='h-[30px] w-[35px]' />
-                                    <div className='flex flex-col justify-center items-start gap-0'>
-                                        <span className='text-[12px] font-semibold text-green-700'>ACROSS NIGERIA</span>
-                                        <span className='text-[10px] text-green-500'>REALITY SHOW</span>
-                                    </div>
-                                </div>
-                                <span className="text-[14px]">Share it!, Share to friends and families for them to watch and vote for you.</span>
-                                <div className="flex pt-[15px] mt-[15px] flex-row items-center justify-evenly gap-2 border-t-1 w-full border-t-gray-500">
-                                    <button onClick={copyShareLink} className="h-[60px] text-[14px] hover:scale-105 transition-all duration-400 ease-in-out hover:opacity-75 flex flex-col justify-center items-center gap-2 ">
-                                    <div className="w-[45px] flex flex-col justify-center items-center h-[45px] border-1 border-gray-800 rounded-full">
-                                        <CopyLink size={'40px'}/>
-                                        </div>
-                                        <span>Copy link</span>
-                                    </button>
-                                    <a  href={shareLinks.whatsapp}
-                                        target="_blank"
-                                        rel="noopener noreferrer"
-                                        className="h-[60px] text-[14px] hover:scale-105 transition-all duration-400 ease-in-out hover:opacity-75 flex flex-col justify-center items-center gap-2 ">
-                                    <div className="w-[45px] flex flex-col justify-center items-center h-[45px] rounded-full">
-                                        <WhatappIcon size={'40px'}/>
-                                        </div>
-                                        <span>Whatsapp</span>
-                                    </a>
-                                    <a  href={shareLinks.facebook}
-                                        target="_blank"
-                                        rel="noopener noreferrer"
-                                        className="h-[60px] text-[14px] hover:scale-105 transition-all duration-400 ease-in-out hover:opacity-75 flex flex-col justify-center items-center gap-2 ">
-                                    <div className="w-[45px] flex flex-col justify-center items-center h-[45px] rounded-full">
-                                        <FbIcon size={'40px'}/>
-                                        </div>
-                                        <span>Facebook</span>
-                                    </a>
-                                    <button onClick={copyShareLink} className="h-[60px] text-[14px] hover:scale-105 transition-all duration-400 ease-in-out hover:opacity-75 flex flex-col justify-center items-center gap-2 ">
-                                    <div className="w-[45px] flex flex-col justify-center items-center h-[45px] rounded-full">
-                                        <IgIcon size={'40px'}/>
-                                        </div>
-                                        <span>Instagram</span>
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                }
+                <ShareModal skitLink={skitLink} displayShareNotifier={displayShareNotifier} closeModal={()=>{shareModal('out')}} shareLinks={shareLinks} showModal={showShareModal}/>
 
                 { errorGettingSkit && 
                     <div style={{height:`calc(var(--vh, 1vh)*100)`}} className='w-full pt-[30px] flex flex-col justify-center items-center gap-10'>
@@ -342,7 +238,7 @@ export default function SkitScreen(props) {
                     )
                     }
                 </div> 
-                <div className={`fixed ${shareNotifyBottom} ${shareNotifyOpacity} transition-all text-center ease-in-out duration-500 bg-gray-100 z-[2000] text-gray-600 rounded-[20px] md:w-fit w-[80%] border-1 border-green-500 h-fit p-3`}>
+                <div className={`fixed ${shareNotifyBottom} ${shareNotifyOpacity} text-[13px] transition-all text-center ease-in-out duration-500 bg-gray-100 z-[2000] text-gray-600 rounded-[20px] md:w-fit w-[80%] h-fit p-2`}>
                     <span>Link copied, you can now share it</span>
                 </div> 
                 <div className={`w-full md:max-w-[400px] absolute z-[1000] bottom-0 text-white flex flex-col md:pl-[2%] pl-[3%] `}>

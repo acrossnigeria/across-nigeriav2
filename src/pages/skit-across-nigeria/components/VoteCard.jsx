@@ -10,7 +10,7 @@ const VoteCard = ( { closeModal, handleVote, voterEmail, numberOfVotes, setVoter
 
     return (
         <div className="transition-all ease-in-out duration-300 h-[500px] leading-tight p-4 pb-1 md:w-[450px] w-[95%] rounded-[20px] flex flex-col justify-start bg-white" >
-            <div className="w-full h-fit mb-6 flex flex-row justify-end">
+            <div className="w-full h-fit mb-4 flex flex-row justify-end">
                 <X onClick={closeModal} className="cursor-pointer" size={22} />
             </div>
             <span className="text-[20px] text-center font-medium">Vote for this Skit</span>
@@ -20,7 +20,7 @@ const VoteCard = ( { closeModal, handleVote, voterEmail, numberOfVotes, setVoter
             <span className="font-bold text-center mb-3">You&apos;re paying ₦{numberOfVotes*100}</span>
             <PaystackClick buttonText={'Vote Now'} callBack={handleVote} email={voterEmail} amount={numberOfVotes * 100}/>
             <InfoText className={'mt-2'} text={`Each vote costs ₦100`}/>
-            <div className="mt-7 text-xs flex-row flex justify-center items-center w-full text-gray-600 text-center">
+            <div className="mt-9 text-xs flex-row flex justify-center items-center w-full text-gray-600 text-center">
                 <ShieldCheck className="inline-block w-4 h-4 mr-1 text-green-500" />
                 <span>Secure Payment via Paystack</span>
             </div>
