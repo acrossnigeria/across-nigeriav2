@@ -4,7 +4,7 @@ import VoteCard from "./VoteCard";
 import ProcessingCard from "./ProcessingCard";
 import VoteSuccess from "./VoteSuccess";
 
-const VoteModal = ({ showVoteModal, setShowVoteModal, userEmail, userId, skitId }) => {
+const VoteModal = ({ showVoteModal, setShowVoteModal, userEmail, userId, skitId, handleVoteModal }) => {
     const [ voterEmail, setVoterEmail ] = useState('');
     const [ numberOfVotes, setNumberOfVotes ] = useState(1);
     const [ voteError, setVoteError ] = useState('');
@@ -58,7 +58,11 @@ const VoteModal = ({ showVoteModal, setShowVoteModal, userEmail, userId, skitId 
         } 
     };
 
-    const closeModal = () => { setShowVoteModal(false); setCardStep(0); };
+    const closeModal = () => {
+        setShowVoteModal(false); 
+        setCardStep(0); 
+        handleVoteModal();
+    };
     const reset = () => { setCardStep(0); };
 
     return (

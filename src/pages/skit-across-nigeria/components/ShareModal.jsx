@@ -28,7 +28,7 @@ const ShareModal = ( { showModal, closeModal, shareLinks, displayShareNotifier, 
                     <Close bg={'white'} size={'15px'}/>
                     Close
                 </button>
-                <div className={`overflow-hidden h-[270px] md:w-[400px] transition-all duration-500 ease-in-out w-[90%] text-center p-3 md:p-5 flex flex-col justify-center items-center bg-gray-100 rounded-[20px]`}>
+                <div className={`overflow-hidden h-[270px] md:w-[400px] transition-all duration-500 ease-in-out w-[94%] text-center p-3 md:p-5 flex flex-col justify-center items-center bg-gray-100 rounded-[20px]`}>
                     <div className='text-center mb-[35px] flex flex-row justify-center gap-1 items-center'>
                         <Image src={logo1} alt='logo' placeholder='blur' className='h-[27px] w-[32px]' />
                         <div className='flex flex-col justify-center items-start gap-0'>

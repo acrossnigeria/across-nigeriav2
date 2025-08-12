@@ -25,10 +25,6 @@ export default function VideoCard( { content, isLandscape }) {
         getThumbnail();
     }, [])
 
-    console.log(thumbnailUrl);
-    // const thumbnailUrl = cld.image(videoId).setAssetType('video').format('auto:image').toURL().concat('.jpeg');
-    // console.log(thumbnailUrl)
-
     const modifyTitle = ( str ) => {
         const firstWord = str.slice(0, 1).toUpperCase();
         return `${firstWord}${str.slice(1)}`;

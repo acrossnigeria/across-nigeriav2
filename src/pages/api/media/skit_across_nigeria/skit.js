@@ -72,7 +72,6 @@ const Handler = async ( req, res ) => {
 
             if ( type === "single" ) {
                 const id = req.query.id;
-                const user = req.query?.user;
 
                 await db.connect();
                 const video = await SkitAcrossNigeriaSkit.findById(id).populate('user', 'name surname');
@@ -85,10 +84,8 @@ const Handler = async ( req, res ) => {
                     votes+=voteDoc?.votes;
                 });
 
-
                 await db.disconnect();
                 const vidUrl = video?.vidUrl?.replace("mp4", "m3u8").replace("mov", "m3u8");
-                console.log(vidUrl);
 
                 const vidData = {
                     vidLength:video?.vidLength, 
@@ -111,19 +108,19 @@ const Handler = async ( req, res ) => {
                       const vidId = e._id;
                       const voteDocs = await SkitAcrossNigeriaVote.find({ skitId: vidId });
                       let votes = 0;
+
                       voteDocs?.map( ( voteDoc ) => {
                         votes += voteDoc?.votes;
                       })
-                  
+
                       return {
-                        vidLength: e.vidLength,
-                        vidTitle: e.vidTitle,
-                        vidCaption: e.vidCaption,
-                        vidUrl: e.vidUrl,
+                        vidLength: e?.vidLength,
+                        vidCaption: e?.vidCaption,
+                        vidUrl: e?.vidUrl,
                         votes: votes,
-                        fullname: `${e.user.name} ${e.user.surname}`,
+                        fullname: `${e?.user.name} ${e?.user.surname}`,
                         id: vidId,
-                        createdAt: timeAgo(e.createdAt),
+                        createdAt: timeAgo(e?.createdAt),
                       };
                     })
                   );

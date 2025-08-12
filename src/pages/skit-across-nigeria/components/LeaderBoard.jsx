@@ -25,7 +25,7 @@ const LeaderBoard = ({ skits, toShowLeaderBoard }) => {
                                     </div>
                                 </div>
                             </div>
-                            <Link href={`/skit-across-nigeria/watch/${position?.id}`} className='text-[14px] font-medium hover:underline text-primary-700'>Watch skit</Link>
+                            <Link href={`/skit-across-nigeria/pgs/video/${position?.id}`} className='text-[14px] font-medium hover:underline text-primary-700'>Watch skit</Link>
                         </div>
                         ):(
                         <div key={index} className='w-full flex flex-row px-4 items-center rounded-[20px] gap-4 bg-gradient-to-r from-blue-200 to-blue-100 h-[50px]'>

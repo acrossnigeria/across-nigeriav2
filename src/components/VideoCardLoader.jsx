@@ -21,8 +21,6 @@ export default function VideoCardLoader() {
                             </div>
                         </div>
                     </div>
-                    <button className="hover:scale-110 hover:opacity-50"><OptionsIcon/></button>
-                   
                 </div>
             </div>
  

@@ -20,13 +20,13 @@ import ShareModal from "../../components/ShareModal";
 const ReactPlayer = dynamic(() => import('react-player'), { ssr: false });
 
 
-export default function SkitScreen(props) {
+export default function SkitScreen() {
 
     const router = useRouter();
-    const params = router.query;
+    const { id } = router.query || {};
     const { data:session } = useSession();
     const message = '🔥 Check out this amazing skit on Across Nigeria Reality Show! 😂🎭 The creator is competing to win cash prizes! 🏆💰 Support them by watching and voting for your favorite skit. Every vote counts! Cast yours now! 🚀✨';
-    const skitLink = `https://acrossnig.com/skit-across-nigeria/pgs/video/video/${params.id}`;
+    const skitLink = `https://acrossnig.com/skit-across-nigeria/pgs/video/video/${id}`;
     const encodedMessage = encodeURIComponent(message + ' ' + skitLink);
 
     const shareLinks = {
@@ -48,7 +48,6 @@ export default function SkitScreen(props) {
     const [ shareNotifyOpacity, setShareNotifyOpacity ] = useState('opacity-0');
 
     const [ showShareModal, setShowShareModal ] = useState(false);
-    const [ uploadModal, setUploadModal ] = useState(false);
 
     // State to track player
     const [ isPlaying, setIsPlaying ] = useState(true);
@@ -58,20 +57,23 @@ export default function SkitScreen(props) {
     // state to track modal display
     const [ showVoteModal, setShowVoteModal ] = useState(false);
 
+     // State to track client-side rendering
+    const [isClient, setIsClient] = useState(false);
+
     // displays voting modal
     const voteModal = () => {  
         setShowVoteModal(!showVoteModal);
-        setIsPlaying(false);
+        setIsPlaying(!isPlaying);
     }
 
-
-    const [isClient, setIsClient] = useState(false); // State to track client-side rendering
-
     useEffect(() => {
-        if (isClient) { // Only run this code after the component is mounted on the client
+        if ( !router.isReady ) return;
+        console.log(id)
+
+        if ( isClient && id ) { // Only run this code after the component is mounted on the client
             getVideoData(); // get datas for video
         }
-    }, [isClient]);
+    }, [ isClient, id, router.isReady ]);
 
     useEffect(() => {
         // This will only run on the client
@@ -82,18 +84,15 @@ export default function SkitScreen(props) {
     const getVideoData = async () => {
         async function getData(user) {
             try {
-                if ( params.id ) {
+                if ( id ) {
                     setLoadingData(true)
-                    const response = await axios.get(`/api/media/skit_across_nigeria/skit?id=${ params?.id }&type=single${user?`&user=${user}`:''}`);
+                    const response = await axios.get(`/api/media/skit_across_nigeria/skit?id=${ id }&type=single${user?`&user=${user}`:''}`);
                     const videoData = response.data.vidData;
                     setData(videoData);
                     setLoadingData(false);
                     setDataSuccess(true);
                     setCaption(videoData?.vidCaption);
                     setErrorGettingSkit(false);
-                    if (params?.isNew === 'true' || params?.isNew === true) {
-                        setUploadModal(true);
-                    }
                 }
             } catch(error) {
                 setLoadingData(false);
@@ -146,9 +145,7 @@ export default function SkitScreen(props) {
         setIsPlaying(!isPlaying);
     };
 
-    
     setRealVH();
-
 
     return(
         <>
@@ -167,7 +164,7 @@ export default function SkitScreen(props) {
             </div>
         ):(
             <div style={{height:`calc(var(--vh, 1vh)*100)`}}  className='w-screen flex flex-col items-center bg-gray-950'>
-                <VoteModal userId={session?.user?._id} skitId={params?.id} userEmail={session?.user?.email} setShowVoteModal={setShowVoteModal} showVoteModal={showVoteModal} />
+                <VoteModal userId={session?.user?._id} skitId={id} userEmail={session?.user?.email} handleVoteModal={voteModal} setShowVoteModal={setShowVoteModal} showVoteModal={showVoteModal} />
                 <div className={`flex md:w-[50%] mx-auto rounded-[20px] justify-center items-center gap-4 flex-col`}>
                 <ShareModal skitLink={skitLink} displayShareNotifier={displayShareNotifier} closeModal={()=>{shareModal('out')}} shareLinks={shareLinks} showModal={showShareModal}/>
 
@@ -181,7 +178,7 @@ export default function SkitScreen(props) {
                     </div>
                 }
                 <div style={{height:`calc(var(--vh, 1vh)*100)`}} className={` md:max-w-[400px] w-screen flex flex-col justify-center item-center md:rounded-[5px] overflow-hidden bg-black`}>
-                    { typeof window !== "undefined" && ( loadingData ? ( 
+                    { isClient && ( loadingData ? ( 
                             <div className="h-full w-full flex flex-col bg-transparent justify-center items-center">
                                 <ProcessLoader color={'white'} size={'40px'}/>
                             </div>
