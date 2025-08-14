@@ -11,6 +11,7 @@ import setRealVH from "../../../../../utils/setRealVH";
 import InfoButton from "@/components/InfoButton";
 import HeadComponent from "@/components/HeadComponent";
 import Loader from "@/components/Loader";
+import ShrimpLoader from "@/components/ui/ShrimpLoader";
  
 function reducer(state, action) {
   switch (action.type) {
@@ -328,8 +329,7 @@ const UploadScreen = ( { isRegistered } ) => {
       <Loader/>
       { checkingUser ? (
         <div style={{height:`calc(var(--vh, 1vh)*100)`}} className="w-full flex flex-col justify-center items-center">
-          <ProcessLoader color={'black'} size={'40px'}/>
-          <span>Please wait..</span>
+          <ShrimpLoader/>
         </div>
       ) : (
         <div style={{height:`calc(var(--vh, 1vh)*100)`}} className="flex flex-col justify-center bg-white items-center">  
@@ -346,13 +346,13 @@ const UploadScreen = ( { isRegistered } ) => {
           <div className="z-[1000] flex flex-col gap-2 justify-center items-center h-screen w-screen bg-gray-100">
               <Layers2 strokeWidth={1} size={'100px'} className="text-green-800"/>
             { saveSuccess ? (
-              <div className="flex text-[25px] flex-row items-center gap-2">
+              <div className="flex text-[20px] flex-row items-center gap-2">
                 <Check strokeWidth={1} size={'40px'} className="text-green-800"/>
                 <span>Submited Successfully</span>
               </div>
              ) : (
-              <div className="flex text-[25px] flex-row items-center gap-2">
-                  <ProcessLoader size={'40px'}/>
+              <div className="flex text-[20px] flex-row items-center gap-2">
+                  <ShrimpLoader/>
                   <span>Submiting your skit..</span>
               </div>
             )}
@@ -365,7 +365,7 @@ const UploadScreen = ( { isRegistered } ) => {
         
         { !isSaving && (
           <div className="mx-auto align-middle flex flex-col h-full pt-[100px] pb-[30px] max-w-[400px] w-[100%] md:px-0" >
-            <div className={`fixed z-[2000] text-[14px] ${displayMessage?'top-[70px] opacity-100':'top-[-10px] opacity-0'} ${messageType==='neutral'?'border-b-yellow-200':(messageType==='error'?'border-b-red-500':'border-b-green-600')} flex flex-row gap-2 items-center transition-all duration-300 ease-in-out border-[1px] border-gray-300 md:w-[50%] md:left-[25%] left-[10%] w-[80%] bg-white border-b-[2px] h-fit p-3 rounded-[5px]`}>
+            <div className={`fixed z-[2000] text-[14px] ${displayMessage?'top-[70px] opacity-100':'top-[-10px] opacity-0'} ${messageType==='neutral'?'border-b-yellow-200':(messageType==='error'?'border-b-red-500':'border-b-green-600')} flex flex-row gap-2 items-center transition-all duration-300 ease-in-out border-[1px] border-gray-300 md:w-[50%] md:left-[25%] left-[10%] w-[80%] bg-white border-b-[2px] h-fit p-3 rounded-[30px]`}>
               <span>{message}</span>
               { messageType==='error' ?(
                 <TriangleAlert strokeWidth={1} size={'20px'} className="text-red-600"/>
@@ -409,7 +409,7 @@ const UploadScreen = ( { isRegistered } ) => {
                           </div>
                         </div>
                     ) : (
-                        <div className='md:w-[85%] rounded-[20px] w-[90%] mx-auto border-gray-300 border-2 h-full flex flex-col justify-center items-center'>
+                        <div className='md:w-[85%] rounded-[15px] w-[90%] mx-auto border-gray-300 border-2 h-full flex flex-col justify-center items-center'>
                           <FileVideo strokeWidth={0.5} size={'180px'} className=" text-yellow-500"/>
                           <div className="flex flex-row items-center justify-center mt-5 mb-2 gap-1">
                             <button onClick={selectVideo} className="flex flex-row gap-2 hover:text-blue-800 text-blue-600">
@@ -493,33 +493,3 @@ UploadScreen.auth = true;
 
 export default UploadScreen;
 
-
-// export async function  getServerSideProps(context) {
-//     const session = await getSession(context)
-//     const userId = session?.user?._id;
-//     let response;
-//     let isUserRegistered;
-
-//     if ( userId ) {
-//       response = await axios.get(`https://acrossnig-test-base.netlify.app/api/skit-across-nigeria/auth?userId=${userId}`);
-//       isUserRegistered = response.data.isUserRegistered;
-//       if ( !isUserRegistered ) {
-//         return {
-//         redirect: {
-//             destination: '/skit-across-nigeria/pgs/register',
-//             permanent: false,
-//         }
-//       };
-//       } else {
-//         return { props:{ isRegistered:true } };
-//       }
-//     } else {
-//       return {
-//         redirect: {
-//             destination: '/account/login?redirect=/skit-across-nigeria/pgs/video/upload',
-//             permanent: false,
-//         }
-//       };
-//     }
-    
-// } 

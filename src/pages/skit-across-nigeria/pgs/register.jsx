@@ -1,9 +1,7 @@
 "use client";
 
-import { ShieldCheck, CheckCircle2, Check } from "lucide-react";
-import setRealVH from "../../../../utils/setRealVH";
+import { ShieldCheck, CheckCircle2, Check, ChevronLeft } from "lucide-react";
 import Image from "next/image";
-import banner from "../../../../public/images/saImage2.png";
 import PaystackClick from "@/components/PaystackClick";
 import { getSession, useSession } from "next-auth/react";
 import HeadComponent from "@/components/HeadComponent";
@@ -13,6 +11,8 @@ import ProcessLoader from "@/components/ui/ProcessLoader";
 import axios from "axios";
 import ErrorCard from "@/components/ui/ErrorCard";
 import Loader from "@/components/Loader";
+import Layout from "@/components/Layout";
+import ShrimpLoader from "@/components/ui/ShrimpLoader";
 
 export default function Register() {
     const { data: session } = useSession();
@@ -56,8 +56,6 @@ export default function Register() {
         }
     };
 
-    // Set the real viewport height for responsive design
-    setRealVH();
 
     // check data
     useEffect(()  => {
@@ -82,7 +80,7 @@ export default function Register() {
 
 
   return (
-        <>
+        <Layout hideAdvertCard={true} hideFooter={true} hideNav={true}>
         <HeadComponent
             title="Register for Skit Across Nigeria Reality Show"
             desc="Sign up now to join the Skit Across Nigeria Reality Show. Submit your original skit, gain nationwide exposure, and stand a chance to win ₦100,000. Registration is free and open to all Theatre Arts students and skit creators."
@@ -94,26 +92,36 @@ export default function Register() {
         <Loader/>
 
         { checkingUser ? (
-            <div style={{height:`calc(var(--vh, 1vh)*100)`}} className="w-full flex flex-col justify-center items-center">
-            <ProcessLoader color={'black'} size={'40px'}/>
-            <span>Please wait..</span>
+            <div className="w-full h-[90vh] flex flex-col justify-center items-center">
+                <ShrimpLoader />
             </div> 
         ):(
-            <div style={{height:`calc(var(--vh, 1vh)*100)`}} className="bg-white flex items-center justify-center px-4">
-                <div className="max-w-xl w-full bg-gray-50 rounded-xl shadow-xl border-1 border-gray-300 pb-14 pt-1 px-1">
-                    <div className="w-full h-[150px] overflow-hidden relative rounded-xl shadow-lg">
-                        <Image
-                        src={banner}
-                        alt="Skit Competition Banner"
-                        layout="fill"
-                        objectFit="cover"
-                        />
-                    </div>
-                    <h1 className="text-2xl px-7 font-bold text-gray-900 mb-5 mt-5 text-center">
-                        Register for Skits Across Nigeria
-                    </h1>
+            <div className="bg-white h-fit flex flex-col items-center justify-center px-4 font-poppins">
+                <div className="w-[150px] self-start cursor-pointer md:ml-[3%] hover:bg-gray-300 border border-gray-700 transition-all ease-in-out duration-300 text-gray-700 rounded-[30px] flex items-center justify-center h-[30px]" onClick={()=>{router.back()}}>
+                    <ChevronLeft size={'20px'} className="text-gray-700 cursor-pointer"/>
+                    Go back
+                </div>
+                <div className="max-w-xl w-full pb-14 pt-1 px-1">
 
-                    <div className="mb-4 space-y-2 px-4">
+                    <div className="flex flex-row bg-gradient-to-t from-gray-100 rounded-b-[20px] to-transparent h-[210px] items-center justify-between gap-2">
+                        <div className="w-[55%] h-full flex flex-col justify-end pl-3 gap-2 pb-3 overflow-hidden">
+                            <h1 className="text-2xl pl-4 font-bold text-gray-900 mb-5 mt-5 text-left">
+                                Register for Skits Across Nigeria
+                            </h1>
+                        </div>
+                        <div className="w-[40%] h-full overflow-hidden relative">
+                            <Image
+                            src={"/svg/Film-rolls-bro.svg"}
+                            alt="Skit Competition Banner"
+                            className="h-full w-[40%]"
+                            layout="fill"
+                            objectFit="contain"
+                            />
+                        </div>
+                    </div>
+
+
+                    <div className="mb-4 mt-5 space-y-2 px-4">
                         <p className="text-gray-700 text-[15px] flex flex-row items-start gap-2">
                             <CheckCircle2 size={20} className="text-green-600" />
                             One-time Registration Fee: ₦5,000
@@ -145,7 +153,7 @@ export default function Register() {
                 )}
 
                 { !isRegistered ? (
-                    <div className="mt-6 text-sm text-gray-600 text-center">
+                    <div className="mt-[70px] text-sm text-gray-600 text-center">
                         <ShieldCheck className="inline-block w-4 h-4 mr-1 text-green-500" />
                         Secure Payment via Paystack
                     </div>
@@ -158,7 +166,7 @@ export default function Register() {
             </div>
         </div>
         )}
-        </>
+        </Layout>
   );
 }
 

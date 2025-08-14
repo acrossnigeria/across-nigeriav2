@@ -3,11 +3,9 @@
 import { ChevronLeft, ShieldCheck } from "lucide-react";
 import setRealVH from "../../../../utils/setRealVH";
 import Image from "next/image";
-import banner from "../../../../public/images/saImage2.png";
 import HeadComponent from "@/components/HeadComponent";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import ProcessLoader from "@/components/ui/ProcessLoader";
 import axios from "axios";
 import 'next-cloudinary/dist/cld-video-player.css';
 import CopyLink from "../../../../public/images/icon/CopyLink";
@@ -17,7 +15,6 @@ import WhatappIcon from "../../../../public/images/icon/WhatappIcon";
 import { useSession } from "next-auth/react";
 import Loader from "@/components/Loader";
 import Layout from "@/components/Layout";
-import { Link } from "@nextui-org/react";
 import ShrimpLoader from "@/components/ui/ShrimpLoader";
 
 export default function Creator( { skitId } ) {
@@ -84,9 +81,6 @@ export default function Creator( { skitId } ) {
         }
     }
 
-    // Set the real viewport height for responsive design
-    setRealVH();
-
 
   return (
         <Layout hideAdvertCard={true} hideFooter={true} hideNav={true}>
@@ -118,12 +112,12 @@ export default function Creator( { skitId } ) {
 
                     <div className="flex flex-row bg-gradient-to-t from-gray-100 rounded-b-[20px] to-transparent h-[210px] items-center justify-between gap-2">
                         <div className="w-[55%] h-full flex flex-col justify-end pl-3 gap-2 pb-3 overflow-hidden">
-                            <span className="md:text-lg text-[17px] font-bold leading-tight text-green-600 mt-4 text-left">
+                            <span className="md:text-lg text-[20px] font-bold leading-tight text-green-600 mt-4 text-left">
                                 {session?.user?.name + " "}
                                 your skit was submitted successfully!
                             </span>
-                            <span className="text-gray-700 mb-2 text-[14px] leading-tight text-left">
-                                You&apos;ve uploaded your skit for this month&apos;s Across Nigeria Skit Competition, great job!
+                            <span className="text-gray-700 mb-2 text-[16px] leading-tight text-left">
+                                You&apos;ve uploaded your skit for this month&apos;s Skits Across Nigeria Reality Show, great job!
                             </span>
                         </div>
                         <div className="w-[40%] h-full overflow-hidden relative">
