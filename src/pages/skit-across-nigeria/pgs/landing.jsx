@@ -90,7 +90,7 @@ export default function SkitCompetitionLanding() {
     ];
 
   return (
-    <Layout>
+    <Layout hideAdvertCard={true} hideNav={true}>
         <HeadComponent
         title='Skit Across Nigeria Reality Show'
         desc="Watch and vote for your favorite skits in the Skit Across Nigeria Reality Show. Support amazing talents and win exciting prizes!"
@@ -124,7 +124,7 @@ export default function SkitCompetitionLanding() {
             </div>
         }
 
-    <section className="w-screen h-fit bg-white">
+    <section className="w-screen h-fit bg-white font-poppins">
       <div className="flex flex-col bg-[url('/svg/Hexagon.svg')] h-[85vh] bg-cover bg-center px-[3%] md:flex-row md:justify-center justify-start md:pt-0 pt-12 gap-3 items-center">
         <div className="md:text-left text-center flex flex-col gap-3 md:max-w-[48%] md:h-96 md:pt-8 md:pr-5">
             {/* Title */}

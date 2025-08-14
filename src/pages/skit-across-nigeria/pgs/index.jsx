@@ -135,7 +135,7 @@ function SkitsPage() {
         }
 
         { !errorGettingSkit &&
-          <div className='pb-[50px]'>
+          <div className='pb-[50px] font-poppins'>
             <div className='font-medium w-full flex flex-row justify-between text-center text-[20px] px-4 pt-3'>
                 <span className={`font-bold transition-all ease-in-out duration-300 ${hideDashboard?'text-gray-400':'text-black'}`}>Leader Board (Top 5)</span>
                 <button className='flex flex-row items-center' onClick={handleDashboardToggle}>
@@ -202,7 +202,7 @@ function SkitsPage() {
 
             <div className={`${currentSkits.length === sortedSkit.length ? '' : 'hidden'} flex bg-gradient-to-t from-white via-gray-200 to-white h-[100px] justify-center flex-row gap-2 mt-4`}>
                 <div className={`w-fit  flex-row flex gap-1 items-center`}>
-                  <span>Thats all for now.</span>
+                  <span>That&apos;s all for now.</span>
                   <Smile size={'20px'} className='text-gray-800'/>
                 </div>
             </div>

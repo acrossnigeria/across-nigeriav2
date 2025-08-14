@@ -116,9 +116,9 @@ export default function Creator( { skitId } ) {
 
                 <div className="max-w-xl w-full flex flex-col pb-2 pt-1 px-1">
 
-                    <div className="flex flex-row bg-gradient-to-t from-gray-100 rounded-b-[20px] to-transparent h-[180px] items-center justify-between gap-2">
+                    <div className="flex flex-row bg-gradient-to-t from-gray-100 rounded-b-[20px] to-transparent h-[210px] items-center justify-between gap-2">
                         <div className="w-[55%] h-full flex flex-col justify-end pl-3 gap-2 pb-3 overflow-hidden">
-                            <span className="md:text-lg text-[16px] font-bold leading-tight text-green-600 mt-4 text-left">
+                            <span className="md:text-lg text-[17px] font-bold leading-tight text-green-600 mt-4 text-left">
                                 {session?.user?.name + " "}
                                 your skit was submitted successfully!
                             </span>
