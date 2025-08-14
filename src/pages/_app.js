@@ -6,6 +6,7 @@ import { Providers } from "../../utils/providers";
 import { LoaderProvider } from "@/context/LoaderContext";
 import { useLoader } from "@/context/LoaderContext";
 import { useEffect } from "react";
+import localFont from "next/font/local";
 
 function LoaderHandler() {
   // Global loader logic
@@ -37,8 +38,8 @@ export default function App({ Component, pageProps:{session,...pageProps}, }) {
     <SessionProvider session={session}>
       <StoreProvider>
         <Providers>
-          <LoaderProvider>
-            <LoaderHandler/>
+          <LoaderProvider >
+            <LoaderHandler />
             {Component.auth?(<Auth> <Component {...pageProps} /></Auth>):(<Component {...pageProps} />)}
           </LoaderProvider>
         </Providers>

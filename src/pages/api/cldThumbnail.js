@@ -19,10 +19,10 @@ const Handler = async (req, res) => {
           return res.status(400).json({ error: 'Video ID is required' });
         }
         let dim ;
-        if (crop) {
+        if (crop === 'true') {
           dim = { width: 800, height: 450, crop: "fill" };
         } else {
-          dim = { width: 800, height: 450, fit: "scale" };
+          dim = { width: 400, height: 700, crop: "fill" };
         }
       
         let initialUrl = cloudinary.v2.url(encodeURIComponent(videoId), {

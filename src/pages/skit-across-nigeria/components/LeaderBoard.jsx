@@ -1,13 +1,12 @@
 import React from 'react';
-import Image from 'next/image';
 import Profile from '../../../../public/images/icon/Profile';
 import Link from 'next/link';
-import { Info, X, Videotape, Video, VideoIcon, PlayCircle } from 'lucide-react';
+import { PlayCircle } from 'lucide-react';
 
-const LeaderBoard = ({ skits, toShowLeaderBoard }) => {
+const LeaderBoard = ({ skits, hideDashboard }) => {
     
     return (
-        <div className='w-[98%] rounded-[10px] px-1 h-fit mx-auto flex flex-col'>
+        <div className={`${hideDashboard?"h-0 overflow-hidden":"h-fit"} w-[98%] transition-all duration-300 ease-in-out rounded-[10px] px-1 mx-auto flex flex-col`}>
             <div className='flex flex-col mt-2 gap-[3px] items-center justify-between w-full'>
                 { [ skits?.oneUser, skits?.twoUser, skits?.thirdUser, skits?.fourUser, skits?.fiveUser ].map( (position, index)=> {
                     return (
@@ -17,7 +16,7 @@ const LeaderBoard = ({ skits, toShowLeaderBoard }) => {
                             <div className='flex flex-row flex-grow items-center'>
                                 <PlayCircle strokeWidth={1} size={'28px'} bg={'black'}/>
                                 <div className='flex flex-col justify-center ml-2 items-start'>
-                                    <span className='text-[14px] md:hidden text-black'>{position?.vidCaption?.length > 20? `${position?.vidCaption?.slice(0, 20)}...`:position?.vidCaption}</span>
+                                    <span className='text-[13px] md:hidden text-black'>{position?.vidCaption?.length > 35? `${position?.vidCaption?.slice(0, 35)}...`:position?.vidCaption}</span>
                                     <span className='text-[14px] hidden md:block text-black'>{position?.vidCaption?.length > 150? `${position?.vidCaption?.slice(0, 150)}...`:position?.vidCaption}</span>
                                     <div className='flex flex-row gap-1 items-center'>
                                         <Profile size={'17px'} bg={'white'}/>

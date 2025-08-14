@@ -1,3 +1,4 @@
+import RegisteredSACreator from "@/models/RegisteredSACreator";
 import db from "../../../../../utils/db";
 import SkitAcrossNigeriaSkit from "@/models/SkitAcrossNigeriaSkit";
 import SkitAcrossNigeriaVote from "@/models/SkitAcrossNigeriaVote";
@@ -68,7 +69,7 @@ const Handler = async ( req, res ) => {
             
         } else if( req.method === 'GET' ) {
 
-            const type = req.query.type;
+            const { type, userId } = req.query;
 
             if ( type === "single" ) {
                 const id = req.query.id;
@@ -102,6 +103,11 @@ const Handler = async ( req, res ) => {
 
                 await db.connect();
                 const videos = await SkitAcrossNigeriaSkit.find().populate('user', 'name surname');
+                let isRegistered = false;
+                if ( userId !=='' ) {
+                    const user = await RegisteredSACreator.findOne({ user: userId });
+                    isRegistered = !!user;
+                }
 
                 const allvideosSort = await Promise.all(
                     videos.map(async (e) => {
@@ -127,7 +133,7 @@ const Handler = async ( req, res ) => {
                   
                 await db.disconnect();
 
-                res.status(200).json( { success:true, vidData:allvideosSort })
+                res.status(200).json( { success:true, vidData:allvideosSort, isRegistered })
             }
 
         } else {

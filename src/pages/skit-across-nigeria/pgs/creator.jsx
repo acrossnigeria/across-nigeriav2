@@ -1,6 +1,6 @@
 "use client";
 
-import { ShieldCheck, CheckCircle2, Check } from "lucide-react";
+import { ChevronLeft, ShieldCheck } from "lucide-react";
 import setRealVH from "../../../../utils/setRealVH";
 import Image from "next/image";
 import banner from "../../../../public/images/saImage2.png";
@@ -9,7 +9,6 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import ProcessLoader from "@/components/ui/ProcessLoader";
 import axios from "axios";
-import ErrorCard from "@/components/ui/ErrorCard";
 import 'next-cloudinary/dist/cld-video-player.css';
 import CopyLink from "../../../../public/images/icon/CopyLink";
 import FbIcon from "../../../../public/images/icon/FbIcon";
@@ -17,6 +16,9 @@ import IgIcon from "../../../../public/images/icon/IgIcon";
 import WhatappIcon from "../../../../public/images/icon/WhatappIcon";
 import { useSession } from "next-auth/react";
 import Loader from "@/components/Loader";
+import Layout from "@/components/Layout";
+import { Link } from "@nextui-org/react";
+import ShrimpLoader from "@/components/ui/ShrimpLoader";
 
 export default function Creator( { skitId } ) {
     const { data: session } = useSession();
@@ -87,7 +89,7 @@ export default function Creator( { skitId } ) {
 
 
   return (
-        <>
+        <Layout hideAdvertCard={true} hideFooter={true} hideNav={true}>
         <HeadComponent
             title="Register for Skit Across Nigeria"
             desc="Sign up now to join the Skit Across Nigeria Competition. Submit your original skit, gain nationwide exposure, and stand a chance to win ₦100,000. Registration is free and open to all Theatre Arts students and skit creators."
@@ -98,35 +100,45 @@ export default function Creator( { skitId } ) {
         />
         <Loader/>
         { isLoading ? (
-            <div style={{height:`calc(var(--vh, 1vh)*100)`}} className="w-full flex flex-col justify-center items-center">
-                <ProcessLoader color={'black'} size={'40px'}/>
-                <span>Please wait..</span>
+            <div className="w-full flex flex-col h-[90vh] justify-center items-center">
+                <ShrimpLoader />
             </div> 
         ):(
-            <div style={{height:`calc(var(--vh, 1vh)*100)`}} className="bg-white flex items-center justify-center px-2">
-                <div className={`fixed ${shareNotifyBottom} ${shareNotifyOpacity} transition-all text-center ease-in-out duration-500 bg-gray-100 z-[2000] text-gray-600 rounded-[20px] md:w-fit w-[80%] border-1 border-green-500 h-fit p-3`}>
+            <div className="flex items-center justify-center flex-col pt-[10px] font-poppins pb-[50px] px-2">
+                <div className={`fixed ${shareNotifyBottom} ${shareNotifyOpacity} transition-all text-center ease-in-out duration-500 z-[2000] bg-white text-gray-600 rounded-[20px] md:w-fit w-[80%] h-fit p-3`}>
                     <span>Link copied, you can now share it</span>
                 </div> 
 
-                <div className="max-w-xl w-full bg-gray-50 flex flex-col rounded-xl shadow-xl border-1 border-gray-300 pb-2 pt-1 px-1">
-                    <div className="w-full h-[110px] overflow-hidden relative rounded-xl shadow-lg">
-                        <Image
-                        src={banner}
-                        alt="Skit Competition Banner"
-                        layout="fill"
-                        objectFit="cover"
-                        />
-                    </div>
-                    <span className="text-xl px-3 font-bold text-black mt-4 text-center">
-                        {data?.userFirstName}
-                        Skit Uploaded Successfully!
-                    </span>
-                    <span className="md:px-4 px-3 text-gray-700 mb-2 text-[15px] leading-tight text-center">
-                        You&apos;ve uploaded your skit for this month&apos;s Across Nigeria Skit Competition, great job!
-                    </span>
+                <div className="w-[150px] self-start cursor-pointer md:ml-[3%] hover:bg-gray-300 border border-gray-700 transition-all ease-in-out duration-300 text-gray-700 rounded-[30px] flex items-center justify-center h-[30px]" onClick={()=>{router.back()}}>
+                    <ChevronLeft size={'20px'} className="text-gray-700 cursor-pointer"/>
+                    Go back
+                </div>
 
-                    <div className="mb-4 space-y-2 text-[14px] border-y border-y-gray-200 py-3 md:px-4 px-3">
-                        <p className="text-gray-900 font-semibold flex items-center gap-2">
+                <div className="max-w-xl w-full flex flex-col pb-2 pt-1 px-1">
+
+                    <div className="flex flex-row bg-gradient-to-t from-gray-100 rounded-b-[20px] to-transparent h-[180px] items-center justify-between gap-2">
+                        <div className="w-[55%] h-full flex flex-col justify-end pl-3 gap-2 pb-3 overflow-hidden">
+                            <span className="md:text-lg text-[16px] font-bold leading-tight text-green-600 mt-4 text-left">
+                                {session?.user?.name + " "}
+                                your skit was submitted successfully!
+                            </span>
+                            <span className="text-gray-700 mb-2 text-[14px] leading-tight text-left">
+                                You&apos;ve uploaded your skit for this month&apos;s Across Nigeria Skit Competition, great job!
+                            </span>
+                        </div>
+                        <div className="w-[40%] h-full overflow-hidden relative">
+                            <Image
+                            src={"/svg/Film-rolls-bro.svg"}
+                            alt="Skit Competition Banner"
+                            className="h-full w-[40%]"
+                            layout="fill"
+                            objectFit="contain"
+                            />
+                        </div>
+                    </div>
+
+                    <div className="mb-4 space-y-2 text-[15px] border-y border-y-gray-200 py-3 md:px-4 px-3">
+                        <p className="text-gray-900 text-[16px] font-semibold flex items-center gap-2">
                             🔥 Next Step? Get Votes!
                         </p>
                         <p className="text-gray-600 flex items-center gap-2">
@@ -135,8 +147,8 @@ export default function Creator( { skitId } ) {
                         <p className="text-gray-600 flex items-center gap-2">
                         📆 Remember: New competitions are held every month. You can upload a new skit next month, so stay creative and ready!
                         </p>
-                        <p className="text-gray-600 flex items-center gap-2">
-                        🚀 Good luck, we&aposre rooting for you!
+                        <p className="text-gray-600 text-[15px] flex items-center gap-2">
+                        🚀 Good luck, we&apos;re rooting for you!
                         </p>
                     </div>
 
@@ -144,7 +156,7 @@ export default function Creator( { skitId } ) {
                         <button onClick={()=>{router.push(`/skit-across-nigeria/pgs/video/${data?.skitId}`)}} className="h-[40px] w-full text-white bg-green-600 hover:bg-green-700 transition-all duration-200 rounded-[20px]">View my skit</button>
                     </div>
 
-                    <div className="flex mt-2 flex-row items-center justify-around w-full px-4">
+                    <div className="flex my-4 flex-row items-center justify-around w-full md:w-[80%] mx-auto px-4">
                         <button onClick={copyShareLink} className="text-[14px] hover:scale-105 transition-all duration-400 ease-in-out hover:opacity-75 flex flex-col justify-center items-center gap-1">
                             <div className="w-[35px] flex flex-col text-[10px] justify-center items-center h-[35px] border-1 border-gray-800 rounded-full">
                                 <CopyLink size={'25px'}/>
@@ -184,7 +196,7 @@ export default function Creator( { skitId } ) {
                 </div>
             </div>
         )}
-    </>
+    </Layout>
   );
 }
  

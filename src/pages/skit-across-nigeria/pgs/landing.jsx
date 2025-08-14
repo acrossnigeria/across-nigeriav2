@@ -189,21 +189,6 @@ export default function SkitCompetitionLanding() {
       </div>   
       <div className="mx-auto text-center">
 
-        {/* Countdown */}
-        {/* {timeLeft ? (
-          <div className="mb-10 text-xl text-gray-800">
-            ⏳ Voting Closes In:{" "}
-            <span className="font-bold">
-              {timeLeft.days}d {timeLeft.hours}h {timeLeft.minutes}m {timeLeft.seconds}s
-            </span>
-          </div>
-        ) : (
-          <div className="mb-10 text-xl text-red-600 font-semibold">
-            🚨 Voting has closed!
-          </div>
-        )} */}
-
-
         {/* Details */}
         <div className=" pt-[70px] pb-[30px] bg-gradient-to-b from-transparent to-gray-200 text-left md:px-9 px-6">
           <div className="max-w-6xl grid md:grid-cols-2 gap-8 mx-auto items-center">

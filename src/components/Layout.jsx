@@ -1,17 +1,15 @@
-import Head from "next/head";
 import Footer from "./Footer"; 
 import StickyNavbar from "./Stickynavbar";
 import { ToastContainer } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Navbar from "./Navbar";
 import Loader from "./Loader";
 import axios from "axios";
 import { useSession } from "next-auth/react";
-import HeadComponent from "./HeadComponent";
 import AdvertClickCard from "./AdvertIClickCard";
 
-export default function Layout({ title, children, image, desc, bg, hideNav=false, hideAdvertCard, page }) {
+export default function Layout({ children, hideNav=false, hideAdvertCard, page, hideFooter=false }) {
   const [isOpen, setIsOpen] = useState(false);
   const [ noti, setNoti ] = useState(null);
   const [ networkError, setNetworkError ] = useState(false);
@@ -75,6 +73,6 @@ export default function Layout({ title, children, image, desc, bg, hideNav=false
         </main>
         { !hideAdvertCard && <AdvertClickCard/> }
       </div> 
-      <Footer />
+      { !hideFooter && <Footer /> }
     </div >)
 }
