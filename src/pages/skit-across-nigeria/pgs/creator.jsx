@@ -103,7 +103,7 @@ export default function Creator( { skitId } ) {
                     <span>Link copied, you can now share it</span>
                 </div> 
 
-                <div className="w-[150px] self-start cursor-pointer md:ml-[3%] hover:bg-gray-300 border border-gray-700 transition-all ease-in-out duration-300 text-gray-700 rounded-[30px] flex items-center justify-center h-[30px]" onClick={()=>{router.back()}}>
+                <div className="w-[125px] self-start cursor-pointer md:ml-[3%] hover:bg-gray-300 border border-gray-700 transition-all ease-in-out duration-300 text-gray-700 rounded-[30px] flex items-center justify-center h-[30px]" onClick={()=>{router.back()}}>
                     <ChevronLeft size={'20px'} className="text-gray-700 cursor-pointer"/>
                     Go back
                 </div>
@@ -112,7 +112,7 @@ export default function Creator( { skitId } ) {
 
                     <div className="flex flex-row bg-gradient-to-t from-gray-100 rounded-b-[20px] to-transparent h-[210px] items-center justify-between gap-2">
                         <div className="w-[55%] h-full flex flex-col justify-end pl-3 gap-2 pb-3 overflow-hidden">
-                            <span className="md:text-lg text-[20px] font-bold leading-tight text-green-600 mt-4 text-left">
+                            <span className="md:text-lg text-[18px] font-bold leading-tight text-green-600 mt-4 text-left">
                                 {session?.user?.name + " "}
                                 your skit was submitted successfully!
                             </span>

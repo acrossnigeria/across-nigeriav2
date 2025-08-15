@@ -97,11 +97,11 @@ export default function Register() {
             </div> 
         ):(
             <div className="bg-white h-fit flex flex-col items-center justify-center px-4 font-poppins">
-                <div className="w-[150px] self-start cursor-pointer md:ml-[3%] hover:bg-gray-300 border border-gray-700 transition-all ease-in-out duration-300 text-gray-700 rounded-[30px] flex items-center justify-center h-[30px]" onClick={()=>{router.back()}}>
+                <div className="w-[125px] self-start mt-2 cursor-pointer md:ml-[3%] hover:bg-gray-300 border border-gray-700 transition-all ease-in-out duration-300 text-gray-700 rounded-[30px] flex items-center justify-center h-[30px]" onClick={()=>{router.back()}}>
                     <ChevronLeft size={'20px'} className="text-gray-700 cursor-pointer"/>
                     Go back
                 </div>
-                <div className="max-w-xl w-full pb-14 pt-1 px-1">
+                <div className="max-w-xl w-full pb-14 pt-1 mt-4 px-1">
 
                     <div className="flex flex-row bg-gradient-to-t from-gray-100 rounded-b-[20px] to-transparent h-[210px] items-center justify-between gap-2">
                         <div className="w-[55%] h-full flex flex-col justify-end pl-3 gap-2 pb-3 overflow-hidden">

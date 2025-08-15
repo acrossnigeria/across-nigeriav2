@@ -21,11 +21,11 @@ export default function VidThumbnail( { url, videoId }) {
     // console.log(thumbnailUrl)
 
     return(
-        <div className="h-full w-full flex flex-row justify-center items-center border-gray-400 border-1 rounded-[5px]">
+        <div className="h-full w-[420px] relative flex flex-row justify-center items-center border-gray-300 border-1 rounded-[5px]">
             <Image 
             className="h-full w-full p-0" 
-            width={225}
-            height={100}
+            layout="fill"
+            objectFit="cover"
             src={thumbnailUrl} 
             alt={'thumbnail'}
             optimized

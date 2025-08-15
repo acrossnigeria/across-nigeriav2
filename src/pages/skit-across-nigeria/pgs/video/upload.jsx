@@ -344,7 +344,6 @@ const UploadScreen = ( { isRegistered } ) => {
 
         { isSaving && (
           <div className="z-[1000] flex flex-col gap-2 justify-center items-center h-screen w-screen bg-gray-100">
-              <Layers2 strokeWidth={1} size={'100px'} className="text-green-800"/>
             { saveSuccess ? (
               <div className="flex text-[20px] flex-row items-center gap-2">
                 <Check strokeWidth={1} size={'40px'} className="text-green-800"/>
@@ -353,7 +352,6 @@ const UploadScreen = ( { isRegistered } ) => {
              ) : (
               <div className="flex text-[20px] flex-row items-center gap-2">
                   <ShrimpLoader/>
-                  <span>Submiting your skit..</span>
               </div>
             )}
             <div className="absolute bottom-[15%] text-gray-500 flex flex-row items-center justify-between gap-2">
@@ -394,7 +392,7 @@ const UploadScreen = ( { isRegistered } ) => {
               { dataUrl === null &&
                   <>
                     { loadingUpload ?  ( 
-                        <div className='md:w-[85%] w-[90%]  mx-auto h-full flex flex-col justify-center items-center'>
+                        <div className='md:w-[85%] w-[90%]  mx-auto flex flex-col justify-center items-center'>
                           <div className="flex flex-col justify-center h-fit mb-5 items-center">
                             <CloudUpload strokeWidth={1} className="animate-pulse" size={'70px'}/>
                             <FileVideo strokeWidth={1} size={'180px'} className=" text-green-700"/>
@@ -409,7 +407,7 @@ const UploadScreen = ( { isRegistered } ) => {
                           </div>
                         </div>
                     ) : (
-                        <div className='md:w-[85%] rounded-[15px] w-[90%] mx-auto border-gray-300 border-2 h-full flex flex-col justify-center items-center'>
+                        <div className='md:w-[85%] rounded-[15px] w-[90%] mx-auto border-gray-300 border-2 h-[420px] flex flex-col justify-center items-center'>
                           <FileVideo strokeWidth={0.5} size={'180px'} className=" text-yellow-500"/>
                           <div className="flex flex-row items-center justify-center mt-5 mb-2 gap-1">
                             <button onClick={selectVideo} className="flex flex-row gap-2 hover:text-blue-800 text-blue-600">
