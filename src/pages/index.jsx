@@ -1,4 +1,3 @@
-import { Inter } from "next/font/google";
 import Layout from "@/components/Layout";
 import image1 from "../../public/images/giveaway_quizzes.jpg";
 import image2 from "../../public/images/skit_across_nigeria.jpg";
@@ -20,7 +19,6 @@ import CycleLoader from "@/components/CycleLoader";
 import RegularShoutout from "@/components/shout-out/RegularShoutout";
 import NoShoutOut from "@/components/shout-out/NoShoutOut";
 import AmbassadorInfo from "@/components/AmbassadorInfo";
-import AddAccDetails from "@/components/notifiers/AddAccountDetails";
 import { useSession } from "next-auth/react";
 import GoldAdvertComponent from "@/components/GoldAdvertComponent";
 import SilverAdvertComponent from "@/components/SilverAdvertComponent";
@@ -46,7 +44,7 @@ export default function Home() {
   const [ getAdvertRetryCounts, setGetAdvertRetryCounts ] = useState(0);
 
   const games = [
-    {title:"SKITS ACROSS NIGERIA REALITY SHOW",image:image2,link:"/skit-across-nigeria/pgs/landing", date:'Skit upload opens 20th August 2025', isOpen:true },
+    {title:"SKITS ACROSS NIGERIA REALITY SHOW",image:image2,link:"/soon", date:'Skit upload opens 20th August 2025', isOpen:false },
     {title:"GIVE AWAY QUIZZES", image:image1,link:"/giveaway-quiz", date:'Coming Soon', isOpen:false },
     {title:"ACROSS NIGERIA QUIZ SHOW",image:image12,link:"/across_quiz_show", date:'Coming Soon', isOpen:false },
     {title:"KING AND QUEEN ACROSS NIGERIA", image:image3, link:"/soon", date:'2026', isOpen:false },

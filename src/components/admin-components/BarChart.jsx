@@ -1,16 +1,15 @@
 import { Bar } from "react-chartjs-2";
 import { Chart as ChartJs, LinearScale, BarElement, Title, Tooltip, Legend, CategoryScale } from "chart.js";
-import { responsive } from "@cloudinary/react";
-import CycleLoader from "../CycleLoader";
-import Checkbox from "../Checkbox";
-import { useEffect, useState } from "react";
+import { useState } from "react";
+import ShimmerLoader from "../ui/ShimmerLoader";
+import ProcessLoader from "../ui/ProcessLoader";
 
 ChartJs.register( LinearScale, BarElement, Title, Tooltip, Legend, CategoryScale )
 
 const BarChart = ( { data } ) => {
     const [ showChart, setShowChart ] = useState(true);
 
-    const title = 'Users Based On Residence'
+    const title = 'Users Based On State'
     const nigeriaStates = [
         'Abia', 'Adamawa', 'Akwa Ibom', 'Anambra', 'Bauchi', 'Bayelsa', 'Benue', 'Borno',
         'Cross River', 'Delta', 'Ebonyi', 'Edo', 'Ekiti', 'Enugu', 'FCT', 'Gombe', 'Imo',
@@ -29,8 +28,10 @@ const BarChart = ( { data } ) => {
                 label:'users',
                 data:data?.list,
                 backgroundColor: "#22c55e",
-                borderColor: "black",
+                borderColor: "transparent",
                 borderWidth: 0,
+                borderRadius: 2,
+                width: '100%'
             },
         ]
     }
@@ -44,7 +45,7 @@ const BarChart = ( { data } ) => {
     }
 
     return (
-     <div className="flex flex-col gap-[5x] h-[460px] items-center rounded-[5px]  bg-white w-[100%] p-3">
+     <div className="flex flex-col gap-3 h-full items-center rounded-[15px] border shadow-lg  bg-white w-[100%] p-3">
         <div className="flex w-[100%] px-2 flex-row justify-between">
             <span className="font-extralight text-[22px]">{title}</span>
             <div className="flex gap-2 flex-row items-center">
@@ -60,37 +61,37 @@ const BarChart = ( { data } ) => {
             </div>
         </div>
         { showChart && (
-            <div className="h-[290px] w-[100%]">
+            <div className="h-[270px] w-[100%] flex flex-col justify-center items-center">
                 { data ? (
                     <Bar data={dataset} options={options}/>
                 ) : (
-                    <div className="h-[290px] flex flex-col justify-center items-center w-[100%]">
-                        <CycleLoader size={'30px'}/>
-                        <span className="font-extralight text-[12px]">Loading data...</span>
+                    <div className="h-[290px] flex flex-col justify-center gap-2 items-center w-[100%]">
+                        <ProcessLoader size={'30px'}/>
+                        <span className="font-extralight text-[11px]">Loading data...</span>
                     </div>
                 ) }
             </div>
         )}
 
         { !showChart && (
-            <div className="border-1 w-[100%] text-[15px] font-extralight flex flex-col border-gray-400">
-                    <div className="border-b-1 flex-row flex border-gray-500 bg-gray-300">
-                        <div className="w-[35%] pl-3">State</div>
-                        <div className="w-[65%] border-l-1 border-gray-600 pl-3">Users</div>
+            <div className="border-1 w-[100%] text-[13px] font-extralight flex flex-col rounded-[7px] h-[290px] border-gray-400">
+                    <div className=" flex-row flex rounded-t-[7px] bg-gray-300">
+                        <div className="w-[35%] p-2">State</div>
+                        <div className="w-[65%] border-l-1 border-gray-600 p-2">Users</div>
                     </div>
-                    <div className="h-[263px] overflow-y-scroll overflow-x-hidden">
+                    <div className="h-[200px] overflow-y-scroll overflow-x-hidden">
                         { data?.list?.map( ( val, index ) => {
                             return (
-                            <div key={index} className="border-b-1  flex-row flex border-gray-400 text-gray-700">
-                                <div className="w-[35%] pl-3">{nigeriaStates[index]}</div>
-                                <div className="w-[65%] border-l-1 border-gray-400 pl-3">{val}</div>
+                            <div key={index} className={`${index === data?.list?.length - 1 ? '' : 'border-b-1 border-gray-400'} flex-row flex text-gray-700`}>
+                                <div className="w-[36.5%] p-2">{nigeriaStates[index]}</div>
+                                <div className="w-[65%] border-l-1 border-gray-400 p-2">{val}</div>
                             </div>
                             )
                         })}
                     </div>
             </div>
         )}
-        { (data?.lowestStates && data?.highestStates) ? (
+        { data ? (
         <div className="flex border-1 w-[100%] border-gray-400 text-[11px] flex-col self-center mt-[5px] font-extralight">
                 <div className="border-b-1 flex-row flex border-gray-500 bg-gray-300">
                     <div className="w-[35%] pl-2">Metric</div>
@@ -102,12 +103,12 @@ const BarChart = ( { data } ) => {
                     <div className="w-[65%] border-l-1 border-gray-400 pl-2">{data.highestStates}</div>
                 </div>
                 <div className="flex-row flex border-gray-400 text-gray-700">
-                    <div className="w-[35%] pl-2">States with Lowest Users</div>
+                    <div className="w-[35%] pl-2">States with Users {'< 11'}</div>
                     <div className="w-[65%] border-l-1 border-gray-400 pl-2">{data.lowestStates}</div>
                 </div>
             </div>
         ) : (
-            <div className="h-[70px] bg-gray-300 w-[90%] animate-pulse mt-2"></div>
+            <ShimmerLoader roundedness={'7px'} width={'100%'} height={'100px'} />
         ) }
      </div>
     )

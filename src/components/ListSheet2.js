@@ -2,14 +2,14 @@ export default function ListSheet2( { list }) {
     return (
         <div className="w-[100%]">
             <div className="w-[100%] flex flex-row text-[11px] h-[30px] gap-0.5">
-                <div className="flex w-[12.5%] flex-row bg-gray-500 text-white justify-start items-center pl-1">Fullname</div>
-                <div className="flex w-[7.5%] overflow-x-hidden flex-row bg-gray-500 text-white justify-start items-center pl-1">Referrals</div>
-                <div className="flex w-[17.5%] overflow-x-hidden flex-row bg-gray-500 text-white justify-start items-center pl-1">Institution</div>
-                <div className="flex w-[17.5%] overflow-x-hidden flex-row bg-gray-500 text-white justify-start items-center pl-1">Email</div>
-                <div className="flex w-[12.5%] overflow-x-hidden flex-row bg-gray-500 text-white justify-start items-center pl-1">Phone</div>
-                <div className="flex w-[7.5%] overflow-x-hidden flex-row bg-gray-500 text-white justify-start items-center pl-1"> Residence</div>
-                <div className="flex w-[17.5%] overflow-x-hidden flex-row bg-gray-500 text-white justify-start items-center pl-1">Town/ village</div>
-                <div className="flex w-[7.5%] overflow-x-hidden flex-row bg-gray-500 text-white justify-start items-center pl-1">Status</div>
+                <div className="flex w-[12.5%] flex-row bg-green-700 rounded-tl-[7px] text-white justify-start items-center pl-1">Fullname</div>
+                <div className="flex w-[7.5%] overflow-x-hidden flex-row bg-green-700 text-white justify-start items-center pl-1">Referrals</div>
+                <div className="flex w-[17.5%] overflow-x-hidden flex-row bg-green-700 text-white justify-start items-center pl-1">Institution</div>
+                <div className="flex w-[17.5%] overflow-x-hidden flex-row bg-green-700 text-white justify-start items-center pl-1">Email</div>
+                <div className="flex w-[12.5%] overflow-x-hidden flex-row bg-green-700 text-white justify-start items-center pl-1">Phone</div>
+                <div className="flex w-[7.5%] overflow-x-hidden flex-row bg-green-700 text-white justify-start items-center pl-1"> Residence</div>
+                <div className="flex w-[17.5%] overflow-x-hidden flex-row bg-green-700 text-white justify-start items-center pl-1">Town/ village</div>
+                <div className="flex w-[7.5%] overflow-x-hidden flex-row rounded-tr-[7px] bg-green-700 text-white justify-start items-center pl-1">Status</div>
             </div>
 
         { list.length > 0 ? (
