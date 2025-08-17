@@ -3,7 +3,7 @@ import setRealVH from "../../../utils/setRealVH";
 import Profile from "../../../public/images/icon/Profile";
 import { getSession } from "next-auth/react";
 import { useState } from "react";
-import { Bell, ChevronDown, Home, Layers, Megaphone, Menu, PanelLeftClose, PanelLeftOpen, UsersIcon } from "lucide-react";
+import { Bell, ChevronDown, Home, Layers, Megaphone, Menu, PanelLeftClose, PanelLeftOpen, UsersIcon, X } from "lucide-react";
 import Dashboard from "./components/Dashboard";
 import Users from "./components/Users";
 import AmbassadorProgram from "./components/AmbassadorProgram";
@@ -142,7 +142,7 @@ const AdminMainPage = ( { user }) => {
                         <Link href={'/user/profile'}>Welcome, {user?.name}</Link>
                         <Profile size={'45px'} bg={'#b4bedf'}/>
                         <button onClick={()=>{setIsHamOpen(!isHamOpen)}} className={` ml-1 p-3 md:hidden rounded-full hover:bg-gray-900`}>
-                            {isHamOpen?<Close bg={"#b4bedf"}/>:<Menu/>}
+                            {isHamOpen?<X color={"#b4bedf"}/>:<Menu/>}
                         </button>
                     </div>
                 </div>
