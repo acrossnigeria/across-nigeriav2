@@ -212,7 +212,7 @@ const StepThree = ( { showContactUsButton, advertType, setAdvertImage, advertIma
             <div className="md:w-[70%] w-[100%] h-[400px] bg-white rounded-[5px] p-3 mt-[14px]">
                 <div className='flex flex-col my-[10px]'>
                     <input
-                        accept=".jpg, png, jfif"
+                        accept=".jpg,.jpeg,.png,.jfif,image/*"
                         type="file"
                         className="mb-4 w-[100%] hidden opacity-0 border-2 h-[30px] "
                         id="imageFile"

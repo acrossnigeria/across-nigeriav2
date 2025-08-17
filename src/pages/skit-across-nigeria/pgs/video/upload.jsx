@@ -53,7 +53,7 @@ function reducer(state, action) {
   }
 };
 
-const UploadScreen = ( { isRegistered } ) => {
+const UploadScreen = () => {
   const router = useRouter();
   const { data: session } = useSession();
   const uploadRef = useRef(null);
@@ -424,7 +424,7 @@ const UploadScreen = ( { isRegistered } ) => {
               }
             </div>
 
-            <input accept=".mp4" type="file" className="w-full hidden" id="videoFile" onChange={uploadHandler}/>
+            <input accept="video/*,.mp4,.mov,.avi,.mkv" type="file" className="w-full hidden" id="videoFile" onChange={uploadHandler}/>
             <div className="flex flex-row w-full">
               <div className="flex flex-row w-full justify-center mt-[50px] items-center">
 
