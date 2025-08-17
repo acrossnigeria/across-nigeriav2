@@ -7,6 +7,7 @@ import { LoaderProvider } from "@/context/LoaderContext";
 import { useLoader } from "@/context/LoaderContext";
 import { useEffect } from "react";
 import localFont from "next/font/local";
+import ShrimpLoader from "@/components/ui/ShrimpLoader";
 
 function LoaderHandler() {
   // Global loader logic
@@ -59,7 +60,9 @@ function Auth({ children }) {
     },
   });
   if (status === 'loading') {
-    return <div>Loading</div>;
+    return <div className="w-screen flex flex-col justify-center items-center h-screen ">
+      <ShrimpLoader />
+    </div>;
   }
   return children;
 }
