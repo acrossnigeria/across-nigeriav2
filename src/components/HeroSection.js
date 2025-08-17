@@ -38,7 +38,7 @@ const HeroSection = ( { isLoading, adverts }) => {
   return (
     <div className="relative md:h-[85vh] md:border-t-1 bg-gradient-to-b from-white to-gray-200 md:border-gray-200 md:px-[5%] md:gap-[2.5%] md:py-[4%] pb-[5%] flex md:flex-row flex-col-reverse top-0  border-b-gray">
       <div className="md:w-[38%] p-3 flex flex-col md:text-left text-center md:mt-0 mt-5 items-start h-full">
-        <span className="w-full text-green-600 leading-tight md:text-5xl text-3xl font-bold md:font-semibold ">Adventure of a lifetime</span> 
+        <span className="w-full text-green-600 leading-tight md:text-5xl text-3xl font-bold md:font-semibold ">How far?</span> 
         <p className="md:text-[16px] text-[17px] mt-3 leading-tight text-gray-800">{data.paragraph2}</p>
         <Link  href="/account/reg" style={{ display:( session?.user? 'none': 'flex')}} className="w-[100%] md:mt-5 mt-6 md:w-[300px] text-[18px] text-white rounded-[30px] gap-2 h-[45px] flex-row transition-all duration-200 justify-center items-center bg-green-500 hover:bg-green-700">
             <span> Register Now </span>
