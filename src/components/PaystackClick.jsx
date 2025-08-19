@@ -4,7 +4,7 @@ import { PaystackButton } from "react-paystack";
 export default function PaystackClick({ amount, email, buttonText, callBack }) {
 
     const liveKey = process.env.NEXT_PUBLIC_PAYSTACK_LIVE;
-    const testKey = process.env.NEXT_PUBLIC_PAYSTACK_TEST;
+    // const testKey = process.env.NEXT_PUBLIC_PAYSTACK_TEST;
 
     const config = {
       reference: new Date().getTime().toString(),
