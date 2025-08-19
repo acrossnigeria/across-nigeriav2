@@ -97,7 +97,7 @@ export default function Register() {
             </div> 
         ):(
             <div className="bg-white h-fit flex flex-col items-center justify-center px-4 font-poppins">
-                <div className="w-[125px] self-start mt-2 cursor-pointer md:ml-[3%] hover:bg-gray-300 border border-gray-700 transition-all ease-in-out duration-300 text-gray-700 rounded-[30px] flex items-center justify-center h-[30px]" onClick={()=>{router.back()}}>
+                <div className="w-[125px] self-start mt-2 cursor-pointer md:ml-[3%] hover:bg-gray-300 border border-gray-700 transition-all ease-in-out duration-300 text-gray-700 rounded-[30px] flex items-center justify-center h-[30px]" onClick={()=>{router.push('/skit-across-nigeria/pgs/')}}>
                     <ChevronLeft size={'20px'} className="text-gray-700 cursor-pointer"/>
                     Go back
                 </div>
