@@ -176,7 +176,7 @@ function SkitsPage() {
                     <div className='mx-w-[70%] text-[14px] text-center mt-3'>⏳ The stage is set! the competition starts now.</div>
                     <div className='mx-w-[70%] text-[14px] text-center'>🚀 Be the first to showcase your talent! Upload your skit now and compete for amazing cash prizes on Across Nigeria Reality Show! 🏆 Don&apos;t miss this chance to shine!</div>
                     <div className='flex md:flex-row flex-col w-full mt-4 gap-2 justify-center items-center'>
-                      <button onClick={()=>{router.push('/skit-across-nigeria/pgs/video/upload')}} className='h-[40px] md:w-[150px] w-full text-[15px] bg-green-600 hover:bg-green-700 text-white rounded-[30px]'>{ session?.user?.name ? "Upload My Skit":"Register/ Log In to Participate"}</button>
+                      <button onClick={()=>{router.push(session?.user?.name ? '/skit-across-nigeria/pgs/video/upload' : '/account/login')}} className='h-[40px] md:w-[150px] w-full text-[15px] bg-green-600 hover:bg-green-700 text-white rounded-[30px]'>{ session?.user?.name ? "Upload My Skit":"Register/ Log In to Participate"}</button>
                       <button onClick={()=>{router.push('/skit-across-nigeria/pgs/landing')}} className='h-[40px] md:w-[150px] w-full text-[15px] border-1 border-black bg-transparent hover:bg-gray-300 rounded-[30px]'>Learn more</button>
                     </div>
                   </div>
