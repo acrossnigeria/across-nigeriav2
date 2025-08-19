@@ -2,7 +2,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import Layout from "@/components/Layout";
-import banner from "../../../../public/images/saImage2.png";
+import banner from "../../../../public/images/saImage2.jpg";
 import creatorIllus from "../../../../public/svg/creator.svg";
 import { useSession } from "next-auth/react";
 import logo1 from "../../../../public/images/logo1.png";
@@ -147,7 +147,7 @@ export default function SkitCompetitionLanding() {
         </div>
 
         {/* Banner */}
-        <div className="md:w-[48%] w-full h-64 md:h-96 relative shadow-lg">
+        <div className="md:w-[48%] w-full h-64 md:h-96 relative rounded-[20px] shadow-lg overflow-hidden">
           <Image
             src={banner}
             alt="Skit Competition Banner"
@@ -270,12 +270,16 @@ export default function SkitCompetitionLanding() {
                     objectFit="cover"
                   />
                 </div>
-                <div className="p-4 text-left">
+                {/* <div className="p-4 text-left">
                     <h3 className="font-semibold text-gray-800">Skit Title {skit}</h3>
                     <p className="text-sm text-gray-600 mb-2">by Participant {skit}</p>
                     <Link className="text-primary hover:underline text-sm" href={`/skit-across-nigeria/pgs/video/${skit}`}>
                             Watch
                     </Link>
+                </div> */}
+                <div className="p-4 text-left">
+                    <div className="bg-gray-300 rounded-[10px] h-[25px] mb-2 w-[80%]"></div>
+                    <div className="bg-gray-300 rounded-[20px] h-[20px] w-[60%]"></div>
                 </div>
               </div>
             ))}

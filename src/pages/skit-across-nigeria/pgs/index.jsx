@@ -42,7 +42,7 @@ function SkitsPage() {
       for (let i = 0; i < arr.length - 1; i++) {
           for (let j = 0; j < arr.length - 1 - i; j++) {
               //if the current element is less than the next element swap them
-              if ( arr[j].votes.length < arr[j + 1].votes.length ) {
+              if ( arr[j].votes < arr[j + 1].votes ) {
                   //swap using a temparary variable
                   let temp = arr[j];
                   arr[j] = arr[j + 1];

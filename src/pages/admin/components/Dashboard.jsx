@@ -1,5 +1,3 @@
-import Container from "@/components/admin-components/Container";
-import { getSession } from "next-auth/react";
 import { useEffect, useState } from "react";
 import BarChart from "@/components/admin-components/BarChart";
 import PieChart from "@/components/admin-components/PieChart";

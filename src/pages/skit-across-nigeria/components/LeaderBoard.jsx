@@ -4,13 +4,12 @@ import Link from 'next/link';
 import { PlayCircle } from 'lucide-react';
 
 const LeaderBoard = ({ skits, hideDashboard }) => {
-    
     return (
         <div className={`${hideDashboard?"h-0 overflow-hidden":"h-fit"} w-[98%] transition-all duration-300 ease-in-out rounded-[10px] px-1 mx-auto flex flex-col`}>
             <div className='flex flex-col mt-2 gap-[3px] items-center justify-between w-full'>
                 { [ skits?.oneUser, skits?.twoUser, skits?.thirdUser, skits?.fourUser, skits?.fiveUser ].map( (position, index)=> {
                     return (
-                        position ? (
+                        position?.votes > 1 ? (
                         <div key={index} className='w-full flex flex-row px-4 items-center rounded-[20px] gap-4 bg-gradient-to-r from-blue-200 to-blue-100 h-[50px]'>
                             <span className='font-bold'>{index + 1}</span>
                             <div className='flex flex-row flex-grow items-center'>

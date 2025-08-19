@@ -10,7 +10,7 @@ export default function PaystackClick({ amount, email, buttonText, callBack }) {
       reference: new Date().getTime().toString(),
       email: email,
       amount: amount * 100, //Amount is in the country's lowest currency. E.g Kobo, so 20000 kobo = N200
-      publicKey: liveKey
+      publicKey: liveKey,
     };
 
     const handlePaystackSuccessAction = async (ref) => {

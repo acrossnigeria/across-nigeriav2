@@ -44,7 +44,7 @@ export default function Home() {
   const [ getAdvertRetryCounts, setGetAdvertRetryCounts ] = useState(0);
 
   const games = [
-    {title:"SKITS ACROSS NIGERIA REALITY SHOW",image:image2,link:"/soon", date:'Skit upload opens 20th August 2025', isOpen:false },
+    {title:"SKITS ACROSS NIGERIA REALITY SHOW",image:image2,link:"/skit-across-nigeria/pgs/landing", date:'Click Join to Participate', isOpen:true },
     {title:"GIVE AWAY QUIZZES", image:image1,link:"/giveaway-quiz", date:'Coming Soon', isOpen:false },
     {title:"ACROSS NIGERIA QUIZ SHOW",image:image12,link:"/across_quiz_show", date:'Coming Soon', isOpen:false },
     {title:"KING AND QUEEN ACROSS NIGERIA", image:image3, link:"/soon", date:'2026', isOpen:false },

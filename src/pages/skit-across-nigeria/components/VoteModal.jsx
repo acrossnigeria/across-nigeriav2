@@ -3,6 +3,7 @@ import axios from "axios";
 import VoteCard from "./VoteCard";
 import ProcessingCard from "./ProcessingCard";
 import VoteSuccess from "./VoteSuccess";
+import NoVoteCard from "./NoVotingCard";
 
 const VoteModal = ({ showVoteModal, setShowVoteModal, userEmail, userId, skitId, handleVoteModal }) => {
     const [ voterEmail, setVoterEmail ] = useState('');
@@ -70,7 +71,7 @@ const VoteModal = ({ showVoteModal, setShowVoteModal, userEmail, userId, skitId,
         { showVoteModal && (
             <div className={`bg-black/50 backdrop-blur-[1px] absolute z-[3000] flex flex-col justify-center items-center h-full w-full left-0 top-0`} >
 
-                { cardStep === 0 && ( 
+                {/* { cardStep === 0 && ( 
                     <VoteCard
                     handleVote={handleVote}
                     closeModal={closeModal} 
@@ -78,6 +79,12 @@ const VoteModal = ({ showVoteModal, setShowVoteModal, userEmail, userId, skitId,
                     setVoterEmail={setVoterEmail}
                     numberOfVotes={numberOfVotes}
                     setNumberOfVotes={setNumberOfVotes}
+                    />
+                )} */}
+
+                { cardStep === 0 && ( 
+                    <NoVoteCard
+                    closeModal={closeModal} 
                     />
                 )}
 

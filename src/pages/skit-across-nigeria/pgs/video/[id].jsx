@@ -63,7 +63,7 @@ export default function SkitScreen() {
     // displays voting modal
     const voteModal = () => {  
         setShowVoteModal(!showVoteModal);
-        setIsPlaying(!isPlaying);
+        handlePlayer();
     }
 
     useEffect(() => {

@@ -7,6 +7,7 @@ import { Bell, ChevronDown, Home, Layers, Megaphone, Menu, PanelLeftClose, Panel
 import Dashboard from "./components/Dashboard";
 import Users from "./components/Users";
 import AmbassadorProgram from "./components/AmbassadorProgram";
+import SkitANRS from "./components/SkitANRS";
 
 const AdminMainPage = ( { user }) => {
     const [ isHamOpen, setIsHamOpen ] = useState(false);
@@ -58,7 +59,7 @@ const AdminMainPage = ( { user }) => {
     const pages = {
         "01": { page: <Dashboard/>, title: 'Dashboard' },
         "02": { page: <Users/>, title: 'Users registry' },
-        "p1": { page: <Dashboard/>, title: 'Skit ANRS' },
+        "p1": { page: <SkitANRS/>, title: 'Skit ANRS' },
         "p5": { page: <Users/>, title: 'Referral Program' },
         "p3": { page: <Dashboard/>, title: 'King & Queen ANRS' },
         "p4": { page: <AmbassadorProgram/>, title: 'Ambassador Program' },
@@ -82,7 +83,7 @@ const AdminMainPage = ( { user }) => {
 
     setRealVH();
     return (
-        <div style={{height:`calc(var(--vh, 1vh)*100)`}} className="flex gap-3 font-poppins justify-between bg-gray-100 p-3  flex-row">
+        <div style={{minHeight:`calc(var(--vh, 1vh)*100)`,}} className="flex gap-3 font-poppins justify-between bg-gray-100 p-2  flex-row">
 
             <div className={`${isPanelOpen ? 'w-[280px]' : 'w-[60px]'} h-[95%] top-[2.5%] transition-all duration-300 fixed ease-in-out rounded-[15px] overflow-x-hidden bg-green-700 flex flex-col gap-3 items-center justify-between p-3 border`}>
                 <div className={`${isPanelOpen ? 'justify-end' : ' justify-center'} w-full items-center flex flex-row`}>

@@ -2,11 +2,10 @@ import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { signOut, useSession } from 'next-auth/react';
 import { useRouter } from 'next/router';
-import Search from '../../public/images/icon/Search';
 import Logo from '../../public/images/icon/Logo';
 import Profile from '../../public/images/icon/Profile';
-import NotifyIcon from '../../public/images/icon/NotifyIcon';
 import BottomMenu from './BottomMenu';
+import { Bell } from 'lucide-react';
 
 const Navbar = ( { hideNav } ) => {
   const { status, data: session } = useSession();
@@ -57,7 +56,7 @@ const Navbar = ( { hideNav } ) => {
           ) : session?.user ? (
           <div className="relative flex flex-row items-center gap-3">
             <Link href={'/user/notifications'} className='flex h-[35px] w-[35px] rounded-full justify-center items-center hover:bg-green-800 flex-row'>
-              <NotifyIcon/>
+              <Bell strokeWidth={1.5} color='white' />
               <div className={`absolute ml-[23px] text-white mb-[23px] ${notifications>0?'bg-red-500':'bg-gray-500'} flex flex-row justify-center items-center rounded-full p-2 h-[21px] text-[11px] w-[21px]`}>{notifications}</div>
             </Link>
             <div style={{alignItems:'center'}} className="flex flex-row justify-between gap-2 h-[30px] px-[10px] cursor-pointer  text-white bg-gradient-to-br from-green-500 to-yellow-400 transition duration-100 rounded-[30px] text-[16px]">

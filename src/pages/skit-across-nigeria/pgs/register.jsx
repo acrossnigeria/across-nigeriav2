@@ -101,7 +101,7 @@ export default function Register() {
                     <ChevronLeft size={'20px'} className="text-gray-700 cursor-pointer"/>
                     Go back
                 </div>
-                <div className="max-w-xl w-full pb-14 pt-1 mt-4 px-1">
+                <div className="max-w-xl w-full pb-14 pt-1 mt-1 px-1">
 
                     <div className="flex flex-row bg-gradient-to-t from-gray-100 rounded-b-[20px] to-transparent h-[210px] items-center justify-between gap-2">
                         <div className="w-[55%] h-full flex flex-col justify-end pl-3 gap-2 pb-3 overflow-hidden">
@@ -111,7 +111,7 @@ export default function Register() {
                         </div>
                         <div className="w-[40%] h-full overflow-hidden relative">
                             <Image
-                            src={"/svg/Film-rolls-bro.svg"}
+                            src={"/svg/Success-factors-amico.svg"}
                             alt="Skit Competition Banner"
                             className="h-full w-[40%]"
                             layout="fill"
