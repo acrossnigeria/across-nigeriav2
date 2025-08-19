@@ -322,9 +322,9 @@ export default function SkitANRS() {
                                 <span className="text-xl font-semibold block">Activate New Phase</span>
                                 <span className="text-[14px] text-gray-500">Select phase to activate</span>
                                 <div className="space-y-2 mt-4">
-                                    { phases.filter( ( { status }) => status !== 'completed').map( ( { name, id } ) => {
+                                    { phases.filter( ( { status }) => status !== 'completed').map( ( { name, id }, index ) => {
                                         return (
-                                            <button onClick={() =>{handleActivateSelect(id)}} className="flex flex-row w-full justify-between p-2 text-[14px] rounded-[7px] cursor-pointer items-center hover:bg-gray-200">
+                                            <button key={index} onClick={() =>{handleActivateSelect(id)}} className="flex flex-row w-full justify-between p-2 text-[14px] rounded-[7px] cursor-pointer items-center hover:bg-gray-200">
                                                 <span>{name}</span>
                                                 <div className="h-5 w-5 border-gray-700 border flex flex-col justify-center items-center rounded-full">
                                                     { phaseToBeActivated?.id === id && <div className="h-[70%] w-[70%] bg-green-500 rounded-full"></div>}
@@ -363,9 +363,9 @@ export default function SkitANRS() {
                                                 <div className="bg-green-800 text-[13px] text-white w-[24.8%] py-1 pl-3">skit</div>
                                                 <div className="bg-green-800 text-[13px] text-white w-[24.8%] py-1 rounded-tr-[7px] pl-3">userId</div>
                                             </div>
-                                            { generatedWinners?.map( ( winner ) => {
+                                            { generatedWinners?.map( ( winner, index ) => {
                                                 return (
-                                                    <div className="w-full flex flex-row justify-between items-center">
+                                                    <div className="w-full flex flex-row justify-between items-center" key={index}>
                                                         <div className="bg-gray-200 text-[11px] text-gray-700 w-[24.8%] py-1 pl-3">{ winner?.title }</div>
                                                         <div className="bg-gray-200 text-[11px] text-gray-700 w-[24.8%] py-1 pl-3">{ winner?.user?.fullname }</div>
                                                         <div className="bg-gray-200 text-[11px] text-gray-700 w-[24.8%] py-1 pl-3">{ winner?.votes }</div>
@@ -403,7 +403,7 @@ export default function SkitANRS() {
                         <div className="fixed inset-0 flex items-center justify-center bg-black/30 backdrop-blur-sm">
                             <div className="bg-white p-6 rounded-2xl shadow-lg w-full max-w-md">
                                 <h2 className="text-xl font-semibold mb-4">Delete Phase</h2>
-                                <p className="mb-4">Are you sure you want to delete "{phaseToBeDeleted?.name}" phase?</p>
+                                <p className="mb-4">Are you sure you want to delete &quot;{phaseToBeDeleted?.name}&quot; phase?</p>
                                 <div className="flex justify-end gap-3">
                                     <button onClick={() => { handlePhaseDelete('')}} className="px-4 py-1 text-[14px] bg-gray-300 rounded-[7px]">Cancel</button>
                                     <button onClick={deletePhase} className="px-4 py-1 text-[14px] bg-red-600 text-white rounded-[7px]">delete</button>
