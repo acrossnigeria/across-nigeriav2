@@ -3,7 +3,7 @@ import axios from "axios";
 import { Check, PlusIcon, RefreshCcw } from "lucide-react";
 import { useEffect, useState } from "react";
 
-export default function SkitANRS() {
+export default function SANRS_phase_manage( { changePage } ) {
     const [ showModal, setShowModal ] = useState(false);
     const [ showWinnerModal, setShowWinnerModal ] = useState(false);
     const [ showPublishModal, setShowPublishModal ] = useState(false);
