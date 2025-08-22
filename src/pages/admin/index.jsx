@@ -10,6 +10,7 @@ import AmbassadorProgram from "./components/AmbassadorProgram";
 import ProcessLoader from "@/components/ui/ProcessLoader";
 import { useRouter } from "next/router";
 import SANRS_main from "./components/SANRS_main";
+import UnfinishedBuild from './components/UnfinishedBuild';
 
 
 const AdminMainPage = () => {
@@ -69,10 +70,10 @@ const AdminMainPage = () => {
         "01": { page: <Dashboard/>, title: 'Dashboard' },
         "02": { page: <Users/>, title: 'Users registry' },
         "p1": { page: <SANRS_main/>, title: 'Skit ANRS' },
-        "p5": { page: <Users/>, title: 'Referral Program' },
-        "p3": { page: <Dashboard/>, title: 'King & Queen ANRS' },
+        "p5": { page: <UnfinishedBuild/>, title: 'Referral Program' },
+        "p3": { page: <UnfinishedBuild/>, title: 'King & Queen ANRS' },
         "p4": { page: <AmbassadorProgram/>, title: 'Ambassador Program' },
-        "p2": { page: <Users/>, title: 'Giveaway Quizies' },
+        "p2": { page: <UnfinishedBuild/>, title: 'Giveaway Quizies' },
     }
 
     const handlePageChange = ( pageId ) => {

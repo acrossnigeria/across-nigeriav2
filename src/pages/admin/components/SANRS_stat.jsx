@@ -5,7 +5,7 @@ import SANRS_profile_modal from "./SANRS_profile_modal";
 
 const SANRS_stat = ( { changePage } ) => {
     const [ isLoading, setIsLoading ] = useState(false);
-    const [ showProfileModal, setShowProfileModal ] = useState(true);
+    const [ showProfileModal, setShowProfileModal ] = useState(false);
 
     const handleShowProfileModal = () => {
         setShowProfileModal(true);
@@ -61,7 +61,7 @@ const SANRS_stat = ( { changePage } ) => {
                                 <span className="text-[11px] text-gray-500">Scheduled end date: <span className="font-semibold text-gray-800">25 September</span></span>
                                 <span className="text-[11px] text-gray-500">Total vote cast: <span className="font-semibold text-gray-800">72 votes</span></span>
                             </div>
-                            <button className="px-2 py-1 text-[14px] text-white rounded-[7px] bg-green-600 hover:bg-green-700 transition-all ease-in-out duration-300">
+                            <button onClick={()=> { changePage}} className="px-2 py-1 text-[14px] text-white rounded-[7px] bg-green-600 hover:bg-green-700 transition-all ease-in-out duration-300">
                                 Phase Management
                             </button>
                         </div>
