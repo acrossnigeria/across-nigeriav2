@@ -1,6 +1,6 @@
 import ShimmerLoader from "@/components/ui/ShimmerLoader";
 import axios from "axios";
-import { Check, PlusIcon, RefreshCcw } from "lucide-react";
+import { Check, ChevronLeft, PlusIcon, RefreshCcw } from "lucide-react";
 import { useEffect, useState } from "react";
 
 export default function SANRS_phase_manage( { changePage } ) {
@@ -157,6 +157,10 @@ export default function SANRS_phase_manage( { changePage } ) {
 
     return (
         <>
+            <button onClick={changePage} className="text-[13px] text-white  bg-green-600 hover:bg-green-700 items-center rounded-[7px] py-1 px-5 flex flex-row mb-1">
+                <ChevronLeft strokeWidth={1.5} size={20}/>
+                <span>Back to Statistics</span>
+            </button>
             { isLoading && (
                 <div className="flex flex-row items-start h-full w-full justify-between bg-white/50 backdrop-blur-sm">
                     <div className="w-[60%] flex flex-col gap-2">

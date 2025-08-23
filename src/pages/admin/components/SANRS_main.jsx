@@ -12,8 +12,8 @@ const SANRS_main = () => {
 
     return (
         <>
-        { presentPage === 1 && <SANRS_stat changePage={handlePageChange}/> }
-        { presentPage === 2 && <SANRS_phase_manage changePage={handlePageChange}/> }
+        { presentPage === 1 && <SANRS_stat changePage={() => {handlePageChange(2)}} /> }
+        { presentPage === 2 && <SANRS_phase_manage changePage={() => {handlePageChange(1)}} /> }
         </>
     );
 }
