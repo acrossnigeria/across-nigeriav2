@@ -12,9 +12,11 @@ export default function Dashboard( ) {
     const [ stateData, setStateData ] = useState(null);
     const [ genderData, setGenderData ] = useState(null);
     const [ ageData, setAgeData ] = useState(null);
+    const [ isLoading, setIsLoading ] = useState(true);
 
 
     async function getStatData() {
+        setIsLoading(true);
         try {
             const response = await axios.get('/api/admin/getStats');
             const data = response.data.stats;
@@ -23,6 +25,7 @@ export default function Dashboard( ) {
             setStateData(data.stateData);
             setGenderData(data.genderData);
             setAgeData(data.ageData);
+            setIsLoading(false);
         } catch(err) {
             console.log(err.message);
         }
@@ -61,16 +64,34 @@ export default function Dashboard( ) {
     }
 
     return (
-        < >
+        <>
+        { isLoading ? (
+            <> 
             <div className="flex md:flex-row flex-col justify-between mb-3 items-center md:gap-0 gap-1">
-                <div className="bg-gradient-to-tr from-green-700 to-green-500 flex rounded-[15px] flex-row justify-around items-center h-[70px] p-2 md:w-[59%] w-[98%] text-white">
+                <ShimmerLoader roundedness={'15px'} width={'49%'} height={'70px'}/>
+                <ShimmerLoader roundedness={'15px'} width={'49%'} height={'70px'}/>
+            </div>
+
+            <div className="flex md:flex-row flex-col md:gap-0 gap-2 justify-between">
+                <ShimmerLoader roundedness={'15px'} width={'59%'} height={'470px'}/>
+                <div className="md:w-[40%] w-[98%] flex flex-col gap-2">
+                    <ShimmerLoader roundedness={'15px'} width={'100%'} height={'230px'}/>
+                    <ShimmerLoader roundedness={'15px'} width={'100%'} height={'230px'}/>
+                </div>
+            </div>
+
+            </>
+        ) : (
+            <>
+            <div className="flex md:flex-row flex-col justify-between mb-3 items-center md:gap-0 gap-1">
+                <div className="bg-gradient-to-tr from-green-700 to-green-500 flex rounded-[15px] flex-row justify-around items-center h-[70px] p-2 md:w-[49%] w-[98%] text-white">
                     <AllUsersIcon/>
                     <div className="flex flex-col items-center">
                         <span className={`text-[19px] ${stats?.totalUsers?'':'animate-pulse'} font-extralight`}>{stats?.totalUsers?stats?.totalUsers:'loading...'}</span>
                         <span>TOTAL USERS</span>
                     </div>
                 </div>
-                <div className="bg-gradient-to-tr from-gray-800 to-gray-400 rounded-[15px]  flex flex-row justify-around items-center h-[70px] p-2 md:w-[40%] w-[98%] text-white">
+                <div className="bg-gradient-to-tr from-gray-800 to-gray-400 rounded-[15px]  flex flex-row justify-around items-center h-[70px] p-2 md:w-[49%] w-[98%] text-white">
                     <NewIcon/>
                     <div className="flex flex-col justify-center items-center">
                         <span className={`text-[19px] ${newUsers?'':'animate-pulse'} font-extralight`}>{newUsers?newUsers.length:'loading...'}</span>
@@ -143,6 +164,8 @@ export default function Dashboard( ) {
                     </div>
                 </div>
             </div>
+            </>
+        )}
         </>
     )
 }

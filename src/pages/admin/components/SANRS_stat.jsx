@@ -1,12 +1,26 @@
 import { Check, Eye, Users2, Videotape, Vote, X } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ProfileIcon from "../../../../public/images/icon/ProfileIcon";
 import SANRS_profile_modal from "./SANRS_profile_modal";
 import DynamicBarChart from "@/components/admin-components/DynamicBarChart";
+import axios from "axios";
+import ShimmerLoader from "@/components/ui/ShimmerLoader";
 
 const SANRS_stat = ( { changePage } ) => {
     const [ isLoading, setIsLoading ] = useState(false);
     const [ showProfileModal, setShowProfileModal ] = useState(false);
+    const [ registeredParticipants, setRegisteredParticipants ] = useState([]);
+    const [ stateData, setStateData ] = useState([]);
+    const [ totalVotes, setTotalVotes ] = useState(0);
+    const [ totalSubmitted, setTotalSubmitted ] = useState(0);
+
+    const [ profileSelected, setProfileSelected ] = useState(null);
+    const profileToBeViewed = registeredParticipants?.find( user => user?.id === profileSelected );
+
+    const handleProfileSelection = (id) => {
+        setProfileSelected(id);
+        handleShowProfileModal();
+    };
 
     const nigeriaStates = [
         'Abia', 'Adamawa', 'Akwa Ibom', 'Anambra', 'Bauchi', 'Bayelsa', 'Benue', 'Borno',
@@ -15,54 +29,48 @@ const SANRS_stat = ( { changePage } ) => {
         'Niger', 'Ogun', 'Ondo', 'Osun', 'Oyo', 'Plateau', 'Rivers', 'Sokoto', 'Taraba', 'Yobe', 'Zamfara'
     ];
 
-    const dummyList = [
-                9,
-                8,
-                19,
-                12,
-                11,
-                8,
-                17,
-                9,
-                10,
-                13,
-                3,
-                13,
-                17,
-                22,
-                61,
-                6,
-                5,
-                5,
-                276,
-                10,
-                4,
-                1,
-                26,
-                57,
-                280,
-                13,
-                10,
-                43,
-                19,
-                35,
-                41,
-                13,
-                5,
-                2,
-                6,
-                10,
-                8
-            ]
-
     const handleShowProfileModal = () => {
         setShowProfileModal(true);
     };
 
+    useEffect( () => {
+        const fetchData = async () => {
+            setIsLoading(true);
+            try {
+                const response = await axios.get('/api/admin/SANRS/statistics');
+                const data = response.data;
+                setRegisteredParticipants(data?.registeredParticipants);
+                setStateData(data?.stateData);
+                setTotalVotes(data?.totalVotes);
+                setTotalSubmitted(data?.totalSubmitted);
+            } catch (error) {
+                console.error("Error fetching data:", error);
+            } finally {
+                setIsLoading(false);
+            }
+        };
+
+        fetchData();
+    }, []);
+
     return (
         <>
         { isLoading ? (
-            <div>Loading...</div>
+            <div className="flex flex-col gap-2 w-full">
+                <div className="flex flex-row justify-between items-center">
+                    <ShimmerLoader roundedness={'15px'} width={'33%'} height={'70px'}/>
+                    <ShimmerLoader roundedness={'15px'} width={'33%'} height={'70px'}/>
+                    <ShimmerLoader roundedness={'15px'} width={'33%'} height={'70px'}/>
+                </div>
+
+                <div className="flex flex-row justify-between h-[480px] pt-2 items-center">
+                    <div className="w-[60%] flex flex-col justify-between h-full">
+                        <ShimmerLoader roundedness={'15px'} width={'100%'} height={'66%'}/>
+                        <ShimmerLoader roundedness={'15px'} width={'100%'} height={'33%'}/>
+                    </div>
+                    <ShimmerLoader roundedness={'15px'} width={'38%'} height={'100%'}/>
+                </div>
+            </div>
         ): (
             <div className="flex flex-col gap-2 w-full">
                 <div className="flex flex-row justify-between items-center">
@@ -70,7 +78,7 @@ const SANRS_stat = ( { changePage } ) => {
                         <Users2 strokeWidth={1.5} size={30}/>
                         <div className="flex flex-col items-center">
                             {/* <span className={`text-[19px] ${stats?.totalUsers?'':'animate-pulse'} font-extralight`}>{stats?.totalUsers?stats?.totalUsers:'loading...'}</span> */}
-                            <span className={`text-[19px] font-extralight`}>1039</span>
+                            <span className={`text-[19px] font-extralight`}>{registeredParticipants.length}</span>
                             <span className="text-[12px]">TOTAL REGISTERED</span>
                         </div>
                     </div>
@@ -78,7 +86,7 @@ const SANRS_stat = ( { changePage } ) => {
                         <Videotape strokeWidth={1.5} size={30}/>
                         <div className="flex flex-col items-center">
                             {/* <span className={`text-[19px] ${stats?.totalUsers?'':'animate-pulse'} font-extralight`}>{stats?.totalUsers?stats?.totalUsers:'loading...'}</span> */}
-                            <span className={`text-[19px] font-extralight`}>1039</span>
+                            <span className={`text-[19px] font-extralight`}>{totalSubmitted}</span>
                             <span className="text-[12px]">TOTAL SKITS SUBMISSIONS</span>
                         </div>
                     </div>
@@ -86,7 +94,7 @@ const SANRS_stat = ( { changePage } ) => {
                         <Vote strokeWidth={1.5} size={30}/>
                         <div className="flex flex-col items-center">
                             {/* <span className={`text-[19px] ${stats?.totalUsers?'':'animate-pulse'} font-extralight`}>{stats?.totalUsers?stats?.totalUsers:'loading...'}</span> */}
-                            <span className={`text-[19px] font-extralight`}>1039</span>
+                            <span className={`text-[19px] font-extralight`}>{totalVotes}</span>
                             <span className="text-[12px]">TOTAL VOTE CAST</span>
                         </div>
                     </div>
@@ -95,7 +103,7 @@ const SANRS_stat = ( { changePage } ) => {
                 <div className="flex flex-row justify-between h-[480px] pt-2 items-center">
                     <div className="w-[60%] flex flex-col justify-between h-full">
                         <div className="w-full border h-[66%] rounded-[15px] bg-white shadow-lg">
-                            <DynamicBarChart title={"Registered participants by state"} labels={nigeriaStates} dataList={dummyList} individualLabel={'Participants'}/>
+                            <DynamicBarChart title={"Registered participants by state"} labels={nigeriaStates} dataList={stateData} individualLabel={'Participants'}/>
                         </div>
                         <div className="w-full border h-[33%] flex flex-col gap-1 rounded-[15px] bg-white p-4 shadow-lg">
                             <div className="flex flex-row gap-1 items-center">
@@ -123,18 +131,18 @@ const SANRS_stat = ( { changePage } ) => {
                         </div>
     
                         <div className="w-full flex-grow mt-2 flex flex-col gap-1 overflow-y-scroll">
-                            { [ 0, 0, 0, 0, 0, 0, 0, 0].map( (item, index) => {
+                            { registeredParticipants.map( (user, index) => {
                                 return (
-                                    <div key={index} onClick={handleShowProfileModal} className="w-full flex flex-row justify-between cursor-pointer hover:bg-gray-100 transition-all duration-200 ease-in-out p-2 rounded-[10px] items-center">
+                                    <div key={index} onClick={()=>{handleProfileSelection(user?.id)}} className="w-full flex flex-row justify-between cursor-pointer hover:bg-gray-100 transition-all duration-200 ease-in-out p-2 rounded-[10px] items-center">
                                         <div className="flex items-center flex-row justify-start gap-2 flex-grow">
                                             <ProfileIcon size={'50px'} bg={'gray'}/>
                                             <div className="flex flex-col text-[13px] leading-tight mt-2">
-                                                <span className="text-[12px] font-bold">Alimam Ahmed</span>
+                                                <span className="text-[12px] font-bold">{user?.fullname}</span>
                                                 <div className="flex flex-row gap-1 items-center">
-                                                    <span className="text-[11px] text-gray-500">Submitted skit</span>
-                                                    <Check color="green" size={10}/>
+                                                    <span className="text-[11px] text-gray-500">{user?.hasSubmitted?'Submitted ' : <span className="text-red-500">Not Submitted</span>}</span>
+                                                    <span className="text-[11px] text-gray-500">{user?.hasSubmitted?<Check color="green" size={10}/> : <X color="red" size={10}/>}</span>
                                                 </div>
-                                                <span className="text-[11px] text-gray-500">2 days ago</span>
+                                                <span className="text-[11px] text-gray-500">{ user?.createdAt }</span>
                                             </div>
                                         </div>
                                         <Eye size={'20px'} className="text-gray-500"/>
@@ -145,7 +153,7 @@ const SANRS_stat = ( { changePage } ) => {
                     </div>
                 </div>
                 { showProfileModal && (
-                    <SANRS_profile_modal closeModal={()=>{setShowProfileModal(false)}}/>
+                    <SANRS_profile_modal profileToBeViewed={profileToBeViewed} closeModal={()=>{setShowProfileModal(false)}}/>
                 )}
             </div>
         )}

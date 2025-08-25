@@ -63,6 +63,7 @@ const Handler = async ( req, res) => {
                 'Jigawa':0, 'Kaduna':0, 'Kano':0, 'Katsina':0, 'Kebbi':0, 'Kogi':0, 'Kwara':0, 'Lagos':0, 'Nasarawa':0,
                 'Niger':0, 'Ogun':0, 'Ondo':0, 'Osun':0, 'Oyo':0, 'Plateau':0, 'Rivers':0, 'Sokoto':0, 'Taraba':0, 'Yobe':0, 'Zamfara':0
             };
+            
             nigeriaStates.map( state => {
                 data.map( user => { 
                     let isFromState = user.residence === state;

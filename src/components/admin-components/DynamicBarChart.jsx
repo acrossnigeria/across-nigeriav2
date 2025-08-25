@@ -66,17 +66,17 @@ const DynamicBarChart = ( { dataList, individualLabel, labels, title } ) => {
         )}
 
         { !showChart && (
-            <div className="border-1 w-[100%] text-[13px] font-extralight flex flex-col rounded-[7px] h-full border-gray-400">
+            <div className="border-1 w-[100%] text-[12px] font-extralight flex flex-col rounded-[7px] h-full border-gray-400">
                     <div className=" flex-row flex rounded-t-[7px] bg-gray-300">
-                        <div className="w-[35%] p-2">State</div>
-                        <div className="w-[65%] border-l-1 border-gray-600 p-2">Users</div>
+                        <div className="w-[35%] p-1">State</div>
+                        <div className="w-[65%] border-l-1 border-gray-600 p-1">Users</div>
                     </div>
                     <div className="h-[200px] overflow-y-scroll overflow-x-hidden">
                         { dataList?.map( ( val, index ) => {
                             return (
                             <div key={index} className={`${index === dataList?.length - 1 ? '' : 'border-b-1 border-gray-400'} flex-row flex text-gray-700`}>
-                                <div className="w-[36.5%] p-2">{labels[index]}</div>
-                                <div className="w-[65%] border-l-1 border-gray-400 p-2">{val}</div>
+                                <div className="w-[36.5%] p-1">{labels[index]}</div>
+                                <div className="w-[65%] border-l-1 border-gray-400 p-1">{val}</div>
                             </div>
                             )
                         })}
